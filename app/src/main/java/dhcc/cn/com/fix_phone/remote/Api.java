@@ -2,6 +2,8 @@ package dhcc.cn.com.fix_phone.remote;
 
 
 
+import dhcc.cn.com.fix_phone.bean.RegisterRequest;
+import dhcc.cn.com.fix_phone.bean.RegisterResponse;
 import dhcc.cn.com.fix_phone.bean.TelCheckRequest;
 import dhcc.cn.com.fix_phone.bean.TelCheckResponse;
 import retrofit2.Call;
@@ -19,7 +21,7 @@ public interface Api {
     Call<TelCheckResponse> getVerificationCodeResponse(@Body TelCheckRequest telCheck);
 
     /*注册*/
-    /*@POST("/Account /RegisterByPhone")
-    Call<UserResponse> register(@Body UserRegisterRequest userRegisterRequest);*/
+    @POST("/Account /RegisterByPhone")
+    Call<RegisterResponse> register(@Body RegisterRequest RegisterRequest);
 
 }

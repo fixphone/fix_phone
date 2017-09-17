@@ -2,6 +2,7 @@ package dhcc.cn.com.fix_phone.ui.fragment;
 
 import android.os.Bundle;
 
+import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.base.BaseFragment;
 
 /**
@@ -19,6 +20,6 @@ public class MeFragment extends BaseFragment {
 
     @Override
     protected int getLayoutId() {
-        return 0;
+        return R.layout.fragment_me;
     }
 }
