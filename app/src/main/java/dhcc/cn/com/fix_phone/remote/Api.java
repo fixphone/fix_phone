@@ -1,10 +1,21 @@
 package dhcc.cn.com.fix_phone.remote;
 
 
+import dhcc.cn.com.fix_phone.bean.TelCheckRequest;
+import dhcc.cn.com.fix_phone.bean.TelCheckResponse;
+import retrofit2.Response;
+import retrofit2.http.Body;
+import retrofit2.http.POST;
+import rx.Observable;
+
 /**
  * 2016/11/2 11
  */
 public interface Api {
-    String BASE_LOGIN_URL = "http://lamp.cloudring.net/";
+    String BASE_LOGIN_URL = "http://120.77.202.151:8080";
+
+    /*获取验证码的返回消息*/
+    @POST("/Account/SendRegisterPhoneCode")
+    Observable<Response<TelCheckResponse>> getVerificationCodeResponse(@Body TelCheckRequest telCheck);
 
 }

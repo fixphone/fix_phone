@@ -62,14 +62,18 @@ public class RetrofitHelper {
                         // 有网络时, 不缓存, 最大保存时长为10小时
                         int maxAge = 0;
                         response.newBuilder()
-                                .header("Cache-Control", "public, max-age=" + maxAge)
+                                .addHeader("Cache-Control", "public, max-age=" + maxAge)
+                                .addHeader("Content-Type" , "application/json")
+                                .addHeader("accessKey","JHD2017")
                                 .removeHeader("Pragma")
                                 .build();
                     } else {
                         // 无网络时，设置超时为4周
                         int maxStale = 60 * 60 * 24 * 28;
                         response.newBuilder()
-                                .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
+                                .addHeader("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
+                                .addHeader("Content-Type" , "application/json")
+                                .addHeader("accessKey","JHD2017")
                                 .removeHeader("Pragma")
                                 .build();
                     }
