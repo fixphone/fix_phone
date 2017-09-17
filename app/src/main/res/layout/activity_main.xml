@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,23 +7,17 @@
     android:layout_height="match_parent"
     tools:context="dhcc.cn.com.fix_phone.ui.activity.MainActivity">
 
-
-    <FrameLayout
-        android:id="@+id/frameLayout_main"
-        android:layout_width="match_parent"
-        android:layout_marginBottom="56dp"
-        android:layout_height="match_parent"/>
-
     <android.support.design.widget.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:layout_gravity="bottom"
         app:tabGravity="fill"
         app:tabIndicatorHeight="0dp"
         app:tabMode="fixed"
         app:tabSelectedTextColor="@color/text_color_selector"
-        app:tabTextColor="@color/text_color">
+        app:tabTextColor="@color/text_color"
+        android:layout_alignParentBottom="true"
+        android:background="@color/text_color_white">
 
         <android.support.design.widget.TabItem
             android:layout_width="wrap_content"
@@ -45,4 +39,9 @@
 
     </android.support.design.widget.TabLayout>
 
-</FrameLayout>
+    <FrameLayout
+        android:id="@+id/frameLayout_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/tabLayout"/>
+</RelativeLayout>

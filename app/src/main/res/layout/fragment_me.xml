@@ -1,7 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-</LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#F0EFF5">
+
+        <RelativeLayout
+            android:id="@+id/mine_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#037EFF"
+            android:paddingTop="@dimen/public_80dp"
+            android:paddingLeft="@dimen/public_15dp"
+            android:paddingRight="@dimen/public_15dp"
+            android:paddingBottom="@dimen/public_10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/user_icon"
+                    android:layout_width="@dimen/public_80dp"
+                    android:layout_height="@dimen/public_80dp"
+                    android:layout_centerInParent="true"
+                    android:layout_alignParentLeft="true"
+                    android:src="@drawable/user_default_icon"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_centerInParent="true"
+                    android:layout_toRightOf="@id/user_icon"
+                    android:layout_marginLeft="@dimen/public_10dp">
+
+                    <TextView
+                        android:id="@+id/user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp"
+                        android:text="宋阳"/>
+
+                    <TextView
+                        android:id="@+id/user_mobile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:layout_marginTop="@dimen/dp_4"
+                        android:text="12306"/>
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/button_right_arrow"/>
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/mine_circle"
+            style="@style/Mine_TextView"
+            android:drawableLeft="@drawable/tabbar_circle_select"
+            android:text="我的圈子"
+            android:gravity="center|left"
+            android:layout_marginTop="@dimen/public_15dp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#F0EFF5"/>
+
+        <TextView
+            android:id="@+id/mine_house"
+            style="@style/Mine_TextView"
+            android:drawableLeft="@drawable/tabbar_circle_select"
+            android:text="个人收藏"
+            android:gravity="center|left"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#F0EFF5"/>
+
+        <TextView
+            android:id="@+id/mine_suggest"
+            style="@style/Mine_TextView"
+            android:drawableLeft="@drawable/tabbar_circle_select"
+            android:text="投诉建议"
+            android:gravity="center|left"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#F0EFF5"/>
+
+        <TextView
+            android:id="@+id/mine_vip"
+            style="@style/Mine_TextView"
+            android:drawableLeft="@drawable/tabbar_circle_select"
+            android:text="付费会员"
+            android:gravity="center|left"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#F0EFF5"/>
+
+        <TextView
+            android:id="@+id/mine_advert"
+            style="@style/Mine_TextView"
+            android:drawableLeft="@drawable/tabbar_circle_select"
+            android:text="店铺广告"
+            android:gravity="center|left"
+            android:layout_marginTop="@dimen/public_15dp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#F0EFF5"/>
+
+        <TextView
+            android:id="@+id/mine_produce"
+            style="@style/Mine_TextView"
+            android:drawableLeft="@drawable/tabbar_circle_select"
+            android:text="店铺产品"
+            android:gravity="center|left"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#F0EFF5"/>
+
+        <TextView
+            android:id="@+id/mine_clear"
+            style="@style/Mine_TextView"
+            android:drawableLeft="@drawable/tabbar_circle_select"
+            android:text="清空缓存"
+            android:gravity="center|left"
+            android:layout_marginTop="@dimen/public_15dp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#F0EFF5"/>
+
+        <TextView
+            android:id="@+id/mine_app"
+            style="@style/Mine_TextView"
+            android:drawableLeft="@drawable/tabbar_circle_select"
+            android:text="APP简介"
+            android:gravity="center|left"
+            android:layout_marginTop="@dimen/public_15dp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#F0EFF5"/>
+    </LinearLayout>
+</ScrollView>
