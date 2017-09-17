@@ -25,8 +25,12 @@ public interface Api {
     @POST("/Account /RegisterByPhone")
     Call<RegisterResponse> register(@Body RegisterRequest RegisterRequest);
 
-
+    //获取首页广告
     @GET("/Adver/GetIndexList")
     Call<CirCleADResponse> getCircleAD();
+
+    //获取生意圈广告
+/*    @GET("/Adver/GetCircleList")
+    Call<> getCircleList();*/
 
 }

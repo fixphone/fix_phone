@@ -1,13 +1,14 @@
 package dhcc.cn.com.fix_phone.ui.fragment;
 
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.youth.banner.Banner;
 
@@ -24,7 +25,6 @@ import dhcc.cn.com.fix_phone.adapter.CircleAdapter;
 import dhcc.cn.com.fix_phone.base.BaseFragment;
 import dhcc.cn.com.fix_phone.base.GlideImageLoader;
 import dhcc.cn.com.fix_phone.bean.CirCleADResponse;
-import dhcc.cn.com.fix_phone.bean.CircleItem;
 import dhcc.cn.com.fix_phone.conf.CircleDefaultData;
 import dhcc.cn.com.fix_phone.event.CircleAdEvent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
@@ -32,7 +32,8 @@ import dhcc.cn.com.fix_phone.remote.ApiManager;
 /**
  * 2017/9/16 23
  */
-public class CircleFragment extends BaseFragment implements BaseQuickAdapter.OnItemClickListener {
+public class CircleFragment extends BaseFragment implements CircleAdapter.OnCircleItemClickListener {
+    private static final String TAG = "CircleFragment";
 
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
@@ -40,10 +41,10 @@ public class CircleFragment extends BaseFragment implements BaseQuickAdapter.OnI
     @BindView(R.id.recyclerview)
     RecyclerView mRecyclerView;
 
-    private List<CircleItem> mCircleItems;
-    private CircleAdapter    mAdapter;
-    private View             mHeaderView;
-    private Banner           mBanner;
+    private List<MultiItemEntity> mCircleItems;
+    private CircleAdapter         mAdapter;
+    private View                  mHeaderView;
+    private Banner                mBanner;
 
     public static CircleFragment newInstance() {
         return new CircleFragment();
@@ -71,33 +72,28 @@ public class CircleFragment extends BaseFragment implements BaseQuickAdapter.OnI
     protected void initView(View view) {
         super.initView(view);
         mHeaderView = getHeaderView();
-        GridLayoutManager layoutManager = new GridLayoutManager(_mActivity, 3);
-        mRecyclerView.setLayoutManager(layoutManager);
-        mAdapter.setSpanSizeLookup(new BaseQuickAdapter.SpanSizeLookup() {
+        final GridLayoutManager layoutManager = new GridLayoutManager(_mActivity, 3);
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
-            public int getSpanSize(GridLayoutManager gridLayoutManager, int position) {
-                return mCircleItems.get(position).getSpanSize();
+            public int getSpanSize(int position) {
+                return mAdapter.getItemViewType(position) == CircleAdapter.TYPE_LEVEL_1 ? 1 : layoutManager.getSpanCount();
             }
         });
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mAdapter.addHeaderView(mHeaderView);
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(layoutManager);
         mRefreshLayout.setEnableLoadmore(false);
+        mAdapter.expandAll();
     }
 
     @Override
     protected void initEvent() {
-        mAdapter.setOnItemClickListener(this);
+        mAdapter.setOnCircleItemClickListener(this);
     }
 
     @Override
     protected void initData() {
         ApiManager.Instance().getCircleAds();
-    }
-
-    @Override
-    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
     }
 
     private View getHeaderView() {
@@ -116,5 +112,11 @@ public class CircleFragment extends BaseFragment implements BaseQuickAdapter.OnI
         mBanner.setImageLoader(new GlideImageLoader());
         mBanner.setImages(imageList);
         mBanner.start();
+    }
+
+    @Override
+    public void onCircleItemClick(BaseQuickAdapter adapter, View view, String typeId) {
+        Log.d(TAG, "onCircleItemClick: "+ typeId);
+
     }
 }
