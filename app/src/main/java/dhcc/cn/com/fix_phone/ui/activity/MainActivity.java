@@ -33,6 +33,7 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
     @Override
     protected void initView() {
         loadMultipleRootFragment(R.id.frameLayout_main, 1, mFragments);
+        mTabLayout.getTabAt(1).select();
     }
 
     @Override
@@ -54,6 +55,12 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
 
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
     }
 }

@@ -63,8 +63,6 @@ public class RetrofitHelper {
                         int maxAge = 0;
                         response.newBuilder()
                                 .addHeader("Cache-Control", "public, max-age=" + maxAge)
-                                .addHeader("Content-Type" , "application/json")
-                                .addHeader("accessKey","JHD2017")
                                 .removeHeader("Pragma")
                                 .build();
                     } else {
@@ -72,8 +70,6 @@ public class RetrofitHelper {
                         int maxStale = 60 * 60 * 24 * 28;
                         response.newBuilder()
                                 .addHeader("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
-                                .addHeader("Content-Type" , "application/json")
-                                .addHeader("accessKey","JHD2017")
                                 .removeHeader("Pragma")
                                 .build();
                     }
@@ -82,6 +78,15 @@ public class RetrofitHelper {
             };
             //设置缓存
             builder.addNetworkInterceptor(cacheInterceptor);
+            builder.addNetworkInterceptor(new Interceptor() {
+                @Override
+                public Response intercept(Chain chain) throws IOException {
+                    Request request = chain.request();
+                    Request headerRequest = request.newBuilder().addHeader("Content-Type", "application/json")
+                            .addHeader("accessKey", "JHD2017").build();
+                    return chain.proceed(headerRequest);
+                }
+            });
             builder.addInterceptor(cacheInterceptor);
             builder.cache(cache);
             //设置超时
