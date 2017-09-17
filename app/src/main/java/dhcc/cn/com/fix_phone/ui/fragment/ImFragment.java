@@ -7,13 +7,13 @@ import dhcc.cn.com.fix_phone.base.BaseFragment;
 /**
  * 2017/9/16 23
  */
-public class CircleFragment extends BaseFragment {
+public class ImFragment extends BaseFragment {
 
-    public static CircleFragment newInstance() {
+    public static ImFragment newInstance() {
         
         Bundle args = new Bundle();
         
-        CircleFragment fragment = new CircleFragment();
+        ImFragment fragment = new ImFragment();
         fragment.setArguments(args);
         return fragment;
     }

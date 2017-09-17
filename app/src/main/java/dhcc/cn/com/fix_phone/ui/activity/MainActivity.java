@@ -1,20 +1,21 @@
 package dhcc.cn.com.fix_phone.ui.activity;
 
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 
 import butterknife.BindView;
 import dhcc.cn.com.fix_phone.R;
-import dhcc.cn.com.fix_phone.adapter.MainAdapter;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
+import dhcc.cn.com.fix_phone.ui.fragment.CircleFragment;
+import dhcc.cn.com.fix_phone.ui.fragment.ImFragment;
+import dhcc.cn.com.fix_phone.ui.fragment.MeFragment;
+import me.yokeyword.fragmentation.SupportFragment;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements TabLayout.OnTabSelectedListener {
 
-    @BindView(R.id.viewPager)
-    ViewPager mViewPager;
     @BindView(R.id.tabLayout)
     TabLayout mTabLayout;
-    private MainAdapter mAdapter;
+
+    private SupportFragment[] mFragments = new SupportFragment[3];
 
     @Override
     public int getLayoutId() {
@@ -24,14 +25,35 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void init() {
         super.init();
-
+        mFragments[0] = ImFragment.newInstance();
+        mFragments[1] = CircleFragment.newInstance();
+        mFragments[2] = MeFragment.newInstance();
     }
 
     @Override
     protected void initView() {
-        mAdapter = new MainAdapter(getSupportFragmentManager());
-        mViewPager.setAdapter(mAdapter);
-        mTabLayout.setupWithViewPager(mViewPager);
+        loadMultipleRootFragment(R.id.frameLayout_main, 1, mFragments);
     }
 
+    @Override
+    protected void initEvent() {
+        super.initEvent();
+        mTabLayout.addOnTabSelectedListener(this);
+    }
+
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+        int position = tab.getPosition();
+        showHideFragment(mFragments[position]);
+    }
+
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+
+    }
 }

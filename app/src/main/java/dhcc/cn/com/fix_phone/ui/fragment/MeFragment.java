@@ -7,17 +7,16 @@ import dhcc.cn.com.fix_phone.base.BaseFragment;
 /**
  * 2017/9/16 23
  */
-public class CircleFragment extends BaseFragment {
+public class MeFragment extends BaseFragment {
 
-    public static CircleFragment newInstance() {
-        
+    public static MeFragment newInstance() {
         Bundle args = new Bundle();
-        
-        CircleFragment fragment = new CircleFragment();
+
+        MeFragment fragment = new MeFragment();
         fragment.setArguments(args);
         return fragment;
     }
-    
+
     @Override
     protected int getLayoutId() {
         return 0;
