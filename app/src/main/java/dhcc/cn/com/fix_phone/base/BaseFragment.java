@@ -66,6 +66,11 @@ public abstract class BaseFragment<T extends BasePresenter> extends SwipeBackFra
         if (mPresenter != null) {
             mPresenter.detachView();
         }
+        destroy();
+    }
+
+    protected void destroy() {
+
     }
 
     protected void init() {

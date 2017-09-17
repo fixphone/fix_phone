@@ -1,4 +1,4 @@
-package dhcc.cn.com.fix_phone;
+package dhcc.cn.com.fix_phone.adapter;
 
 import android.content.Context;
 
@@ -7,6 +7,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.util.List;
 
+import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.bean.CircleItem;
 
 /**

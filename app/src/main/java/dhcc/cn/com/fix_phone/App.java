@@ -14,6 +14,8 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
+import dhcc.cn.com.fix_phone.remote.ApiService;
+
 /**
  * 2017/9/16 22
  */
@@ -52,6 +54,8 @@ public class App extends Application {
         //Pid Process
         //Uid User
         super.onCreate();
+
+        ApiService.Instance().getService();
 
         setGlobalRefreshStyle();
     }

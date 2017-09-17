@@ -1,13 +1,15 @@
 package dhcc.cn.com.fix_phone.remote;
 
 
-
+import dhcc.cn.com.fix_phone.bean.CirCleADResponse;
 import dhcc.cn.com.fix_phone.bean.RegisterRequest;
 import dhcc.cn.com.fix_phone.bean.RegisterResponse;
 import dhcc.cn.com.fix_phone.bean.TelCheckRequest;
 import dhcc.cn.com.fix_phone.bean.TelCheckResponse;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 /**
@@ -23,5 +25,10 @@ public interface Api {
     /*注册*/
     @POST("/Account /RegisterByPhone")
     Call<RegisterResponse> register(@Body RegisterRequest RegisterRequest);
+
+
+    @Headers("accessKey: JHD2017")
+    @GET("/Adver/GetIndexList")
+    Call<CirCleADResponse> getCircleAD();
 
 }

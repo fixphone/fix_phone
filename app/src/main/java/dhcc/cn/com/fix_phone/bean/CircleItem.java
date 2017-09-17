@@ -15,6 +15,13 @@ public class CircleItem implements MultiItemEntity {
     public String content;
     public int    sourceId;
 
+    public CircleItem(int itemType, int spanSize, String content, int sourceId) {
+        this.itemType = itemType;
+        this.spanSize = spanSize;
+        this.content = content;
+        this.sourceId = sourceId;
+    }
+
     public int getSpanSize() {
         return spanSize;
     }
