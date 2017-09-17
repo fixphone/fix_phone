@@ -7,3 +7,8 @@
 /build
 /captures
 .externalNativeBuild
+libs/
+src/main/java/dhcc/cn/com/fix_phone/widget/
+src/main/res/drawable-ldpi/
+src/main/res/drawable-xhdpi/
+src/main/res/drawable-xxhdpi/

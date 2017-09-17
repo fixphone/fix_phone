@@ -10,9 +10,7 @@ import dhcc.cn.com.fix_phone.base.BaseFragment;
 public class CircleFragment extends BaseFragment {
 
     public static CircleFragment newInstance() {
-        
         Bundle args = new Bundle();
-        
         CircleFragment fragment = new CircleFragment();
         fragment.setArguments(args);
         return fragment;
