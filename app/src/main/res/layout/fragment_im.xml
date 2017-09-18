@@ -1,7 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/public_15dp">
+
+        <dhcc.cn.com.fix_phone.ui.widget.DragPointView
+            android:id="@+id/seal_num"
+            android:layout_width="19dp"
+            android:layout_height="19dp"
+            android:layout_gravity="right"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="19dp"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:visibility="invisible" />
+
+        <RadioGroup
+            android:id="@+id/im_title_rg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_centerHorizontal="true">
+
+            <RadioButton
+                android:id="@+id/list_item"
+                android:layout_width="@dimen/public_80dp"
+                android:layout_height="wrap_content"
+                android:textColor="@drawable/im_title_color"
+                android:background="@drawable/im_title_left_bg"
+                android:button="@null"
+                android:text="会话列表"
+                android:gravity="center"
+                android:padding="@dimen/public_5dp"/>
+
+            <RadioButton
+                android:id="@+id/contacts_item"
+                android:layout_width="@dimen/public_80dp"
+                android:layout_height="wrap_content"
+                android:textColor="@drawable/im_title_color"
+                android:background="@drawable/im_title_right_bg"
+                android:button="@null"
+                android:text="通讯录"
+                android:gravity="center"
+                android:padding="@dimen/public_5dp"/>
+        </RadioGroup>
+
+        <ImageView
+            android:id="@+id/add_friend_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/button_add_friend"/>
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/content_fl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>

@@ -36,7 +36,6 @@
             android:layout_height="wrap_content"
             android:icon="@drawable/selector_tabbar_mine"
             android:text="我的"/>
-
     </android.support.design.widget.TabLayout>
 
     <FrameLayout

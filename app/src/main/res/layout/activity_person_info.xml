@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activity_gray_bg">
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/public_50dp"
+        layout="@layout/layout_title"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/info_company_name_rl"
+                style="@style/Mine_Case"
+                android:layout_marginTop="@dimen/public_15dp">
+
+                <TextView
+                    android:id="@+id/info_company_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="公司名称"
+                    android:textColor="@color/app_text_color_black"
+                    android:textSize="16sp"
+                    />
+
+                <TextView
+                    android:id="@+id/info_company_name_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:text="Laosi"
+                    android:textColor="#A1A1A1"
+                    android:textSize="15sp"
+                    android:drawableRight="@drawable/btn_arrow_right"
+                    android:drawablePadding="@dimen/public_15dp"
+                    android:layout_toRightOf="@id/info_company_name"
+                    android:layout_marginLeft="@dimen/public_5dp"
+                    android:gravity="right"
+                    android:singleLine="true"
+                    android:ellipsize="end"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#A6A5AB"/>
+
+            <RelativeLayout
+                android:id="@+id/info_contact_name_rl"
+                style="@style/Mine_Case">
+
+                <TextView
+                    android:id="@+id/info_contact_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="联系人"
+                    android:textColor="@color/app_text_color_black"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/info_contact_name_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:text="Laosi"
+                    android:textColor="#A1A1A1"
+                    android:textSize="15sp"
+                    android:drawableRight="@drawable/btn_arrow_right"
+                    android:drawablePadding="@dimen/public_15dp"
+                    android:layout_toRightOf="@id/info_contact_name"
+                    android:layout_marginLeft="@dimen/public_5dp"
+                    android:gravity="right"
+                    android:singleLine="true"
+                    android:ellipsize="end"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#A6A5AB"/>
+
+            <RelativeLayout
+                android:id="@+id/info_postcode_rl"
+                style="@style/Mine_Case">
+
+                <TextView
+                    android:id="@+id/info_postcode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="邮编"
+                    android:textColor="@color/app_text_color_black"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/info_postcode_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:text="Laosi"
+                    android:textColor="#A1A1A1"
+                    android:textSize="15sp"
+                    android:drawableRight="@drawable/btn_arrow_right"
+                    android:drawablePadding="@dimen/public_15dp"
+                    android:layout_toRightOf="@id/info_postcode"
+                    android:layout_marginLeft="@dimen/public_5dp"
+                    android:gravity="right"
+                    android:singleLine="true"
+                    android:ellipsize="end"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#A6A5AB"/>
+
+            <RelativeLayout
+                android:id="@+id/info_mobile_phone_rl"
+                style="@style/Mine_Case">
+
+                <TextView
+                    android:id="@+id/info_mobile_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="手机"
+                    android:textColor="@color/app_text_color_black"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/info_mobile_phone_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:text="Laosi"
+                    android:textColor="#A1A1A1"
+                    android:textSize="15sp"
+                    android:drawableRight="@drawable/btn_arrow_right"
+                    android:drawablePadding="@dimen/public_15dp"
+                    android:layout_toRightOf="@id/info_mobile_phone"
+                    android:layout_marginLeft="@dimen/public_5dp"
+                    android:gravity="right"
+                    android:singleLine="true"
+                    android:ellipsize="end"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#A6A5AB"/>
+
+            <RelativeLayout
+                android:id="@+id/info_phone_num_rl"
+                style="@style/Mine_Case">
+
+                <TextView
+                    android:id="@+id/info_phone_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="电话"
+                    android:textColor="@color/app_text_color_black"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/info_phone_num_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:text="Laosi"
+                    android:textColor="#A1A1A1"
+                    android:textSize="15sp"
+                    android:drawableRight="@drawable/btn_arrow_right"
+                    android:drawablePadding="@dimen/public_15dp"
+                    android:layout_toRightOf="@id/info_phone_num"
+                    android:layout_marginLeft="@dimen/public_5dp"
+                    android:gravity="right"
+                    android:singleLine="true"
+                    android:ellipsize="end"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#A6A5AB"/>
+
+            <RelativeLayout
+                android:id="@+id/info_address_rl"
+                style="@style/Mine_Case"
+                android:layout_marginTop="@dimen/public_15dp">
+
+                <TextView
+                    android:id="@+id/info_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="经营地址"
+                    android:textColor="@color/app_text_color_black"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/info_address_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:text="Laosi"
+                    android:textColor="#A1A1A1"
+                    android:textSize="15sp"
+                    android:drawableRight="@drawable/btn_arrow_right"
+                    android:drawablePadding="@dimen/public_15dp"
+                    android:layout_marginLeft="@dimen/public_5dp"
+                    android:gravity="right"
+                    android:singleLine="true"
+                    android:ellipsize="end"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#A6A5AB"/>
+
+            <RelativeLayout
+                android:id="@+id/info_company_profile_rl"
+                style="@style/Mine_Case"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/public_15dp"
+                android:paddingTop="@dimen/public_5dp"
+                android:paddingBottom="@dimen/public_5dp">
+
+                <ImageView
+                    android:id="@+id/profile_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/btn_arrow_right"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"/>
+
+                <TextView
+                    android:id="@+id/info_company_profile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="经营地址"
+                    android:textColor="@color/app_text_color_black"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/info_company_profile_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/info_company_profile"
+                    android:text="哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈"
+                    android:textColor="#A1A1A1"
+                    android:textSize="15sp"
+                    android:layout_marginTop="@dimen/public_5dp"
+                    android:layout_marginRight="@dimen/public_15dp"
+                    android:layout_toLeftOf="@id/profile_arrow"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#A6A5AB"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
