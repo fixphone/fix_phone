@@ -1,5 +1,9 @@
 [
     {
+        "merged": "G:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\rc_btn_file_list_send.xml",
+        "source": "G:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\color\\rc_btn_file_list_send.xml"
+    },
+    {
         "merged": "E:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\rc_btn_file_list_send.xml",
         "source": "E:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\color\\rc_btn_file_list_send.xml"
     }

@@ -1,5 +1,9 @@
 [
     {
+        "merged": "G:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\debug\\raw\\voip_outgoing_ring.mp3",
+        "source": "G:\\fixPhone\\CallKit\\src\\main\\res\\raw\\voip_outgoing_ring.mp3"
+    },
+    {
         "merged": "E:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\debug\\raw\\voip_outgoing_ring.mp3",
         "source": "E:\\fixPhone\\CallKit\\src\\main\\res\\raw\\voip_outgoing_ring.mp3"
     }

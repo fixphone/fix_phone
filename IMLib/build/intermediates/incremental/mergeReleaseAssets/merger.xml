@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="E:\fixPhone\IMLib\src\main\assets"/><source path="E:\fixPhone\IMLib\build\generated\assets\shaders\release"/></dataSet><dataSet config="release"><source path="E:\fixPhone\IMLib\src\release\assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="G:\fixPhone\IMLib\src\main\assets"/><source path="G:\fixPhone\IMLib\build\generated\assets\shaders\release"/></dataSet><dataSet config="release"><source path="G:\fixPhone\IMLib\src\release\assets"/></dataSet></merger>

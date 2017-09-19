@@ -2,16 +2,12 @@ package dhcc.cn.com.fix_phone;
 
 import android.app.ActivityManager;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.multidex.MultiDexApplication;
 import android.text.TextUtils;
-import android.view.View;
 
-import com.huawei.hms.support.api.entity.sns.Friend;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreater;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreater;
@@ -20,9 +16,6 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import dhcc.cn.com.fix_phone.remote.ApiService;
 import dhcc.cn.com.fix_phone.rong.SealAppContext;
@@ -34,14 +27,10 @@ import dhcc.cn.com.fix_phone.utils.NLog;
 import dhcc.cn.com.fix_phone.utils.SharedPreferencesContext;
 import io.rong.imageloader.core.DisplayImageOptions;
 import io.rong.imageloader.core.display.FadeInBitmapDisplayer;
-import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
-import io.rong.imkit.tools.CharacterParser;
 import io.rong.imkit.widget.provider.RealTimeLocationMessageProvider;
 import io.rong.imlib.ipc.RongExceptionHandler;
-import io.rong.imlib.model.UserInfo;
 import io.rong.push.RongPushClient;
-import io.rong.push.common.RongException;
 
 /**
  * 2017/9/16 22
