@@ -1,3 +1,29 @@
 <resources>
     <string name="app_name">fix_phone</string>
+
+    <string name="agree">接&#160;&#160;&#160;受</string>
+    <string name="request">已请求</string>
+    <string name="ignore">已忽略</string>
+    <string name="added">已添加</string>
+    <string name="deleted">已删除</string>
+
+    <string name="original_password">原密码不能为空</string>
+    <string name="new_password_not_null">新密码不能为空</string>
+    <string name="confirm_password_not_null">确认密码不能为空</string>
+    <string name="original_password_mistake">原密码填写错误</string>
+    <string name="passwords_invalid">密码必须为6-16位字符，区分大小写</string>
+    <string name="passwords_do_not_match">填写的确认密码与新密码不一致</string>
+
+    <string name="add_friend">加为好友</string>
+    <string name="add_text">加好友信息...</string>
+
+    <string name="online">在线</string>
+    <string name="offline">离线</string>
+    <string name="web_online">网页在线</string>
+    <string name="pc_online">电脑在线</string>
+    <string name="phone_online">手机在线</string>
+    <string name="ipad_online">iPad在线</string>
+    <string name="imac_online">iMac 在线</string>
+    <string name="contact_notification_someone_agree_your_request">%1$s已同意你的好友请求</string>
+    <string name="contact_notification_agree_your_request">对方已同意你的好友请求</string>
 </resources>

@@ -23,6 +23,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    sourceSets.main {
+        jniLibs.srcDir 'libs'
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    flatDir {
+        dir 'libs'
+    }
 }
 
 dependencies {
@@ -56,6 +68,7 @@ dependencies {
 
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.28'
 
+    compile(name: 'HMS-SDK-2.4.0.300', ext: 'aar')
     compile project(':IMKit')
     compile project(':CallKit')
 }

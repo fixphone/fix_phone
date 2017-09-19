@@ -1,5 +1,6 @@
 package dhcc.cn.com.fix_phone.ui.fragment;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
@@ -15,6 +16,7 @@ import butterknife.OnCheckedChanged;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.adapter.ConversationListAdapterEx;
 import dhcc.cn.com.fix_phone.base.BaseFragment;
+import dhcc.cn.com.fix_phone.ui.activity.NewFriendListActivity;
 import dhcc.cn.com.fix_phone.ui.widget.DragPointView;
 import dhcc.cn.com.fix_phone.utils.NToast;
 import io.rong.imkit.RongContext;
@@ -87,7 +89,7 @@ public class ImFragment extends BaseFragment implements DragPointView.OnDragList
         mAddFriendIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                startActivity(new Intent(getContext(), NewFriendListActivity.class));
             }
         });
         mUnreadNumView.setOnClickListener(new View.OnClickListener() {

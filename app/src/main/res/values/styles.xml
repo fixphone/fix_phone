@@ -30,6 +30,9 @@
         <item name="android:paddingRight">@dimen/public_15dp</item>
     </style>
 
-    <style name="IM_Title_Btn">
+    <!-- 右上角popupwindow -->
+    <style name="AnimationPreview">
+        <item name="android:windowEnterAnimation">@anim/fade_in</item>
+        <item name="android:windowExitAnimation">@anim/fade_out</item>
     </style>
 </resources>

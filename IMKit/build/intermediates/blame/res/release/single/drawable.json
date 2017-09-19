@@ -12,16 +12,16 @@
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\drawable\\rc_cs_admin_selector.xml"
     },
     {
-        "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\release\\drawable\\rc_sel_picsel_toolbar_back.xml",
-        "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\drawable\\rc_sel_picsel_toolbar_back.xml"
-    },
-    {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\release\\drawable\\rc_menu_keyboard_selector.xml",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\drawable\\rc_menu_keyboard_selector.xml"
     },
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\release\\drawable\\rc_send_toggle_selector.xml",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\drawable\\rc_send_toggle_selector.xml"
+    },
+    {
+        "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\release\\drawable\\rc_sel_picsel_toolbar_back.xml",
+        "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\drawable\\rc_sel_picsel_toolbar_back.xml"
     },
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\release\\drawable\\rc_btn_send.xml",
