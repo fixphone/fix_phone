@@ -6,5 +6,9 @@
     {
         "merged": "E:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\xml\\rc_file_path.xml",
         "source": "E:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\xml\\rc_file_path.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\CallKit\\build\\intermediates\\res\\merged\\release\\xml\\rc_file_path.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\bundles\\default\\res\\xml\\rc_file_path.xml"
     }
 ]

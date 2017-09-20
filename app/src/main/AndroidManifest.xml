@@ -59,13 +59,8 @@
         <activity android:name=".ui.activity.UserDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
-
-
-
-
-
-
-
+        <activity android:name=".ui.activity.CircleDetailActivity"
+                  android:theme="@style/AppTheme.NoActionBar.SwipeBack"/>
 
 
         <receiver

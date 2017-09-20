@@ -1,8 +1,8 @@
 package dhcc.cn.com.fix_phone.ui.fragment;
 
+import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +28,7 @@ import dhcc.cn.com.fix_phone.bean.CirCleADResponse;
 import dhcc.cn.com.fix_phone.conf.CircleDefaultData;
 import dhcc.cn.com.fix_phone.event.CircleAdEvent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
+import dhcc.cn.com.fix_phone.ui.activity.CircleDetailActivity;
 
 /**
  * 2017/9/16 23
@@ -70,7 +71,6 @@ public class CircleFragment extends BaseFragment implements CircleAdapter.OnCirc
 
     @Override
     protected void initView(View view) {
-        super.initView(view);
         mHeaderView = getHeaderView();
         final GridLayoutManager layoutManager = new GridLayoutManager(_mActivity, 3);
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -116,7 +116,6 @@ public class CircleFragment extends BaseFragment implements CircleAdapter.OnCirc
 
     @Override
     public void onCircleItemClick(BaseQuickAdapter adapter, View view, String typeId) {
-        Log.d(TAG, "onCircleItemClick: "+ typeId);
-
+        startActivity(new Intent(_mActivity, CircleDetailActivity.class).putExtra("data",typeId));
     }
 }

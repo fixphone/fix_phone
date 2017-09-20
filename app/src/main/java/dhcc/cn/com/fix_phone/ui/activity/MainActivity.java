@@ -9,6 +9,7 @@ import dhcc.cn.com.fix_phone.ui.fragment.CircleFragment;
 import dhcc.cn.com.fix_phone.ui.fragment.ImFragment;
 import dhcc.cn.com.fix_phone.ui.fragment.MeFragment;
 import me.yokeyword.fragmentation.SupportFragment;
+import me.yokeyword.fragmentation.SwipeBackLayout;
 
 public class MainActivity extends BaseActivity implements TabLayout.OnTabSelectedListener {
 
@@ -28,6 +29,7 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
         mFragments[0] = ImFragment.newInstance();
         mFragments[1] = CircleFragment.newInstance();
         mFragments[2] = MeFragment.newInstance();
+        getSwipeBackLayout().setEdgeOrientation(SwipeBackLayout.STATE_IDLE);
     }
 
     @Override

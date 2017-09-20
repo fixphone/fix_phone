@@ -43,6 +43,11 @@ public abstract class BaseActivity<T extends BasePresenter> extends SwipeBackAct
             mPresenter.detachView();
         }
         mUnbinder.unbind();
+        destroy();
+    }
+
+    protected void destroy() {
+
     }
 
     protected void initView() {

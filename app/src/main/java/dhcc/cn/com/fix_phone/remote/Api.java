@@ -2,6 +2,8 @@ package dhcc.cn.com.fix_phone.remote;
 
 
 import dhcc.cn.com.fix_phone.bean.CirCleADResponse;
+import dhcc.cn.com.fix_phone.bean.CircleBusiness;
+import dhcc.cn.com.fix_phone.bean.CircleDetailAd;
 import dhcc.cn.com.fix_phone.bean.RegisterRequest;
 import dhcc.cn.com.fix_phone.bean.RegisterResponse;
 import dhcc.cn.com.fix_phone.bean.TelCheckRequest;
@@ -10,6 +12,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 /**
  * 2016/11/2 11
@@ -29,8 +32,16 @@ public interface Api {
     @GET("/Adver/GetIndexList")
     Call<CirCleADResponse> getCircleAD();
 
-    //获取生意圈广告
-/*    @GET("/Adver/GetCircleList")
-    Call<> getCircleList();*/
+    //23.获取生意圈广告
+    @GET("/Adver/GetCircleList")
+    Call<CircleDetailAd> getCircleList(@Query("type") String typeId);
+
+    //10.生意圈获取数据
+    @GET("/Busi/GetList")
+    Call<CircleBusiness> getBusinessList(@Query("getCount") int number,
+                                         @Query("pageIndex") int pageIndex,
+                                         @Query("pageSize") int pageSize,
+                                         @Query("type") String type,
+                                         @Query("where") String where);
 
 }

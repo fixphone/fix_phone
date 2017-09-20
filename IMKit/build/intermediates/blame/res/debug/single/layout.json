@@ -20,6 +20,10 @@
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_item_preview_fragment.xml"
     },
     {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ac_file_manager.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_ac_file_manager.xml"
+    },
+    {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_camera.xml",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_camera.xml"
     },
@@ -48,12 +52,32 @@
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_wi_notice.xml"
     },
     {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_public_service_input_menus.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_item_public_service_input_menus.xml"
+    },
+    {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_public_service_input_menu_item.xml",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_item_public_service_input_menu_item.xml"
     },
     {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_text_message_evaluate.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_item_text_message_evaluate.xml"
+    },
+    {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_sub_menu_container.xml",
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_ext_sub_menu_container.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_file_message.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_item_file_message.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_input_pager_layout.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_input_pager_layout.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_picsel_grid_item.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_picsel_grid_item.xml"
     },
     {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_location_message.xml",
@@ -64,12 +88,48 @@
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_cs_alert_robot_evaluation.xml"
     },
     {
-        "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_wi_file_list_adapter.xml",
-        "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_wi_file_list_adapter.xml"
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_cs_leave_message.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_cs_leave_message.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_emoji_pager.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_ext_emoji_pager.xml"
     },
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_cs_item_single_choice.xml",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_cs_item_single_choice.xml"
+    },
+    {
+        "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_wi_file_list_adapter.xml",
+        "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_wi_file_list_adapter.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_dialog_popup_prompt_warning.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_dialog_popup_prompt_warning.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_cs_evaluate.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_cs_evaluate.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_wi_file_list_adapter.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_wi_file_list_adapter.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_input_edit_text.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_ext_input_edit_text.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_app_service_conversation.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_item_app_service_conversation.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_system_conversation.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_item_system_conversation.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_public_service_conversation.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_item_public_service_conversation.xml"
     },
     {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_public_service_rich_content_message.xml",
@@ -114,6 +174,14 @@
     {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ac_albums.xml",
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_ac_albums.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ac_camera.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_ac_camera.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_fr_conversationlist.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_fr_conversationlist.xml"
     },
     {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_fr_conversation_member_list.xml",
@@ -168,44 +236,80 @@
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_ac_webview.xml"
     },
     {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_extension_bar.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_ext_extension_bar.xml"
+    },
+    {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_extension_bar.xml",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_ext_extension_bar.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_cs_item_single_choice.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_cs_item_single_choice.xml"
     },
     {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ac_file_preview_content.xml",
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_ac_file_preview_content.xml"
     },
     {
-        "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_dialog_popup_prompt_warning.xml",
-        "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_dialog_popup_prompt_warning.xml"
-    },
-    {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_information_notification_message.xml",
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_item_information_notification_message.xml"
+    },
+    {
+        "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_dialog_popup_prompt_warning.xml",
+        "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_dialog_popup_prompt_warning.xml"
     },
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_picprev_activity.xml",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_picprev_activity.xml"
     },
     {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_fr_public_service_search.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_fr_public_service_search.xml"
+    },
+    {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_wi_block_popup.xml",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_wi_block_popup.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_picsel_catalog_listview.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_picsel_catalog_listview.xml"
     },
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_picsel_original.xml",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_picsel_original.xml"
     },
     {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ac_file_preview_content.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_ac_file_preview_content.xml"
+    },
+    {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_public_service_rich_content_message.xml",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_item_public_service_rich_content_message.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_wi_block_popup.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_wi_block_popup.xml"
     },
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_wi_vo_popup.xml",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_wi_vo_popup.xml"
     },
     {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_emoticon_tab_item.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_ext_emoticon_tab_item.xml"
+    },
+    {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_image_message.xml",
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_item_image_message.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_pic_popup_window.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_pic_popup_window.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_mention_list_item.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_mention_list_item.xml"
     },
     {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_menu_container.xml",
@@ -228,12 +332,20 @@
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_fr_conversation.xml"
     },
     {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_location_message.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_item_location_message.xml"
+    },
+    {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_sub_menu_item.xml",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_ext_sub_menu_item.xml"
     },
     {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_cs_alert_warning.xml",
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_cs_alert_warning.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_dialog_popup_options_item.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_dialog_popup_options_item.xml"
     },
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_cs_alert_warning.xml",
@@ -268,8 +380,28 @@
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_ext_emoticon_tab_item.xml"
     },
     {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_text_message.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_item_text_message.xml"
+    },
+    {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_emoji_item.xml",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_ext_emoji_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_progress.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_item_progress.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_group_information_notification_message.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_item_group_information_notification_message.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_sub_menu_container.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_ext_sub_menu_container.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_location_real_time_activity.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_location_real_time_activity.xml"
     },
     {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_plugin_item.xml",
@@ -280,12 +412,20 @@
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_ac_file_manager.xml"
     },
     {
+        "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_root_menu_item.xml",
+        "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_ext_root_menu_item.xml"
+    },
+    {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_fr_public_service_sub_list.xml",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_fr_public_service_sub_list.xml"
     },
     {
-        "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_root_menu_item.xml",
-        "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_ext_root_menu_item.xml"
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_emoji_grid_view.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_ext_emoji_grid_view.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_notification_realtime_location.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_notification_realtime_location.xml"
     },
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_cs_alert_human_evaluation.xml",
@@ -300,16 +440,48 @@
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_cs_evaluate.xml"
     },
     {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_message.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_item_message.xml"
+    },
+    {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_plugin_location_activity.xml",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_plugin_location_activity.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_rich_content_message.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_item_rich_content_message.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_voice_message.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_item_voice_message.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_wi_vo_popup.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_wi_vo_popup.xml"
     },
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_emoticon_tab_item.xml",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_ext_emoticon_tab_item.xml"
     },
     {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_fr_conversation_member_list.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_fr_conversation_member_list.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_voice_input.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_ext_voice_input.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_sub_menu_item.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_ext_sub_menu_item.xml"
+    },
+    {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_fr_messagelist.xml",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_fr_messagelist.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_picsel_grid_camera.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_picsel_grid_camera.xml"
     },
     {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_mention_members.xml",
@@ -318,6 +490,14 @@
     {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_plugin_grid_view.xml",
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_ext_plugin_grid_view.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_cs_single_choice_layout.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_cs_single_choice_layout.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_plugin_item.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_ext_plugin_item.xml"
     },
     {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_fr_public_service_search.xml",
@@ -348,8 +528,16 @@
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_ac_file_list.xml"
     },
     {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ac_picture_pager.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_ac_picture_pager.xml"
+    },
+    {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_location_real_time_activity.xml",
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_location_real_time_activity.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_fr_photo.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_fr_photo.xml"
     },
     {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_picsel_activity.xml",
@@ -364,6 +552,10 @@
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_icon_rt_location_marker.xml"
     },
     {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_plugin_pager.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_ext_plugin_pager.xml"
+    },
+    {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_plugin_grid_view.xml",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_ext_plugin_grid_view.xml"
     },
@@ -372,12 +564,24 @@
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_ac_file_preview_content.xml"
     },
     {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_plugin_grid_view.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_ext_plugin_grid_view.xml"
+    },
+    {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_group_information_notification_message.xml",
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_item_group_information_notification_message.xml"
     },
     {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_public_service_search.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_item_public_service_search.xml"
+    },
+    {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_picsel_preview.xml",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_picsel_preview.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ac_webview.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_ac_webview.xml"
     },
     {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_share_location_message.xml",
@@ -408,6 +612,18 @@
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_picsel_grid_item.xml"
     },
     {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_public_service_rich_content_message.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_item_public_service_rich_content_message.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_fr_conversation.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_fr_conversation.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_public_service_input_menu.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_item_public_service_input_menu.xml"
+    },
+    {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_input_pager_layout.xml",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_input_pager_layout.xml"
     },
@@ -420,16 +636,60 @@
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_item_public_service_input_menu_item.xml"
     },
     {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_picprev_activity.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_picprev_activity.xml"
+    },
+    {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_rich_content_message.xml",
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_item_rich_content_message.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_fragment_base_setting.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_fragment_base_setting.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_public_service_message.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_item_public_service_message.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_fr_messagelist.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_fr_messagelist.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_cs_alert_human_evaluation.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_cs_alert_human_evaluation.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_share_location_message.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_share_location_message.xml"
     },
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_wi_block.xml",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_wi_block.xml"
     },
     {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_picsel_activity.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_picsel_activity.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_icon_rt_location_marker.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_icon_rt_location_marker.xml"
+    },
+    {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_notification_realtime_location.xml",
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_notification_realtime_location.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_refresh_list_view.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_refresh_list_view.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ac_file_download.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_ac_file_download.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_group_conversation.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_item_group_conversation.xml"
     },
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_rich_content_message.xml",
@@ -456,12 +716,24 @@
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_item_public_service_input_menu.xml"
     },
     {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_conversation_member.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_item_conversation_member.xml"
+    },
+    {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_file_message.xml",
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_item_file_message.xml"
     },
     {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_public_service_multi_rich_content_message.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_item_public_service_multi_rich_content_message.xml"
+    },
+    {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_icon_rt_location_marker.xml",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_icon_rt_location_marker.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_indicator.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_ext_indicator.xml"
     },
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_progress.xml",
@@ -494,6 +766,10 @@
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_public_service_list.xml",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_item_public_service_list.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_fr_image.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_fr_image.xml"
     },
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_indicator.xml",
@@ -532,6 +808,14 @@
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_item_conversation.xml"
     },
     {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ac_file_list.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_ac_file_list.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_information_notification_message.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_item_information_notification_message.xml"
+    },
+    {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_refresh_list_view.xml",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_refresh_list_view.xml"
     },
@@ -564,12 +848,20 @@
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_fr_public_service_search.xml"
     },
     {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_preview_fragment.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_item_preview_fragment.xml"
+    },
+    {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_public_service_message.xml",
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_item_public_service_message.xml"
     },
     {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_dialog_popup_options_item.xml",
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_dialog_popup_options_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_image_message.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_item_image_message.xml"
     },
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_voice_message.xml",
@@ -584,6 +876,10 @@
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_item_public_service_multi_rich_content_message.xml"
     },
     {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_mention_members.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_mention_members.xml"
+    },
+    {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_location_message.xml",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_item_location_message.xml"
     },
@@ -594,6 +890,10 @@
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_base_activity_layout.xml",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_base_activity_layout.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_base_activity_layout.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_base_activity_layout.xml"
     },
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ac_file_manager.xml",
@@ -608,12 +908,20 @@
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_dialog_popup_options_item.xml"
     },
     {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_fr_public_service_sub_list.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_fr_public_service_sub_list.xml"
+    },
+    {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_public_service_list.xml",
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_item_public_service_list.xml"
     },
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_fr_file_list.xml",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_fr_file_list.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_fr_file_list.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_fr_file_list.xml"
     },
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_plugin_item.xml",
@@ -636,8 +944,16 @@
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_cs_single_choice_layout.xml"
     },
     {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_fr_dialog_alter.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_fr_dialog_alter.xml"
+    },
+    {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_group_information_notification_message.xml",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_item_group_information_notification_message.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_dialog_popup_options.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_dialog_popup_options.xml"
     },
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_app_service_conversation.xml",
@@ -668,6 +984,10 @@
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_fr_messagelist.xml"
     },
     {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_cs_alert_warning.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_cs_alert_warning.xml"
+    },
+    {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_plugin_pager.xml",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_ext_plugin_pager.xml"
     },
@@ -676,8 +996,20 @@
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_item_public_service_conversation.xml"
     },
     {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_conversation.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_item_conversation.xml"
+    },
+    {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_indicator.xml",
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_ext_indicator.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_discussion_conversation.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_item_discussion_conversation.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_base_conversation.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_item_base_conversation.xml"
     },
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ac_camera.xml",
@@ -704,12 +1036,24 @@
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_fr_conversationlist.xml"
     },
     {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ac_albums.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_ac_albums.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_dialog_popup_prompt.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_dialog_popup_prompt.xml"
+    },
+    {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ac_picture_pager.xml",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_ac_picture_pager.xml"
     },
     {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_mention_list_item.xml",
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_mention_list_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_location_preview_activity.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_location_preview_activity.xml"
     },
     {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_picsel_grid_camera.xml",
@@ -720,12 +1064,24 @@
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_item_system_conversation.xml"
     },
     {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_root_menu_item.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_ext_root_menu_item.xml"
+    },
+    {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_picsel_grid_camera.xml",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_picsel_grid_camera.xml"
     },
     {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_plugin_location_activity.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_plugin_location_activity.xml"
+    },
+    {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_fr_conversationlist.xml",
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_fr_conversationlist.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_wi_block.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_wi_block.xml"
     },
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_picsel_catalog_listview.xml",
@@ -734,6 +1090,26 @@
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_picsel_activity.xml",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_picsel_activity.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_picsel_original.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_picsel_original.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_emoji_item.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_ext_emoji_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_fr_public_service_inf.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_fr_public_service_inf.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_emoticon_tab_container.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_ext_emoticon_tab_container.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_public_service_list.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_item_public_service_list.xml"
     },
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_dialog_popup_options.xml",
@@ -752,6 +1128,10 @@
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_refresh_list_view.xml"
     },
     {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_conversation_notification_container.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_conversation_notification_container.xml"
+    },
+    {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_wi_notice.xml",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_wi_notice.xml"
     },
@@ -768,6 +1148,10 @@
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_ext_plugin_pager.xml"
     },
     {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_camera.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_camera.xml"
+    },
+    {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_mention_members.xml",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_mention_members.xml"
     },
@@ -782,6 +1166,14 @@
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_base_conversation.xml",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_item_base_conversation.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_wi_notice.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_wi_notice.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_menu_container.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_ext_menu_container.xml"
     },
     {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_conversation.xml",
@@ -802,6 +1194,22 @@
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_image_message.xml",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\layout\\rc_item_image_message.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_cs_alert_robot_evaluation.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_cs_alert_robot_evaluation.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_picsel_preview.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_picsel_preview.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_discussion_notification_message.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_item_discussion_notification_message.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_public_service_input_menu_item.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_item_public_service_input_menu_item.xml"
     },
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_public_service_message.xml",
