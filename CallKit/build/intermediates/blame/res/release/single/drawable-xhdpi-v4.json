@@ -60,24 +60,24 @@
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_picsel_catalog_pic_shadow.png"
     },
     {
-        "merged": "E:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_voip_icon_input_video.png",
-        "source": "E:\\fixPhone\\CallKit\\src\\main\\res\\drawable-xhdpi\\rc_voip_icon_input_video.png"
+        "merged": "G:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_ext_plugin_location.png",
+        "source": "G:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_ext_plugin_location.png"
     },
     {
         "merged": "E:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_radio_button_on.png",
         "source": "E:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_radio_button_on.png"
     },
     {
-        "merged": "G:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_ext_plugin_location.png",
-        "source": "G:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_ext_plugin_location.png"
-    },
-    {
-        "merged": "G:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_unread_msg_arrow.png",
-        "source": "G:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_unread_msg_arrow.png"
+        "merged": "E:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_voip_icon_input_video.png",
+        "source": "E:\\fixPhone\\CallKit\\src\\main\\res\\drawable-xhdpi\\rc_voip_icon_input_video.png"
     },
     {
         "merged": "G:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\u23f3.png",
         "source": "G:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\u23f3.png"
+    },
+    {
+        "merged": "G:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_unread_msg_arrow.png",
+        "source": "G:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_unread_msg_arrow.png"
     },
     {
         "merged": "E:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_receive_voice_two.png",
@@ -144,24 +144,24 @@
         "source": "E:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_ic_star.png"
     },
     {
-        "merged": "G:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\u1f616.png",
-        "source": "G:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\u1f616.png"
-    },
-    {
         "merged": "E:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\u1f437.png",
         "source": "E:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\u1f437.png"
+    },
+    {
+        "merged": "G:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\u1f616.png",
+        "source": "G:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\u1f616.png"
     },
     {
         "merged": "G:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_send_voice_two.png",
         "source": "G:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_send_voice_two.png"
     },
     {
-        "merged": "G:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_ext_plugin_image_pressed.png",
-        "source": "G:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_ext_plugin_image_pressed.png"
-    },
-    {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\u1f44d.png",
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\u1f44d.png"
+    },
+    {
+        "merged": "G:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_ext_plugin_image_pressed.png",
+        "source": "G:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_ext_plugin_image_pressed.png"
     },
     {
         "merged": "E:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\u270f.png",
@@ -260,28 +260,28 @@
         "source": "E:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\u1f382.png"
     },
     {
-        "merged": "G:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_ic_checkbox_none.png",
-        "source": "G:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_ic_checkbox_none.png"
-    },
-    {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_img_camera.png",
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_img_camera.png"
+    },
+    {
+        "merged": "G:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_ic_checkbox_none.png",
+        "source": "G:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_ic_checkbox_none.png"
     },
     {
         "merged": "G:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\u1f349.png",
         "source": "G:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\u1f349.png"
     },
     {
-        "merged": "E:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_ic_voice_receive_play2.png",
-        "source": "E:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_ic_voice_receive_play2.png"
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_loading.png",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_loading.png"
     },
     {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\u1f616.png",
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\u1f616.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_loading.png",
-        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_loading.png"
+        "merged": "E:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_ic_voice_receive_play2.png",
+        "source": "E:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_ic_voice_receive_play2.png"
     },
     {
         "merged": "G:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_voip_video_answer_hover.png",
@@ -292,16 +292,16 @@
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_public_service_menu_bg.9.png"
     },
     {
-        "merged": "G:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_cs_star_hover.png",
-        "source": "G:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_cs_star_hover.png"
+        "merged": "E:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_ic_voice_receive_play1.png",
+        "source": "E:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_ic_voice_receive_play1.png"
     },
     {
         "merged": "E:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\u2744.png",
         "source": "E:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\u2744.png"
     },
     {
-        "merged": "E:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_ic_voice_receive_play1.png",
-        "source": "E:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_ic_voice_receive_play1.png"
+        "merged": "G:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_cs_star_hover.png",
+        "source": "G:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_cs_star_hover.png"
     },
     {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_picsel_back_normal.png",
@@ -352,20 +352,20 @@
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_ic_volume_wraning.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_emotion_toggle.png",
-        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_emotion_toggle.png"
-    },
-    {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_ic_yes_hover.png",
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_ic_yes_hover.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_ic_voice_sent_play3.png",
-        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_ic_voice_sent_play3.png"
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_emotion_toggle.png",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_emotion_toggle.png"
     },
     {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\u23f3.png",
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\u23f3.png"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_ic_voice_sent_play3.png",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_ic_voice_sent_play3.png"
     },
     {
         "merged": "E:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_ext_location_marker.png",
@@ -384,12 +384,12 @@
         "source": "E:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_ic_volume_6.png"
     },
     {
-        "merged": "G:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_voip_icon_input_video.png",
-        "source": "G:\\fixPhone\\CallKit\\src\\main\\res\\drawable-xhdpi\\rc_voip_icon_input_video.png"
-    },
-    {
         "merged": "G:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\u270c.png",
         "source": "G:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\u270c.png"
+    },
+    {
+        "merged": "G:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_voip_icon_input_video.png",
+        "source": "G:\\fixPhone\\CallKit\\src\\main\\res\\drawable-xhdpi\\rc_voip_icon_input_video.png"
     },
     {
         "merged": "G:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\u1f648.png",
@@ -484,12 +484,12 @@
         "source": "E:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_receive_voice_one.png"
     },
     {
-        "merged": "E:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_ad_list_ppt_icon.png",
-        "source": "E:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_ad_list_ppt_icon.png"
-    },
-    {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_cs_follow.png",
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_cs_follow.png"
+    },
+    {
+        "merged": "E:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_ad_list_ppt_icon.png",
+        "source": "E:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_ad_list_ppt_icon.png"
     },
     {
         "merged": "E:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_ic_volume_7.png",
@@ -508,16 +508,16 @@
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_ic_voice_receive_play2.png"
     },
     {
-        "merged": "G:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_send_toggle.png",
-        "source": "G:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_send_toggle.png"
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_voice_unread.png",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_voice_unread.png"
     },
     {
         "merged": "E:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_pb_file_download_progress_progress.9.png",
         "source": "E:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_pb_file_download_progress_progress.9.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_voice_unread.png",
-        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_voice_unread.png"
+        "merged": "G:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_send_toggle.png",
+        "source": "G:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_send_toggle.png"
     },
     {
         "merged": "G:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\u261d.png",
@@ -588,12 +588,12 @@
         "source": "G:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_voice_icon_left.png"
     },
     {
-        "merged": "E:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\u1f4aa.png",
-        "source": "E:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\u1f4aa.png"
-    },
-    {
         "merged": "E:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\u1f44c.png",
         "source": "E:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\u1f44c.png"
+    },
+    {
+        "merged": "E:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\u1f4aa.png",
+        "source": "E:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\u1f4aa.png"
     },
     {
         "merged": "E:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_cs_group_ok_pressed.png",
@@ -624,36 +624,36 @@
         "source": "E:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\u1f47d.png"
     },
     {
-        "merged": "E:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_ac_video_file_icon.png",
-        "source": "E:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_ac_video_file_icon.png"
-    },
-    {
         "merged": "G:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_ad_list_file_unchecked.png",
         "source": "G:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_ad_list_file_unchecked.png"
     },
     {
-        "merged": "G:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_ic_setting_friends_add.png",
-        "source": "G:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_ic_setting_friends_add.png"
+        "merged": "E:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_ac_video_file_icon.png",
+        "source": "E:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_ac_video_file_icon.png"
     },
     {
         "merged": "G:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\u1f4a4.png",
         "source": "G:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\u1f4a4.png"
     },
     {
+        "merged": "G:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_ic_setting_friends_add.png",
+        "source": "G:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_ic_setting_friends_add.png"
+    },
+    {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_voip_hang_up.png",
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\CallKit\\src\\main\\res\\drawable-xhdpi\\rc_voip_hang_up.png"
     },
     {
-        "merged": "E:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_ic_location_pressed.png",
-        "source": "E:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_ic_location_pressed.png"
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_mebmer_delete.png",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_mebmer_delete.png"
     },
     {
         "merged": "G:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_ad_list_pdf_icon.png",
         "source": "G:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_ad_list_pdf_icon.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_mebmer_delete.png",
-        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_mebmer_delete.png"
+        "merged": "E:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_ic_location_pressed.png",
+        "source": "E:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_ic_location_pressed.png"
     },
     {
         "merged": "E:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\u1f624.png",
@@ -680,12 +680,12 @@
         "source": "G:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\u1f37b.png"
     },
     {
-        "merged": "G:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\u1f61a.png",
-        "source": "G:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\u1f61a.png"
-    },
-    {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_conversation_list_msg_sending.png",
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_conversation_list_msg_sending.png"
+    },
+    {
+        "merged": "G:\\fixPhone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\u1f61a.png",
+        "source": "G:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\u1f61a.png"
     },
     {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\u1f607.png",
@@ -696,12 +696,12 @@
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_pb_file_download_progress_progress.9.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_grid_camera.png",
-        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_grid_camera.png"
-    },
-    {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_menu_text_hover.png",
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_menu_text_hover.png"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_grid_camera.png",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\bundles\\default\\res\\drawable-xhdpi-v4\\rc_grid_camera.png"
     },
     {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\CallKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_cs_default_portrait.png",

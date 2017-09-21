@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="C:\Users\admin\Desktop\fix_phone\CallLib\src\main\assets"/><source path="C:\Users\admin\Desktop\fix_phone\CallLib\build\generated\assets\shaders\release"/></dataSet><dataSet config="release"><source path="C:\Users\admin\Desktop\fix_phone\CallLib\src\release\assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="G:\fixPhone\CallLib\src\main\assets"/><source path="G:\fixPhone\CallLib\build\generated\assets\shaders\release"/></dataSet><dataSet config="release"><source path="G:\fixPhone\CallLib\src\release\assets"/></dataSet></merger>

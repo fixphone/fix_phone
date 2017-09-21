@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activity_gray_bg">
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/public_50dp"
+        layout="@layout/layout_title"/>
+
+    <RelativeLayout
+        android:id="@+id/my_header_icon"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/public_70dp"
+        android:layout_marginTop="@dimen/public_20dp"
+        android:background="@drawable/case_bg"
+        android:paddingLeft="@dimen/public_15dp"
+        android:paddingRight="@dimen/public_15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/app_text_color_black"
+            android:text="店铺图标"
+            android:layout_centerVertical="true"/>
+
+        <ImageView
+            android:id="@+id/my_right_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/btn_arrow_right"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"/>
+
+        <ImageView
+            android:id="@+id/my_icon"
+            android:layout_width="@dimen/public_50dp"
+            android:layout_height="@dimen/public_50dp"
+            android:src="@drawable/blacklist_icon"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/my_right_arrow"
+            android:layout_marginRight="@dimen/public_5dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/my_phone_num"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/public_50dp"
+        android:background="@drawable/case_bg"
+        android:layout_marginTop="@dimen/public_20dp"
+        android:paddingLeft="@dimen/public_15dp"
+        android:paddingRight="@dimen/public_15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/app_text_color_black"
+            android:text="手机账号"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:id="@+id/my_phone_num_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_color_gray"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:text="13800000000"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/text_line_color"/>
+
+    <RelativeLayout
+        android:id="@+id/my_reset_pass"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/public_50dp"
+        android:background="@drawable/case_bg"
+        android:paddingLeft="@dimen/public_15dp"
+        android:paddingRight="@dimen/public_15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/app_text_color_black"
+            android:text="修改密码"
+            android:layout_centerVertical="true"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/btn_arrow_right"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/my_exit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/public_50dp"
+        android:background="@drawable/case_bg"
+        android:layout_marginTop="@dimen/public_30dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/holo_red_dark"
+            android:layout_centerInParent="true"
+            android:textSize="17sp"
+            android:text="退出登录"/>
+    </RelativeLayout>
+</LinearLayout>

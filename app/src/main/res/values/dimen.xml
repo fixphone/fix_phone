@@ -6,6 +6,7 @@
     <dimen name="public_15dp">15dp</dimen>
     <dimen name="public_20dp">20dp</dimen>
     <dimen name="public_25dp">25dp</dimen>
+    <dimen name="public_30dp">30dp</dimen>
     <dimen name="public_50dp">50dp</dimen>
     <dimen name="public_70dp">70dp</dimen>
     <dimen name="public_80dp">80dp</dimen>

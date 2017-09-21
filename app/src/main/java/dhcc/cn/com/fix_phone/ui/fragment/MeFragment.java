@@ -12,6 +12,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.base.BaseFragment;
+import dhcc.cn.com.fix_phone.ui.activity.MyActivity;
 import dhcc.cn.com.fix_phone.ui.activity.PersonInfoActivity;
 
 /**
@@ -55,7 +56,7 @@ public class MeFragment extends BaseFragment {
     }
 
     @OnClick({R.id.mine_info, R.id.mine_circle, R.id.mine_house, R.id.mine_suggest, R.id.mine_vip,
-            R.id.mine_advert, R.id.mine_produce, R.id.mine_clear, R.id.mine_app})
+            R.id.mine_advert, R.id.mine_produce, R.id.mine_clear, R.id.mine_app, R.id.title_right})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.mine_info:
@@ -63,6 +64,9 @@ public class MeFragment extends BaseFragment {
                 break;
             case R.id.mine_circle:
 
+                break;
+            case R.id.title_right:
+                startActivity(MyActivity.class);
                 break;
             default:
                 break;

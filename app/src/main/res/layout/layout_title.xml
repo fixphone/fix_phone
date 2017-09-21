@@ -35,7 +35,6 @@
         android:layout_height="wrap_content"
         android:textColor="#A1A1A1"
         android:textSize="16sp"
-        android:text="Title"
         android:layout_centerInParent="true"
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/public_15dp"/>

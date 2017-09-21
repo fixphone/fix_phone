@@ -61,7 +61,12 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".ui.activity.CircleDetailActivity"
                   android:theme="@style/AppTheme.NoActionBar.SwipeBack"/>
-
+        <activity android:name=".ui.activity.MyActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ui.activity.SelectHeaderActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ui.activity.ResetPersonInfoActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <receiver
             android:name=".rong.SealNotificationReceiver"
