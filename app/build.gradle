@@ -69,6 +69,5 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
     compile(name: 'HMS-SDK-2.4.0.300', ext: 'aar')
     compile project(':IMKit')
-    compile project(':CallKit')
     compile 'com.orhanobut:logger:2.1.1'
 }

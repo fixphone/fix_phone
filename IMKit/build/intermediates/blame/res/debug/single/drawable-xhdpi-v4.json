@@ -12,16 +12,16 @@
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\u1f636.png"
     },
     {
-        "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\u1f484.png",
-        "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\u1f484.png"
+        "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_ic_volume_4.png",
+        "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_ic_volume_4.png"
     },
     {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_ad_list_video_icon.png",
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_ad_list_video_icon.png"
     },
     {
-        "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_ic_volume_4.png",
-        "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_ic_volume_4.png"
+        "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\u1f484.png",
+        "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\u1f484.png"
     },
     {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_unread_remind_without_count.png",
@@ -52,20 +52,20 @@
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_ac_text_file_icon.png"
     },
     {
-        "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\u1f3b2.png",
-        "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\u1f3b2.png"
-    },
-    {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_conversation_list_empty.png",
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_conversation_list_empty.png"
     },
     {
-        "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\u1f3b5.png",
-        "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\u1f3b5.png"
+        "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\u1f3b2.png",
+        "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\u1f3b2.png"
     },
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_cs_evaluate_plugin_hover.png",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_cs_evaluate_plugin_hover.png"
+    },
+    {
+        "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\u1f3b5.png",
+        "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\u1f3b5.png"
     },
     {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_ic_files_normal.png",
@@ -80,12 +80,12 @@
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\u1f61a.png"
     },
     {
-        "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_ext_locator.png",
-        "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_ext_locator.png"
-    },
-    {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\u1f47c.png",
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\drawable-xhdpi\\u1f47c.png"
+    },
+    {
+        "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_ext_locator.png",
+        "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_ext_locator.png"
     },
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_send_toggle_hover.png",
@@ -128,12 +128,12 @@
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\drawable-xhdpi\\u1f680.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\u1f62e.png",
-        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\drawable-xhdpi\\u1f62e.png"
-    },
-    {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_picsel_empty_pic.png",
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_picsel_empty_pic.png"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\u1f62e.png",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\drawable-xhdpi\\u1f62e.png"
     },
     {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_ic_star_hover.png",
@@ -156,12 +156,12 @@
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_cs_close.png"
     },
     {
-        "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_cs_close.png",
-        "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_cs_close.png"
-    },
-    {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\u1f4a2.png",
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\drawable-xhdpi\\u1f4a2.png"
+    },
+    {
+        "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_cs_close.png",
+        "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_cs_close.png"
     },
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_icon_rt_message_left.png",
@@ -172,12 +172,12 @@
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_cs_evaluate_plugin.png"
     },
     {
-        "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\u1f437.png",
-        "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\u1f437.png"
-    },
-    {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\u1f61e.png",
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\u1f61e.png"
+    },
+    {
+        "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\u1f437.png",
+        "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\u1f437.png"
     },
     {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\u1f4da.png",
@@ -200,12 +200,12 @@
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\drawable-xhdpi\\u1f381.png"
     },
     {
-        "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_file_icon_pdf.png",
-        "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_file_icon_pdf.png"
-    },
-    {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\u1f44f.png",
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\u1f44f.png"
+    },
+    {
+        "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_file_icon_pdf.png",
+        "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_file_icon_pdf.png"
     },
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\u1f623.png",
@@ -252,12 +252,12 @@
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\drawable-xhdpi\\u26a1.png"
     },
     {
-        "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_cs_evaluate_plugin.png",
-        "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_cs_evaluate_plugin.png"
-    },
-    {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_cs_group_list_divide_line.png",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_cs_group_list_divide_line.png"
+    },
+    {
+        "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_cs_evaluate_plugin.png",
+        "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_cs_evaluate_plugin.png"
     },
     {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\u1f630.png",
@@ -308,12 +308,12 @@
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_cs_star.png"
     },
     {
-        "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_btn_pub_service_enter_normal.png",
-        "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_btn_pub_service_enter_normal.png"
-    },
-    {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_cs_group_list_divide_line.png",
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_cs_group_list_divide_line.png"
+    },
+    {
+        "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_btn_pub_service_enter_normal.png",
+        "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_btn_pub_service_enter_normal.png"
     },
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_ic_voice_sent_play3.png",
@@ -328,12 +328,12 @@
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\drawable-xhdpi\\u1f6b2.png"
     },
     {
-        "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_ext_voice_btn_hover.9.png",
-        "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_ext_voice_btn_hover.9.png"
-    },
-    {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\u1f48b.png",
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\drawable-xhdpi\\u1f48b.png"
+    },
+    {
+        "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_ext_voice_btn_hover.9.png",
+        "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_ext_voice_btn_hover.9.png"
     },
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_ic_location_pressed.png",
@@ -356,12 +356,12 @@
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\u1f349.png"
     },
     {
-        "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_ic_bubble_white.9.png",
-        "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_ic_bubble_white.9.png"
-    },
-    {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\u1f3a4.png",
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\u1f3a4.png"
+    },
+    {
+        "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_ic_bubble_white.9.png",
+        "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_ic_bubble_white.9.png"
     },
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_icon_admin.png",
@@ -528,12 +528,12 @@
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_cs_back_press.9.png"
     },
     {
-        "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_picsel_catalog_selected.png",
-        "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_picsel_catalog_selected.png"
-    },
-    {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\u1f62f.png",
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\drawable-xhdpi\\u1f62f.png"
+    },
+    {
+        "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_picsel_catalog_selected.png",
+        "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_picsel_catalog_selected.png"
     },
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\u1f4a3.png",
@@ -568,12 +568,12 @@
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\u1f4b0.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_conversation_list_empty.png",
-        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_conversation_list_empty.png"
-    },
-    {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\u1f389.png",
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\drawable-xhdpi\\u1f389.png"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_conversation_list_empty.png",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_conversation_list_empty.png"
     },
     {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_ext_location_tip.png",
@@ -684,12 +684,12 @@
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_picsel_pictype_normal.png"
     },
     {
-        "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_ic_voice_sent_play2.png",
-        "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_ic_voice_sent_play2.png"
-    },
-    {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_ic_volume_3.png",
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_ic_volume_3.png"
+    },
+    {
+        "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_ic_voice_sent_play2.png",
+        "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_ic_voice_sent_play2.png"
     },
     {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_cs_follow.png",
@@ -732,32 +732,32 @@
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_input_sub_menu_bg.9.png"
     },
     {
-        "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\u1f4da.png",
-        "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\u1f4da.png"
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_cs_follow_hover.png",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_cs_follow_hover.png"
     },
     {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_radio_button_on.png",
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_radio_button_on.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_cs_follow_hover.png",
-        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_cs_follow_hover.png"
+        "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\u1f4da.png",
+        "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\u1f4da.png"
     },
     {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\u1f382.png",
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\drawable-xhdpi\\u1f382.png"
     },
     {
-        "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_file_icon_video.png",
-        "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_file_icon_video.png"
+        "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_ic_volume_cancel.png",
+        "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_ic_volume_cancel.png"
     },
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_grid_image_default.png",
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_grid_image_default.png"
     },
     {
-        "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_ic_volume_cancel.png",
-        "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_ic_volume_cancel.png"
+        "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_file_icon_video.png",
+        "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_file_icon_video.png"
     },
     {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\u1f61f.png",
@@ -820,12 +820,12 @@
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\u1f60f.png"
     },
     {
-        "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_menu_keyboard_hover.png",
-        "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_menu_keyboard_hover.png"
-    },
-    {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_default_portrait.png",
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_default_portrait.png"
+    },
+    {
+        "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_menu_keyboard_hover.png",
+        "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_menu_keyboard_hover.png"
     },
     {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\u270b.png",
@@ -888,12 +888,12 @@
         "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_ic_location_normal.png"
     },
     {
-        "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_ic_volume_5.png",
-        "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_ic_volume_5.png"
-    },
-    {
         "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\u1f3c0.png",
         "source": "G:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\u1f3c0.png"
+    },
+    {
+        "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_ic_volume_5.png",
+        "source": "E:\\fixPhone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_ic_volume_5.png"
     },
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\rc_cs_button_bg.png",
