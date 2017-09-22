@@ -11,6 +11,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.youth.banner.Banner;
+import com.youth.banner.listener.OnBannerListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -21,19 +22,20 @@ import java.util.List;
 
 import butterknife.BindView;
 import dhcc.cn.com.fix_phone.R;
-import dhcc.cn.com.fix_phone.adapter.CircleAdapter;
+import dhcc.cn.com.fix_phone.adapter.CircleFragmentAdapter;
 import dhcc.cn.com.fix_phone.base.BaseFragment;
 import dhcc.cn.com.fix_phone.base.GlideImageLoader;
 import dhcc.cn.com.fix_phone.bean.CirCleADResponse;
 import dhcc.cn.com.fix_phone.conf.CircleDefaultData;
 import dhcc.cn.com.fix_phone.event.CircleAdEvent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
+import dhcc.cn.com.fix_phone.ui.activity.CircleActivity;
 import dhcc.cn.com.fix_phone.ui.activity.CircleDetailActivity;
 
 /**
  * 2017/9/16 23
  */
-public class CircleFragment extends BaseFragment implements CircleAdapter.OnCircleItemClickListener {
+public class CircleFragment extends BaseFragment implements CircleFragmentAdapter.OnCircleItemClickListener {
     private static final String TAG = "CircleFragment";
 
     @BindView(R.id.refreshLayout)
@@ -43,7 +45,7 @@ public class CircleFragment extends BaseFragment implements CircleAdapter.OnCirc
     RecyclerView mRecyclerView;
 
     private List<MultiItemEntity> mCircleItems;
-    private CircleAdapter         mAdapter;
+    private CircleFragmentAdapter mAdapter;
     private View                  mHeaderView;
     private Banner                mBanner;
 
@@ -55,7 +57,7 @@ public class CircleFragment extends BaseFragment implements CircleAdapter.OnCirc
     protected void init() {
         EventBus.getDefault().register(this);
         mCircleItems = CircleDefaultData.getCircleDefaultData();
-        mAdapter = new CircleAdapter(_mActivity, mCircleItems);
+        mAdapter = new CircleFragmentAdapter(_mActivity, mCircleItems);
     }
 
     @Override
@@ -76,7 +78,7 @@ public class CircleFragment extends BaseFragment implements CircleAdapter.OnCirc
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                return mAdapter.getItemViewType(position) == CircleAdapter.TYPE_LEVEL_1 ? 1 : layoutManager.getSpanCount();
+                return mAdapter.getItemViewType(position) == CircleFragmentAdapter.TYPE_LEVEL_1 ? 1 : layoutManager.getSpanCount();
             }
         });
         mAdapter.addHeaderView(mHeaderView);
@@ -89,6 +91,12 @@ public class CircleFragment extends BaseFragment implements CircleAdapter.OnCirc
     @Override
     protected void initEvent() {
         mAdapter.setOnCircleItemClickListener(this);
+        mBanner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                startActivity(new Intent(_mActivity, CircleActivity.class));
+            }
+        });
     }
 
     @Override

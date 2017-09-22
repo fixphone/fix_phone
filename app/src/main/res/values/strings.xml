@@ -26,4 +26,7 @@
     <string name="imac_online">iMac 在线</string>
     <string name="contact_notification_someone_agree_your_request">%1$s已同意你的好友请求</string>
     <string name="contact_notification_agree_your_request">对方已同意你的好友请求</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 </resources>

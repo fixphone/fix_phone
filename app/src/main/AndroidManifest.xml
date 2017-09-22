@@ -33,7 +33,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:name=".App"
+        android:name=".MyApplication"
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.activity.MainActivity"
@@ -194,6 +194,23 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/rc_file_path" />
         </provider>
+
+
+        <activity
+            android:name=".ui.activity.CircleActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            >
+        </activity>
+        <activity android:name=".ui.activity.ImagePagerActivity">
+
+        </activity>
+
+        <meta-data
+            android:name="dhcc.cn.com.fix_phone.MyGlideModule"
+            android:value="GlideModule" />
+
     </application>
 
 </manifest>

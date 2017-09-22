@@ -27,6 +27,12 @@ android {
     sourceSets.main {
         jniLibs.srcDir 'libs'
     }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+    }
+
 }
 
 repositories {
@@ -39,9 +45,6 @@ repositories {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
@@ -69,5 +72,19 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
     compile(name: 'HMS-SDK-2.4.0.300', ext: 'aar')
     compile project(':IMKit')
+<<<<<<< abba9912c9dc813418b1e88e43f0f42d121e50e4
     compile 'com.orhanobut:logger:2.1.1'
+=======
+    compile project(':CallKit')
+
+    compile 'com.github.chrisbanes:PhotoView:1.3.0'
+    compile 'com.malinskiy:superrecyclerview:1.1.4'
+    compile 'com.mikhaellopez:circularprogressbar:1.1.1'
+
+    compile 'pub.devrel:easypermissions:0.2.1'
+
+    compile ('com.github.bumptech.glide:okhttp3-integration:1.4.0'){
+        exclude group: 'glide-parent'
+    }
+>>>>>>> 朋友圈
 }

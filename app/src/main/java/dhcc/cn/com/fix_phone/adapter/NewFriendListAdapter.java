@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import dhcc.cn.com.fix_phone.App;
+import dhcc.cn.com.fix_phone.MyApplication;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.rong.SealUserInfoManager;
 import dhcc.cn.com.fix_phone.rong.response.UserRelationshipResponse;
@@ -43,7 +43,7 @@ public class NewFriendListAdapter extends BaseAdapters {
             portraitUri = SealUserInfoManager.getInstance().getPortraitUri(new UserInfo(
                               userEntity.getId(), userEntity.getNickname(), Uri.parse(userEntity.getPortraitUri())));
         }
-        ImageLoader.getInstance().displayImage(portraitUri, holder.mHead, App.getOptions());
+        ImageLoader.getInstance().displayImage(portraitUri, holder.mHead, MyApplication.getOptions());
         holder.mMessage.setText(bean.getMessage());
         holder.mState.setOnClickListener(new View.OnClickListener() {
             @Override

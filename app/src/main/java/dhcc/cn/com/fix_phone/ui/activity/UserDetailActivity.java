@@ -1,10 +1,7 @@
 package dhcc.cn.com.fix_phone.ui.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,12 +12,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
-import dhcc.cn.com.fix_phone.App;
+import dhcc.cn.com.fix_phone.MyApplication;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.base.RongBaseActivity;
 import dhcc.cn.com.fix_phone.db.Friend;
@@ -120,7 +116,7 @@ public class UserDetailActivity extends RongBaseActivity implements View.OnClick
                 mUserDisplayName.setText(mFriend.getName());
             }
             String portraitUri = SealUserInfoManager.getInstance().getPortraitUri(mFriend);
-            ImageLoader.getInstance().displayImage(portraitUri, mUserPortrait, App.getOptions());
+            ImageLoader.getInstance().displayImage(portraitUri, mUserPortrait, MyApplication.getOptions());
         }
         if (getSharedPreferences("config", MODE_PRIVATE).getBoolean("isDebug", false)) {
             RongIMClient.getInstance().getUserOnlineStatus(mFriend.getUserId(), new IRongCallback.IGetUserOnlineStatusCallback() {
@@ -329,7 +325,7 @@ public class UserDetailActivity extends RongBaseActivity implements View.OnClick
                                 mUserNickName.setText(nickName);
                             }
                             if (hasPortraitUriChanged(portraitUri)) {
-                                ImageLoader.getInstance().displayImage(portraitUri, mUserPortrait, App.getOptions());
+                                ImageLoader.getInstance().displayImage(portraitUri, mUserPortrait, MyApplication.getOptions());
                             } else {
                                 portraitUri = mFriend.getPortraitUri().toString();
                             }
@@ -369,7 +365,7 @@ public class UserDetailActivity extends RongBaseActivity implements View.OnClick
                                     }
                                 }
                                 if (hasPortraitUriChanged(portraitUri)) {
-                                    ImageLoader.getInstance().displayImage(portraitUri, mUserPortrait, App.getOptions());
+                                    ImageLoader.getInstance().displayImage(portraitUri, mUserPortrait, MyApplication.getOptions());
                                     userInfoPortraitUri = portraitUri;
                                 }
                                 //更新好友数据库

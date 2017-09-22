@@ -4,14 +4,14 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.Handler;
 
-import dhcc.cn.com.fix_phone.App;
+import dhcc.cn.com.fix_phone.MyApplication;
 
 public class UIUtils {
     /**
      * 得到上下文
      */
     public static Context getContext() {
-        return App.getContext();
+        return MyApplication.getContext();
     }
 
     /**
@@ -53,14 +53,14 @@ public class UIUtils {
      * 得到主线程的Id
      */
     public static long getMainThreadId() {
-        return App.getMainThreadId();
+        return MyApplication.getMainThreadId();
     }
 
     /**
      * 得到主线程的hanlder
      */
     public static Handler getMainThreadHandler() {
-        return App.getHandler();
+        return MyApplication.getHandler();
     }
 
     /**

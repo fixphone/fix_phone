@@ -15,7 +15,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import dhcc.cn.com.fix_phone.App;
+import dhcc.cn.com.fix_phone.MyApplication;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.base.RongBaseActivity;
 import dhcc.cn.com.fix_phone.db.Friend;
@@ -120,7 +120,7 @@ public class SearchFriendActivity extends RongBaseActivity {
                                     Uri.parse(userInfoByPhoneResponseResult.getPortraitUri()));
                             portraitUri = SealUserInfoManager.getInstance().getPortraitUri(userInfo);
                         }
-                        ImageLoader.getInstance().displayImage(portraitUri, searchImage, App.getOptions());
+                        ImageLoader.getInstance().displayImage(portraitUri, searchImage, MyApplication.getOptions());
                         searchName.setText(userInfoByPhoneResponse.getResult().getNickname());
                         searchItem.setOnClickListener(new View.OnClickListener() {
                             @Override

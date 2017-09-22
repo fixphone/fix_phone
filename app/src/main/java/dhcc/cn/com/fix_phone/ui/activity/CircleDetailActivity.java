@@ -1,6 +1,8 @@
 package dhcc.cn.com.fix_phone.ui.activity;
 
 import android.content.Intent;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -73,6 +75,9 @@ public class CircleDetailActivity extends BaseActivity implements OnRefreshLoadm
     @Override
     protected void initEvent() {
         mRefreshLayout.setOnRefreshLoadmoreListener(this);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
