@@ -1,6 +1,10 @@
 package dhcc.cn.com.fix_phone.utils;
 
+import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Environment;
+import android.provider.MediaStore;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -401,5 +405,75 @@ public class FileUtils {
 			file.delete();
 		}
 		return true;
+	}
+
+	/**
+	 * 根据指定路径，创建父目录及文件
+	 *
+	 * @param filePath
+	 * @return File 如果创建失败的话，返回null
+	 */
+	public static File createFile(String filePath) {
+		return createFile(filePath, "755");
+	}
+
+	/**
+	 * 创建文件，并修改读写权限
+	 *
+	 * @param filePath
+	 * @param mode
+	 * @return
+	 */
+	public static File createFile(String filePath, String mode) {
+		File desFile = null;
+		try {
+			String desDir = filePath.substring(0, filePath.lastIndexOf(File.separator));
+			File dir = new File(desDir);
+			if (!dir.exists()) {
+				dir.mkdirs();
+			}
+			chmodFile(dir.getAbsolutePath(), mode);
+			desFile = new File(filePath);
+			if (!desFile.exists()) {
+				desFile.createNewFile();
+			}
+			chmodFile(desFile.getAbsolutePath(), mode);
+		} catch (Exception e) {
+		}
+		return desFile;
+	}
+
+	/**
+	 * 修改文件读写权限
+	 *
+	 * @param fileAbsPath
+	 * @param mode
+	 */
+	public static void chmodFile(String fileAbsPath, String mode) {
+		String cmd = "chmod " + mode + " " + fileAbsPath;
+		try {
+			Runtime.getRuntime().exec(cmd);
+		} catch (Exception e) {
+		}
+	}
+
+	/**
+	 * 从数据库中获取图片地址
+	 *
+	 * @param uri
+	 * @param mContext
+	 * @return
+	 */
+	public static String getPathFromCursor(Uri uri, Context mContext) {
+		String path;
+		String[] filePathColumns = {MediaStore.Images.Media.DATA};
+		Cursor c = mContext.getContentResolver().query(uri, filePathColumns, null, null, null);
+		if (c != null) {
+			c.moveToFirst();
+		}
+		int columnIndex = c.getColumnIndex(filePathColumns[0]);
+		path = c.getString(columnIndex);
+		c.close();
+		return path;
 	}
 }

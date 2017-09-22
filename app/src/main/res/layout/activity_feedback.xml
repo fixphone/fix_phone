@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activity_gray_bg">
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/public_50dp"
+        layout="@layout/layout_title"/>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="@dimen/public_15dp"
+            android:layout_marginRight="@dimen/public_15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#302D88"
+                android:textSize="14sp"
+                android:text="欢迎您提出宝贵的建议和意见，谢谢！"
+                android:layout_marginTop="@dimen/public_20dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/white_big_bg"
+                android:layout_marginTop="@dimen/public_10dp"
+                android:padding="@dimen/public_5dp">
+
+                <EditText
+                    android:id="@+id/content_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dip"
+                    android:layout_weight="1"
+                    android:gravity="top|left"
+                    android:padding="@dimen/public_5dp"
+                    android:maxLength="400"
+                    android:background="@color/app_transparent"/>
+                <TextView
+                    android:id="@+id/count_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|right"
+                    android:textColor="@color/text_color_gray"
+                    android:text="0/400"/>
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/photo_select_recycle_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|left"
+                android:layout_marginRight="@dimen/public_15dp"
+                android:layout_marginLeft="@dimen/public_15dp"
+                android:layout_marginTop="@dimen/public_20dp"
+                android:layout_marginBottom="@dimen/public_20dp"
+                android:overScrollMode="never"/>
+
+            <Button
+                android:id="@+id/btn_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/select_img_btn_bg"
+                android:textColor="@color/app_text_color_black"
+                android:textSize="18sp"
+                android:text="提交"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

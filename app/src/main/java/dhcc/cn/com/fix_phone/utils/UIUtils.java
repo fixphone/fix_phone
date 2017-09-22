@@ -79,4 +79,9 @@ public class UIUtils {
             getMainThreadHandler().post(task);
         }
     }
+
+    public static int dip2px(float dp) {
+        float density = getContext().getResources().getDisplayMetrics().density;
+        return (int) (density * dp + 0.5);
+    }
 }

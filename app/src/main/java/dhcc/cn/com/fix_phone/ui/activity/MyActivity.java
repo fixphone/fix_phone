@@ -47,6 +47,7 @@ public class MyActivity extends BaseActivity{
             case R.id.my_phone_num:
                 break;
             case R.id.my_reset_pass:
+                startActivity(ResetPassWordActivity.class);
                 break;
             case R.id.my_exit:
                 break;

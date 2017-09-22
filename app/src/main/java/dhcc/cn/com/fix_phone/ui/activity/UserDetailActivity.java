@@ -38,16 +38,10 @@ import dhcc.cn.com.fix_phone.ui.widget.LoadDialog;
 import dhcc.cn.com.fix_phone.ui.widget.SinglePopWindow;
 import dhcc.cn.com.fix_phone.utils.NToast;
 import dhcc.cn.com.fix_phone.utils.RongGenerate;
-import io.rong.callkit.RongCallAction;
-import io.rong.callkit.RongVoIPIntent;
-import io.rong.calllib.RongCallClient;
-import io.rong.calllib.RongCallCommon;
-import io.rong.calllib.RongCallSession;
 import io.rong.imageloader.core.ImageLoader;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
 import io.rong.imlib.model.UserOnlineStatusInfo;
 

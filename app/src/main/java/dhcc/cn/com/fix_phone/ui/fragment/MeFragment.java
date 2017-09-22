@@ -12,6 +12,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.base.BaseFragment;
+import dhcc.cn.com.fix_phone.ui.activity.FeedBackActivity;
 import dhcc.cn.com.fix_phone.ui.activity.MyActivity;
 import dhcc.cn.com.fix_phone.ui.activity.PersonInfoActivity;
 
@@ -64,6 +65,12 @@ public class MeFragment extends BaseFragment {
                 break;
             case R.id.mine_circle:
 
+                break;
+            case R.id.mine_house:
+
+                break;
+            case R.id.mine_suggest:
+                startActivity(FeedBackActivity.class);
                 break;
             case R.id.title_right:
                 startActivity(MyActivity.class);

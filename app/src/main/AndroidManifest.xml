@@ -67,6 +67,10 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".ui.activity.ResetPersonInfoActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ui.activity.ResetPassWordActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ui.activity.FeedBackActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <receiver
             android:name=".rong.SealNotificationReceiver"

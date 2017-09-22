@@ -16,8 +16,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/navi_back"
-            android:layout_marginLeft="@dimen/public_10dp"
-            android:layout_marginRight="@dimen/public_10dp"/>
+            android:layout_marginLeft="@dimen/public_15dp"
+            android:layout_marginRight="@dimen/public_20dp"/>
     </RelativeLayout>
 
     <TextView

@@ -17,19 +17,27 @@
         android:src="@drawable/contact_more_hover"
         android:scaleType="fitXY"/>
 
-    <TextView
+    <Button
+        android:id="@+id/photo_take_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/app_text_color_black"
         android:textSize="16sp"
         android:text="拍一张"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:background="@drawable/select_img_btn_bg"
+        android:layout_marginTop="@dimen/public_50dp"
+        android:layout_marginLeft="@dimen/public_15dp"
+        android:layout_marginRight="@dimen/public_15dp"/>
 
-    <TextView
+    <Button
+        android:id="@+id/photo_album_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/app_text_color_black"
         android:textSize="16sp"
         android:text="从相册选择"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:background="@drawable/select_img_btn_bg"
+        android:layout_margin="@dimen/public_15dp"/>
 </LinearLayout>
