@@ -72,10 +72,7 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
     compile(name: 'HMS-SDK-2.4.0.300', ext: 'aar')
     compile project(':IMKit')
-<<<<<<< abba9912c9dc813418b1e88e43f0f42d121e50e4
     compile 'com.orhanobut:logger:2.1.1'
-=======
-    compile project(':CallKit')
 
     compile 'com.github.chrisbanes:PhotoView:1.3.0'
     compile 'com.malinskiy:superrecyclerview:1.1.4'
@@ -86,5 +83,4 @@ dependencies {
     compile ('com.github.bumptech.glide:okhttp3-integration:1.4.0'){
         exclude group: 'glide-parent'
     }
->>>>>>> 朋友圈
 }

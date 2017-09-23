@@ -71,6 +71,10 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".ui.activity.FeedBackActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ui.activity.VipActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ui.activity.AboutAppActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <receiver
             android:name=".rong.SealNotificationReceiver"

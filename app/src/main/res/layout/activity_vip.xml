@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/text_color_white">
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/public_50dp"
+        layout="@layout/layout_title"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/app_text_color_black"
+        android:textSize="12sp"
+        android:text="支付金额"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/public_30dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#00CB0C"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:text="0.1元"
+        android:layout_margin="@dimen/public_20dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/app_text_color_black"
+        android:textSize="16sp"
+        android:text="恭喜您已开通会员，开通会员可以解除圈子限制发布条数"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/public_30dp"
+        android:gravity="center"
+        android:layout_margin="@dimen/public_15dp"/>
+</LinearLayout>

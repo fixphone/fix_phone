@@ -12,9 +12,11 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.base.BaseFragment;
+import dhcc.cn.com.fix_phone.ui.activity.AboutAppActivity;
 import dhcc.cn.com.fix_phone.ui.activity.FeedBackActivity;
 import dhcc.cn.com.fix_phone.ui.activity.MyActivity;
 import dhcc.cn.com.fix_phone.ui.activity.PersonInfoActivity;
+import dhcc.cn.com.fix_phone.ui.activity.VipActivity;
 
 /**
  * 2017/9/16 23
@@ -71,6 +73,20 @@ public class MeFragment extends BaseFragment {
                 break;
             case R.id.mine_suggest:
                 startActivity(FeedBackActivity.class);
+                break;
+            case R.id.mine_vip:
+                startActivity(VipActivity.class);
+                break;
+            case R.id.mine_advert:
+                break;
+            case R.id.mine_produce:
+
+                break;
+            case R.id.mine_clear:
+
+                break;
+            case R.id.mine_app:
+                startActivity(AboutAppActivity.class);
                 break;
             case R.id.title_right:
                 startActivity(MyActivity.class);
