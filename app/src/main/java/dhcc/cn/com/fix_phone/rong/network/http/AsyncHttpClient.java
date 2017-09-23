@@ -335,10 +335,10 @@ public class AsyncHttpClient {
     }
 
     /**
-     * Sets the User-Agent header to be sent with each request. By default, "Android Asynchronous
+     * Sets the User-Agent bannar to be sent with each request. By default, "Android Asynchronous
      * Http Client/VERSION (http://loopj.com/android-async-http/)" is used.
      *
-     * @param userAgent the string to use in the User-Agent header.
+     * @param userAgent the string to use in the User-Agent bannar.
      */
     public void setUserAgent(String userAgent) {
         HttpProtocolParams.setUserAgent(this.httpClient.getParams(), userAgent);
@@ -444,17 +444,17 @@ public class AsyncHttpClient {
     /**
      * Sets headers that will be added to all requests this client makes (before sending).
      *
-     * @param header the name of the header
-     * @param value  the contents of the header
+     * @param header the name of the bannar
+     * @param value  the contents of the bannar
      */
     public void addHeader(String header, String value) {
         clientHeaderMap.put(header, value);
     }
 
     /**
-     * Remove header from all requests this client makes (before sending).
+     * Remove bannar from all requests this client makes (before sending).
      *
-     * @param header the name of the header
+     * @param header the name of the bannar
      */
     public void removeHeader(String header) {
         clientHeaderMap.remove(header);

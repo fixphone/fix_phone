@@ -5,7 +5,7 @@
     android:layout_height="200dp"
     android:background="@color/white">
 
-    <com.yiw.circledemo.widgets.CircleVideoView
+    <dhcc.cn.com.fix_phone.ui.widget.CircleVideoView
         android:id="@+id/videoView"
         android:layout_width="match_parent"
         android:layout_height="200dp"

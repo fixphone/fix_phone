@@ -1,47 +1,68 @@
 package dhcc.cn.com.fix_phone.adapter.viewholder;
 
+import android.content.Context;
 import android.media.MediaPlayer;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
+import java.util.List;
+
+import dhcc.cn.com.fix_phone.R;
+import dhcc.cn.com.fix_phone.bean.CircleItem;
+import dhcc.cn.com.fix_phone.bean.CommentItem;
+import dhcc.cn.com.fix_phone.bean.FavortItem;
 import dhcc.cn.com.fix_phone.ui.widget.CommentListView;
 import dhcc.cn.com.fix_phone.ui.widget.ExpandTextView;
 import dhcc.cn.com.fix_phone.ui.widget.PraiseListView;
 import dhcc.cn.com.fix_phone.ui.widget.SnsPopupWindow;
 import dhcc.cn.com.fix_phone.ui.widget.videolist.model.VideoLoadMvpView;
 import dhcc.cn.com.fix_phone.ui.widget.videolist.widget.TextureVideoView;
-import dhcc.cn.com.fix_phone.R;
+import dhcc.cn.com.fix_phone.utils.GlideCircleTransform;
+import dhcc.cn.com.fix_phone.utils.UIUtils;
+import dhcc.cn.com.fix_phone.utils.UrlUtils;
 
 /**
  * Created by yiw on 2016/8/16.
  */
 public abstract class CircleViewHolder extends RecyclerView.ViewHolder implements VideoLoadMvpView {
 
-    public final static int TYPE_URL = 1;
+    public final static int TYPE_URL   = 1;
     public final static int TYPE_IMAGE = 2;
     public final static int TYPE_VIDEO = 3;
+
+    protected Context context = UIUtils.getContext();
 
     public int viewType;
 
     public ImageView      headIv;
     public TextView       nameTv;
     public TextView       urlTipTv;
-    /** 动态的内容 */
+    /**
+     * 动态的内容
+     */
     public ExpandTextView contentTv;
     public TextView       timeTv;
     public TextView       deleteBtn;
     public ImageView      snsBtn;
-    /** 点赞列表*/
+    /**
+     * 点赞列表
+     */
     public PraiseListView praiseListView;
 
     public LinearLayout digCommentBody;
     public View         digLine;
 
-    /** 评论列表 */
+    /**
+     * 评论列表
+     */
     public CommentListView commentList;
     // ===========================
     public SnsPopupWindow  snsPopupWindow;
@@ -50,23 +71,23 @@ public abstract class CircleViewHolder extends RecyclerView.ViewHolder implement
         super(itemView);
         this.viewType = viewType;
 
-        ViewStub viewStub = (ViewStub) itemView.findViewById(R.id.viewStub);
+        ViewStub viewStub = itemView.findViewById(R.id.viewStub);
 
         initSubView(viewType, viewStub);
 
-        headIv = (ImageView) itemView.findViewById(R.id.headIv);
-        nameTv = (TextView) itemView.findViewById(R.id.nameTv);
+        headIv = itemView.findViewById(R.id.headIv);
+        nameTv = itemView.findViewById(R.id.nameTv);
         digLine = itemView.findViewById(R.id.lin_dig);
 
-        contentTv = (ExpandTextView) itemView.findViewById(R.id.contentTv);
-        urlTipTv = (TextView) itemView.findViewById(R.id.urlTipTv);
-        timeTv = (TextView) itemView.findViewById(R.id.timeTv);
-        deleteBtn = (TextView) itemView.findViewById(R.id.deleteBtn);
-        snsBtn = (ImageView) itemView.findViewById(R.id.snsBtn);
-        praiseListView = (PraiseListView) itemView.findViewById(R.id.praiseListView);
+        contentTv = itemView.findViewById(R.id.contentTv);
+        urlTipTv = itemView.findViewById(R.id.urlTipTv);
+        timeTv = itemView.findViewById(R.id.timeTv);
+        deleteBtn = itemView.findViewById(R.id.deleteBtn);
+        snsBtn = itemView.findViewById(R.id.snsBtn);
+        praiseListView = itemView.findViewById(R.id.praiseListView);
 
-        digCommentBody = (LinearLayout) itemView.findViewById(R.id.digCommentBody);
-        commentList = (CommentListView)itemView.findViewById(R.id.commentList);
+        digCommentBody = itemView.findViewById(R.id.digCommentBody);
+        commentList = itemView.findViewById(R.id.commentList);
 
         snsPopupWindow = new SnsPopupWindow(itemView.getContext());
 
@@ -98,4 +119,104 @@ public abstract class CircleViewHolder extends RecyclerView.ViewHolder implement
     public void videoResourceReady(String videoPath) {
 
     }
+
+
+    public void setData(final CircleItem circleItem) {
+        final String circleId = circleItem.getUser().getFInterID();
+
+        handleHeadIcon(circleItem);
+
+        handleContent(circleItem);
+
+        handleFavort(circleItem);
+
+        handleComment(circleItem);
+
+        handleDigCommentBody(circleItem);
+
+        handleUrlTipTv(circleItem);
+
+        handledigLine(circleItem);
+
+        handleChildData(circleItem);
+
+    }
+
+    protected void handleChildData(CircleItem circleItem) {
+
+    }
+
+    private void handledigLine(CircleItem circleItem) {
+        boolean hasComment = circleItem.hasComment();
+        boolean hasFavort = circleItem.hasFavort();
+        digLine.setVisibility(hasFavort && hasComment ? View.VISIBLE : View.GONE);
+    }
+
+    private void handleUrlTipTv(CircleItem circleItem) {
+        if (circleItem.getType().equals("1")) {
+            urlTipTv.setVisibility(View.VISIBLE);
+        } else {
+            urlTipTv.setVisibility(View.GONE);
+        }
+    }
+
+    private void handleDigCommentBody(CircleItem circleItem) {
+        boolean hasComment = circleItem.hasComment();
+        boolean hasFavort = circleItem.hasFavort();
+
+        if (hasComment || hasFavort) {
+            digCommentBody.setVisibility(View.VISIBLE);
+        } else {
+            digCommentBody.setVisibility(View.GONE);
+        }
+    }
+
+    private void handleComment(CircleItem circleItem) {
+        final List<CommentItem> commentsDatas = circleItem.getComments();
+        boolean hasComment = circleItem.hasComment();
+        if (hasComment) {//处理评论列表
+            commentList.setDatas(commentsDatas);
+            commentList.setVisibility(View.VISIBLE);
+        } else {
+            commentList.setVisibility(View.GONE);
+        }
+    }
+
+    private void handleFavort(CircleItem circleItem) {
+        final List<FavortItem> favortDatas = circleItem.getFavorters();
+        boolean hasFavort = circleItem.hasFavort();
+        if (hasFavort) {//处理点赞列表
+            praiseListView.setDatas(favortDatas);
+            praiseListView.setVisibility(View.VISIBLE);
+        } else {
+            praiseListView.setVisibility(View.GONE);
+        }
+    }
+
+    private void handleHeadIcon(CircleItem circleItem) {
+        String name = circleItem.getUser().getFUserName();
+        String headImg = circleItem.getUser().getFHeadUrl();
+        String createTime = circleItem.getUser().getFCreateDate();
+        Glide.with(context).load(headImg).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.color.bg_no_photo).transform(new GlideCircleTransform(context)).into(headIv);
+        nameTv.setText(name);
+        timeTv.setText(createTime);
+    }
+
+    private void handleContent(final CircleItem circleItem) {
+        final String content = circleItem.getUser().getFContent();
+        if (!TextUtils.isEmpty(content)) {
+            contentTv.setExpand(circleItem.getUser().isExpand());
+            contentTv.setExpandStatusListener(new ExpandTextView.ExpandStatusListener() {
+                @Override
+                public void statusChange(boolean isExpand) {
+                    circleItem.getUser().setExpand(isExpand);
+                }
+            });
+            contentTv.setText(UrlUtils.formatUrlString(content));
+            contentTv.setVisibility(View.VISIBLE);
+        } else {
+            contentTv.setVisibility(View.GONE);
+        }
+    }
 }
+

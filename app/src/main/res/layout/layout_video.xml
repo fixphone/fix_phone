@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/videoBody"
-    android:layout_width="match_parent"
-    android:layout_height="200dp"
-    android:background="@color/white">
+<FrameLayout android:id="@+id/videoBody"
+             xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="200dp"
+             android:background="@color/white">
 
-    <com.yiw.circledemo.widgets.videolist.widget.TextureVideoView
+    <dhcc.cn.com.fix_phone.ui.widget.videolist.widget.TextureVideoView
         android:id="@+id/video_player"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white" />
+        android:layout_height="match_parent"/>
 
     <ImageView
         android:id="@+id/iv_video_frame"
@@ -19,8 +18,8 @@
         android:scaleType="centerCrop"/>
 
     <com.mikhaellopez.circularprogressbar.CircularProgressBar
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/video_progress"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
@@ -28,13 +27,13 @@
         app:cpb_background_progressbar_color="@color/white"
         app:cpb_background_progressbar_width="3dp"
         app:cpb_progressbar_color="@color/colorAccent"
-        app:cpb_progressbar_width="3dp" />
+        app:cpb_progressbar_width="3dp"/>
 
     <ImageView
         android:id="@+id/iv_video_play"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
-        android:src="@drawable/ic_video_play" />
+        android:src="@drawable/ic_video_play"/>
 
 </FrameLayout>

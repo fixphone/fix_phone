@@ -30,7 +30,6 @@ import dhcc.cn.com.fix_phone.conf.CircleDefaultData;
 import dhcc.cn.com.fix_phone.event.CircleAdEvent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
 import dhcc.cn.com.fix_phone.ui.activity.CircleActivity;
-import dhcc.cn.com.fix_phone.ui.activity.CircleDetailActivity;
 
 /**
  * 2017/9/16 23
@@ -123,7 +122,7 @@ public class CircleFragment extends BaseFragment implements CircleFragmentAdapte
     }
 
     @Override
-    public void onCircleItemClick(BaseQuickAdapter adapter, View view, String typeId) {
-        startActivity(new Intent(_mActivity, CircleDetailActivity.class).putExtra("data",typeId));
+    public void onCircleItemClick(BaseQuickAdapter adapter, View view, String typeId, String content) {
+        startActivity(new Intent(_mActivity, CircleActivity.class).putExtra("data",typeId).putExtra("name",content));
     }
 }

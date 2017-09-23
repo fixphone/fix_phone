@@ -119,20 +119,20 @@ public class CommentListView extends LinearLayout {
         final CircleMovementMethod circleMovementMethod = new CircleMovementMethod(itemSelectorColor, itemSelectorColor);
 
         final CommentItem bean = mDatas.get(position);
-        String name = bean.getUser().getName();
+        String name = bean.getUser().getFCompanyName();
         String id = bean.getId();
         String toReplyName = "";
         if (bean.getToReplyUser() != null) {
-            toReplyName = bean.getToReplyUser().getName();
+            toReplyName = bean.getToReplyUser().getFCompanyName();
         }
 
         SpannableStringBuilder builder = new SpannableStringBuilder();
-        builder.append(setClickableSpan(name, bean.getUser().getId()));
+        builder.append(setClickableSpan(name, bean.getUser().getFInterID()+""));
 
         if (!TextUtils.isEmpty(toReplyName)) {
 
             builder.append(" 回复 ");
-            builder.append(setClickableSpan(toReplyName, bean.getToReplyUser().getId()));
+            builder.append(setClickableSpan(toReplyName, bean.getToReplyUser().getFInterID()+""));
         }
         builder.append(": ");
         //转换表情字符

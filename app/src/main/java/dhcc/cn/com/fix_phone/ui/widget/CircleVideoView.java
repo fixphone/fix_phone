@@ -19,6 +19,7 @@ import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
 import java.io.File;
 import java.io.InputStream;
+
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.ui.widget.videolist.VideoListGlideModule;
 import dhcc.cn.com.fix_phone.ui.widget.videolist.model.VideoLoadMvpView;
@@ -40,12 +41,12 @@ public class CircleVideoView extends LinearLayout implements VideoLoadMvpView, L
     public VideoLoadTarget     videoTarget;
     public VideoProgressTarget progressTarget;
 
-    private static final int STATE_IDLE = 0;
-    private static final int STATE_ACTIVED = 1;
+    private static final int STATE_IDLE      = 0;
+    private static final int STATE_ACTIVED   = 1;
     private static final int STATE_DEACTIVED = 2;
-    private int videoState = STATE_IDLE;
+    private              int videoState      = STATE_IDLE;
 
-    private int postion;;
+    private int    postion;
     private String videoUrl;
 
     private OnPlayClickListener onPlayClickListener;
@@ -70,26 +71,26 @@ public class CircleVideoView extends LinearLayout implements VideoLoadMvpView, L
         postion = pos;
     }
 
-    public void setVideoUrl(String url){
+    public void setVideoUrl(String url) {
         videoUrl = url;
     }
 
-    public void setVideoImgUrl(String imgUrl){
+    public void setVideoImgUrl(String imgUrl) {
 
         Glide.with(getContext())
                 .load(imgUrl)
                 .placeholder(new ColorDrawable(0xffdcdcdc))
                 .centerCrop()
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(videoFrame);
 
-        if(videoState == STATE_IDLE){
+        if (videoState == STATE_IDLE) {
             videoButton.setVisibility(View.VISIBLE);
             videoFrame.setVisibility(View.VISIBLE);
-        }else if(videoState == STATE_ACTIVED){
+        } else if (videoState == STATE_ACTIVED) {
             videoButton.setVisibility(View.GONE);
             videoFrame.setVisibility(View.GONE);
-        }else{
+        } else {
             videoButton.setVisibility(View.VISIBLE);
             videoFrame.setVisibility(View.VISIBLE);
         }
@@ -118,7 +119,7 @@ public class CircleVideoView extends LinearLayout implements VideoLoadMvpView, L
         videoButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(TextUtils.isEmpty(videoUrl)){
+                if (TextUtils.isEmpty(videoUrl)) {
                     Toast.makeText(getContext(), "video url is empty...", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -133,7 +134,7 @@ public class CircleVideoView extends LinearLayout implements VideoLoadMvpView, L
                         .into(progressTarget);
 
                 videoButton.setVisibility(View.INVISIBLE);
-                if(onPlayClickListener!=null){
+                if (onPlayClickListener != null) {
                     onPlayClickListener.onPlayClick(postion);
                 }
             }
@@ -152,9 +153,9 @@ public class CircleVideoView extends LinearLayout implements VideoLoadMvpView, L
 
     @Override
     public void deactivate(View currentView, int position) {
-        if(this.postion==position){
+        if (this.postion == position) {
             videoState = STATE_DEACTIVED;
-            if(!TextUtils.isEmpty(videoUrl)){
+            if (!TextUtils.isEmpty(videoUrl)) {
                 videoPlayer.stop();
                 videoStopped();
             }
@@ -191,20 +192,20 @@ public class CircleVideoView extends LinearLayout implements VideoLoadMvpView, L
     @Override
     public void videoResourceReady(String videoPath) {
         videoLocalPath = videoPath;
-        if(videoLocalPath != null) {
+        if (videoLocalPath != null) {
             videoPlayer.setVideoPath(videoPath);
-            if(videoState == STATE_ACTIVED) {
+            if (videoState == STATE_ACTIVED) {
                 videoPlayer.start();
             }
         }
     }
 
-    public static interface OnPlayClickListener{
+    public static interface OnPlayClickListener {
         void onPlayClick(int pos);
     }
 
     public void resetVideo() {
-        if(!TextUtils.isEmpty(videoUrl)){
+        if (!TextUtils.isEmpty(videoUrl)) {
             videoState = STATE_IDLE;
             videoPlayer.stop();
             videoLocalPath = null;

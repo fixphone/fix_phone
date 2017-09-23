@@ -55,7 +55,7 @@ public class CircleFragmentAdapter extends BaseMultiItemQuickAdapter<MultiItemEn
                     @Override
                     public void onClick(View view) {
                         if (mOnCircleItemClickListener != null) {
-                            mOnCircleItemClickListener.onCircleItemClick(CircleFragmentAdapter.this, helper.itemView, circleItem.getTypeId());
+                            mOnCircleItemClickListener.onCircleItemClick(CircleFragmentAdapter.this, helper.itemView, circleItem.getTypeId(),circleItem.getContent());
                         }
                     }
                 });
@@ -65,7 +65,7 @@ public class CircleFragmentAdapter extends BaseMultiItemQuickAdapter<MultiItemEn
 
 
     public interface OnCircleItemClickListener {
-        void onCircleItemClick(BaseQuickAdapter adapter, View view, String typeId);
+        void onCircleItemClick(BaseQuickAdapter adapter, View view, String typeId, String content);
     }
 
     private OnCircleItemClickListener mOnCircleItemClickListener;

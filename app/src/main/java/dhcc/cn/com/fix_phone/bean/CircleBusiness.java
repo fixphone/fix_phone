@@ -64,7 +64,7 @@ public class CircleBusiness {
             public String          FCreateDate;
             public int             FCreatorID;
             public String          FHeadUrl;
-            public int             FInterID;
+            public String             FInterID;
             public boolean         FIsFooterData;
             public String          FPhone;
             public String          FShareUrl;

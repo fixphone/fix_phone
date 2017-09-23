@@ -13,88 +13,86 @@ import android.widget.TextView;
 
 import dhcc.cn.com.fix_phone.bean.CommentItem;
 import dhcc.cn.com.fix_phone.mvp.presenter.CirclePresenter;
-import dhcc.cn.com.fix_phone.utils.DatasUtil;
 
 import dhcc.cn.com.fix_phone.R;
+
 /**
- * 
-* @ClassName: CommentDialog 
-* @Description: 评论长按对话框，保护复制和删除 
-* @author yiw
-* @date 2015-12-28 下午3:36:39 
-*
+ * @author yiw
+ * @ClassName: CommentDialog
+ * @Description: 评论长按对话框，保护复制和删除
+ * @date 2015-12-28 下午3:36:39
  */
 public class CommentDialog extends Dialog implements
-		android.view.View.OnClickListener {
+        android.view.View.OnClickListener {
 
-	private Context         mContext;
-	private CirclePresenter mPresenter;
-	private CommentItem     mCommentItem;
-	private int             mCirclePosition;
+    private Context         mContext;
+    private CirclePresenter mPresenter;
+    private CommentItem     mCommentItem;
+    private int             mCirclePosition;
 
-	public CommentDialog(Context context, CirclePresenter presenter,
+    public CommentDialog(Context context, CirclePresenter presenter,
                          CommentItem commentItem, int circlePosition) {
-		super(context, R.style.comment_dialog);
-		mContext = context;
-		this.mPresenter = presenter;
-		this.mCommentItem = commentItem;
-		this.mCirclePosition = circlePosition;
-	}
+        super(context, R.style.comment_dialog);
+        mContext = context;
+        this.mPresenter = presenter;
+        this.mCommentItem = commentItem;
+        this.mCirclePosition = circlePosition;
+    }
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.dialog_comment);
-		initWindowParams();
-		initView();
-	}
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.dialog_comment);
+        initWindowParams();
+        initView();
+    }
 
-	private void initWindowParams() {
-		Window dialogWindow = getWindow();
-		// 获取屏幕宽、高用
-		WindowManager wm = (WindowManager) mContext
-				.getSystemService(Context.WINDOW_SERVICE);
-		Display display = wm.getDefaultDisplay();
-		WindowManager.LayoutParams lp = dialogWindow.getAttributes();
-		lp.width = (int) (display.getWidth() * 0.65); // 宽度设置为屏幕的0.65
+    private void initWindowParams() {
+        Window dialogWindow = getWindow();
+        // 获取屏幕宽、高用
+        WindowManager wm = (WindowManager) mContext
+                .getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+        lp.width = (int) (display.getWidth() * 0.65); // 宽度设置为屏幕的0.65
 
-		dialogWindow.setGravity(Gravity.CENTER);
-		dialogWindow.setAttributes(lp);
-	}
+        dialogWindow.setGravity(Gravity.CENTER);
+        dialogWindow.setAttributes(lp);
+    }
 
-	private void initView() {
-		TextView copyTv = (TextView) findViewById(R.id.copyTv);
-		copyTv.setOnClickListener(this);
-		TextView deleteTv = (TextView) findViewById(R.id.deleteTv);
-		if (mCommentItem != null
-				&& DatasUtil.curUser.getId().equals(
-						mCommentItem.getUser().getId())) {
-			deleteTv.setVisibility(View.VISIBLE);
-		} else {
-			deleteTv.setVisibility(View.GONE);
-		}
-		deleteTv.setOnClickListener(this);
-	}
+    private void initView() {
+        TextView copyTv = (TextView) findViewById(R.id.copyTv);
+        copyTv.setOnClickListener(this);
+        TextView deleteTv = (TextView) findViewById(R.id.deleteTv);
+        /*if (mCommentItem != null
+                && DatasUtil.curUser.getId().equals(
+                mCommentItem.getUser().getId())) {
+            deleteTv.setVisibility(View.VISIBLE);
+        } else {
+            deleteTv.setVisibility(View.GONE);
+        }*/
+        deleteTv.setOnClickListener(this);
+    }
 
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.copyTv:
-			if (mCommentItem != null) {
-				ClipboardManager clipboard = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
-				clipboard.setText(mCommentItem.getContent());
-			}
-			dismiss();
-			break;
-		case R.id.deleteTv:
-			if (mPresenter != null && mCommentItem != null) {
-				mPresenter.deleteComment(mCirclePosition, mCommentItem.getId());
-			}
-			dismiss();
-			break;
-		default:
-			break;
-		}
-	}
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.copyTv:
+                if (mCommentItem != null) {
+                    ClipboardManager clipboard = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
+                    clipboard.setText(mCommentItem.getContent());
+                }
+                dismiss();
+                break;
+            case R.id.deleteTv:
+                if (mPresenter != null && mCommentItem != null) {
+                    mPresenter.deleteComment(mCirclePosition, mCommentItem.getId());
+                }
+                dismiss();
+                break;
+            default:
+                break;
+        }
+    }
 
 }

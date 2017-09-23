@@ -84,7 +84,7 @@ public class PraiseListView extends TextView {
             for (int i=0; i<datas.size(); i++){
                 item = datas.get(i);
                 if(item != null){
-                    builder.append(setClickableSpan(item.getUser().getName(), i));
+                    builder.append(setClickableSpan(item.getUser().getFCompanyName(), i));
                     if(i != datas.size()-1){
                         builder.append(", ");
                     }
