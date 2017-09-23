@@ -17,14 +17,19 @@
         android:padding="@dimen/public_15dp"
         android:background="@color/text_color_white">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/content_et"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="@dimen/public_50dp"
             android:textColor="@color/app_text_color_black"
             android:textSize="16sp"
-            android:text="哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈"/>
+            android:gravity="left"
+            android:background="@color/app_transparent"
+            android:maxLength="30"/>
 
         <TextView
+            android:id="@+id/content_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/text_color_gray"

@@ -44,15 +44,16 @@
                     android:layout_weight="1"
                     android:gravity="top|left"
                     android:padding="@dimen/public_5dp"
-                    android:maxLength="400"
+                    android:maxLength="300"
                     android:background="@color/app_transparent"/>
+
                 <TextView
                     android:id="@+id/count_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|right"
                     android:textColor="@color/text_color_gray"
-                    android:text="0/400"/>
+                    android:text="0/300"/>
             </LinearLayout>
 
             <android.support.v7.widget.RecyclerView

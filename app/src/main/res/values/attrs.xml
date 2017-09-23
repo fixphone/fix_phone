@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <attr name="borderRadius" format="dimension" />
+    <attr name="type">
+        <enum name="circle" value="0" />
+        <enum name="round" value="1" />
+    </attr>
+
+    <declare-styleable name="RoundImageView">
+        <attr name="borderRadius" />
+        <attr name="type" />
+    </declare-styleable>
+
     <declare-styleable name="SwitchGroup">
         <attr name="orientation1">
             <flag name="horizontal" value="0"/>

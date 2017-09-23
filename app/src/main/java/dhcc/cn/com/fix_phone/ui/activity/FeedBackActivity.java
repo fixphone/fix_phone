@@ -12,8 +12,11 @@ import android.provider.MediaStore;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.io.File;
@@ -46,6 +49,10 @@ public class FeedBackActivity extends BaseActivity{
     TextView title_name;
     @BindView(R.id.photo_select_recycle_view)
     RecyclerView mRecycleView;
+    @BindView(R.id.content_et)
+    EditText content_et;
+    @BindView(R.id.count_tv)
+    TextView count_tv;
 
     private AddPhotoAdapter mPhotoAdapter;
     private List<String> mList;
@@ -76,6 +83,22 @@ public class FeedBackActivity extends BaseActivity{
     protected void initEvent() {
         super.initEvent();
         title_name.setText("投诉建议");
+        content_et.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                count_tv.setText(s.length() + "/300");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         initRecyclerView();
     }
 
@@ -166,8 +189,6 @@ public class FeedBackActivity extends BaseActivity{
         }).show();
     }
 
-
-
     @SuppressWarnings("AccessStaticViaInstance")
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -201,7 +222,7 @@ public class FeedBackActivity extends BaseActivity{
             Intent localIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, localUri);
             sendBroadcast(localIntent);
             mList.add(mList.size() - 1, photo_path);
-            if(mList.size() == 10){
+            if(mList.size() == 4){
                 mList.remove(mList.size() - 1);
             }
             mPhotoAdapter.notifyDataSetChanged();
