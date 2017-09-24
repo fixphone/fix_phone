@@ -50,6 +50,7 @@ public class MyActivity extends BaseActivity{
                 startActivity(ResetPassWordActivity.class);
                 break;
             case R.id.my_exit:
+                startActivity(LoginActivity.class);
                 break;
         }
     }

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/public_50dp"
+        layout="@layout/layout_title"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/public_15dp">
+
+        <ImageView
+            android:id="@+id/old_pass_clock_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/login_registration_phone"
+            android:layout_centerVertical="true"/>
+
+        <EditText
+            android:id="@+id/phone_num_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/app_text_color_black"
+            android:textSize="16sp"
+            android:layout_toRightOf="@id/old_pass_clock_iv"
+            android:paddingRight="@dimen/public_30dp"
+            android:singleLine="true"
+            android:hint="请输入手机号"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/public_15dp">
+
+        <ImageView
+            android:id="@+id/phone_num_clock_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/login_registration_phone"
+            android:layout_centerVertical="true"/>
+
+        <EditText
+            android:id="@+id/code_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/app_text_color_black"
+            android:textSize="16sp"
+            android:layout_toRightOf="@id/phone_num_clock_iv"
+            android:paddingRight="@dimen/public_50dp"
+            android:singleLine="true"
+            android:hint="请输入验证码"/>
+
+        <TextView
+            android:id="@+id/get_code_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#140FC1"
+            android:textSize="14sp"
+            android:text="获取验证码"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:paddingTop="@dimen/public_10dp"
+            android:paddingBottom="@dimen/public_15dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/public_15dp">
+
+        <ImageView
+            android:id="@+id/pass_clock_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/login_password"
+            android:layout_centerVertical="true"/>
+
+        <EditText
+            android:id="@+id/pass_word_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/app_text_color_black"
+            android:textSize="16sp"
+            android:layout_toRightOf="@id/pass_clock_iv"
+            android:paddingRight="@dimen/public_30dp"
+            android:singleLine="true"
+            android:password="true"
+            android:hint="输入密码"/>
+
+        <ImageView
+            android:id="@+id/eye_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/login_eyeclose"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:paddingLeft="@dimen/public_15dp"
+            android:paddingTop="@dimen/public_10dp"
+            android:paddingBottom="@dimen/public_10dp"/>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/confirm_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_color_white"
+        android:textSize="18sp"
+        android:text="确定"
+        android:background="@drawable/login_btn_bg"
+        android:layout_margin="@dimen/public_15dp"/>
+</LinearLayout>

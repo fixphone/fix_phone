@@ -13,6 +13,7 @@
         android:layout_alignParentLeft="true">
 
         <ImageView
+            android:id="@+id/title_back_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/navi_back"

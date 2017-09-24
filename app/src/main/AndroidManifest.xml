@@ -86,6 +86,15 @@
         <activity
             android:name=".ui.activity.AboutAppActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".ui.activity.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".ui.activity.RegistrationActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".ui.activity.ForgetPassActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <receiver
             android:name=".rong.SealNotificationReceiver"
