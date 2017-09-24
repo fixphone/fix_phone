@@ -1,7 +1,5 @@
 package dhcc.cn.com.fix_phone.mvp.presenter;
 
-import android.view.View;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -18,7 +16,6 @@ import dhcc.cn.com.fix_phone.bean.User;
 import dhcc.cn.com.fix_phone.bean.VideoInfo;
 import dhcc.cn.com.fix_phone.event.CirCleBusinessEvent;
 import dhcc.cn.com.fix_phone.event.CircleDetailAdEvent;
-import dhcc.cn.com.fix_phone.listener.IDataRequestListener;
 import dhcc.cn.com.fix_phone.mvp.contract.CircleContract;
 import dhcc.cn.com.fix_phone.mvp.modle.CircleModel;
 
@@ -39,10 +36,11 @@ public class CirclePresenter implements CircleContract.Presenter {
         EventBus.getDefault().register(this);
     }
 
+
+    @Override
     public void loadData(int loadType) {
 
     }
-
 
     /**
      * @param circleId
@@ -52,7 +50,7 @@ public class CirclePresenter implements CircleContract.Presenter {
      * @Description: 删除动态
      */
     public void deleteCircle(final String circleId) {
-        circleModel.deleteCircle(new IDataRequestListener() {
+        /*circleModel.deleteCircle(new IDataRequestListener() {
 
             @Override
             public void loadSuccess(Object object) {
@@ -60,7 +58,7 @@ public class CirclePresenter implements CircleContract.Presenter {
                     view.update2DeleteCircle(circleId);
                 }
             }
-        });
+        });*/
     }
 
     /**
@@ -93,7 +91,7 @@ public class CirclePresenter implements CircleContract.Presenter {
      * @Description: 取消点赞
      */
     public void deleteFavort(final int circlePosition, final String favortId) {
-        circleModel.deleteFavort(new IDataRequestListener() {
+        /*circleModel.deleteFavort(new IDataRequestListener() {
 
             @Override
             public void loadSuccess(Object object) {
@@ -101,7 +99,7 @@ public class CirclePresenter implements CircleContract.Presenter {
                     view.update2DeleteFavort(circlePosition, favortId);
                 }
             }
-        });
+        });*/
     }
 
     /**
@@ -113,25 +111,25 @@ public class CirclePresenter implements CircleContract.Presenter {
      * @Description: 增加评论
      */
     public void addComment(final String content, final CommentConfig config) {
-        if (config == null) {
+        /*if (config == null) {
             return;
         }
-//        circleModel.addComment(new IDataRequestListener() {
-//
-//            @Override
-//            public void loadSuccess(Object object) {
-//                CommentItem newItem = null;
-//                if (config.commentType == CommentConfig.Type.PUBLIC) {
-//                    newItem = DatasUtil.createPublicComment(content);
-//                } else if (config.commentType == CommentConfig.Type.REPLY) {
-//                    newItem = DatasUtil.createReplyComment(config.replyUser, content);
-//                }
-//                if (view != null) {
-//                    view.update2AddComment(config.circlePosition, newItem);
-//                }
-//            }
-//
-//        });
+        circleModel.addComment(new IDataRequestListener() {
+
+            @Override
+            public void loadSuccess(Object object) {
+                CommentItem newItem = null;
+                if (config.commentType == CommentConfig.Type.PUBLIC) {
+                    newItem = DatasUtil.createPublicComment(content);
+                } else if (config.commentType == CommentConfig.Type.REPLY) {
+                    newItem = DatasUtil.createReplyComment(config.replyUser, content);
+                }
+                if (view != null) {
+                    view.update2AddComment(config.circlePosition, newItem);
+                }
+            }
+
+        });*/
     }
 
     /**
@@ -143,7 +141,7 @@ public class CirclePresenter implements CircleContract.Presenter {
      * @Description: 删除评论
      */
     public void deleteComment(final int circlePosition, final String commentId) {
-        circleModel.deleteComment(new IDataRequestListener() {
+        /*circleModel.deleteComment(new IDataRequestListener() {
 
             @Override
             public void loadSuccess(Object object) {
@@ -152,16 +150,16 @@ public class CirclePresenter implements CircleContract.Presenter {
                 }
             }
 
-        });
+        });*/
     }
 
     /**
      * @param commentConfig
      */
     public void showEditTextBody(CommentConfig commentConfig) {
-        if (view != null) {
+        /*if (view != null) {
             view.updateEditTextBodyVisible(View.VISIBLE, commentConfig);
-        }
+        }*/
     }
 
 

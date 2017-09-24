@@ -4,12 +4,12 @@
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_ext_menu_container.xml"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\release\\layout\\rc_conversation_notification_container.xml",
-        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_conversation_notification_container.xml"
-    },
-    {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\release\\layout\\rc_ac_albums.xml",
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_ac_albums.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\release\\layout\\rc_conversation_notification_container.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_conversation_notification_container.xml"
     },
     {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\release\\layout\\rc_ext_indicator.xml",
@@ -116,12 +116,12 @@
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_item_conversation_member.xml"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\release\\layout\\rc_item_progress.xml",
-        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_item_progress.xml"
-    },
-    {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\release\\layout\\rc_fr_conversation_member_list.xml",
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_fr_conversation_member_list.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\release\\layout\\rc_item_progress.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_item_progress.xml"
     },
     {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\release\\layout\\rc_ext_sub_menu_item.xml",

@@ -9,6 +9,7 @@ import android.view.ViewStub;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -60,12 +61,15 @@ public abstract class CircleViewHolder extends RecyclerView.ViewHolder implement
     public LinearLayout digCommentBody;
     public View         digLine;
 
+    public LinearLayout mCommunication; //沟通
+
     /**
      * 评论列表
      */
     public CommentListView commentList;
     // ===========================
     public SnsPopupWindow  snsPopupWindow;
+
 
     public CircleViewHolder(View itemView, int viewType) {
         super(itemView);
@@ -88,6 +92,8 @@ public abstract class CircleViewHolder extends RecyclerView.ViewHolder implement
 
         digCommentBody = itemView.findViewById(R.id.digCommentBody);
         commentList = itemView.findViewById(R.id.commentList);
+
+        mCommunication = itemView.findViewById(R.id.communication);
 
         snsPopupWindow = new SnsPopupWindow(itemView.getContext());
 
@@ -140,6 +146,28 @@ public abstract class CircleViewHolder extends RecyclerView.ViewHolder implement
 
         handleChildData(circleItem);
 
+        handleListener(circleItem);
+
+    }
+
+    private void handleListener(CircleItem circleItem) {
+        final String phone = circleItem.getUser().FPhone;
+        final String fShareUrl = circleItem.getUser().FShareUrl;
+        mCommunication.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, "" + phone, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        headIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, "" + fShareUrl, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
     }
 
     protected void handleChildData(CircleItem circleItem) {
@@ -153,11 +181,7 @@ public abstract class CircleViewHolder extends RecyclerView.ViewHolder implement
     }
 
     private void handleUrlTipTv(CircleItem circleItem) {
-        if (circleItem.getType().equals("1")) {
-            urlTipTv.setVisibility(View.VISIBLE);
-        } else {
-            urlTipTv.setVisibility(View.GONE);
-        }
+        urlTipTv.setVisibility(View.INVISIBLE);
     }
 
     private void handleDigCommentBody(CircleItem circleItem) {

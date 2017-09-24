@@ -13,15 +13,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.malinskiy.superrecyclerview.SuperRecyclerView
-            android:id="@+id/recyclerView"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/refreshLayout"
+            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_moreProgress="@layout/view_more_progress"
-            app:mainLayoutId="@layout/layout_recyclerview_verticalscroll"
-            app:recyclerClipToPadding="true"
-            app:scrollbarStyle="outsideOverlay"/>
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#fff"
+                android:overScrollMode="never"/>
+
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
         <include
             layout="@layout/layout_editview"

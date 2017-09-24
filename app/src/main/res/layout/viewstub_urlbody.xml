@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dip"
         android:background="#eaeaea"
+        android:visibility="gone"
         android:orientation="horizontal"
         android:padding="5dip" >
 

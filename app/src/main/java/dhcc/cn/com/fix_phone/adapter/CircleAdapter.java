@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.youth.banner.Banner;
 
@@ -23,6 +24,7 @@ import dhcc.cn.com.fix_phone.bean.PhotoInfo;
 import dhcc.cn.com.fix_phone.mvp.presenter.CirclePresenter;
 import dhcc.cn.com.fix_phone.ui.activity.ImagePagerActivity;
 import dhcc.cn.com.fix_phone.ui.widget.MultiImageView;
+import dhcc.cn.com.fix_phone.ui.widget.SnsPopupWindow;
 
 /**
  * Created by yiwei on 16/5/17.
@@ -117,7 +119,27 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
                 default:
                     break;
             }
+
+            popupWindow(holder, (CircleItem) datas.get(realPosition));
         }
+    }
+
+    private void popupWindow(CircleViewHolder holder, final CircleItem circleItem) {
+        final SnsPopupWindow snsPopupWindow = holder.snsPopupWindow;
+        snsPopupWindow.update();
+        snsPopupWindow.setmItemClickListener(new SnsPopupWindow.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Toast.makeText(context, "" + position, Toast.LENGTH_SHORT).show();
+            }
+        });
+        holder.snsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //弹出popupwindow
+                snsPopupWindow.showPopupWindow(view);
+            }
+        });
     }
 
     private void imageViewClick(ImageViewHolder holder, final CircleItem circleItem) {

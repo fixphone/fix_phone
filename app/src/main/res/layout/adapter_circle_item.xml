@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@android:color/white"
-    android:orientation="vertical" >
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@android:color/white"
+              android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/headIv"
@@ -18,17 +19,17 @@
             android:layout_height="48dp"
             android:layout_marginRight="10dip"
             android:scaleType="fitCenter"
-            android:src="@drawable/im_pub_no_image" />
+            android:src="@drawable/im_pub_no_image"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/nameTv"
@@ -36,18 +37,43 @@
                     android:layout_height="wrap_content"
                     android:singleLine="true"
                     android:textColor="@color/color_8290AF"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"/>
 
                 <TextView
                     android:id="@+id/urlTipTv"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
+                    android:layout_weight="7"
                     android:ellipsize="end"
                     android:singleLine="true"
                     android:text="分享了一个连接"
                     android:textColor="@color/color_aeaeae"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp"
+                    android:visibility="invisible"/>
+
+                <LinearLayout
+                    android:id="@+id/communication"
+                    android:layout_width="0dp"
+                    android:layout_height="20dp"
+                    android:layout_weight="2">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="20dp"
+                        android:src="@drawable/button_talkicon"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:text="沟通"
+                        android:textColor="@color/de_title_bg"
+                        android:textSize="14sp"/>
+
+                </LinearLayout>
             </LinearLayout>
 
             <dhcc.cn.com.fix_phone.ui.widget.ExpandTextView
@@ -55,49 +81,50 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dip"
-                app:showLines="4"/>
+                app:showLines="3"/>
 
             <!-- 不同的地方 -->
-			<ViewStub 
-			    android:id="@+id/viewStub"
-			    android:layout_width="match_parent"
-			    android:layout_height="wrap_content"
+            <ViewStub
+                android:id="@+id/viewStub"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-			    />
+                />
             <!-- 地址、时间 、删除 、点赞、 评论 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/timeTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
+                    tools:text="ssss"
                     android:textColor="@color/im_font_color_text_hint"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
 
                 <TextView
                     android:id="@+id/deleteBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dip"
+                    android:background="@drawable/im_selector_social_dig_name_bg"
                     android:paddingLeft="3dp"
                     android:paddingRight="3dp"
                     android:text="删除"
-                    android:textSize="12sp"
                     android:textColor="@color/color_8290AF"
-                    android:background="@drawable/im_selector_social_dig_name_bg"
+                    android:textSize="12sp"
                     android:visibility="gone"/>
 
                 <View
                     android:layout_width="0dip"
                     android:layout_height="1dip"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"/>
 
-                <ImageView 
+                <ImageView
                     android:id="@+id/snsBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -108,13 +135,13 @@
                 android:id="@+id/digCommentBody"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:minHeight="10dip"
-                android:paddingLeft="12dip"
-                android:paddingTop="12dip"
-                android:paddingRight="12dip"
-                android:paddingBottom="8dip"
                 android:background="@drawable/im_distribute_comm_bg"
-                android:orientation="vertical" >
+                android:minHeight="10dip"
+                android:orientation="vertical"
+                android:paddingBottom="8dip"
+                android:paddingLeft="12dip"
+                android:paddingRight="12dip"
+                android:paddingTop="12dip">
 
                 <dhcc.cn.com.fix_phone.ui.widget.PraiseListView
                     android:id="@+id/praiseListView"
@@ -122,19 +149,20 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:lineSpacingMultiplier="1.1"
-                    android:textSize="14sp"
                     android:textColor="@color/praise_item"
+                    android:textSize="14sp"
                     app:item_color="@color/praise_item"
                     />
 
-                <View 
+                <View
                     android:id="@+id/lin_dig"
                     android:layout_width="match_parent"
                     android:layout_height="1dip"
-                    android:background="@color/im_line_color"
-                    android:layout_marginTop="5dip"
                     android:layout_marginBottom="5dip"
+                    android:layout_marginTop="5dip"
+                    android:background="@color/im_line_color"
                     />
+
                 <dhcc.cn.com.fix_phone.ui.widget.CommentListView
                     android:id="@+id/commentList"
                     android:layout_width="fill_parent"

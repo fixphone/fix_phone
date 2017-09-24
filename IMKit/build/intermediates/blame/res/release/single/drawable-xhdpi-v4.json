@@ -4,12 +4,12 @@
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_add_people.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_file_icon_word.png",
-        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_file_icon_word.png"
-    },
-    {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_icon_rt_message_right.png",
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_icon_rt_message_right.png"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_file_icon_word.png",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_file_icon_word.png"
     },
     {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_ext_voice_btn_normal.9.png",
@@ -44,24 +44,24 @@
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_conversation_list_msg_sending.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\u1f606.png",
-        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\drawable-xhdpi\\u1f606.png"
-    },
-    {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_ic_message_block.png",
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_ic_message_block.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\u1f62a.png",
-        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\drawable-xhdpi\\u1f62a.png"
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\u1f606.png",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\drawable-xhdpi\\u1f606.png"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_ic_checkbox_full.png",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_ic_checkbox_full.png"
     },
     {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_cs_follow_hover.png",
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_cs_follow_hover.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_ic_checkbox_full.png",
-        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\drawable-xhdpi\\rc_ic_checkbox_full.png"
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\u1f62a.png",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\drawable-xhdpi\\u1f62a.png"
     },
     {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\rc_keyboard.png",

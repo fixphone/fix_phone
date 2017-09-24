@@ -60,12 +60,12 @@
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_item_file_message.xml"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_input_pager_layout.xml",
-        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_input_pager_layout.xml"
-    },
-    {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_conversation_member.xml",
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_item_conversation_member.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_input_pager_layout.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_input_pager_layout.xml"
     },
     {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_picsel_grid_item.xml",
@@ -100,12 +100,12 @@
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_wi_file_list_adapter.xml"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_input_edit_text.xml",
-        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_ext_input_edit_text.xml"
-    },
-    {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_app_service_conversation.xml",
         "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_item_app_service_conversation.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_input_edit_text.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\src\\main\\res\\layout\\rc_ext_input_edit_text.xml"
     },
     {
         "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_system_conversation.xml",
