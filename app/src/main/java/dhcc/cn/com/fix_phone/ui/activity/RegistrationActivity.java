@@ -12,6 +12,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
+import dhcc.cn.com.fix_phone.remote.ApiManager;
 import dhcc.cn.com.fix_phone.ui.widget.MyCountDownTimer;
 import dhcc.cn.com.fix_phone.utils.AMUtils;
 
@@ -85,12 +86,16 @@ public class RegistrationActivity extends BaseActivity{
                 pass_word_et.setSelection(pass_word_et.getText().toString().length());
                 break;
             case R.id.confirm_btn:
-
+                registration();
                 break;
         }
     }
 
     private void getCode(){
+        ApiManager.Instance().getVerificationCodeResponse(null);
+    }
 
+    private void registration(){
+        ApiManager.Instance().register(null);
     }
 }

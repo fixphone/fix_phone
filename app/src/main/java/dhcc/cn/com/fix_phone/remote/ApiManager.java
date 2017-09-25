@@ -5,9 +5,15 @@ import org.greenrobot.eventbus.EventBus;
 import dhcc.cn.com.fix_phone.bean.CirCleADResponse;
 import dhcc.cn.com.fix_phone.bean.CircleBusiness;
 import dhcc.cn.com.fix_phone.bean.CircleDetailAd;
+import dhcc.cn.com.fix_phone.bean.RegisterRequest;
+import dhcc.cn.com.fix_phone.bean.RegisterResponse;
+import dhcc.cn.com.fix_phone.bean.TelCheckRequest;
+import dhcc.cn.com.fix_phone.bean.TelCheckResponse;
 import dhcc.cn.com.fix_phone.event.CirCleBusinessEvent;
 import dhcc.cn.com.fix_phone.event.CircleAdEvent;
 import dhcc.cn.com.fix_phone.event.CircleDetailAdEvent;
+import dhcc.cn.com.fix_phone.event.RegisterEvent;
+import dhcc.cn.com.fix_phone.event.TelCheckEvent;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -51,7 +57,6 @@ public class ApiManager {
         });
     }
 
-
     public void getCircleDetailAds(String typeId) {
         mApi.getCircleList(typeId).enqueue(new Callback<CircleDetailAd>() {
             @Override
@@ -90,5 +95,46 @@ public class ApiManager {
 
             }
         });
+    }
+
+
+    //用户中心
+    public void getVerificationCodeResponse(TelCheckRequest telCheck){
+        mApi.getVerificationCodeResponse(telCheck).enqueue(new Callback<TelCheckResponse>() {
+            @Override
+            public void onResponse(Call<TelCheckResponse> call, Response<TelCheckResponse> response) {
+                if(response.code() == 200){
+                    TelCheckResponse telCheckResponse = response.body();
+                    if(telCheckResponse != null && telCheckResponse.FIsSuccess){
+                        EventBus.getDefault().post(new TelCheckEvent(telCheckResponse));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TelCheckResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void register(RegisterRequest registerRequest){
+        mApi.register(registerRequest).enqueue(new Callback<RegisterResponse>() {
+            @Override
+            public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
+                if(response.code() == 200){
+                    RegisterResponse registerResponse = response.body();
+                    if(registerResponse != null){
+                        EventBus.getDefault().post(new RegisterEvent(registerResponse));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RegisterResponse> call, Throwable t) {
+
+            }
+        });
+
     }
 }
