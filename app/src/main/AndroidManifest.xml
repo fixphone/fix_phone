@@ -228,6 +228,7 @@
         <activity
             android:name=".ui.activity.ImagePagerActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ui.activity.BusinessActivity"/>
 
 
         <meta-data

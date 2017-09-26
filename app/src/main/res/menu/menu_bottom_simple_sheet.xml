@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_image"
+        android:title="发布图片"/>
+    <item
+        android:id="@+id/menu_video"
+        android:title="发布视频"/>
+    <item
+        android:id="@+id/menu_cancel"
+        android:title="取消"/>
+</menu>

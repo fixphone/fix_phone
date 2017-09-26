@@ -1,5 +1,7 @@
 package dhcc.cn.com.fix_phone.remote;
 
+import com.orhanobut.logger.Logger;
+
 import org.greenrobot.eventbus.EventBus;
 
 import dhcc.cn.com.fix_phone.bean.CirCleADResponse;
@@ -79,7 +81,7 @@ public class ApiManager {
     }
 
     public void getCircleBusinessList(int number, int pageIndex, int pageSize, String type, String where) {
-        mApi.getBusinessList(number,pageIndex,pageSize,type,where).enqueue(new Callback<CircleBusiness>() {
+        mApi.getBusinessList(number, pageIndex, pageSize, type, where).enqueue(new Callback<CircleBusiness>() {
             @Override
             public void onResponse(Call<CircleBusiness> call, Response<CircleBusiness> response) {
                 if (response.code() == 200) {
@@ -97,15 +99,47 @@ public class ApiManager {
         });
     }
 
+    public void getUserInfo(String useId) {
+        mApi.getUserInfo(useId).enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                Logger.json(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void register(RegisterRequest registerRequest) {
+        mApi.register(registerRequest).enqueue(new Callback<RegisterResponse>() {
+            @Override
+            public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
+                if (response.code() == 200) {
+                    RegisterResponse registerResponse = response.body();
+                    if (registerResponse != null) {
+                        EventBus.getDefault().post(new RegisterEvent(registerResponse));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RegisterResponse> call, Throwable t) {
+
+            }
+        });
+    }
 
     //用户中心
-    public void getVerificationCodeResponse(TelCheckRequest telCheck){
+    public void getVerificationCodeResponse(TelCheckRequest telCheck) {
         mApi.getVerificationCodeResponse(telCheck).enqueue(new Callback<TelCheckResponse>() {
             @Override
             public void onResponse(Call<TelCheckResponse> call, Response<TelCheckResponse> response) {
-                if(response.code() == 200){
+                if (response.code() == 200) {
                     TelCheckResponse telCheckResponse = response.body();
-                    if(telCheckResponse != null && telCheckResponse.FIsSuccess){
+                    if (telCheckResponse != null && telCheckResponse.FIsSuccess) {
                         EventBus.getDefault().post(new TelCheckEvent(telCheckResponse));
                     }
                 }
@@ -118,23 +152,4 @@ public class ApiManager {
         });
     }
 
-    public void register(RegisterRequest registerRequest){
-        mApi.register(registerRequest).enqueue(new Callback<RegisterResponse>() {
-            @Override
-            public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
-                if(response.code() == 200){
-                    RegisterResponse registerResponse = response.body();
-                    if(registerResponse != null){
-                        EventBus.getDefault().post(new RegisterEvent(registerResponse));
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<RegisterResponse> call, Throwable t) {
-
-            }
-        });
-
-    }
 }

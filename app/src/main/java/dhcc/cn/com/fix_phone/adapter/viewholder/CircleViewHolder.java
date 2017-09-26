@@ -1,6 +1,7 @@
 package dhcc.cn.com.fix_phone.adapter.viewholder;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -20,6 +21,7 @@ import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.bean.CircleItem;
 import dhcc.cn.com.fix_phone.bean.CommentItem;
 import dhcc.cn.com.fix_phone.bean.FavortItem;
+import dhcc.cn.com.fix_phone.ui.activity.BusinessActivity;
 import dhcc.cn.com.fix_phone.ui.widget.CommentListView;
 import dhcc.cn.com.fix_phone.ui.widget.ExpandTextView;
 import dhcc.cn.com.fix_phone.ui.widget.PraiseListView;
@@ -150,7 +152,7 @@ public abstract class CircleViewHolder extends RecyclerView.ViewHolder implement
 
     }
 
-    private void handleListener(CircleItem circleItem) {
+    private void handleListener(final CircleItem circleItem) {
         final String phone = circleItem.getUser().FPhone;
         final String fShareUrl = circleItem.getUser().FShareUrl;
         mCommunication.setOnClickListener(new View.OnClickListener() {
@@ -163,7 +165,12 @@ public abstract class CircleViewHolder extends RecyclerView.ViewHolder implement
         headIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "" + fShareUrl, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, BusinessActivity.class);
+                intent.putExtra("name",circleItem.getUser().FUserName).
+                        putExtra("headurl",circleItem.getUser().FHeadUrl).
+                        putExtra("userID",circleItem.getUser().FInterID);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
             }
         });
 
@@ -220,10 +227,10 @@ public abstract class CircleViewHolder extends RecyclerView.ViewHolder implement
     private void handleHeadIcon(CircleItem circleItem) {
         String name = circleItem.getUser().getFUserName();
         String headImg = circleItem.getUser().getFHeadUrl();
-        String createTime = circleItem.getUser().getFCreateDate();
+        String timeAgo = circleItem.getUser().getFTimeAgo();
         Glide.with(context).load(headImg).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.color.bg_no_photo).transform(new GlideCircleTransform(context)).into(headIv);
         nameTv.setText(name);
-        timeTv.setText(createTime);
+        timeTv.setText(timeAgo);
     }
 
     private void handleContent(final CircleItem circleItem) {

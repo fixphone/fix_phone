@@ -44,4 +44,7 @@ public interface Api {
                                          @Query("type") String type,
                                          @Query("where") String where);
 
+    //17.获取店铺资料
+    @GET("/Account/GetUserInfo")
+    Call<String> getUserInfo(@Query("userID") String userID);
 }

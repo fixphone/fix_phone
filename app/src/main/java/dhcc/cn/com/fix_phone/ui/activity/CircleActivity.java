@@ -2,10 +2,12 @@ package dhcc.cn.com.fix_phone.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -13,6 +15,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.rubensousa.bottomsheetbuilder.BottomSheetBuilder;
+import com.github.rubensousa.bottomsheetbuilder.BottomSheetMenuDialog;
+import com.github.rubensousa.bottomsheetbuilder.adapter.BottomSheetItemClickListener;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
@@ -30,7 +35,6 @@ import dhcc.cn.com.fix_phone.bean.FavortItem;
 import dhcc.cn.com.fix_phone.mvp.contract.CircleContract;
 import dhcc.cn.com.fix_phone.mvp.presenter.CirclePresenter;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
-import dhcc.cn.com.fix_phone.ui.widget.DivItemDecoration;
 
 /**
  * @author yiw
@@ -122,7 +126,29 @@ public class CircleActivity extends YWActivity implements CircleContract.View {
         mPublish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(CircleActivity.this, "" + "publish", Toast.LENGTH_SHORT).show();
+                BottomSheetMenuDialog dialog = new BottomSheetBuilder(CircleActivity.this)
+                        .setMode(BottomSheetBuilder.MODE_LIST)
+                        .setMenu(R.menu.menu_bottom_simple_sheet)
+                        .setItemClickListener(new BottomSheetItemClickListener() {
+                            @Override
+                            public void onBottomSheetItemClick(MenuItem item) {
+                                int id = item.getItemId();
+                                switch (id) {
+                                    case R.id.menu_image:
+
+                                        break;
+                                    case R.id.menu_video:
+
+                                        break;
+                                    case R.id.menu_cancel:
+                                        break;
+
+                                }
+                            }
+                        })
+                        .createDialog();
+
+                dialog.show();
             }
         });
 
@@ -151,7 +177,7 @@ public class CircleActivity extends YWActivity implements CircleContract.View {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new DivItemDecoration(2, true));
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         circleAdapter = new CircleAdapter(this);
         circleAdapter.setCirclePresenter(presenter);

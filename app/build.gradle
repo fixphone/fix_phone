@@ -80,6 +80,8 @@ dependencies {
 
     compile 'pub.devrel:easypermissions:0.2.1'
 
+    compile 'com.github.rubensousa:bottomsheetbuilder:1.6.0'
+
     compile ('com.github.bumptech.glide:okhttp3-integration:1.4.0'){
         exclude group: 'glide-parent'
     }
