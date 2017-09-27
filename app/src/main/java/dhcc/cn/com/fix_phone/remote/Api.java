@@ -4,6 +4,7 @@ package dhcc.cn.com.fix_phone.remote;
 import dhcc.cn.com.fix_phone.bean.CirCleADResponse;
 import dhcc.cn.com.fix_phone.bean.CircleBusiness;
 import dhcc.cn.com.fix_phone.bean.CircleDetailAd;
+import dhcc.cn.com.fix_phone.bean.LoginResponse;
 import dhcc.cn.com.fix_phone.bean.RegisterResponse;
 import dhcc.cn.com.fix_phone.bean.TelCheckResponse;
 import retrofit2.Call;
@@ -32,6 +33,11 @@ public interface Api {
                                     @Query("contactPhone") String contactPhone,
                                     @Query("postCode") String postCode,
                                     @Query("address") String address);
+
+    /*登录*/
+    @POST("/Account/Login")
+    Call<LoginResponse> login(@Query("phone") String phone,
+                              @Query("pwd") String pwd);
 
     //获取首页广告
     @GET("/Adver/GetIndexList")

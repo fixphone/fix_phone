@@ -130,7 +130,7 @@ public class RegistrationActivity extends BaseActivity{
         registerRequest.phone = phoneNum;
         registerRequest.postCode = code;
         registerRequest.pwd = passWord;
-//        ApiManager.Instance().register(phoneNum,passWord);
+        ApiManager.Instance().register(phoneNum,passWord, "", "", "", "", "", "", "");
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

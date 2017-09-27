@@ -2,17 +2,27 @@ package dhcc.cn.com.fix_phone.ui.activity;
 
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
+import dhcc.cn.com.fix_phone.event.LoginEvent;
+import dhcc.cn.com.fix_phone.event.RegisterEvent;
+import dhcc.cn.com.fix_phone.remote.ApiManager;
+import dhcc.cn.com.fix_phone.utils.AMUtils;
 
 /**
  * Created by Administrator on 2017/9/24 0024.
@@ -21,6 +31,7 @@ import dhcc.cn.com.fix_phone.base.BaseActivity;
 
 public class LoginActivity extends BaseActivity{
 
+    private static final String TAG = "LoginActivity";
     public static final int REG_CODE = 0x0001;
     private static final String IMG_TAG_HIDE = "hide";
     private static final String IMG_TAG_SHOW = "show";
@@ -36,6 +47,7 @@ public class LoginActivity extends BaseActivity{
     @BindView(R.id.eye_state)
     ImageView eye_state;
 
+    private Toast toast;
 
     @Override
     public int getLayoutId() {
@@ -48,6 +60,7 @@ public class LoginActivity extends BaseActivity{
         title_name.setText("");
         title_back_iv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.button_cancel_icon));
         eye_state.setTag(IMG_TAG_HIDE);
+        toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
     }
 
     @OnClick({R.id.title_back_iv, R.id.eye_state, R.id.login_confirm, R.id.registration_tv, R.id.forget_pass})
@@ -69,6 +82,7 @@ public class LoginActivity extends BaseActivity{
                 pass_word_et.setSelection(pass_word_et.getText().toString().length());
                 break;
             case R.id.login_confirm:
+                login();
                 break;
             case R.id.registration_tv:
                 startActivity(RegistrationActivity.class);
@@ -95,5 +109,26 @@ public class LoginActivity extends BaseActivity{
                 pass_word_et.setText(passWord);
             }
         }
+    }
+
+    public void login(){
+        String phone = phone_num_et.getText().toString();
+        String psw = pass_word_et.getText().toString();
+        if(!AMUtils.isMobile(phone)){
+            toast.setText("请填写正确的手机号码");
+            toast.show();
+            return;
+        }
+        if(TextUtils.isEmpty(psw)){
+            toast.setText("密码不能为空");
+            toast.show();
+            return;
+        }
+        ApiManager.Instance().login(phone, psw);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void login(LoginEvent loginEvent){
+        Log.d(TAG, "getCode: " + loginEvent.loginResponse.FMsg);
     }
 }

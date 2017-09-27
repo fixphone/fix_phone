@@ -2,10 +2,12 @@ package dhcc.cn.com.fix_phone.bean;
 
 import java.util.List;
 
+import dhcc.cn.com.fix_phone.base.BaseResponse;
+
 /**
  * 2017/9/17 12
  */
-public class TelCheckResponse {
+public class TelCheckResponse extends BaseResponse {
 
     /**
      * FInterID : 0
@@ -20,8 +22,6 @@ public class TelCheckResponse {
     public int FInterID;
     public boolean FIsFooterData;
     public boolean FIsNeedRelogin;
-    public boolean FIsSuccess;
-    public String  FMsg;
-    public String  FObject;
     public List<?> rows;
+    public Object FObject;
 }

@@ -7,11 +7,13 @@ import org.greenrobot.eventbus.EventBus;
 import dhcc.cn.com.fix_phone.bean.CirCleADResponse;
 import dhcc.cn.com.fix_phone.bean.CircleBusiness;
 import dhcc.cn.com.fix_phone.bean.CircleDetailAd;
+import dhcc.cn.com.fix_phone.bean.LoginResponse;
 import dhcc.cn.com.fix_phone.bean.RegisterResponse;
 import dhcc.cn.com.fix_phone.bean.TelCheckResponse;
 import dhcc.cn.com.fix_phone.event.CirCleBusinessEvent;
 import dhcc.cn.com.fix_phone.event.CircleAdEvent;
 import dhcc.cn.com.fix_phone.event.CircleDetailAdEvent;
+import dhcc.cn.com.fix_phone.event.LoginEvent;
 import dhcc.cn.com.fix_phone.event.RegisterEvent;
 import dhcc.cn.com.fix_phone.event.TelCheckEvent;
 import retrofit2.Call;
@@ -142,7 +144,7 @@ public class ApiManager {
                          String address) {
         mApi.register(phone, pwd, companyName, companyProfile, contact, contactMobile, contactPhone, postCode, address).enqueue(new Callback<RegisterResponse>() {
             @Override
-            public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
+        public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
                 if (response.code() == 200) {
                     RegisterResponse registerResponse = response.body();
                     if (registerResponse != null) {
@@ -158,5 +160,22 @@ public class ApiManager {
         });
     }
 
+    public void login(String phone, String psw){
+        mApi.login(phone, psw).enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                if (response.code() == 200 && response.body().FIsSuccess) {
+                    LoginResponse loginResponse = response.body();
+                    if (loginResponse != null) {
+                        EventBus.getDefault().post(new LoginEvent(loginResponse));
+                    }
+                }
+            }
 
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+
+            }
+        });
+    }
 }

@@ -1,9 +1,11 @@
 package dhcc.cn.com.fix_phone.bean;
 
+import dhcc.cn.com.fix_phone.base.BaseResponse;
+
 /**
  * 2017/9/17 12
  */
-public class RegisterResponse {
+public class RegisterResponse extends BaseResponse{
 
     /**
      * FIsSuccess : 操作是否成功
@@ -11,8 +13,6 @@ public class RegisterResponse {
      * FObject : {}
      */
 
-    public String FIsSuccess;
-    public String      FMsg;
     public FObjectBean FObject;
 
     public static class FObjectBean {
