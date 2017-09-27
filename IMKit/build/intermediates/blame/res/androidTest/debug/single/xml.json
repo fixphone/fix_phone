@@ -2,5 +2,9 @@
     {
         "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\xml\\rc_file_path.xml",
         "source": "E:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\debug\\res\\xml\\rc_file_path.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\xml\\rc_file_path.xml",
+        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\bundles\\debug\\res\\xml\\rc_file_path.xml"
     }
 ]

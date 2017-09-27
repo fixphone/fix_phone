@@ -19,7 +19,6 @@ import butterknife.OnClick;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
 import dhcc.cn.com.fix_phone.bean.RegisterRequest;
-import dhcc.cn.com.fix_phone.bean.TelCheckRequest;
 import dhcc.cn.com.fix_phone.event.RegisterEvent;
 import dhcc.cn.com.fix_phone.event.TelCheckEvent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
@@ -108,7 +107,7 @@ public class RegistrationActivity extends BaseActivity{
     }
 
     private void getCode(String phoneNum){
-        ApiManager.Instance().getVerificationCodeResponse(new TelCheckRequest(phoneNum));
+        ApiManager.Instance().getVerificationCodeResponse(phoneNum);
     }
 
     private void registration(String phoneNum, String code, String passWord){
@@ -131,7 +130,7 @@ public class RegistrationActivity extends BaseActivity{
         registerRequest.phone = phoneNum;
         registerRequest.postCode = code;
         registerRequest.pwd = passWord;
-        ApiManager.Instance().register(registerRequest);
+//        ApiManager.Instance().register(phoneNum,passWord);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

@@ -4,12 +4,9 @@ package dhcc.cn.com.fix_phone.remote;
 import dhcc.cn.com.fix_phone.bean.CirCleADResponse;
 import dhcc.cn.com.fix_phone.bean.CircleBusiness;
 import dhcc.cn.com.fix_phone.bean.CircleDetailAd;
-import dhcc.cn.com.fix_phone.bean.RegisterRequest;
 import dhcc.cn.com.fix_phone.bean.RegisterResponse;
-import dhcc.cn.com.fix_phone.bean.TelCheckRequest;
 import dhcc.cn.com.fix_phone.bean.TelCheckResponse;
 import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -22,11 +19,19 @@ public interface Api {
 
     /*获取验证码的返回消息*/
     @POST("/Account/SendRegisterPhoneCode")
-    Call<TelCheckResponse> getVerificationCodeResponse(@Body TelCheckRequest telCheck);
+    Call<TelCheckResponse> getVerificationCodeResponse(@Query("phone") String telCheck);
 
     /*注册*/
     @POST("/Account /RegisterByPhone")
-    Call<RegisterResponse> register(@Body RegisterRequest RegisterRequest);
+    Call<RegisterResponse> register(@Query("phone") String phone,
+                                    @Query("pwd") String pwd,
+                                    @Query("companyName") String companyName,
+                                    @Query("companyProfile") String companyProfile,
+                                    @Query("contact") String contact,
+                                    @Query("contactMobile") String contactMobile,
+                                    @Query("contactPhone") String contactPhone,
+                                    @Query("postCode") String postCode,
+                                    @Query("address") String address);
 
     //获取首页广告
     @GET("/Adver/GetIndexList")

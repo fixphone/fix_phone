@@ -7,9 +7,7 @@ import org.greenrobot.eventbus.EventBus;
 import dhcc.cn.com.fix_phone.bean.CirCleADResponse;
 import dhcc.cn.com.fix_phone.bean.CircleBusiness;
 import dhcc.cn.com.fix_phone.bean.CircleDetailAd;
-import dhcc.cn.com.fix_phone.bean.RegisterRequest;
 import dhcc.cn.com.fix_phone.bean.RegisterResponse;
-import dhcc.cn.com.fix_phone.bean.TelCheckRequest;
 import dhcc.cn.com.fix_phone.bean.TelCheckResponse;
 import dhcc.cn.com.fix_phone.event.CirCleBusinessEvent;
 import dhcc.cn.com.fix_phone.event.CircleAdEvent;
@@ -114,7 +112,7 @@ public class ApiManager {
     }
 
     //用户中心
-    public void getVerificationCodeResponse(TelCheckRequest telCheckRequest) {
+    public void getVerificationCodeResponse(String telCheckRequest) {
         mApi.getVerificationCodeResponse(telCheckRequest).enqueue(new Callback<TelCheckResponse>() {
             @Override
             public void onResponse(Call<TelCheckResponse> call, Response<TelCheckResponse> response) {
@@ -133,8 +131,16 @@ public class ApiManager {
         });
     }
 
-    public void register(RegisterRequest registerRequest) {
-        mApi.register(registerRequest).enqueue(new Callback<RegisterResponse>() {
+    public void register(String phone,
+                         String pwd,
+                         String companyName,
+                         String companyProfile,
+                         String contact,
+                         String contactMobile,
+                         String contactPhone,
+                         String postCode,
+                         String address) {
+        mApi.register(phone, pwd, companyName, companyProfile, contact, contactMobile, contactPhone, postCode, address).enqueue(new Callback<RegisterResponse>() {
             @Override
             public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
                 if (response.code() == 200) {
