@@ -21,13 +21,14 @@ import dhcc.cn.com.fix_phone.base.BaseActivity;
 
 public class LoginActivity extends BaseActivity{
 
+    public static final int REG_CODE = 0x0001;
     private static final String IMG_TAG_HIDE = "hide";
     private static final String IMG_TAG_SHOW = "show";
 
     @BindView(R.id.title_name)
     TextView title_name;
     @BindView(R.id.phone_num_et)
-    EditText phone_num_tv;
+    EditText phone_num_et;
     @BindView(R.id.pass_word_et)
     EditText pass_word_et;
     @BindView(R.id.title_back_iv)
@@ -80,6 +81,19 @@ public class LoginActivity extends BaseActivity{
 
     private void startActivity(Class clazz){
         Intent intent = new Intent(this, clazz);
-        startActivity(intent);
+        startActivityForResult(intent, REG_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REG_CODE){
+            if(resultCode == RegistrationActivity.REG_SUCCESS){
+                String phone = data.getStringExtra("phone");
+                String passWord = data.getStringExtra("passWord");
+                phone_num_et.setText(phone);
+                pass_word_et.setText(passWord);
+            }
+        }
     }
 }

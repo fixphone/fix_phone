@@ -113,6 +113,26 @@ public class ApiManager {
         });
     }
 
+    //用户中心
+    public void getVerificationCodeResponse(TelCheckRequest telCheckRequest) {
+        mApi.getVerificationCodeResponse(telCheckRequest).enqueue(new Callback<TelCheckResponse>() {
+            @Override
+            public void onResponse(Call<TelCheckResponse> call, Response<TelCheckResponse> response) {
+                if (response.code() == 200) {
+                    TelCheckResponse telCheckResponse = response.body();
+                    if (telCheckResponse != null && telCheckResponse.FIsSuccess) {
+                        EventBus.getDefault().post(new TelCheckEvent(telCheckResponse));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TelCheckResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
     public void register(RegisterRequest registerRequest) {
         mApi.register(registerRequest).enqueue(new Callback<RegisterResponse>() {
             @Override
@@ -132,24 +152,5 @@ public class ApiManager {
         });
     }
 
-    //用户中心
-    public void getVerificationCodeResponse(TelCheckRequest telCheck) {
-        mApi.getVerificationCodeResponse(telCheck).enqueue(new Callback<TelCheckResponse>() {
-            @Override
-            public void onResponse(Call<TelCheckResponse> call, Response<TelCheckResponse> response) {
-                if (response.code() == 200) {
-                    TelCheckResponse telCheckResponse = response.body();
-                    if (telCheckResponse != null && telCheckResponse.FIsSuccess) {
-                        EventBus.getDefault().post(new TelCheckEvent(telCheckResponse));
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<TelCheckResponse> call, Throwable t) {
-
-            }
-        });
-    }
 
 }

@@ -1,12 +1,19 @@
 package dhcc.cn.com.fix_phone.bean;
 
+import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.sql.language.Select;
+import com.raizlabs.android.dbflow.structure.BaseModel;
+
 /**
  * @author yiw
  * @ClassName: User
  * @Description: TODO(这里用一句话描述这个类的作用)
  * @date 2015-12-28 下午3:45:04
  */
-public class User {
+@Table(database = AppDatabase.class)
+public class User extends BaseModel {
     /**
      * FCompanyName : 18899767529
      * FContent : 估计
@@ -27,24 +34,64 @@ public class User {
      * FUserTypeNumber : VIP
      */
 
+    @Column
     public  String  FCompanyName;
+
+    @Column
     public  String  FContent;
+
+    @Column
     public  String  FCreateDate;
+
+    @Column
     public  int     FCreatorID;
+
+    @Column
     public  String  FHeadUrl;
+
+    @Column
     public  String  FInterID;
+
+    @Column
     public  boolean FIsFooterData;
+
+    @PrimaryKey
+    @Column
     public  String  FPhone;
+
+    @Column
     public  String  FShareUrl;
+
+    @Column
     public  String  FTimeAgo;
+
+    @Column
     public  int     FTypeID;
+
+    @Column
     public  String  FTypeName;
+
+    @Column
     public  String  FTypeNumber;
+
+    @Column
     public  String  FUserName;
+
+    @Column
     public  int     FUserType;
+
+    @Column
     public  String  FUserTypeName;
+
+    @Column
     public  String  FUserTypeNumber;
-    private boolean mExpand;
+
+    @Column
+    public boolean mExpand;
+
+    public static User getUser(String FPhone) {
+        return new Select().from(User.class).where(User_Table.FPhone.eq(FPhone)).querySingle();
+    }
 
     public String getFCompanyName() {
         return FCompanyName;

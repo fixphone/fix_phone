@@ -1,10 +1,6 @@
 [
     {
-        "merged": "G:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\rc_btn_file_list_send.xml",
-        "source": "G:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\debug\\res\\color\\rc_btn_file_list_send.xml"
-    },
-    {
-        "merged": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\rc_btn_file_list_send.xml",
-        "source": "C:\\Users\\admin\\Desktop\\fix_phone\\IMKit\\build\\intermediates\\bundles\\debug\\res\\color\\rc_btn_file_list_send.xml"
+        "merged": "E:\\fixPhone\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\rc_btn_file_list_send.xml",
+        "source": "E:\\fixPhone\\IMKit\\build\\intermediates\\bundles\\debug\\res\\color\\rc_btn_file_list_send.xml"
     }
 ]

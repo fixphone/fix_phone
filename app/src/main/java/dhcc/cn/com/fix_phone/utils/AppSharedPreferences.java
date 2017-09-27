@@ -40,10 +40,25 @@ public class AppSharedPreferences {
 		return "";
 	}
 
+	public boolean getBoolean(String key) {
+		if (null == sharedPreferences) {
+			return false;
+		}
+		return sharedPreferences.getBoolean(key, false);
+	}
+
 	public void set(String key, String value) {
 		if (null != sharedPreferences) {
 			SharedPreferences.Editor editor = sharedPreferences.edit();
 			editor.putString(key, value);
+			editor.commit();
+		}
+	}
+
+	public void setBoolean(String key, boolean value) {
+		if (null != sharedPreferences) {
+			SharedPreferences.Editor editor = sharedPreferences.edit();
+			editor.putBoolean(key, value);
 			editor.commit();
 		}
 	}
