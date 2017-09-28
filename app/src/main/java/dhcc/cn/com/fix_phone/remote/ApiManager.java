@@ -133,16 +133,8 @@ public class ApiManager {
         });
     }
 
-    public void register(String phone,
-                         String pwd,
-                         String companyName,
-                         String companyProfile,
-                         String contact,
-                         String contactMobile,
-                         String contactPhone,
-                         String postCode,
-                         String address) {
-        mApi.register(phone, pwd, companyName, companyProfile, contact, contactMobile, contactPhone, postCode, address).enqueue(new Callback<RegisterResponse>() {
+    public void register(String phone,String pwd) {
+        mApi.register(phone, pwd).enqueue(new Callback<RegisterResponse>() {
             @Override
         public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
                 if (response.code() == 200) {

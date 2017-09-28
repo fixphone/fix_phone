@@ -25,14 +25,7 @@ public interface Api {
     /*注册*/
     @POST("/Account /RegisterByPhone")
     Call<RegisterResponse> register(@Query("phone") String phone,
-                                    @Query("pwd") String pwd,
-                                    @Query("companyName") String companyName,
-                                    @Query("companyProfile") String companyProfile,
-                                    @Query("contact") String contact,
-                                    @Query("contactMobile") String contactMobile,
-                                    @Query("contactPhone") String contactPhone,
-                                    @Query("postCode") String postCode,
-                                    @Query("address") String address);
+                                    @Query("pwd") String pwd);
 
     /*登录*/
     @POST("/Account/Login")
