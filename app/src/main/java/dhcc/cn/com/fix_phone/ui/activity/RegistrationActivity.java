@@ -27,32 +27,31 @@ import dhcc.cn.com.fix_phone.utils.AMUtils;
 
 /**
  * Created by Administrator on 2017/9/24 0024.
- *
  */
 
-public class RegistrationActivity extends BaseActivity{
+public class RegistrationActivity extends BaseActivity {
 
     private static final String TAG = "RegistrationActivity";
 
-    public static final int REG_SUCCESS = 0x0003;
+    public static final  int    REG_SUCCESS  = 0x0003;
     private static final String IMG_TAG_HIDE = "hide";
     private static final String IMG_TAG_SHOW = "show";
 
     @BindView(R.id.title_name)
-    TextView title_name;
+    TextView  title_name;
     @BindView(R.id.phone_num_et)
-    EditText phone_num_et;
+    EditText  phone_num_et;
     @BindView(R.id.code_et)
-    EditText code_et;
+    EditText  code_et;
     @BindView(R.id.get_code_tv)
-    TextView get_code_tv;
+    TextView  get_code_tv;
     @BindView(R.id.pass_word_et)
-    EditText pass_word_et;
+    EditText  pass_word_et;
     @BindView(R.id.eye_state)
     ImageView eye_state;
 
     private MyCountDownTimer myCountDownTimer;
-    private Toast toast;
+    private Toast            toast;
 
     @Override
     public int getLayoutId() {
@@ -69,13 +68,13 @@ public class RegistrationActivity extends BaseActivity{
     }
 
     @OnClick({R.id.title_back, R.id.get_code_tv, R.id.eye_state, R.id.confirm_btn})
-    public void onClick(View view){
-        switch (view.getId()){
+    public void onClick(View view) {
+        switch (view.getId()) {
             case R.id.title_back:
                 finish();
                 break;
             case R.id.get_code_tv:
-                if(!AMUtils.isMobile(phone_num_et.getText().toString())){
+                if (!AMUtils.isMobile(phone_num_et.getText().toString())) {
                     toast.setText("请填写正确的手机号码");
                     toast.show();
                     return;
@@ -106,22 +105,22 @@ public class RegistrationActivity extends BaseActivity{
         }
     }
 
-    private void getCode(String phoneNum){
+    private void getCode(String phoneNum) {
         ApiManager.Instance().getVerificationCodeResponse(phoneNum);
     }
 
-    private void registration(String phoneNum, String code, String passWord){
-        if(!AMUtils.isMobile(phoneNum)){
+    private void registration(String phoneNum, String code, String passWord) {
+        if (!AMUtils.isMobile(phoneNum)) {
             toast.setText("请填写正确的手机号码");
             toast.show();
             return;
         }
-        if(TextUtils.isEmpty(code)){
+        if (TextUtils.isEmpty(code)) {
             toast.setText("请填写验证码");
             toast.show();
             return;
         }
-        if(TextUtils.isEmpty(passWord)){
+        if (TextUtils.isEmpty(passWord)) {
             toast.setText("密码不能为空");
             toast.show();
             return;
@@ -130,16 +129,16 @@ public class RegistrationActivity extends BaseActivity{
         registerRequest.phone = phoneNum;
         registerRequest.postCode = code;
         registerRequest.pwd = passWord;
-        ApiManager.Instance().register(phoneNum,passWord, "", "", "", "", "", "", "");
+        ApiManager.Instance().register(phoneNum, passWord);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void getCode(TelCheckEvent telCheckEvent){
+    public void getCode(TelCheckEvent telCheckEvent) {
         Log.d(TAG, "getCode: " + telCheckEvent.telCheckResponse.FMsg);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void getCode(RegisterEvent registerEvent){
+    public void getCode(RegisterEvent registerEvent) {
         Log.d(TAG, "getCode: " + registerEvent.registerResponse.FMsg);
         Intent intent = getIntent();
         intent.putExtra("phone", phone_num_et.getText().toString());
