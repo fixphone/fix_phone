@@ -17,6 +17,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
+import dhcc.cn.com.fix_phone.bean.LoginResponse;
 import dhcc.cn.com.fix_phone.remote.ApiService;
 import dhcc.cn.com.fix_phone.rong.SealAppContext;
 import dhcc.cn.com.fix_phone.rong.SealUserInfoManager;
@@ -36,11 +37,13 @@ import io.rong.push.RongPushClient;
  * 2017/9/16 22
  */
 public class MyApplication extends MultiDexApplication {
+    private static final String TAG = "MyApplication";
 
-    private static Context mContext;
-    private static Handler mHandler;
-    private static long    mMainThreadId;
-    private static DisplayImageOptions options;
+    private static Context                 mContext;
+    private static Handler                 mHandler;
+    private static long                    mMainThreadId;
+    private static DisplayImageOptions     options;
+    private static LoginResponse loginResponse;
 
     public static Context getContext() {
         return mContext;
@@ -77,7 +80,7 @@ public class MyApplication extends MultiDexApplication {
         setGlobalRefreshStyle();
 
         if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
-//            LeakCanary.install(this);//内存泄露检测
+            //            LeakCanary.install(this);//内存泄露检测
             RongPushClient.registerHWPush(this);
             RongPushClient.registerMiPush(this, "2882303761517473625", "5451747338625");
             /**
@@ -158,5 +161,13 @@ public class MyApplication extends MultiDexApplication {
                 return new ClassicsFooter(mContext);
             }
         });
+    }
+
+    public static LoginResponse getLoginResponse() {
+        return loginResponse;
+    }
+
+    public static void setLoginResponse(LoginResponse loginResponse) {
+        MyApplication.loginResponse = loginResponse;
     }
 }

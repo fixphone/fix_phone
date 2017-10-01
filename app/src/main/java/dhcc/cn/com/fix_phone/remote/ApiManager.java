@@ -1,15 +1,16 @@
 package dhcc.cn.com.fix_phone.remote;
 
-import com.orhanobut.logger.Logger;
-
 import org.greenrobot.eventbus.EventBus;
 
+import dhcc.cn.com.fix_phone.MyApplication;
+import dhcc.cn.com.fix_phone.bean.BusinessResponse;
 import dhcc.cn.com.fix_phone.bean.CirCleADResponse;
 import dhcc.cn.com.fix_phone.bean.CircleBusiness;
 import dhcc.cn.com.fix_phone.bean.CircleDetailAd;
 import dhcc.cn.com.fix_phone.bean.LoginResponse;
 import dhcc.cn.com.fix_phone.bean.RegisterResponse;
 import dhcc.cn.com.fix_phone.bean.TelCheckResponse;
+import dhcc.cn.com.fix_phone.event.BusinessEvent;
 import dhcc.cn.com.fix_phone.event.CirCleBusinessEvent;
 import dhcc.cn.com.fix_phone.event.CircleAdEvent;
 import dhcc.cn.com.fix_phone.event.CircleDetailAdEvent;
@@ -25,6 +26,10 @@ import retrofit2.Response;
  */
 public class ApiManager {
     private Api mApi;
+
+    private static LoginResponse.LoginBody getLoginInfo() {
+        return MyApplication.getLoginResponse().FObject;
+    }
 
     private ApiManager() {
         mApi = ApiService.Instance().getService();
@@ -99,15 +104,20 @@ public class ApiManager {
         });
     }
 
-    public void getUserInfo(String useId) {
-        mApi.getUserInfo(useId).enqueue(new Callback<String>() {
+    public void getUserInfo() {
+        mApi.getUserInfo(getLoginInfo().accessToken, getLoginInfo().userID).enqueue(new Callback<BusinessResponse>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                Logger.json(response.body());
+            public void onResponse(Call<BusinessResponse> call, Response<BusinessResponse> response) {
+                if (response.code() == 200) {
+                    BusinessResponse businessResponse = response.body();
+                    if (businessResponse != null && businessResponse.FIsSuccess) {
+                        EventBus.getDefault().post(new BusinessEvent(response.body()));
+                    }
+                }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<BusinessResponse> call, Throwable t) {
 
             }
         });
@@ -133,10 +143,10 @@ public class ApiManager {
         });
     }
 
-    public void register(String phone,String pwd) {
-        mApi.register(phone, pwd).enqueue(new Callback<RegisterResponse>() {
+    public void register(String phone, String code, String pwd) {
+        mApi.register(phone, code, pwd).enqueue(new Callback<RegisterResponse>() {
             @Override
-        public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
+            public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
                 if (response.code() == 200) {
                     RegisterResponse registerResponse = response.body();
                     if (registerResponse != null) {
@@ -152,7 +162,7 @@ public class ApiManager {
         });
     }
 
-    public void login(String phone, String psw){
+    public void login(String phone, String psw) {
         mApi.login(phone, psw).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {

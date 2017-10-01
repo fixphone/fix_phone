@@ -44,7 +44,6 @@ public class BusinessActivity extends BaseActivity {
     Toolbar   mToolbar;
     private String mName;
     private String mHeadurl;
-    private String mUserID;
 
     @Override
     public int getLayoutId() {
@@ -56,7 +55,6 @@ public class BusinessActivity extends BaseActivity {
         Intent intent = getIntent();
         mName = intent.getStringExtra("name");
         mHeadurl = intent.getStringExtra("headurl");
-        mUserID = intent.getStringExtra("userID");
         EventBus.getDefault().register(this);
     }
 
@@ -68,7 +66,7 @@ public class BusinessActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        ApiManager.Instance().getUserInfo(mUserID);
+        ApiManager.Instance().getUserInfo();
     }
 
     @Override

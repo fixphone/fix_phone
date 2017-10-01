@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -18,7 +19,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
-import dhcc.cn.com.fix_phone.bean.RegisterRequest;
 import dhcc.cn.com.fix_phone.event.RegisterEvent;
 import dhcc.cn.com.fix_phone.event.TelCheckEvent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
@@ -56,6 +56,18 @@ public class RegistrationActivity extends BaseActivity {
     @Override
     public int getLayoutId() {
         return R.layout.activity_registration;
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void destroy() {
+        super.destroy();
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -125,11 +137,7 @@ public class RegistrationActivity extends BaseActivity {
             toast.show();
             return;
         }
-        RegisterRequest registerRequest = new RegisterRequest();
-        registerRequest.phone = phoneNum;
-        registerRequest.postCode = code;
-        registerRequest.pwd = passWord;
-        ApiManager.Instance().register(phoneNum, passWord);
+        ApiManager.Instance().register(phoneNum, code, passWord);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -144,5 +152,6 @@ public class RegistrationActivity extends BaseActivity {
         intent.putExtra("phone", phone_num_et.getText().toString());
         intent.putExtra("passWord", pass_word_et.getText().toString());
         setResult(REG_SUCCESS, intent);
+        finish();
     }
 }

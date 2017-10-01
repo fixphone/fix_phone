@@ -12,15 +12,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import dhcc.cn.com.fix_phone.MyApplication;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
 import dhcc.cn.com.fix_phone.event.LoginEvent;
-import dhcc.cn.com.fix_phone.event.RegisterEvent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
 import dhcc.cn.com.fix_phone.utils.AMUtils;
 
@@ -48,6 +49,12 @@ public class LoginActivity extends BaseActivity{
     ImageView eye_state;
 
     private Toast toast;
+
+    @Override
+    protected void init() {
+        super.init();
+        EventBus.getDefault().register(this);
+    }
 
     @Override
     public int getLayoutId() {
@@ -128,7 +135,16 @@ public class LoginActivity extends BaseActivity{
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void login(LoginEvent loginEvent){
+    public void loginResult(LoginEvent loginEvent){
         Log.d(TAG, "getCode: " + loginEvent.loginResponse.FMsg);
+        MyApplication.setLoginResponse(loginEvent.loginResponse);
+        startActivity(MainActivity.class);
+        finish();
+    }
+
+    @Override
+    protected void destroy() {
+        super.destroy();
+        EventBus.getDefault().unregister(this);
     }
 }

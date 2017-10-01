@@ -13,12 +13,23 @@ public class LoginResponse extends BaseResponse {
     @SerializedName("FObject")
     public LoginBody FObject;
 
-    public class LoginBody{
+    public static class LoginBody{
 
         public String userID;
         public String phone;
         public String accessToken;
         public String refreshToken;
         public String expireIn;
+
+        @Override
+        public String toString() {
+            return "LoginBody{" +
+                    "userID='" + userID + '\'' +
+                    ", phone='" + phone + '\'' +
+                    ", accessToken='" + accessToken + '\'' +
+                    ", refreshToken='" + refreshToken + '\'' +
+                    ", expireIn='" + expireIn + '\'' +
+                    '}';
+        }
     }
 }
