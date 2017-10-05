@@ -2,6 +2,7 @@ package dhcc.cn.com.fix_phone.ui.activity;
 
 import android.content.Intent;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,15 +14,22 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.List;
+
 import butterknife.BindView;
+import butterknife.OnClick;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
+import dhcc.cn.com.fix_phone.base.GlideImageLoader;
+import dhcc.cn.com.fix_phone.bean.BusinessResponse;
+import dhcc.cn.com.fix_phone.event.BusinessEvent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
 
 /**
  * 2017/9/26 21
  */
 public class BusinessActivity extends BaseActivity {
+    private static final String TAG = "BusinessActivity";
     @BindView(R.id.imageview_head)
     ImageView mImageviewHead;
     @BindView(R.id.textView_product)
@@ -44,6 +52,7 @@ public class BusinessActivity extends BaseActivity {
     Toolbar   mToolbar;
     private String mName;
     private String mHeadurl;
+    private String mUserID;
 
     @Override
     public int getLayoutId() {
@@ -55,6 +64,8 @@ public class BusinessActivity extends BaseActivity {
         Intent intent = getIntent();
         mName = intent.getStringExtra("name");
         mHeadurl = intent.getStringExtra("headurl");
+        mUserID = intent.getStringExtra("userID");
+        Log.d(TAG, "init: " + mUserID);
         EventBus.getDefault().register(this);
     }
 
@@ -66,7 +77,7 @@ public class BusinessActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        ApiManager.Instance().getUserInfo();
+        ApiManager.Instance().getUserInfo(mUserID);
     }
 
     @Override
@@ -86,7 +97,37 @@ public class BusinessActivity extends BaseActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onShowAd(String event) {
+    public void onShowAd(BusinessEvent event) {
+        BusinessResponse response = event.mResponse;
+        String companyProfile = response.FObject.companyProfile;
+        mTextViewDesc.setText(companyProfile);
 
+        List<String> imageList = response.FObject.productList;
+        mBanner.setImageLoader(new GlideImageLoader());
+        mBanner.setImages(imageList);
+        mBanner.start();
+    }
+
+    @OnClick({R.id.textView_circle, R.id.textView_home, R.id.textView_product, R.id.textView_phone})
+    public void onClick(View view) {
+        int id = view.getId();
+        switch (id) {
+            case R.id.textView_circle:
+                finish();
+                break;
+            case R.id.textView_home:
+                startActivity(new Intent(BusinessActivity.this, MainActivity.class));
+                break;
+            case R.id.textView_product:
+                Intent intent = new Intent(BusinessActivity.this, ProductActivity.class);
+                intent.putExtra("name",mName).
+                        putExtra("headurl",mHeadurl).
+                        putExtra("userID",mUserID);
+                startActivity(intent);
+                break;
+            case R.id.textView_phone:
+
+                break;
+        }
     }
 }

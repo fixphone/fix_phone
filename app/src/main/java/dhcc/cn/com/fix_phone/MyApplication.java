@@ -39,11 +39,12 @@ import io.rong.push.RongPushClient;
 public class MyApplication extends MultiDexApplication {
     private static final String TAG = "MyApplication";
 
-    private static Context                 mContext;
-    private static Handler                 mHandler;
-    private static long                    mMainThreadId;
-    private static DisplayImageOptions     options;
-    private static LoginResponse loginResponse;
+    private static Context             mContext;
+    private static Handler             mHandler;
+    private static long                mMainThreadId;
+    private static DisplayImageOptions options;
+    private static LoginResponse       loginResponse;
+    private static String              currentTypeId;
 
     public static Context getContext() {
         return mContext;
@@ -169,5 +170,13 @@ public class MyApplication extends MultiDexApplication {
 
     public static void setLoginResponse(LoginResponse loginResponse) {
         MyApplication.loginResponse = loginResponse;
+    }
+
+    public static String getCurrentTypeId() {
+        return currentTypeId;
+    }
+
+    public static void setCurrentTypeId(String currentTypeId) {
+        MyApplication.currentTypeId = currentTypeId;
     }
 }

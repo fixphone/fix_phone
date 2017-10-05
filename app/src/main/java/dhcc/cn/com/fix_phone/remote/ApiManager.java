@@ -104,8 +104,8 @@ public class ApiManager {
         });
     }
 
-    public void getUserInfo() {
-        mApi.getUserInfo(getLoginInfo().accessToken, getLoginInfo().userID).enqueue(new Callback<BusinessResponse>() {
+    public void getUserInfo(String useId) {
+        mApi.getUserInfo(getLoginInfo().accessToken, useId).enqueue(new Callback<BusinessResponse>() {
             @Override
             public void onResponse(Call<BusinessResponse> call, Response<BusinessResponse> response) {
                 if (response.code() == 200) {
@@ -180,4 +180,39 @@ public class ApiManager {
             }
         });
     }
+
+    public void GetStoreList(String useId) {
+        mApi.GetStoreList(useId).enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //19.获取产品图片
+    public void GetIconList(String userID,
+                            String type,
+                            int pageIndex,
+                            int pageSize,
+                            int getCount,
+                            String where) {
+        mApi.GetIconList(getLoginInfo().accessToken, userID, type, pageIndex, pageSize, getCount, where).enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+    }
+
 }

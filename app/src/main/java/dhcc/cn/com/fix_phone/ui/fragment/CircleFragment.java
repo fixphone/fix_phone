@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import dhcc.cn.com.fix_phone.MyApplication;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.adapter.CircleFragmentAdapter;
 import dhcc.cn.com.fix_phone.base.BaseFragment;
@@ -123,6 +124,7 @@ public class CircleFragment extends BaseFragment implements CircleFragmentAdapte
 
     @Override
     public void onCircleItemClick(BaseQuickAdapter adapter, View view, String typeId, String content) {
-        startActivity(new Intent(_mActivity, CircleActivity.class).putExtra("data",typeId).putExtra("name",content));
+        MyApplication.setCurrentTypeId(typeId);
+        startActivity(new Intent(_mActivity, CircleActivity.class).putExtra("data", typeId).putExtra("name", content));
     }
 }

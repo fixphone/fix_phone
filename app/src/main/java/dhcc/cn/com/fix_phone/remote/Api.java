@@ -95,9 +95,9 @@ public interface Api {
     Call<String> GetIconList(@Header("accessToken") String accessToken,
                              @Query("userID") String userID,
                              @Query("type") String type,
-                             @Query("pageIndex") String pageIndex,
-                             @Query("pageSize") String pageSize,
-                             @Query("getCount") String getCount,
+                             @Query("pageIndex") int pageIndex,
+                             @Query("pageSize") int pageSize,
+                             @Query("getCount") int getCount,
                              @Query("where") String where);
 
     //20.上传产品图片 --头像的二进制数据
