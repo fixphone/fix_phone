@@ -7,7 +7,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
-import dhcc.cn.com.fix_phone.bean.AddFavoResponse;
+import dhcc.cn.com.fix_phone.bean.FavoResponse;
 import dhcc.cn.com.fix_phone.bean.CircleBusiness;
 import dhcc.cn.com.fix_phone.bean.CircleDetailAd;
 import dhcc.cn.com.fix_phone.bean.CircleItem;
@@ -15,7 +15,7 @@ import dhcc.cn.com.fix_phone.bean.CommentConfig;
 import dhcc.cn.com.fix_phone.bean.PhotoInfo;
 import dhcc.cn.com.fix_phone.bean.User;
 import dhcc.cn.com.fix_phone.bean.VideoInfo;
-import dhcc.cn.com.fix_phone.event.AddFavoResponseEvent;
+import dhcc.cn.com.fix_phone.event.FavoResponseEvent;
 import dhcc.cn.com.fix_phone.event.CirCleBusinessEvent;
 import dhcc.cn.com.fix_phone.event.CircleDetailAdEvent;
 import dhcc.cn.com.fix_phone.mvp.contract.CircleContract;
@@ -187,8 +187,8 @@ public class CirclePresenter implements CircleContract.Presenter {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void addFavo(AddFavoResponseEvent event) {
-        AddFavoResponse response = event.mResponse;
+    public void addFavo(FavoResponseEvent event) {
+        FavoResponse response = event.mResponse;
         view.showError(response.FMsg);
     }
 

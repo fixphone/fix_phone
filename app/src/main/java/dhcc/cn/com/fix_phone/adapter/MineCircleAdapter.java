@@ -82,6 +82,14 @@ public class MineCircleAdapter extends BaseRecycleViewAdapter {
                 break;
         }
 
+        holder.snsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mDeleteClickListener != null) {
+                    mDeleteClickListener.onDelete(position, (CircleItem) datas.get(position));
+                }
+            }
+        });
 
     }
 
@@ -106,4 +114,13 @@ public class MineCircleAdapter extends BaseRecycleViewAdapter {
         return datas.size();//有head需要加1
     }
 
+    public interface OnDeleteClickListener{
+        void onDelete(int position , CircleItem item);
+    }
+
+    private OnDeleteClickListener mDeleteClickListener;
+
+    public void setDeleteClickListener(OnDeleteClickListener deleteClickListener) {
+        mDeleteClickListener = deleteClickListener;
+    }
 }

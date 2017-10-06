@@ -3,20 +3,20 @@ package dhcc.cn.com.fix_phone.remote;
 import org.greenrobot.eventbus.EventBus;
 
 import dhcc.cn.com.fix_phone.MyApplication;
-import dhcc.cn.com.fix_phone.bean.AddFavoResponse;
 import dhcc.cn.com.fix_phone.bean.BusinessResponse;
 import dhcc.cn.com.fix_phone.bean.CirCleADResponse;
 import dhcc.cn.com.fix_phone.bean.CircleBusiness;
 import dhcc.cn.com.fix_phone.bean.CircleDetailAd;
+import dhcc.cn.com.fix_phone.bean.FavoResponse;
 import dhcc.cn.com.fix_phone.bean.LoginResponse;
 import dhcc.cn.com.fix_phone.bean.ProductImage;
 import dhcc.cn.com.fix_phone.bean.RegisterResponse;
 import dhcc.cn.com.fix_phone.bean.TelCheckResponse;
-import dhcc.cn.com.fix_phone.event.AddFavoResponseEvent;
 import dhcc.cn.com.fix_phone.event.BusinessEvent;
 import dhcc.cn.com.fix_phone.event.CirCleBusinessEvent;
 import dhcc.cn.com.fix_phone.event.CircleAdEvent;
 import dhcc.cn.com.fix_phone.event.CircleDetailAdEvent;
+import dhcc.cn.com.fix_phone.event.FavoResponseEvent;
 import dhcc.cn.com.fix_phone.event.LoginEvent;
 import dhcc.cn.com.fix_phone.event.ProductImageEvent;
 import dhcc.cn.com.fix_phone.event.RegisterEvent;
@@ -116,7 +116,12 @@ public class ApiManager {
         mApi.getMyList(getLoginInfo().accessToken, number, pageIndex, pageSize, "", where).enqueue(new Callback<CircleBusiness>() {
             @Override
             public void onResponse(Call<CircleBusiness> call, Response<CircleBusiness> response) {
-
+                if (response.code() == 200) {
+                    CircleBusiness business = response.body();
+                    if (business != null && business.FIsSuccess) {
+                        EventBus.getDefault().post(new CirCleBusinessEvent(business.FObject));
+                    }
+                }
             }
 
             @Override
@@ -236,19 +241,58 @@ public class ApiManager {
         });
     }
 
-    //28.添加收藏
-    public void addFavo(String interId) {
-        mApi.AddFavo(getLoginInfo().accessToken, interId).enqueue(new Callback<AddFavoResponse>() {
+    //27.收藏列表
+    public void getFavoList(){
+        mApi.getFavoList(getLoginInfo().accessToken).enqueue(new Callback<CircleBusiness>() {
             @Override
-            public void onResponse(Call<AddFavoResponse> call, Response<AddFavoResponse> response) {
-                AddFavoResponse body = response.body();
-                if (response.code() == 200 && body != null) {
-                    EventBus.getDefault().post(new AddFavoResponseEvent(body));
+            public void onResponse(Call<CircleBusiness> call, Response<CircleBusiness> response) {
+                if (response.code() == 200) {
+                    CircleBusiness business = response.body();
+                    if (business != null && business.FIsSuccess) {
+                        EventBus.getDefault().post(new CirCleBusinessEvent(business.FObject));
+                    }
                 }
             }
 
             @Override
-            public void onFailure(Call<AddFavoResponse> call, Throwable t) {
+            public void onFailure(Call<CircleBusiness> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    //28.添加收藏
+    public void addFavo(String interId) {
+        mApi.AddFavo(getLoginInfo().accessToken, interId).enqueue(new Callback<FavoResponse>() {
+            @Override
+            public void onResponse(Call<FavoResponse> call, Response<FavoResponse> response) {
+                FavoResponse body = response.body();
+                if (response.code() == 200 && body != null) {
+                    EventBus.getDefault().post(new FavoResponseEvent(body));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FavoResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //29.删除收藏
+    public void  deleteFavo(String interId){
+        mApi.DeleteFavo(getLoginInfo().accessToken,interId).enqueue(new Callback<FavoResponse>() {
+            @Override
+            public void onResponse(Call<FavoResponse> call, Response<FavoResponse> response) {
+                FavoResponse body = response.body();
+                if (response.code() == 200 && body != null) {
+                    EventBus.getDefault().post(new FavoResponseEvent(body));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FavoResponse> call, Throwable t) {
 
             }
         });

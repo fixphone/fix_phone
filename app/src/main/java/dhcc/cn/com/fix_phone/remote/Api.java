@@ -1,11 +1,11 @@
 package dhcc.cn.com.fix_phone.remote;
 
 
-import dhcc.cn.com.fix_phone.bean.AddFavoResponse;
 import dhcc.cn.com.fix_phone.bean.BusinessResponse;
 import dhcc.cn.com.fix_phone.bean.CirCleADResponse;
 import dhcc.cn.com.fix_phone.bean.CircleBusiness;
 import dhcc.cn.com.fix_phone.bean.CircleDetailAd;
+import dhcc.cn.com.fix_phone.bean.FavoResponse;
 import dhcc.cn.com.fix_phone.bean.LoginResponse;
 import dhcc.cn.com.fix_phone.bean.ProductImage;
 import dhcc.cn.com.fix_phone.bean.RegisterResponse;
@@ -148,22 +148,17 @@ public interface Api {
 
     //27.收藏列表
     @POST("/Favo/GetList")
-    Call<String> GetList(@Header("accessToken") String accessToken,
-                         @Query("type") String type,
-                         @Query("pageIndex") String pageIndex,
-                         @Query("pageSize") String pageSize,
-                         @Query("getCount") String getCount,
-                         @Query("where") String where);
+    Call<CircleBusiness> getFavoList(@Header("accessToken") String accessToken);
 
     //28.添加收藏
     @POST("/Favo/Add")
-    Call<AddFavoResponse> AddFavo(@Header("accessToken") String accessToken,
-                                  @Query("interId") String interId);
+    Call<FavoResponse> AddFavo(@Header("accessToken") String accessToken,
+                               @Query("interId") String interId);
 
     //29.删除收藏
     @POST("/Favo/Delete")
-    Call<String> DeleteFavo(@Header("accessToken") String accessToken,
-                            @Query("interId") String interId);
+    Call<FavoResponse> DeleteFavo(@Header("accessToken") String accessToken,
+                                       @Query("interId") String interId);
 
     //30.添加图片收藏
     @POST("/Favo/AddPicture")

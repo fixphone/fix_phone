@@ -1,12 +1,14 @@
 package dhcc.cn.com.fix_phone.ui.activity;
 
 import android.content.Intent;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -27,10 +29,12 @@ import dhcc.cn.com.fix_phone.adapter.MineCircleAdapter;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
 import dhcc.cn.com.fix_phone.bean.CircleBusiness;
 import dhcc.cn.com.fix_phone.bean.CircleItem;
+import dhcc.cn.com.fix_phone.bean.FavoResponse;
 import dhcc.cn.com.fix_phone.bean.PhotoInfo;
 import dhcc.cn.com.fix_phone.bean.User;
 import dhcc.cn.com.fix_phone.bean.VideoInfo;
 import dhcc.cn.com.fix_phone.event.CirCleBusinessEvent;
+import dhcc.cn.com.fix_phone.event.FavoResponseEvent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
 
 /**
@@ -57,6 +61,7 @@ public class MineCirCleActivity extends BaseActivity {
     private String            mTitle;
     private MineCircleAdapter mAdapter;
     private int               mResourceType;
+    private int               mCurrentPosition;
 
     @Override
     public int getLayoutId() {
@@ -96,16 +101,32 @@ public class MineCirCleActivity extends BaseActivity {
                 loadMore();
             }
         });
+
+        mAdapter.setDeleteClickListener(new MineCircleAdapter.OnDeleteClickListener() {
+            @Override
+            public void onDelete(int position, CircleItem item) {
+                mCurrentPosition = position;
+                ApiManager.Instance().deleteFavo(item.getUser().FInterID);
+            }
+        });
     }
 
     @Override
     protected void initData() {
-        pageIndex = 1;
-        ApiManager.Instance().getMyList(MAX_NUMBER, pageIndex, pageSize, "");
+        if (mResourceType == 1) {
+            pageIndex = 1;
+            ApiManager.Instance().getMyList(MAX_NUMBER, pageIndex, pageSize, "");
+        } else {
+            ApiManager.Instance().getFavoList();
+        }
     }
 
     private void loadMore() {
-        ApiManager.Instance().getMyList(MAX_NUMBER, ++pageIndex, pageSize, "");
+        if (mResourceType == 1) {
+            ApiManager.Instance().getMyList(MAX_NUMBER, ++pageIndex, pageSize, "");
+        } else {
+            ApiManager.Instance().getFavoList();
+        }
     }
 
     @Override
@@ -113,6 +134,7 @@ public class MineCirCleActivity extends BaseActivity {
         mToolbarTitle.setText(mTitle);
         mRecyclerview.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerview.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        mRecyclerview.setItemAnimator(new DefaultItemAnimator());
         mAdapter = new MineCircleAdapter(this);
         mRecyclerview.setAdapter(mAdapter);
     }
@@ -127,6 +149,16 @@ public class MineCirCleActivity extends BaseActivity {
         CircleBusiness.FObjectBean bean = event.mFObjectBean;
         List<CircleItem> circleItems = transformCircleItem(bean);
         updateCircleItem(circleItems);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onShowBusiness(FavoResponseEvent event) {
+        FavoResponse response = event.mResponse;
+        if (response.FIsSuccess) {
+            mAdapter.getDatas().remove(mCurrentPosition);
+            mAdapter.notifyItemRemoved(mCurrentPosition);
+        }
+        Toast.makeText(this, "" + response.FMsg, Toast.LENGTH_SHORT).show();
     }
 
     public void updateCircleItem(List<CircleItem> circleItems) {

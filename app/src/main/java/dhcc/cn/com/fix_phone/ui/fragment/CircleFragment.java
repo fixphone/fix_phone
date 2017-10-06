@@ -46,7 +46,6 @@ public class CircleFragment extends BaseFragment implements CircleFragmentAdapte
 
     private List<MultiItemEntity> mCircleItems;
     private CircleFragmentAdapter mAdapter;
-    private View                  mHeaderView;
     private Banner                mBanner;
 
     public static CircleFragment newInstance() {
@@ -57,7 +56,6 @@ public class CircleFragment extends BaseFragment implements CircleFragmentAdapte
     protected void init() {
         EventBus.getDefault().register(this);
         mCircleItems = CircleDefaultData.getCircleDefaultData();
-        mAdapter = new CircleFragmentAdapter(_mActivity, mCircleItems);
     }
 
     @Override
@@ -73,7 +71,9 @@ public class CircleFragment extends BaseFragment implements CircleFragmentAdapte
 
     @Override
     protected void initView(View view) {
-        mHeaderView = getHeaderView();
+        mRefreshLayout.setEnableLoadmore(false);
+        mAdapter = new CircleFragmentAdapter(_mActivity, mCircleItems);
+        mAdapter.addHeaderView(getHeaderView());
         final GridLayoutManager layoutManager = new GridLayoutManager(_mActivity, 3);
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
@@ -81,11 +81,10 @@ public class CircleFragment extends BaseFragment implements CircleFragmentAdapte
                 return mAdapter.getItemViewType(position) == CircleFragmentAdapter.TYPE_LEVEL_1 ? 1 : layoutManager.getSpanCount();
             }
         });
-        mAdapter.addHeaderView(mHeaderView);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(layoutManager);
-        mRefreshLayout.setEnableLoadmore(false);
-        mAdapter.expandAll();
+        mAdapter.expand(1,false,false);
+        mAdapter.expand(10,false,false);
     }
 
     @Override

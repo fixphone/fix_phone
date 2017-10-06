@@ -7,7 +7,7 @@ import dhcc.cn.com.fix_phone.base.BaseResponse;
 /**
  * 2017/10/6 12
  */
-public class AddFavoResponse extends BaseResponse {
+public class FavoResponse extends BaseResponse {
 
     /**
      * FIsNeedRelogin : false

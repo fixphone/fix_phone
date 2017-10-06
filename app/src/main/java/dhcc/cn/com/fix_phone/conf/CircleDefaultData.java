@@ -16,6 +16,7 @@ public class CircleDefaultData {
 
     public static List<MultiItemEntity> getCircleDefaultData() {
         List<MultiItemEntity> list = new ArrayList<>();
+
         CircleFragmentTitle phoneTitle = new CircleFragmentTitle("手机分类");
         list.add(phoneTitle);
         phoneTitle.addSubItem(new CircleFragmentItem("Accessories", "配件耗材", R.drawable.menu_0));
@@ -26,6 +27,7 @@ public class CircleDefaultData {
         phoneTitle.addSubItem(new CircleFragmentItem("Tool", "维修工具", R.drawable.menu_5));
         phoneTitle.addSubItem(new CircleFragmentItem("Device", "设备", R.drawable.menu_6));
         phoneTitle.addSubItem(new CircleFragmentItem("PolarizedLight", "跑单曝光", R.drawable.menu_7));
+
         CircleFragmentTitle computeTitle = new CircleFragmentTitle("电脑/笔记本/电视");
         list.add(computeTitle);
         computeTitle.addSubItem(new CircleFragmentItem("Comp_Module", "玻璃模组", R.drawable.menu_8));
@@ -36,6 +38,7 @@ public class CircleDefaultData {
         computeTitle.addSubItem(new CircleFragmentItem("Comp_Whole", "整机", R.drawable.menu_13));
         computeTitle.addSubItem(new CircleFragmentItem("Comp_Device", "设备", R.drawable.menu_14));
         computeTitle.addSubItem(new CircleFragmentItem("", "跑单曝光", R.drawable.menu_15));
+
         return list;
     }
 }

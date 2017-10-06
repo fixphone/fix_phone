@@ -71,7 +71,7 @@ public class MeFragment extends BaseFragment {
                         putExtra("resource_type", 1));
                 break;
             case R.id.mine_house:
-                startActivity(new Intent(getActivity(), MineCirCleActivity.class).putExtra("title", "个人收藏").
+                startActivity(new Intent(getActivity(), MineCirCleActivity.class).putExtra("title", "我的收藏").
                         putExtra("resource_type", 2));
                 break;
             case R.id.mine_suggest:
