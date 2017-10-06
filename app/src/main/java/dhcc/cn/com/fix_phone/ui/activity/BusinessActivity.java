@@ -2,7 +2,6 @@ package dhcc.cn.com.fix_phone.ui.activity;
 
 import android.content.Intent;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -50,9 +49,10 @@ public class BusinessActivity extends BaseActivity {
     ImageView mCommunication;
     @BindView(R.id.toolbar)
     Toolbar   mToolbar;
-    private String mName;
-    private String mHeadurl;
-    private String mUserID;
+    private String           mName;
+    private String           mHeadurl;
+    private String           mUserID;
+    private BusinessResponse mResponse;
 
     @Override
     public int getLayoutId() {
@@ -65,7 +65,6 @@ public class BusinessActivity extends BaseActivity {
         mName = intent.getStringExtra("name");
         mHeadurl = intent.getStringExtra("headurl");
         mUserID = intent.getStringExtra("userID");
-        Log.d(TAG, "init: " + mUserID);
         EventBus.getDefault().register(this);
     }
 
@@ -98,11 +97,11 @@ public class BusinessActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onShowAd(BusinessEvent event) {
-        BusinessResponse response = event.mResponse;
-        String companyProfile = response.FObject.companyProfile;
+        mResponse = event.mResponse;
+        String companyProfile = mResponse.FObject.companyProfile;
         mTextViewDesc.setText(companyProfile);
 
-        List<String> imageList = response.FObject.productList;
+        List<String> imageList = mResponse.FObject.productList;
         mBanner.setImageLoader(new GlideImageLoader());
         mBanner.setImages(imageList);
         mBanner.start();
@@ -120,14 +119,18 @@ public class BusinessActivity extends BaseActivity {
                 break;
             case R.id.textView_product:
                 Intent intent = new Intent(BusinessActivity.this, ProductActivity.class);
-                intent.putExtra("name",mName).
-                        putExtra("headurl",mHeadurl).
-                        putExtra("userID",mUserID);
+                intent.putExtra("name", mName).
+                        putExtra("headurl", mHeadurl).
+                        putExtra("userID", mUserID);
                 startActivity(intent);
                 break;
-            case R.id.textView_phone:
 
+            case R.id.textView_phone:
+                Intent intent2 = new Intent(BusinessActivity.this, ContactWayActivity.class);
+                intent2.putExtra("mResponse", mResponse);
+                startActivity(intent2);
                 break;
+
         }
     }
 }

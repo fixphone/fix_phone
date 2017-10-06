@@ -1,23 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:divider="@drawable/shape_line"
+    android:showDividers="middle"
+    android:orientation="vertical"
     tools:context="dhcc.cn.com.fix_phone.ui.activity.MainActivity">
+
+    <FrameLayout
+        android:id="@+id/frameLayout_main"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="56dp"
+        android:background="@color/text_color_white"
         app:tabGravity="fill"
         app:tabIndicatorHeight="0dp"
+        app:tabPaddingTop="3dp"
         app:tabMode="fixed"
         app:tabSelectedTextColor="@color/text_color_selector"
-        app:tabTextColor="@color/text_color"
-        android:layout_alignParentBottom="true"
-        android:background="@color/text_color_white">
+        app:tabTextColor="@color/text_color">
 
         <android.support.design.widget.TabItem
             android:layout_width="wrap_content"
@@ -37,10 +46,4 @@
             android:icon="@drawable/selector_tabbar_mine"
             android:text="我的"/>
     </android.support.design.widget.TabLayout>
-
-    <FrameLayout
-        android:id="@+id/frameLayout_main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/tabLayout"/>
-</RelativeLayout>
+</LinearLayout>

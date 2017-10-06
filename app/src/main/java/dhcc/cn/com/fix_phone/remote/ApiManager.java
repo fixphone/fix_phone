@@ -8,6 +8,7 @@ import dhcc.cn.com.fix_phone.bean.CirCleADResponse;
 import dhcc.cn.com.fix_phone.bean.CircleBusiness;
 import dhcc.cn.com.fix_phone.bean.CircleDetailAd;
 import dhcc.cn.com.fix_phone.bean.LoginResponse;
+import dhcc.cn.com.fix_phone.bean.ProductImage;
 import dhcc.cn.com.fix_phone.bean.RegisterResponse;
 import dhcc.cn.com.fix_phone.bean.TelCheckResponse;
 import dhcc.cn.com.fix_phone.event.BusinessEvent;
@@ -15,6 +16,7 @@ import dhcc.cn.com.fix_phone.event.CirCleBusinessEvent;
 import dhcc.cn.com.fix_phone.event.CircleAdEvent;
 import dhcc.cn.com.fix_phone.event.CircleDetailAdEvent;
 import dhcc.cn.com.fix_phone.event.LoginEvent;
+import dhcc.cn.com.fix_phone.event.ProductImageEvent;
 import dhcc.cn.com.fix_phone.event.RegisterEvent;
 import dhcc.cn.com.fix_phone.event.TelCheckEvent;
 import retrofit2.Call;
@@ -166,7 +168,7 @@ public class ApiManager {
         mApi.login(phone, psw).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                if (response.code() == 200 && response.body().FIsSuccess) {
+                if (response.code() == 200 && response.body() != null && response.body().FIsSuccess) {
                     LoginResponse loginResponse = response.body();
                     if (loginResponse != null) {
                         EventBus.getDefault().post(new LoginEvent(loginResponse));
@@ -196,20 +198,18 @@ public class ApiManager {
     }
 
     //19.获取产品图片
-    public void GetIconList(String userID,
-                            String type,
-                            int pageIndex,
-                            int pageSize,
-                            int getCount,
-                            String where) {
-        mApi.GetIconList(getLoginInfo().accessToken, userID, type, pageIndex, pageSize, getCount, where).enqueue(new Callback<String>() {
+    public void getProductList(String userID) {
+        mApi.GetProductList(getLoginInfo().accessToken, userID).enqueue(new Callback<ProductImage>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-
+            public void onResponse(Call<ProductImage> call, Response<ProductImage> response) {
+                ProductImage body = response.body();
+                if (response.code() == 200 && body != null && body.FIsSuccess) {
+                    EventBus.getDefault().post(new ProductImageEvent(body));
+                }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<ProductImage> call, Throwable t) {
 
             }
         });

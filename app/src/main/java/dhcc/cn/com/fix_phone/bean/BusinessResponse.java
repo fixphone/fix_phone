@@ -1,5 +1,6 @@
 package dhcc.cn.com.fix_phone.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 import dhcc.cn.com.fix_phone.base.BaseResponse;
@@ -23,9 +24,8 @@ public class BusinessResponse extends BaseResponse {
     public Object      FBillNo;
     public FObjectBean FObject;
     public boolean     FIsFooterData;
-    public List<?>     rows;
 
-    public static class FObjectBean {
+    public class FObjectBean implements Serializable {
         /**
          * userID : 57
          * name : 18923465093

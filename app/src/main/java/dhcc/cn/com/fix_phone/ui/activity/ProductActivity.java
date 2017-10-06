@@ -9,26 +9,26 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.OnClick;
-import dhcc.cn.com.fix_phone.MyApplication;
 import dhcc.cn.com.fix_phone.R;
+import dhcc.cn.com.fix_phone.adapter.ImageAdapter;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
-import dhcc.cn.com.fix_phone.event.BusinessEvent;
+import dhcc.cn.com.fix_phone.event.ProductImageEvent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
 
 /**
  * 2017/10/1 16
  */
 public class ProductActivity extends BaseActivity {
-
-    public static final    int    MAX_NUMBER         = 20;
-    public                 int    pageIndex          = 1;
-    public                 int    pageSize           = 20;
 
     @BindView(R.id.toolbar_title)
     TextView     mToolbarTitle;
@@ -42,6 +42,8 @@ public class ProductActivity extends BaseActivity {
     private String mName;
     private String mHeadurl;
     private String mUserID;
+    private ImageAdapter mImageAdapter;
+    private List<String> mStrings;
 
     @Override
     public int getLayoutId() {
@@ -74,15 +76,13 @@ public class ProductActivity extends BaseActivity {
                 outRect.set(5, 5, 5, 5);
             }
         });
+        mImageAdapter = new ImageAdapter(R.layout.item_image, null);
+        mRecyclerView.setAdapter(mImageAdapter);
     }
 
     @Override
     protected void initData() {
-        ApiManager.Instance().GetIconList(mUserID,
-                MyApplication.getCurrentTypeId(),
-                pageIndex,
-                pageSize,
-                MAX_NUMBER,"");
+        ApiManager.Instance().getProductList(mUserID);
     }
 
     @Override
@@ -99,6 +99,14 @@ public class ProductActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
 
+            }
+        });
+
+        mImageAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                ImagePagerActivity.ImageSize imageSize = new ImagePagerActivity.ImageSize(view.getMeasuredWidth(), view.getMeasuredHeight());
+                ImagePagerActivity.startImagePagerActivity(ProductActivity.this, mStrings, position, imageSize);
             }
         });
     }
@@ -118,8 +126,9 @@ public class ProductActivity extends BaseActivity {
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onShowAd(BusinessEvent event) {
-
+    public void onshowImage(ProductImageEvent event) {
+        mStrings = event.mProductImage.FObject.list;
+        mImageAdapter.setNewData(mStrings);
     }
 
 }

@@ -6,6 +6,7 @@ import dhcc.cn.com.fix_phone.bean.CirCleADResponse;
 import dhcc.cn.com.fix_phone.bean.CircleBusiness;
 import dhcc.cn.com.fix_phone.bean.CircleDetailAd;
 import dhcc.cn.com.fix_phone.bean.LoginResponse;
+import dhcc.cn.com.fix_phone.bean.ProductImage;
 import dhcc.cn.com.fix_phone.bean.RegisterResponse;
 import dhcc.cn.com.fix_phone.bean.TelCheckResponse;
 import retrofit2.Call;
@@ -91,14 +92,9 @@ public interface Api {
                                 @Query("address") String address);
 
     //19.获取产品图片
-    @GET("/Product/GetIconList")
-    Call<String> GetIconList(@Header("accessToken") String accessToken,
-                             @Query("userID") String userID,
-                             @Query("type") String type,
-                             @Query("pageIndex") int pageIndex,
-                             @Query("pageSize") int pageSize,
-                             @Query("getCount") int getCount,
-                             @Query("where") String where);
+    @GET("/Product/GetList")
+    Call<ProductImage> GetProductList(@Header("accessToken") String accessToken,
+                                      @Query("userID") String userID);
 
     //20.上传产品图片 --头像的二进制数据
     @POST("/ Product/UploadIcon")
