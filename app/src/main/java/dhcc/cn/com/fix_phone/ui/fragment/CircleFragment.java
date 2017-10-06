@@ -30,6 +30,7 @@ import dhcc.cn.com.fix_phone.bean.CirCleADResponse;
 import dhcc.cn.com.fix_phone.conf.CircleDefaultData;
 import dhcc.cn.com.fix_phone.event.CircleAdEvent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
+import dhcc.cn.com.fix_phone.ui.activity.BusinessActivity;
 import dhcc.cn.com.fix_phone.ui.activity.CircleActivity;
 
 /**
@@ -47,6 +48,7 @@ public class CircleFragment extends BaseFragment implements CircleFragmentAdapte
     private List<MultiItemEntity> mCircleItems;
     private CircleFragmentAdapter mAdapter;
     private Banner                mBanner;
+    private List<CirCleADResponse.FObjectBean.ListBean> mListBeans;
 
     public static CircleFragment newInstance() {
         return new CircleFragment();
@@ -93,7 +95,10 @@ public class CircleFragment extends BaseFragment implements CircleFragmentAdapte
         mBanner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
-                startActivity(new Intent(_mActivity, CircleActivity.class));
+                startActivity(new Intent(_mActivity, BusinessActivity.class).
+                        putExtra("headurl",mListBeans.get(position).FUrl).
+                        putExtra("name",mListBeans.get(position).FLinkName).
+                        putExtra("userID",mListBeans.get(position).FLinkID));
             }
         });
     }
@@ -111,9 +116,9 @@ public class CircleFragment extends BaseFragment implements CircleFragmentAdapte
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onShowAd(CircleAdEvent event) {
-        List<CirCleADResponse.FObjectBean.ListBean> lists = event.mListBeans;
+        mListBeans = event.mListBeans;
         List<String> imageList = new ArrayList<>();
-        for (CirCleADResponse.FObjectBean.ListBean list : lists) {
+        for (CirCleADResponse.FObjectBean.ListBean list : mListBeans) {
             imageList.add(list.FUrl);
         }
         mBanner.setImageLoader(new GlideImageLoader());

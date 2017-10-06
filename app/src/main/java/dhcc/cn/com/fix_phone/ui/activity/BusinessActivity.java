@@ -96,15 +96,20 @@ public class BusinessActivity extends BaseActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onShowAd(BusinessEvent event) {
+    public void onUserInfo(BusinessEvent event) {
         mResponse = event.mResponse;
-        String companyProfile = mResponse.FObject.companyProfile;
-        mTextViewDesc.setText(companyProfile);
+        setViewData();
 
         List<String> imageList = mResponse.FObject.productList;
         mBanner.setImageLoader(new GlideImageLoader());
         mBanner.setImages(imageList);
         mBanner.start();
+    }
+
+    private void setViewData() {
+        mTextViewDesc.setText(mResponse.FObject.companyProfile);
+        Glide.with(this).load(mHeadurl = mResponse.FObject.headUrl).into(mImageviewHead);
+        mToolbarTitle.setText(mName = mResponse.FObject.companyName);
     }
 
     @OnClick({R.id.textView_circle, R.id.textView_home, R.id.textView_product, R.id.textView_phone})

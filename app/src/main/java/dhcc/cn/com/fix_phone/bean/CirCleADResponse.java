@@ -18,7 +18,7 @@ public class CirCleADResponse {
      * FIsFooterData : false
      */
 
-    public boolean FIsNeedRelogin;
+    public boolean     FIsNeedRelogin;
     public boolean     FIsSuccess;
     public String      FMsg;
     public int         FInterID;
@@ -44,7 +44,7 @@ public class CirCleADResponse {
              * FIsFooterData : false
              */
 
-            public int FEntryID;
+            public int     FEntryID;
             public String  FUrl;
             public int     FType;
             public Object  FTypeNumber;
@@ -52,7 +52,7 @@ public class CirCleADResponse {
             public int     FLinkType;
             public String  FLinkNumber;
             public String  FLinkName;
-            public int     FLinkID;
+            public String  FLinkID;
             public boolean FIsFooterData;
         }
     }
