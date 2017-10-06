@@ -1,6 +1,7 @@
 package dhcc.cn.com.fix_phone.remote;
 
 
+import dhcc.cn.com.fix_phone.bean.AddFavoResponse;
 import dhcc.cn.com.fix_phone.bean.BusinessResponse;
 import dhcc.cn.com.fix_phone.bean.CirCleADResponse;
 import dhcc.cn.com.fix_phone.bean.CircleBusiness;
@@ -73,6 +74,24 @@ public interface Api {
                                          @Query("type") String type,
                                          @Query("where") String where);
 
+    //11.我的帖子
+    @GET("/Busi/GetMyList")
+    Call<CircleBusiness> getMyList(@Header("accessToken") String accessToken,
+                                   @Query("getCount") int number,
+                                   @Query("pageIndex") int pageIndex,
+                                   @Query("pageSize") int pageSize,
+                                   @Query("type") String type,
+                                   @Query("where") String where);
+    //12.上传生意圈图片
+
+    //13.上传生意圈视频
+
+    //14.发布生意圈
+
+    //15.删除生意圈
+
+    //16.上传店铺头像
+
 
     //17.获取店铺资料
     @GET("/Account/GetUserInfo")
@@ -138,8 +157,8 @@ public interface Api {
 
     //28.添加收藏
     @POST("/Favo/Add")
-    Call<String> AddFavo(@Header("accessToken") String accessToken,
-                         @Query("interId") String interId);
+    Call<AddFavoResponse> AddFavo(@Header("accessToken") String accessToken,
+                                  @Query("interId") String interId);
 
     //29.删除收藏
     @POST("/Favo/Delete")

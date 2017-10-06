@@ -54,7 +54,7 @@ public abstract class CircleViewHolder extends RecyclerView.ViewHolder implement
     public ExpandTextView contentTv;
     public TextView       timeTv;
     public TextView       deleteBtn;
-    public ImageView      snsBtn;
+    public View      snsBtn;
     /**
      * 点赞列表
      */

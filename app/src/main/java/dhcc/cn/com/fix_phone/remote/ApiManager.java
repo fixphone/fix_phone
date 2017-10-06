@@ -3,6 +3,7 @@ package dhcc.cn.com.fix_phone.remote;
 import org.greenrobot.eventbus.EventBus;
 
 import dhcc.cn.com.fix_phone.MyApplication;
+import dhcc.cn.com.fix_phone.bean.AddFavoResponse;
 import dhcc.cn.com.fix_phone.bean.BusinessResponse;
 import dhcc.cn.com.fix_phone.bean.CirCleADResponse;
 import dhcc.cn.com.fix_phone.bean.CircleBusiness;
@@ -11,6 +12,7 @@ import dhcc.cn.com.fix_phone.bean.LoginResponse;
 import dhcc.cn.com.fix_phone.bean.ProductImage;
 import dhcc.cn.com.fix_phone.bean.RegisterResponse;
 import dhcc.cn.com.fix_phone.bean.TelCheckResponse;
+import dhcc.cn.com.fix_phone.event.AddFavoResponseEvent;
 import dhcc.cn.com.fix_phone.event.BusinessEvent;
 import dhcc.cn.com.fix_phone.event.CirCleBusinessEvent;
 import dhcc.cn.com.fix_phone.event.CircleAdEvent;
@@ -104,6 +106,25 @@ public class ApiManager {
 
             }
         });
+    }
+
+    //11.我的帖子
+    public void getMyList(int number,
+                          int pageIndex,
+                          int pageSize,
+                          String where) {
+        mApi.getMyList(getLoginInfo().accessToken, number, pageIndex, pageSize, "", where).enqueue(new Callback<CircleBusiness>() {
+            @Override
+            public void onResponse(Call<CircleBusiness> call, Response<CircleBusiness> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<CircleBusiness> call, Throwable t) {
+
+            }
+        });
+
     }
 
     public void getUserInfo(String useId) {
@@ -210,6 +231,24 @@ public class ApiManager {
 
             @Override
             public void onFailure(Call<ProductImage> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //28.添加收藏
+    public void addFavo(String interId) {
+        mApi.AddFavo(getLoginInfo().accessToken, interId).enqueue(new Callback<AddFavoResponse>() {
+            @Override
+            public void onResponse(Call<AddFavoResponse> call, Response<AddFavoResponse> response) {
+                AddFavoResponse body = response.body();
+                if (response.code() == 200 && body != null) {
+                    EventBus.getDefault().post(new AddFavoResponseEvent(body));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AddFavoResponse> call, Throwable t) {
 
             }
         });

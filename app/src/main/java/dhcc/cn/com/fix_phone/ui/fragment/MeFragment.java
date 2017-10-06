@@ -14,6 +14,7 @@ import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.base.BaseFragment;
 import dhcc.cn.com.fix_phone.ui.activity.AboutAppActivity;
 import dhcc.cn.com.fix_phone.ui.activity.FeedBackActivity;
+import dhcc.cn.com.fix_phone.ui.activity.MineCirCleActivity;
 import dhcc.cn.com.fix_phone.ui.activity.MyActivity;
 import dhcc.cn.com.fix_phone.ui.activity.PersonInfoActivity;
 import dhcc.cn.com.fix_phone.ui.activity.VipActivity;
@@ -28,11 +29,11 @@ public class MeFragment extends BaseFragment {
     @BindView(R.id.title_back)
     RelativeLayout mTitleBackRl;
     @BindView(R.id.title_right)
-    TextView mTitleRightTv;
+    TextView       mTitleRightTv;
     @BindView(R.id.bottom_line)
-    View mBottomLine;
+    View           mBottomLine;
     @BindView(R.id.title_name)
-    TextView mTitleNameTv;
+    TextView       mTitleNameTv;
 
     public static MeFragment newInstance() {
         Bundle args = new Bundle();
@@ -60,16 +61,18 @@ public class MeFragment extends BaseFragment {
 
     @OnClick({R.id.mine_info, R.id.mine_circle, R.id.mine_house, R.id.mine_suggest, R.id.mine_vip,
             R.id.mine_advert, R.id.mine_produce, R.id.mine_clear, R.id.mine_app, R.id.title_right})
-    public void onClick(View view){
-        switch (view.getId()){
+    public void onClick(View view) {
+        switch (view.getId()) {
             case R.id.mine_info:
                 startActivity(PersonInfoActivity.class);
                 break;
             case R.id.mine_circle:
-
+                startActivity(new Intent(getActivity(), MineCirCleActivity.class).putExtra("title", "我的圈子").
+                        putExtra("resource_type", 1));
                 break;
             case R.id.mine_house:
-
+                startActivity(new Intent(getActivity(), MineCirCleActivity.class).putExtra("title", "个人收藏").
+                        putExtra("resource_type", 2));
                 break;
             case R.id.mine_suggest:
                 startActivity(FeedBackActivity.class);
@@ -96,7 +99,7 @@ public class MeFragment extends BaseFragment {
         }
     }
 
-    private void startActivity(Class clazz){
+    private void startActivity(Class clazz) {
         Intent intent = new Intent(getActivity(), clazz);
         startActivity(intent);
     }

@@ -1,5 +1,6 @@
 package dhcc.cn.com.fix_phone.ui.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -152,6 +153,23 @@ public class CircleActivity extends YWActivity implements CircleContract.View {
             }
         });
 
+        circleAdapter.setOnPopWindowClickListener(new CircleAdapter.OnPopWindowClickListener() {
+            @Override
+            public void onItemClick(int position, CircleItem circleItem) {
+                switch (position) {
+                    case 0: // 收藏
+                        ApiManager.Instance().addFavo(circleItem.getUser().FInterID);
+                        break;
+                    case 1: // 投诉
+                        startActivity(FeedBackActivity.class);
+                        break;
+                    case 2: // 分享
+
+                        break;
+                }
+            }
+        });
+
     }
 
     private void initData() {
@@ -209,88 +227,30 @@ public class CircleActivity extends YWActivity implements CircleContract.View {
 
     @Override
     public void update2DeleteCircle(String circleId) {
-        /*List<CircleItem> circleItems = circleAdapter.getDatas();
-        for (int i = 0; i < circleItems.size(); i++) {
-            if (circleId.equals(circleItems.get(i).getId())) {
-                circleItems.remove(i);
-                circleAdapter.notifyDataSetChanged();
-                return;
-            }
-        }*/
     }
 
     @Override
     public void update2AddFavorite(int circlePosition, FavortItem addItem) {
-        /*if (addItem != null) {
-            CircleItem item = (CircleItem) circleAdapter.getDatas().get(circlePosition);
-            item.getFavorters().add(addItem);
-            circleAdapter.notifyDataSetChanged();
-        }*/
     }
 
     @Override
     public void update2DeleteFavort(int circlePosition, String favortId) {
-        /*CircleItem item = (CircleItem) circleAdapter.getDatas().get(circlePosition);
-        List<FavortItem> items = item.getFavorters();
-        for (int i = 0; i < items.size(); i++) {
-            if (favortId.equals(items.get(i).getId())) {
-                items.remove(i);
-                circleAdapter.notifyDataSetChanged();
-                return;
-            }
-        }*/
     }
 
     @Override
     public void update2AddComment(int circlePosition, CommentItem addItem) {
-        /*if (addItem != null) {
-            CircleItem item = (CircleItem) circleAdapter.getDatas().get(circlePosition);
-            item.getComments().add(addItem);
-            circleAdapter.notifyDataSetChanged();
-        }
-        //清空评论文本
-        editText.setText("");*/
     }
 
     @Override
     public void update2DeleteComment(int circlePosition, String commentId) {
-        /*CircleItem item = (CircleItem) circleAdapter.getDatas().get(circlePosition);
-        List<CommentItem> items = item.getComments();
-        for (int i = 0; i < items.size(); i++) {
-            if (commentId.equals(items.get(i).getId())) {
-                items.remove(i);
-                circleAdapter.notifyDataSetChanged();
-                return;
-            }
-        }*/
     }
 
     @Override
     public void updateEditTextBodyVisible(int visibility, CommentConfig commentConfig) {
-        /*this.commentConfig = commentConfig;
-        edittextbody.setVisibility(visibility);
-
-        measureCircleItemHighAndCommentItemOffset(commentConfig);
-
-        if (View.VISIBLE == visibility) {
-            editText.requestFocus();
-            //弹出键盘
-            CommonUtils.showSoftInput(editText.getContext(), editText);
-
-        } else if (View.GONE == visibility) {
-            //隐藏键盘
-            CommonUtils.hideSoftInput(editText.getContext(), editText);
-        }*/
     }
 
     @Override
     public void update2loadData(int loadType, List<CircleItem> datas) {
-        /*if (loadType == TYPE_PULLREFRESH) {
-            circleAdapter.setDatas(datas);
-        } else if (loadType == TYPE_UPLOADREFRESH) {
-            circleAdapter.getDatas().addAll(datas);
-        }
-        circleAdapter.notifyDataSetChanged();*/
 
     }
 
@@ -328,8 +288,12 @@ public class CircleActivity extends YWActivity implements CircleContract.View {
 
     @Override
     public void showError(String errorMsg) {
-
+        Toast.makeText(this, "" + errorMsg, Toast.LENGTH_SHORT).show();
     }
 
+    private <T extends Activity> void startActivity(Class<T> clazz) {
+        Intent intent = new Intent(this, clazz);
+        startActivity(intent);
+    }
 
 }
