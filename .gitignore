@@ -7,9 +7,5 @@
 .DS_Store
 build/
 /captures
-/IMKit/
-/IMLib/
-/CallLib/
-/CallKit/
 /.idea/
 /gradle/
