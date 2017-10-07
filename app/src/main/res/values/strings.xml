@@ -32,4 +32,6 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <string name="permission_request_denied">需要相应的权限</string>
 </resources>

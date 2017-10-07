@@ -14,7 +14,7 @@ android {
 
         multiDexEnabled true
         ndk {
-            abiFilters "armeabi-v7a", "x86"
+            abiFilters "armeabi-v7a"
         }
     }
     buildTypes {
@@ -80,12 +80,18 @@ dependencies {
     compile 'com.github.chrisbanes:PhotoView:1.3.0'
     compile 'com.malinskiy:superrecyclerview:1.1.4'
     compile 'com.mikhaellopez:circularprogressbar:1.1.1'
-    compile 'pub.devrel:easypermissions:0.2.1'
-    compile 'com.github.rubensousa:bottomsheetbuilder:1.6.0'
     compile('com.github.bumptech.glide:okhttp3-integration:1.4.0') {
         exclude group: 'glide-parent'
     }
+    // 数据库dbflow
     compile 'com.github.Raizlabs.DBFlow:dbflow-core:4.1.1'
     compile 'com.github.Raizlabs.DBFlow:dbflow:4.1.1'
     annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:4.1.1"
+    // 图片选择器
+    compile project(':matisse')
+    // 底部dialog
+    compile project(':bottomsheetbuilder')
+    // 权限
+    compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.1@aar'
+    compile 'io.reactivex.rxjava2:rxjava:2.0.5'
 }

@@ -243,7 +243,19 @@
         <activity
             android:name=".ui.activity.MineCirCleActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".ui.activity.PublishActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.zhihu.matisse.sample.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths_public"/>
+        </provider>
 
         <meta-data
             android:name="dhcc.cn.com.fix_phone.MyGlideModule"

@@ -12,6 +12,8 @@
             <option value="$PROJECT_DIR$/IMKit" />
             <option value="$PROJECT_DIR$/IMLib" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/bottomsheetbuilder" />
+            <option value="$PROJECT_DIR$/matisse" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

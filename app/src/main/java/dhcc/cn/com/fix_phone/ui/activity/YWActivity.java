@@ -10,14 +10,12 @@ import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.utils.SystemBarUtil;
 import me.yokeyword.fragmentation.SwipeBackLayout;
 import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
-import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Created by yiw on 2017/1/9.
  */
 
 public class YWActivity extends SwipeBackActivity {
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,17 +65,5 @@ public class YWActivity extends SwipeBackActivity {
             win.setAttributes(winParams);
         }
     }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        // Forward results to EasyPermissions
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
-    }
-
-
-
-
 
 }

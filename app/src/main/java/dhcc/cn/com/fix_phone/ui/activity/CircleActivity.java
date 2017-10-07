@@ -52,26 +52,27 @@ public class CircleActivity extends YWActivity implements CircleContract.View {
     public                 int    pageSize           = 20;
     public boolean isLoadMore;
 
-    private CircleAdapter       circleAdapter;
-    private LinearLayout        edittextbody;
-    private EditText            editText;
-    private ImageView           sendIv;
-    private int                 screenHeight;
-    private int                 editTextBodyHeight;
-    private int                 currentKeyboardH;
-    private int                 selectCircleItemH;
-    private int                 selectCommentItemOffset;
-    private CirclePresenter     presenter;
-    private CommentConfig       commentConfig;
-    private RecyclerView        recyclerView;
-    private LinearLayoutManager layoutManager;
-    private TextView            titleBar;
-    private SmartRefreshLayout  mRefreshLayout;
-    private String              mTypeId;
-    private String              mContentName;
-    private Toolbar             mToolbar;
-    private ImageView           mSearch;
-    private LinearLayout        mPublish;
+    private CircleAdapter         circleAdapter;
+    private LinearLayout          edittextbody;
+    private EditText              editText;
+    private ImageView             sendIv;
+    private int                   screenHeight;
+    private int                   editTextBodyHeight;
+    private int                   currentKeyboardH;
+    private int                   selectCircleItemH;
+    private int                   selectCommentItemOffset;
+    private CirclePresenter       presenter;
+    private CommentConfig         commentConfig;
+    private RecyclerView          recyclerView;
+    private LinearLayoutManager   layoutManager;
+    private TextView              titleBar;
+    private SmartRefreshLayout    mRefreshLayout;
+    private String                mTypeId;
+    private String                mContentName;
+    private Toolbar               mToolbar;
+    private ImageView             mSearch;
+    private LinearLayout          mPublish;
+    private BottomSheetMenuDialog mDialog;
 
 
     @Override
@@ -127,29 +128,7 @@ public class CircleActivity extends YWActivity implements CircleContract.View {
         mPublish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BottomSheetMenuDialog dialog = new BottomSheetBuilder(CircleActivity.this)
-                        .setMode(BottomSheetBuilder.MODE_LIST)
-                        .setMenu(R.menu.menu_bottom_simple_sheet)
-                        .setItemClickListener(new BottomSheetItemClickListener() {
-                            @Override
-                            public void onBottomSheetItemClick(MenuItem item) {
-                                int id = item.getItemId();
-                                switch (id) {
-                                    case R.id.menu_image:
-
-                                        break;
-                                    case R.id.menu_video:
-
-                                        break;
-                                    case R.id.menu_cancel:
-                                        break;
-
-                                }
-                            }
-                        })
-                        .createDialog();
-
-                dialog.show();
+                createBottomDialog();
             }
         });
 
@@ -170,6 +149,36 @@ public class CircleActivity extends YWActivity implements CircleContract.View {
             }
         });
 
+    }
+
+    private void createBottomDialog() {
+        if (mDialog != null && mDialog.isShowing()) {
+            mDialog.dismiss();
+        }
+        mDialog = new BottomSheetBuilder(CircleActivity.this)
+                .setMode(BottomSheetBuilder.MODE_LIST)
+                .setMenu(R.menu.menu_bottom_simple_sheet)
+                .setItemClickListener(new BottomSheetItemClickListener() {
+                    @Override
+                    public void onBottomSheetItemClick(MenuItem item) {
+                        int id = item.getItemId();
+                        switch (id) {
+                            case R.id.menu_image:
+                                startActivity(new Intent(CircleActivity.this, PublishActivity.class).putExtra("type", 1));
+                                break;
+                            case R.id.menu_video:
+                                startActivity(new Intent(CircleActivity.this, PublishActivity.class).putExtra("type", 2));
+                                break;
+                            case R.id.menu_cancel:
+                                mDialog.dismiss();
+                                break;
+
+                        }
+                    }
+                })
+                .createDialog();
+
+        mDialog.show();
     }
 
     private void initData() {
