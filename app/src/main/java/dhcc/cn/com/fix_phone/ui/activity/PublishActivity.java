@@ -4,16 +4,15 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Rect;
-import android.net.Uri;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,11 +26,14 @@ import com.zhihu.matisse.engine.impl.GlideEngine;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import dhcc.cn.com.fix_phone.R;
+import dhcc.cn.com.fix_phone.adapter.ImageAdapter;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
+import dhcc.cn.com.fix_phone.conf.CircleDefaultData;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -39,6 +41,7 @@ import io.reactivex.disposables.Disposable;
  * 2017/9/26 23
  */
 public class PublishActivity extends BaseActivity {
+    private static final String TAG = "PublishActivity";
 
     private static final int REQUEST_CODE_CHOOSE_PHOTO = 100;
     private static final int REQUEST_CODE_CHOOSE_VIDEO = 200;
@@ -61,15 +64,22 @@ public class PublishActivity extends BaseActivity {
     ImageView      mSelector;
     @BindView(R.id.textView_video)
     TextView       mTextViewVideo;
+    @BindView(R.id.LinearLayout_show)
+    LinearLayout   mLinearLayout;
 
-    private BottomSheetDialog mDialog;
-    private int               mType;
-    private List<Uri>         mSelected;
+    private BottomSheetDialog    mDialog;
+    private int                  mType;
+    private List<String>         mSelected;
+    private Map<Integer, String> mMap;
+    private String               mSelectType;
+    private ImageAdapter         mAdapter;
 
     @Override
     protected void init() {
         Intent intent = getIntent();
         mType = intent.getIntExtra("type", 0);
+        mMap = CircleDefaultData.getCirCleDefailtMap();
+        mAdapter = new ImageAdapter(R.layout.item_image_check, null);
     }
 
     @Override
@@ -92,6 +102,7 @@ public class PublishActivity extends BaseActivity {
             }
         });
         mRecyclerView.setLayoutManager(manager);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
@@ -176,7 +187,7 @@ public class PublishActivity extends BaseActivity {
                 .choose(MimeType.ofImage()) // 选择 mime 的类型
                 .countable(true)
                 .capture(true)
-                .captureStrategy(new CaptureStrategy(true, "com.zhihu.matisse.sample.fileprovider"))
+                .captureStrategy(new CaptureStrategy(true, "dhcc.cn.com.fix_phone.FileProvider"))
                 .maxSelectable(9) // 图片选择的最多数量
                 .gridExpectedSize(getResources().getDimensionPixelSize(R.dimen.grid_expected_size))
                 .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
@@ -198,7 +209,7 @@ public class PublishActivity extends BaseActivity {
                     @Override
                     public void onBottomSheetItemClick(MenuItem item) {
                         int itemId = item.getItemId();
-                        Log.d("Item click", item.getTitle() + "");
+                        mSelectType = mMap.get(itemId);
                         mDialog.dismiss();
                     }
                 })
@@ -211,8 +222,12 @@ public class PublishActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_CHOOSE_PHOTO && resultCode == RESULT_OK) {
-            mSelected = Matisse.obtainResult(data);
-            Log.d("Matisse", "mSelected: " + mSelected);
+            mSelected = Matisse.obtainPathResult(data);
+            if (!mSelected.isEmpty()) {
+                mRecyclerView.setVisibility(View.VISIBLE);
+                mLinearLayout.setVisibility(View.GONE);
+                mAdapter.setNewData(mSelected);
+            }
         }
     }
 }

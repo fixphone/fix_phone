@@ -1,9 +1,12 @@
 package dhcc.cn.com.fix_phone.conf;
 
+import android.support.v4.util.ArrayMap;
+
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.bean.CircleFragmentItem;
@@ -13,6 +16,26 @@ import dhcc.cn.com.fix_phone.bean.CircleFragmentTitle;
  * 2017/9/17 15
  */
 public class CircleDefaultData {
+
+    public static Map<Integer,String> getCirCleDefailtMap(){
+        Map<Integer,String> map = new ArrayMap<>();
+        map.put(R.id.Accessories,"Accessories");
+        map.put(R.id.LiquidCrystal,"LiquidCrystal");
+        map.put(R.id.Module,"Module");
+        map.put(R.id.Maintain,"Maintain");
+        map.put(R.id.Business,"Business");
+        map.put(R.id.Tool,"Tool");
+        map.put(R.id.Device,"Device");
+        map.put(R.id.Comp_Module,"Comp_Module");
+        map.put(R.id.Comp_LiquidCrystal,"Comp_LiquidCrystal");
+        map.put(R.id.Comp_TabMaintain,"Comp_TabMaintain");
+        map.put(R.id.Comp_Accessories,"Comp_Accessories");
+        map.put(R.id.Comp_Chassis,"Comp_Chassis");
+        map.put(R.id.Comp_Whole,"Comp_Whole");
+        map.put(R.id.Comp_Device,"Comp_Device");
+        map.put(R.id.Comp_PolarizedLight,"Comp_PolarizedLight");
+        return map;
+    }
 
     public static List<MultiItemEntity> getCircleDefaultData() {
         List<MultiItemEntity> list = new ArrayList<>();
