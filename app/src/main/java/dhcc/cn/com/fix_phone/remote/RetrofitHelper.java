@@ -2,13 +2,13 @@ package dhcc.cn.com.fix_phone.remote;
 
 import android.content.Context;
 
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-import dhcc.cn.com.fix_phone.utils.NetworkUtils;
 import okhttp3.Cache;
-import okhttp3.CacheControl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -30,6 +30,7 @@ public class RetrofitHelper {
                 .client(okHttpClient)
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
     }
 
@@ -41,7 +42,7 @@ public class RetrofitHelper {
             builder.addInterceptor(loggingInterceptor);
             File cacheFile = new File(context.getCacheDir(), "http");
             Cache cache = new Cache(cacheFile, 1024 * 1024 * 50);
-            Interceptor cacheInterceptor = new Interceptor() {
+            /*Interceptor cacheInterceptor = new Interceptor() {
                 @Override
                 public Response intercept(Chain chain) throws IOException {
                     Request request = chain.request();
@@ -75,7 +76,9 @@ public class RetrofitHelper {
                 }
             };
             //设置缓存
-            builder.addNetworkInterceptor(cacheInterceptor);
+            builder.addInterceptor(cacheInterceptor);
+            builder.addNetworkInterceptor(cacheInterceptor);*/
+
             builder.addNetworkInterceptor(new Interceptor() {
                 @Override
                 public Response intercept(Chain chain) throws IOException {
@@ -85,7 +88,6 @@ public class RetrofitHelper {
                     return chain.proceed(headerRequest);
                 }
             });
-            builder.addInterceptor(cacheInterceptor);
             builder.cache(cache);
             //设置超时
             builder.connectTimeout(10, TimeUnit.SECONDS);

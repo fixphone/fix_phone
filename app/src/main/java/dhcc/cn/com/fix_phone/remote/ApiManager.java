@@ -1,6 +1,11 @@
 package dhcc.cn.com.fix_phone.remote;
 
+import com.jakewharton.retrofit2.adapter.rxjava2.Result;
+import com.orhanobut.logger.Logger;
+
 import org.greenrobot.eventbus.EventBus;
+
+import java.io.File;
 
 import dhcc.cn.com.fix_phone.MyApplication;
 import dhcc.cn.com.fix_phone.bean.BusinessResponse;
@@ -21,6 +26,9 @@ import dhcc.cn.com.fix_phone.event.LoginEvent;
 import dhcc.cn.com.fix_phone.event.ProductImageEvent;
 import dhcc.cn.com.fix_phone.event.RegisterEvent;
 import dhcc.cn.com.fix_phone.event.TelCheckEvent;
+import io.reactivex.Observable;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -242,7 +250,7 @@ public class ApiManager {
     }
 
     //27.收藏列表
-    public void getFavoList(){
+    public void getFavoList() {
         mApi.getFavoList(getLoginInfo().accessToken).enqueue(new Callback<CircleBusiness>() {
             @Override
             public void onResponse(Call<CircleBusiness> call, Response<CircleBusiness> response) {
@@ -281,8 +289,8 @@ public class ApiManager {
     }
 
     //29.删除收藏
-    public void  deleteFavo(String interId){
-        mApi.DeleteFavo(getLoginInfo().accessToken,interId).enqueue(new Callback<FavoResponse>() {
+    public void deleteFavo(String interId) {
+        mApi.DeleteFavo(getLoginInfo().accessToken, interId).enqueue(new Callback<FavoResponse>() {
             @Override
             public void onResponse(Call<FavoResponse> call, Response<FavoResponse> response) {
                 FavoResponse body = response.body();
@@ -296,6 +304,18 @@ public class ApiManager {
 
             }
         });
+    }
+
+    //12.上传生意圈图片
+    public Observable<Result<String>> UploadPictureBusiness(final String file) {
+        Logger.d("UploadPictureBusiness","UploadPictureBusiness");
+        RequestBody mutipartBody = createMutipartBody(file);
+        return mApi.UploadPictureBusi(mutipartBody);
+    }
+
+    private RequestBody createMutipartBody(String filePath) {
+        File file = new File(filePath);
+        return RequestBody.create(MediaType.parse("multipart/form-data"), file);
     }
 
 }

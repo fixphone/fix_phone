@@ -7,10 +7,8 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,6 +17,7 @@ import android.widget.Toast;
 import com.github.rubensousa.bottomsheetbuilder.BottomSheetBuilder;
 import com.github.rubensousa.bottomsheetbuilder.BottomSheetMenuDialog;
 import com.github.rubensousa.bottomsheetbuilder.adapter.BottomSheetItemClickListener;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
@@ -44,25 +43,14 @@ import dhcc.cn.com.fix_phone.remote.ApiManager;
  */
 public class CircleActivity extends YWActivity implements CircleContract.View {
 
-    public static final    int    MAX_NUMBER         = 20;
-    protected static final String TAG                = "CircleActivity";
-    private final static   int    TYPE_PULLREFRESH   = 1;
-    private final static   int    TYPE_UPLOADREFRESH = 2;
-    public                 int    pageIndex          = 1;
-    public                 int    pageSize           = 20;
+    public static final    int    MAX_NUMBER = 20;
+    protected static final String TAG        = "CircleActivity";
+    public                 int    pageIndex  = 1;
+    public                 int    pageSize   = 20;
     public boolean isLoadMore;
 
     private CircleAdapter         circleAdapter;
-    private LinearLayout          edittextbody;
-    private EditText              editText;
-    private ImageView             sendIv;
-    private int                   screenHeight;
-    private int                   editTextBodyHeight;
-    private int                   currentKeyboardH;
-    private int                   selectCircleItemH;
-    private int                   selectCommentItemOffset;
     private CirclePresenter       presenter;
-    private CommentConfig         commentConfig;
     private RecyclerView          recyclerView;
     private LinearLayoutManager   layoutManager;
     private TextView              titleBar;
@@ -73,6 +61,8 @@ public class CircleActivity extends YWActivity implements CircleContract.View {
     private ImageView             mSearch;
     private LinearLayout          mPublish;
     private BottomSheetMenuDialog mDialog;
+    private MaterialSearchView    mSearchView;
+    private TextView              mTextView_number;
 
 
     @Override
@@ -121,7 +111,7 @@ public class CircleActivity extends YWActivity implements CircleContract.View {
         mSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(CircleActivity.this, "" + "search", Toast.LENGTH_SHORT).show();
+                mSearchView.showSearch();
             }
         });
 
@@ -146,6 +136,20 @@ public class CircleActivity extends YWActivity implements CircleContract.View {
 
                         break;
                 }
+            }
+        });
+
+        mSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                ApiManager.Instance().getCircleBusinessList(MAX_NUMBER, pageIndex, pageSize, mTypeId, query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //Do some magic
+                return false;
             }
         });
 
@@ -200,6 +204,7 @@ public class CircleActivity extends YWActivity implements CircleContract.View {
     private void initView() {
         initTitle();
         initToolbar();
+        mSearchView = (MaterialSearchView) findViewById(R.id.search_view);
         mRefreshLayout = (SmartRefreshLayout) findViewById(R.id.refreshLayout);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         layoutManager = new LinearLayoutManager(this);
@@ -210,6 +215,11 @@ public class CircleActivity extends YWActivity implements CircleContract.View {
         circleAdapter.setCirclePresenter(presenter);
         recyclerView.setAdapter(circleAdapter);
 
+        mSearchView.setVoiceSearch(false);
+        mSearchView.setCursorDrawable(R.drawable.custom_cursor);
+        mSearchView.setEllipsize(true);
+
+        mTextView_number = (TextView) findViewById(R.id.textView_number);
     }
 
     private void initToolbar() {
@@ -221,17 +231,6 @@ public class CircleActivity extends YWActivity implements CircleContract.View {
     private void initTitle() {
         titleBar = (TextView) findViewById(R.id.toolbar_title);
         titleBar.setText(mContentName);
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            if (edittextbody != null && edittextbody.getVisibility() == View.VISIBLE) {
-                updateEditTextBodyVisible(View.GONE, null);
-                return true;
-            }
-        }
-        return super.onKeyDown(keyCode, event);
     }
 
     @Override
@@ -281,8 +280,12 @@ public class CircleActivity extends YWActivity implements CircleContract.View {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+    public void showTextViewNumber(boolean b) {
+        if (b) {
+            mTextView_number.setVisibility(View.VISIBLE);
+        } else {
+            mTextView_number.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -305,4 +308,12 @@ public class CircleActivity extends YWActivity implements CircleContract.View {
         startActivity(intent);
     }
 
+    @Override
+    public void onBackPressedSupport() {
+        if (mSearchView.isSearchOpen()) {
+            mSearchView.closeSearch();
+        } else {
+            super.onBackPressed();
+        }
+    }
 }

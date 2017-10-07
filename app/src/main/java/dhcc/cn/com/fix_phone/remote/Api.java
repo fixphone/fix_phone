@@ -1,6 +1,8 @@
 package dhcc.cn.com.fix_phone.remote;
 
 
+import com.jakewharton.retrofit2.adapter.rxjava2.Result;
+
 import dhcc.cn.com.fix_phone.bean.BusinessResponse;
 import dhcc.cn.com.fix_phone.bean.CirCleADResponse;
 import dhcc.cn.com.fix_phone.bean.CircleBusiness;
@@ -10,10 +12,16 @@ import dhcc.cn.com.fix_phone.bean.LoginResponse;
 import dhcc.cn.com.fix_phone.bean.ProductImage;
 import dhcc.cn.com.fix_phone.bean.RegisterResponse;
 import dhcc.cn.com.fix_phone.bean.TelCheckResponse;
+import dhcc.cn.com.fix_phone.bean.UploadResponse;
+import io.reactivex.Observable;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 /**
@@ -82,16 +90,29 @@ public interface Api {
                                    @Query("pageSize") int pageSize,
                                    @Query("type") String type,
                                    @Query("where") String where);
-    //12.上传生意圈图片
+
+    //12.上传生意圈图片 POST /Busi/ UploadPicture
+    @Multipart
+    @POST("/Busi/UploadPicture")
+    Observable<Result<String>> UploadPictureBusi(@Part("file\"; filename=\"image.png\"") RequestBody file);
 
     //13.上传生意圈视频
+    @Multipart
+    @POST("/Busi/UploadVideo")
+    Observable<UploadResponse> UploadVideoBusi(@Part MultipartBody.Part file);
 
     //14.发布生意圈
+    @POST("/Busi/Publish")
+    Call<String> PublishBusi(@Part MultipartBody.Part file);
 
     //15.删除生意圈
+    @POST("/Busi/Delete")
+    Call<String> DeleteBusi(@Header("accessToken") String accessToken,
+                            @Query("FInterID") String FInterID);
 
     //16.上传店铺头像
-
+    @POST("/Account/UploadIcon")
+    Call<UploadResponse> UploadIconAccount(@Part MultipartBody.Part file);
 
     //17.获取店铺资料
     @GET("/Account/GetUserInfo")
@@ -158,7 +179,7 @@ public interface Api {
     //29.删除收藏
     @POST("/Favo/Delete")
     Call<FavoResponse> DeleteFavo(@Header("accessToken") String accessToken,
-                                       @Query("interId") String interId);
+                                  @Query("interId") String interId);
 
     //30.添加图片收藏
     @POST("/Favo/AddPicture")

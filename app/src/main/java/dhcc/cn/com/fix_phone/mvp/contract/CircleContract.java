@@ -32,6 +32,8 @@ public interface CircleContract {
         void updateAd(List<CircleDetailAd.FObjectBean.ListBean> lists);
 
         void updateCircleItem(List<CircleItem> circleItem);
+
+        void showTextViewNumber(boolean b);
     }
 
     interface Presenter extends BasePresenter {

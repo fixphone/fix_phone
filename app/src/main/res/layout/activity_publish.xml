@@ -89,6 +89,7 @@
                 android:id="@+id/photo_select_recycle_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:layout_gravity="center|left"
                 android:layout_marginBottom="@dimen/public_20dp"
                 android:layout_marginLeft="@dimen/public_15dp"

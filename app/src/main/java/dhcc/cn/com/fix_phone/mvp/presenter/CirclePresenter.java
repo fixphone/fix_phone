@@ -52,15 +52,6 @@ public class CirclePresenter implements CircleContract.Presenter {
      * @Description: 删除动态
      */
     public void deleteCircle(final String circleId) {
-        /*circleModel.deleteCircle(new IDataRequestListener() {
-
-            @Override
-            public void loadSuccess(Object object) {
-                if (view != null) {
-                    view.update2DeleteCircle(circleId);
-                }
-            }
-        });*/
     }
 
     /**
@@ -71,17 +62,6 @@ public class CirclePresenter implements CircleContract.Presenter {
      * @Description: 点赞
      */
     public void addFavort(final int circlePosition) {
-//        circleModel.addFavort(new IDataRequestListener() {
-//
-//            @Override
-//            public void loadSuccess(Object object) {
-//                FavortItem item = DatasUtil.createCurUserFavortItem();
-//                if (view != null) {
-//                    view.update2AddFavorite(circlePosition, item);
-//                }
-//
-//            }
-//        });
     }
 
     /**
@@ -93,15 +73,6 @@ public class CirclePresenter implements CircleContract.Presenter {
      * @Description: 取消点赞
      */
     public void deleteFavort(final int circlePosition, final String favortId) {
-        /*circleModel.deleteFavort(new IDataRequestListener() {
-
-            @Override
-            public void loadSuccess(Object object) {
-                if (view != null) {
-                    view.update2DeleteFavort(circlePosition, favortId);
-                }
-            }
-        });*/
     }
 
     /**
@@ -113,25 +84,7 @@ public class CirclePresenter implements CircleContract.Presenter {
      * @Description: 增加评论
      */
     public void addComment(final String content, final CommentConfig config) {
-        /*if (config == null) {
-            return;
-        }
-        circleModel.addComment(new IDataRequestListener() {
 
-            @Override
-            public void loadSuccess(Object object) {
-                CommentItem newItem = null;
-                if (config.commentType == CommentConfig.Type.PUBLIC) {
-                    newItem = DatasUtil.createPublicComment(content);
-                } else if (config.commentType == CommentConfig.Type.REPLY) {
-                    newItem = DatasUtil.createReplyComment(config.replyUser, content);
-                }
-                if (view != null) {
-                    view.update2AddComment(config.circlePosition, newItem);
-                }
-            }
-
-        });*/
     }
 
     /**
@@ -143,25 +96,14 @@ public class CirclePresenter implements CircleContract.Presenter {
      * @Description: 删除评论
      */
     public void deleteComment(final int circlePosition, final String commentId) {
-        /*circleModel.deleteComment(new IDataRequestListener() {
 
-            @Override
-            public void loadSuccess(Object object) {
-                if (view != null) {
-                    view.update2DeleteComment(circlePosition, commentId);
-                }
-            }
-
-        });*/
     }
 
     /**
      * @param commentConfig
      */
     public void showEditTextBody(CommentConfig commentConfig) {
-        /*if (view != null) {
-            view.updateEditTextBodyVisible(View.VISIBLE, commentConfig);
-        }*/
+
     }
 
 
@@ -183,6 +125,7 @@ public class CirclePresenter implements CircleContract.Presenter {
     public void onShowBusiness(CirCleBusinessEvent event) {
         CircleBusiness.FObjectBean bean = event.mFObjectBean;
         List<CircleItem> circleItems = transformCircleItem(bean);
+        view.showTextViewNumber(circleItems.isEmpty());
         view.updateCircleItem(circleItems);
     }
 
