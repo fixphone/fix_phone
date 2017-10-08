@@ -21,4 +21,12 @@ public class Constants {
 	 */
 	public static final int	DEBUGLEVEL	= LogUtils.LEVEL_ALL;
 
+	public static final String APP_ID = "wxaba609e92f61abdf";
+
+	public static class ShowMsgActivity {
+		public static final String STitle = "showmsg_title";
+		public static final String SMessage = "showmsg_message";
+		public static final String BAThumbData = "showmsg_thumb_data";
+	}
+
 }

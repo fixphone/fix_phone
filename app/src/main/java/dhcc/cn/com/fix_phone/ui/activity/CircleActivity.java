@@ -41,6 +41,7 @@ import dhcc.cn.com.fix_phone.bean.FavortItem;
 import dhcc.cn.com.fix_phone.mvp.contract.CircleContract;
 import dhcc.cn.com.fix_phone.mvp.presenter.CirclePresenter;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
+import dhcc.cn.com.fix_phone.ui.fragment.AlterDialogFragment;
 
 import static dhcc.cn.com.fix_phone.ui.activity.FeedBackActivity.getCurrentTime;
 
@@ -142,7 +143,7 @@ public class CircleActivity extends YWActivity implements CircleContract.View {
                         startActivity(FeedBackActivity.class);
                         break;
                     case 2: // 分享
-
+                        showShareDialog();
                         break;
                 }
             }
@@ -170,6 +171,11 @@ public class CircleActivity extends YWActivity implements CircleContract.View {
             }
         });
 
+    }
+
+    private void showShareDialog() {
+        AlterDialogFragment fragment = new AlterDialogFragment();
+        fragment.show(getSupportFragmentManager(),"AlterDialogFragment");
     }
 
     private void createBottomDialog() {

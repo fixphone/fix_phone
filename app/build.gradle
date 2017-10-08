@@ -101,4 +101,7 @@ dependencies {
     compile 'com.miguelcatalan:materialsearchview:1.4.0'
 
     compile 'com.zhy:okhttputils:2.0.0'
+
+    //微信
+    compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
 }
