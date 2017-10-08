@@ -3,10 +3,12 @@ package dhcc.cn.com.fix_phone.ui.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,7 +24,11 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.squareup.okhttp.Request;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.FileCallBack;
 
+import java.io.File;
 import java.util.List;
 
 import dhcc.cn.com.fix_phone.R;
@@ -36,6 +42,8 @@ import dhcc.cn.com.fix_phone.mvp.contract.CircleContract;
 import dhcc.cn.com.fix_phone.mvp.presenter.CirclePresenter;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
 
+import static dhcc.cn.com.fix_phone.ui.activity.FeedBackActivity.getCurrentTime;
+
 /**
  * @author yiw
  * @ClassName: CircleActivity
@@ -48,6 +56,7 @@ public class CircleActivity extends YWActivity implements CircleContract.View {
     public                 int    pageIndex  = 1;
     public                 int    pageSize   = 20;
     public boolean isLoadMore;
+    private static final String storePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera/";
 
     private CircleAdapter         circleAdapter;
     private CirclePresenter       presenter;
@@ -136,6 +145,14 @@ public class CircleActivity extends YWActivity implements CircleContract.View {
 
                         break;
                 }
+            }
+        });
+
+        circleAdapter.setOnVideoLongClickListener(new CircleAdapter.OnVideoLongClickListener() {
+            @Override
+            public void onVideoLongClickListener(CircleItem circleItem) {
+                Log.d(TAG, "onVideoLongClickListener: ");
+                createBottomVideoDialog(circleItem);
             }
         });
 
@@ -321,6 +338,53 @@ public class CircleActivity extends YWActivity implements CircleContract.View {
         } else {
             finish();
         }
+    }
+
+    private void createBottomVideoDialog(final CircleItem circleItem) {
+        if (mDialog != null && mDialog.isShowing()) {
+            mDialog.dismiss();
+        }
+        mDialog = new BottomSheetBuilder(this)
+                .setMode(BottomSheetBuilder.MODE_LIST)
+                .setMenu(R.menu.menu_bottom_video)
+                .setItemClickListener(new BottomSheetItemClickListener() {
+                    @Override
+                    public void onBottomSheetItemClick(MenuItem item) {
+                        int id = item.getItemId();
+                        switch (id) {
+                            case R.id.menu_save:
+                                String fFileName = circleItem.getVideoInfo().FFileName;
+                                OkHttpUtils.get().url(fFileName).build().
+                                        execute(new FileCallBack(storePath, getCurrentTime("yyyyMMddHHmmss") + ".mp4") {
+                                            @Override
+                                            public void inProgress(float progress) {
+
+                                            }
+
+                                            @Override
+                                            public void onError(Request request, Exception e) {
+
+                                            }
+
+                                            @Override
+                                            public void onResponse(File file) {
+                                                Toast.makeText(CircleActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                break;
+                            case R.id.menu_collect:
+                                ApiManager.Instance().AddVideoFavo(circleItem.getVideoInfo().FUUID);
+                                break;
+                            case R.id.menu_cancel:
+                                mDialog.dismiss();
+                                break;
+
+                        }
+                    }
+                })
+                .createDialog();
+
+        mDialog.show();
     }
 
 }

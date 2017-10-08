@@ -2,6 +2,7 @@ package dhcc.cn.com.fix_phone.adapter;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +32,7 @@ import dhcc.cn.com.fix_phone.ui.widget.SnsPopupWindow;
 public class CircleAdapter extends BaseRecycleViewAdapter {
     public final static int TYPE_HEAD     = 0;
     public static final int HEADVIEW_SIZE = 1;
-
+    private static final String TAG = "CircleAdapter";
 
     private CirclePresenter                           presenter;
     private Activity                                  context;
@@ -113,7 +114,18 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
 
                     break;
                 case CircleViewHolder.TYPE_VIDEO: // 视频处理
-
+                    if (holder instanceof VideoViewHolder) {
+                        ((VideoViewHolder) holder).videoView.videoPlayer.setOnLongClickListener(new View.OnLongClickListener() {
+                            @Override
+                            public boolean onLongClick(View view) {
+                                Log.d(TAG, "onLongClick: ");
+                                if (mOnVideoLongClickListener != null) {
+                                    mOnVideoLongClickListener.onVideoLongClickListener((CircleItem) datas.get(realPosition));
+                                }
+                                return true;
+                            }
+                        });
+                    }
 
                     break;
                 default:
@@ -131,7 +143,7 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
             @Override
             public void onItemClick(int position) {
                 if (mOnPopWindowClickListener != null) {
-                    mOnPopWindowClickListener.onItemClick(position,circleItem);
+                    mOnPopWindowClickListener.onItemClick(position, circleItem);
                 }
             }
         });
@@ -193,4 +205,14 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
 
     private OnPopWindowClickListener mOnPopWindowClickListener;
 
+
+    public interface OnVideoLongClickListener{
+        void onVideoLongClickListener(CircleItem circleItem);
+    }
+
+    private OnVideoLongClickListener mOnVideoLongClickListener;
+
+    public void setOnVideoLongClickListener(OnVideoLongClickListener onVideoLongClickListener) {
+        mOnVideoLongClickListener = onVideoLongClickListener;
+    }
 }

@@ -18,6 +18,7 @@ import dhcc.cn.com.fix_phone.bean.User;
 import dhcc.cn.com.fix_phone.bean.VideoInfo;
 import dhcc.cn.com.fix_phone.event.CirCleBusinessEvent;
 import dhcc.cn.com.fix_phone.event.CircleDetailAdEvent;
+import dhcc.cn.com.fix_phone.event.CollectEvent;
 import dhcc.cn.com.fix_phone.event.FavoResponseEvent;
 import dhcc.cn.com.fix_phone.event.PublishSuccessEvent;
 import dhcc.cn.com.fix_phone.mvp.contract.CircleContract;
@@ -141,6 +142,13 @@ public class CirclePresenter implements CircleContract.Presenter {
     public void addSuccess(PublishSuccessEvent event) {
         if (event.isSuccess) {
             view.refreshData();
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void addSuccess(CollectEvent event) {
+        if (event.isSuccess) {
+            view.showError("收藏成功");
         }
     }
 
