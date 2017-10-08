@@ -38,7 +38,6 @@ import dhcc.cn.com.fix_phone.ui.widget.SelectableRoundedImageView;
 import dhcc.cn.com.fix_phone.utils.PinyinComparator;
 import io.rong.imageloader.core.ImageLoader;
 import io.rong.imkit.RongIM;
-import io.rong.imkit.mention.MemberMentionedActivity;
 import io.rong.imkit.mention.SideBar;
 import io.rong.imlib.model.UserInfo;
 
@@ -251,7 +250,9 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
         SealUserInfoManager.getInstance().getFriends(new SealUserInfoManager.ResultCallback<List<Friend>>() {
             @Override
             public void onSuccess(List<Friend> friendsList) {
-                updateFriendsList(friendsList);
+                if (friendsList != null) {
+                    updateFriendsList(friendsList);
+                }
             }
 
             @Override
