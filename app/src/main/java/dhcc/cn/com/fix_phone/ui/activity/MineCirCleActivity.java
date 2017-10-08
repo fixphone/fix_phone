@@ -155,7 +155,7 @@ public class MineCirCleActivity extends BaseActivity {
     public void onShowBusiness(FavoResponseEvent event) {
         FavoResponse response = event.mResponse;
         if (response.FIsSuccess) {
-            mAdapter.getDatas().remove(mCurrentPosition);
+            mAdapter.getData().remove(mCurrentPosition);
             mAdapter.notifyItemRemoved(mCurrentPosition);
         }
         Toast.makeText(this, "" + response.FMsg, Toast.LENGTH_SHORT).show();
@@ -164,10 +164,10 @@ public class MineCirCleActivity extends BaseActivity {
     public void updateCircleItem(List<CircleItem> circleItems) {
         if (isLoadMore) {
             mRefreshLayout.finishLoadmore(200);
-            mAdapter.addDatas(circleItems);
+            mAdapter.addData(circleItems);
         } else {
             mRefreshLayout.finishRefresh(200);
-            mAdapter.setDatas(circleItems);
+            mAdapter.setData(circleItems);
         }
         mAdapter.notifyDataSetChanged();
     }

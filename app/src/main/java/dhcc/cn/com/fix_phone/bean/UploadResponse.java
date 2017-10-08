@@ -1,6 +1,6 @@
 package dhcc.cn.com.fix_phone.bean;
 
-import com.google.gson.annotations.SerializedName;
+import java.util.List;
 
 import dhcc.cn.com.fix_phone.base.BaseResponse;
 
@@ -10,21 +10,38 @@ import dhcc.cn.com.fix_phone.base.BaseResponse;
 public class UploadResponse extends BaseResponse {
 
     /**
-     * FIsSuccess : 操作是否成功
-     * FIsNeedRelogin : 是否需要重新登录
-     * FObject : {"uuid":"图片的uuid（Guid类型，全局唯一ID，该ID用于发布生意圈时回传）"}
+     * FIsNeedRelogin : false
+     * FInterID : 0
+     * FBillNo : null
+     * rows : []
+     * FObject : {"uuid":"6F42A5DC-5C74-44BC-8C7C-E49BDC1B69A8"}
+     * FIsFooterData : false
      */
 
-    @SerializedName("FIsSuccess")
-    public String      FIsSuccessX;
-    public String      FIsNeedRelogin;
+    public boolean FIsNeedRelogin;
+    public int         FInterID;
+    public Object      FBillNo;
     public FObjectBean FObject;
+    public boolean     FIsFooterData;
+    public List<?>     rows;
 
     public static class FObjectBean {
         /**
-         * uuid : 图片的uuid（Guid类型，全局唯一ID，该ID用于发布生意圈时回传）
+         * uuid : 6F42A5DC-5C74-44BC-8C7C-E49BDC1B69A8
          */
 
         public String uuid;
+    }
+
+    @Override
+    public String toString() {
+        return "UploadResponse{" +
+                "FIsNeedRelogin=" + FIsNeedRelogin +
+                ", FInterID=" + FInterID +
+                ", FBillNo=" + FBillNo +
+                ", FObject=" + FObject +
+                ", FIsFooterData=" + FIsFooterData +
+                ", rows=" + rows +
+                '}';
     }
 }

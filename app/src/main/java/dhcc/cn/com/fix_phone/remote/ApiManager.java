@@ -1,6 +1,5 @@
 package dhcc.cn.com.fix_phone.remote;
 
-import com.jakewharton.retrofit2.adapter.rxjava2.Result;
 import com.orhanobut.logger.Logger;
 
 import org.greenrobot.eventbus.EventBus;
@@ -17,6 +16,7 @@ import dhcc.cn.com.fix_phone.bean.LoginResponse;
 import dhcc.cn.com.fix_phone.bean.ProductImage;
 import dhcc.cn.com.fix_phone.bean.RegisterResponse;
 import dhcc.cn.com.fix_phone.bean.TelCheckResponse;
+import dhcc.cn.com.fix_phone.bean.UploadResponse;
 import dhcc.cn.com.fix_phone.event.BusinessEvent;
 import dhcc.cn.com.fix_phone.event.CirCleBusinessEvent;
 import dhcc.cn.com.fix_phone.event.CircleAdEvent;
@@ -28,6 +28,7 @@ import dhcc.cn.com.fix_phone.event.RegisterEvent;
 import dhcc.cn.com.fix_phone.event.TelCheckEvent;
 import io.reactivex.Observable;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -307,15 +308,16 @@ public class ApiManager {
     }
 
     //12.上传生意圈图片
-    public Observable<Result<String>> UploadPictureBusiness(final String file) {
-        Logger.d("UploadPictureBusiness","UploadPictureBusiness");
-        RequestBody mutipartBody = createMutipartBody(file);
-        return mApi.UploadPictureBusi(mutipartBody);
+    public Observable<UploadResponse> UploadPictureBusiness(final String file) {
+        Logger.d("UploadPictureBusiness", "UploadPictureBusiness");
+        return mApi.UploadPictureBusi(getLoginInfo().accessToken, createMutipartBody(file));
     }
 
-    private RequestBody createMutipartBody(String filePath) {
+    private MultipartBody.Part createMutipartBody(String filePath) {
         File file = new File(filePath);
-        return RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        RequestBody requestFile = RequestBody.create(MediaType.parse("application/otcet-stream"), file);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("aFile", file.getName(), requestFile);
+        return body;
     }
 
 }

@@ -186,12 +186,13 @@ public class CircleActivity extends YWActivity implements CircleContract.View {
     }
 
     private void initData() {
+        pageIndex = 1;
         ApiManager.Instance().getCircleDetailAds(mTypeId);
         ApiManager.Instance().getCircleBusinessList(MAX_NUMBER, pageIndex, pageSize, mTypeId, "");
     }
 
     private void loadMore() {
-        ApiManager.Instance().getCircleBusinessList(MAX_NUMBER, pageIndex, pageSize, mTypeId, "");
+        ApiManager.Instance().getCircleBusinessList(MAX_NUMBER, ++pageIndex, pageSize, mTypeId, "");
     }
 
     private void init() {
@@ -271,10 +272,10 @@ public class CircleActivity extends YWActivity implements CircleContract.View {
     public void updateCircleItem(List<CircleItem> circleItems) {
         if (isLoadMore) {
             mRefreshLayout.finishLoadmore(200);
-            circleAdapter.addDatas(circleItems);
+            circleAdapter.addData(circleItems);
         } else {
             mRefreshLayout.finishRefresh(200);
-            circleAdapter.setDatas(circleItems);
+            circleAdapter.setData(circleItems);
         }
         circleAdapter.notifyDataSetChanged();
     }
@@ -286,6 +287,11 @@ public class CircleActivity extends YWActivity implements CircleContract.View {
         } else {
             mTextView_number.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void refreshData() {
+        initData();
     }
 
     @Override
@@ -313,7 +319,8 @@ public class CircleActivity extends YWActivity implements CircleContract.View {
         if (mSearchView.isSearchOpen()) {
             mSearchView.closeSearch();
         } else {
-            super.onBackPressed();
+            finish();
         }
     }
+
 }

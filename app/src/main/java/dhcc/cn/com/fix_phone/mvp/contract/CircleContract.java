@@ -34,6 +34,8 @@ public interface CircleContract {
         void updateCircleItem(List<CircleItem> circleItem);
 
         void showTextViewNumber(boolean b);
+
+        void refreshData();
     }
 
     interface Presenter extends BasePresenter {

@@ -1,8 +1,6 @@
 package dhcc.cn.com.fix_phone.remote;
 
 
-import com.jakewharton.retrofit2.adapter.rxjava2.Result;
-
 import dhcc.cn.com.fix_phone.bean.BusinessResponse;
 import dhcc.cn.com.fix_phone.bean.CirCleADResponse;
 import dhcc.cn.com.fix_phone.bean.CircleBusiness;
@@ -15,10 +13,10 @@ import dhcc.cn.com.fix_phone.bean.TelCheckResponse;
 import dhcc.cn.com.fix_phone.bean.UploadResponse;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -94,7 +92,8 @@ public interface Api {
     //12.上传生意圈图片 POST /Busi/ UploadPicture
     @Multipart
     @POST("/Busi/UploadPicture")
-    Observable<Result<String>> UploadPictureBusi(@Part("file\"; filename=\"image.png\"") RequestBody file);
+    @Headers("accessKey:JHD2017")
+    Observable<UploadResponse> UploadPictureBusi(@Header("accessToken") String accessToken, @Part MultipartBody.Part file );
 
     //13.上传生意圈视频
     @Multipart

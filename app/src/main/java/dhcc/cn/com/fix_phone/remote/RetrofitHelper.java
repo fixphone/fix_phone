@@ -39,7 +39,6 @@ public class RetrofitHelper {
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
             HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
             loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-            builder.addInterceptor(loggingInterceptor);
             File cacheFile = new File(context.getCacheDir(), "http");
             Cache cache = new Cache(cacheFile, 1024 * 1024 * 50);
             /*Interceptor cacheInterceptor = new Interceptor() {
@@ -79,7 +78,7 @@ public class RetrofitHelper {
             builder.addInterceptor(cacheInterceptor);
             builder.addNetworkInterceptor(cacheInterceptor);*/
 
-            builder.addNetworkInterceptor(new Interceptor() {
+            Interceptor interceptor = new Interceptor() {
                 @Override
                 public Response intercept(Chain chain) throws IOException {
                     Request request = chain.request();
@@ -87,7 +86,10 @@ public class RetrofitHelper {
                             .addHeader("accessKey", "JHD2017").build();
                     return chain.proceed(headerRequest);
                 }
-            });
+            };
+            builder.addNetworkInterceptor(interceptor);
+            //builder.addInterceptor(interceptor);
+            builder.addInterceptor(loggingInterceptor);
             builder.cache(cache);
             //设置超时
             builder.connectTimeout(10, TimeUnit.SECONDS);

@@ -22,35 +22,41 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.github.rubensousa.bottomsheetbuilder.BottomSheetBuilder;
 import com.github.rubensousa.bottomsheetbuilder.adapter.BottomSheetItemClickListener;
-import com.jakewharton.retrofit2.adapter.rxjava2.Result;
+import com.google.gson.Gson;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CountDownLatch;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import dhcc.cn.com.fix_phone.MyApplication;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.adapter.SelectImageAdapter;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
+import dhcc.cn.com.fix_phone.bean.UploadResponse;
 import dhcc.cn.com.fix_phone.conf.CircleDefaultData;
-import dhcc.cn.com.fix_phone.remote.ApiManager;
+import dhcc.cn.com.fix_phone.event.PublishSuccessEvent;
 import dhcc.cn.com.fix_phone.utils.FileUtils;
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
+import dhcc.cn.com.fix_phone.utils.GsonUtils;
 import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 
 import static dhcc.cn.com.fix_phone.ui.activity.FeedBackActivity.TAKEPHOTO_PATH;
 import static dhcc.cn.com.fix_phone.ui.activity.FeedBackActivity.getCurrentTime;
@@ -58,7 +64,7 @@ import static dhcc.cn.com.fix_phone.ui.activity.FeedBackActivity.getCurrentTime;
 /**
  * 2017/9/26 23
  */
-public class PublishActivity extends BaseActivity implements BaseQuickAdapter.OnItemChildClickListener {
+public class PublishActivity extends BaseActivity implements SelectImageAdapter.OnAddClickListener, SelectImageAdapter.OnDeleteClickListener {
 
     private static final String TAG                       = "PublishActivity";
     private static final int    REQUEST_CODE_CHOOSE_PHOTO = 100;
@@ -91,22 +97,27 @@ public class PublishActivity extends BaseActivity implements BaseQuickAdapter.On
     private Map<Integer, String> mMap;
     private String               mSelectType;
     private SelectImageAdapter   mAdapter;
+    private int                          currentNumber = 9;
+    private CopyOnWriteArrayList<String> mList         = new CopyOnWriteArrayList<>();
+    private File mFileVideo;
 
     @Override
     protected void init() {
         Intent intent = getIntent();
         mType = intent.getIntExtra("type", 0);
         mMap = CircleDefaultData.getCirCleDefailtMap();
-        mAdapter = new SelectImageAdapter(R.layout.item_image_check, null);
+        mAdapter = new SelectImageAdapter(this, null);
     }
 
     @Override
     protected void initData() {
         mTitleName.setText("发布生意");
         if (mType == 1) {
-            mTextViewVideo.setVisibility(View.GONE);
+            mLinearLayout.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(View.VISIBLE);
         } else {
-            mTextViewVideo.setVisibility(View.VISIBLE);
+            mLinearLayout.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(View.GONE);
         }
     }
 
@@ -130,11 +141,12 @@ public class PublishActivity extends BaseActivity implements BaseQuickAdapter.On
 
     @Override
     protected void initEvent() {
-        mAdapter.setOnItemChildClickListener(this);
+        mAdapter.setOnAddClickListener(this);
+        mAdapter.setOnDeleteClickListener(this);
     }
 
     @OnClick({R.id.title_back, R.id.textView_type, R.id.btn_confirm, R.id.imageView_selector})
-    public void onClick(View view) {
+    public void onHandleClick(View view) {
         int id = view.getId();
         switch (id) {
             case R.id.title_back:
@@ -165,44 +177,128 @@ public class PublishActivity extends BaseActivity implements BaseQuickAdapter.On
     }
 
     private void uploadVideo() {
+        if (mFileVideo == null || !mFileVideo.exists()) {
+            postUploadMessage();
+        } else {
+            mList = new CopyOnWriteArrayList<>();
+            Log.d(TAG, "uploadVideo: "+ mFileVideo.length());
+            final CountDownLatch startSignal = new CountDownLatch(1);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        uploadVideoFile(mList, mFileVideo, startSignal);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
 
+            // 成功以后
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        startSignal.await();
+                        postUploadMessage();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+        }
     }
 
     private void uploadPhoto() {
         if (mAdapter.getData().isEmpty()) {
-
+            postUploadMessage();
         } else {
-            Observable.fromIterable(mAdapter.getData()).
-                    flatMap(new Function<String, ObservableSource<Result<String>>>() {
-                        @Override
-                        public ObservableSource<Result<String>> apply(String s) throws Exception {
-                            return ApiManager.Instance().UploadPictureBusiness(s);
+            mList = new CopyOnWriteArrayList<>();
+            final CountDownLatch startSignal = new CountDownLatch(mAdapter.getData().size());
+            for (int i = 0; i < mAdapter.getData().size(); i++) {
+                final File file = new File(mAdapter.getData().get(i));
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            uploadPhotoFile(mList, file, startSignal);
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
-                    })
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Observer<Result<String>>() {
-                        @Override
-                        public void onSubscribe(Disposable d) {
-
-                        }
-
-                        @Override
-                        public void onNext(Result<String> stringResult) {
-
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            Log.d(TAG, "onError: " + e.toString());
-                        }
-
-                        @Override
-                        public void onComplete() {
-
-                        }
-                    });
+                    }
+                }).start();
+            }
+            // 成功以后
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        startSignal.await();
+                        postUploadMessage();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
         }
+    }
+
+    private void postUploadMessage() {
+        OkHttpUtils
+                .post()
+                .url("http://120.77.202.151:8080/Busi/Publish")
+                .addParams("type", mSelectType)
+                .addParams("content", getEditText())
+                .addParams("images", mList.isEmpty() ? "" : GsonUtils.toJson(mList))
+                .addParams("videoId", mList.isEmpty() ? "" : mList.get(0))
+                .addHeader("accessKey", "JHD2017")
+                .addHeader("accessToken", MyApplication.getLoginResponse().FObject.accessToken)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Request request, Exception e) {
+                        Log.d(TAG, "onError: " + e.toString());
+                    }
+
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d(TAG, "onResponse: " + response);
+                        EventBus.getDefault().post(new PublishSuccessEvent(true));
+                        finish();
+                    }
+                });
+    }
+
+    private void uploadPhotoFile(final CopyOnWriteArrayList<String> list, File file, final CountDownLatch startSignal) throws IOException {
+        Response response = OkHttpUtils
+                .post()
+                .url("http://120.77.202.151:8080/Busi/UploadPicture")
+                .addFile("mFile", file.getName(), file)
+                .addHeader("accessKey", "JHD2017")
+                .addHeader("accessToken", MyApplication.getLoginResponse().FObject.accessToken)
+                .build()
+                .execute();
+        Log.d(TAG, "uploadVideoFile: " + response.body().string());
+        Gson gson = new Gson();
+        UploadResponse uploadResponse = gson.fromJson(response.body().string(), UploadResponse.class);
+        list.add(uploadResponse.FObject.uuid);
+        startSignal.countDown();
+    }
+
+    private void uploadVideoFile(final CopyOnWriteArrayList<String> list, File file, final CountDownLatch startSignal) throws IOException {
+        Response response = OkHttpUtils
+                .post()
+                .url("http://120.77.202.151:8080/Busi/UploadVideo")
+                .addFile("mFile", file.getName(), file)
+                .addHeader("accessKey", "JHD2017")
+                .addHeader("accessToken", MyApplication.getLoginResponse().FObject.accessToken)
+                .build()
+                .execute();
+        Log.d(TAG, "uploadVideoFile: " + response.body().string());
+        Gson gson = new Gson();
+        UploadResponse uploadResponse = gson.fromJson(response.body().string(), UploadResponse.class);
+        list.add(uploadResponse.FObject.uuid);
+        startSignal.countDown();
     }
 
     private void applyPermission() {
@@ -236,7 +332,7 @@ public class PublishActivity extends BaseActivity implements BaseQuickAdapter.On
 
     private void handleSelector() {
         if (mType == 1) {
-            selectPhoto();
+            selectPhoto(currentNumber - mAdapter.getData().size());
         } else if (mType == 2) {
             createVideo();
         }
@@ -260,13 +356,13 @@ public class PublishActivity extends BaseActivity implements BaseQuickAdapter.On
         startActivityForResult(intent, CAMERA_REQUEST_CODE);
     }
 
-    private void selectPhoto() {
+    private void selectPhoto(int number) {
         Matisse.from(PublishActivity.this)
                 .choose(MimeType.ofImage()) // 选择 mime 的类型
                 .countable(true)
                 .capture(true)
                 .captureStrategy(new CaptureStrategy(true, "dhcc.cn.com.fix_phone.FileProvider"))
-                .maxSelectable(9) // 图片选择的最多数量
+                .maxSelectable(number) // 图片选择的最多数量
                 .gridExpectedSize(getResources().getDimensionPixelSize(R.dimen.grid_expected_size))
                 .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                 .thumbnailScale(0.85f) // 缩略图的比例
@@ -282,7 +378,7 @@ public class PublishActivity extends BaseActivity implements BaseQuickAdapter.On
         mDialog = new BottomSheetBuilder(this, R.style.AppTheme_BottomSheetDialog_Custom)
                 .setMode(BottomSheetBuilder.MODE_LIST)
                 .setMenu(R.menu.menu_botton_type)
-                .expandOnStart(true)
+                .expandOnStart(false)
                 .setItemClickListener(new BottomSheetItemClickListener() {
                     @Override
                     public void onBottomSheetItemClick(MenuItem item) {
@@ -303,32 +399,33 @@ public class PublishActivity extends BaseActivity implements BaseQuickAdapter.On
         if (requestCode == REQUEST_CODE_CHOOSE_PHOTO && resultCode == RESULT_OK) {
             List<String> strings = Matisse.obtainPathResult(data);
             if (!strings.isEmpty()) {
-                showRecycler(strings);
+                mAdapter.addData(strings);
             }
         }
 
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
-            File file = new File(photo_path);
-            if (file.exists() && file.getName().endsWith("mp4")) {
-                Glide.with(this).load(Uri.fromFile(file)).placeholder(R.drawable.menu_0).into(mSelector);
+            mFileVideo = new File(photo_path);
+            if (mFileVideo.exists() && mFileVideo.getName().endsWith("mp4")) {
+                Log.d(TAG, "onActivityResult: " + photo_path);
+                Glide.with(this).load(Uri.fromFile(mFileVideo)).placeholder(R.drawable.menu_0).into(mSelector);
                 mTextViewVideo.setText("已拍好视频，发布您的生意圈");
             }
         }
     }
 
-    private void showRecycler(List<String> strings) {
-        mRecyclerView.setVisibility(View.VISIBLE);
-        mLinearLayout.setVisibility(View.GONE);
-        mAdapter.setNewData(strings);
+    @Override
+    public void onDelete(int position) {
+        mAdapter.remove(position);
     }
 
     @Override
-    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-        if (mAdapter.getData().isEmpty()) {
-            mRecyclerView.setVisibility(View.GONE);
-            mLinearLayout.setVisibility(View.VISIBLE);
-        } else {
-            mAdapter.remove(position);
-        }
+    public void onAdd() {
+        applyPermission();
+    }
+
+    public String getEditText() {
+        String trim = mContentEt.getText().toString().trim();
+        Log.d(TAG, "getEditText: " + trim);
+        return trim;
     }
 }

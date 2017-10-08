@@ -92,8 +92,6 @@
                 android:background="@color/white"
                 android:layout_gravity="center|left"
                 android:layout_marginBottom="@dimen/public_20dp"
-                android:layout_marginLeft="@dimen/public_15dp"
-                android:layout_marginRight="@dimen/public_15dp"
                 android:layout_marginTop="@dimen/public_20dp"
                 android:overScrollMode="never"
                 android:visibility="gone"/>

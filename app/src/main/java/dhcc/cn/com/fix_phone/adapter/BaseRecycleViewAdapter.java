@@ -14,22 +14,20 @@ public abstract class BaseRecycleViewAdapter<T, VH extends RecyclerView.ViewHold
     protected RecycleViewItemListener itemListener;
     protected List<T> datas = new ArrayList<T>();
 
-    public List<T> getDatas() {
-        if (datas == null)
-            datas = new ArrayList<T>();
+    public List<T> getData() {
         return datas;
     }
 
-    public void setDatas(List<T> datas) {
-        this.datas = datas;
+    public void setData(List<T> data) {
+        this.datas = data;
     }
 
     public void setItemListener(RecycleViewItemListener listener) {
         this.itemListener = listener;
     }
 
-    public void addDatas(List<T> datas) {
-        datas.addAll(datas);
+    public void addData(List<T> data) {
+        datas.addAll(data);
     }
 
 }
