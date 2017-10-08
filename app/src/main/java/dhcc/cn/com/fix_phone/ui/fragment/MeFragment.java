@@ -19,7 +19,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.base.BaseFragment;
-import dhcc.cn.com.fix_phone.base.GlideImageLoader;
 import dhcc.cn.com.fix_phone.bean.BusinessResponse;
 import dhcc.cn.com.fix_phone.event.BusinessEvent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
@@ -27,6 +26,7 @@ import dhcc.cn.com.fix_phone.ui.activity.AboutAppActivity;
 import dhcc.cn.com.fix_phone.ui.activity.FeedBackActivity;
 import dhcc.cn.com.fix_phone.ui.activity.MineCirCleActivity;
 import dhcc.cn.com.fix_phone.ui.activity.MyActivity;
+import dhcc.cn.com.fix_phone.ui.activity.MyProductActivity;
 import dhcc.cn.com.fix_phone.ui.activity.PersonInfoActivity;
 import dhcc.cn.com.fix_phone.ui.activity.VipActivity;
 import dhcc.cn.com.fix_phone.ui.widget.RoundImageView;
@@ -122,9 +122,10 @@ public class MeFragment extends BaseFragment {
                 startActivity(VipActivity.class);
                 break;
             case R.id.mine_advert:
+                startActivity(new Intent(getActivity(), MyProductActivity.class).putExtra("type", 1));
                 break;
             case R.id.mine_produce:
-
+                startActivity(new Intent(getActivity(), MyProductActivity.class).putExtra("type", 2));
                 break;
             case R.id.mine_clear:
 

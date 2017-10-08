@@ -36,11 +36,12 @@ import dhcc.cn.com.fix_phone.bean.VideoInfo;
 import dhcc.cn.com.fix_phone.event.CirCleBusinessEvent;
 import dhcc.cn.com.fix_phone.event.FavoResponseEvent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
+import dhcc.cn.com.fix_phone.ui.fragment.DeleteDialogFragment;
 
 /**
  * 2017/10/6 13
  */
-public class MineCirCleActivity extends BaseActivity {
+public class MineCirCleActivity extends BaseActivity implements DeleteDialogFragment.SelectListener {
 
     protected static final String TAG        = "MineCirCleActivity";
     public static final    int    MAX_NUMBER = 20;
@@ -106,7 +107,8 @@ public class MineCirCleActivity extends BaseActivity {
             @Override
             public void onDelete(int position, CircleItem item) {
                 mCurrentPosition = position;
-                ApiManager.Instance().deleteFavo(item.getUser().FInterID);
+                DeleteDialogFragment deleteFragment = DeleteDialogFragment.newInstance(item.getUser().FInterID);
+                deleteFragment.show(getSupportFragmentManager(), "deleteFragment");
             }
         });
     }
@@ -243,5 +245,10 @@ public class MineCirCleActivity extends BaseActivity {
         }
 
         return circleItemList;
+    }
+
+    @Override
+    public void onSelector(String fInterID) {
+        ApiManager.Instance().deleteFavo(fInterID);
     }
 }

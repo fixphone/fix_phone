@@ -1,29 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="200dp"
-              android:layout_height="200dp"
-              android:orientation="horizontal">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="150dp">
 
     <TextView
-        android:id="@+id/textView_friend"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:drawablePadding="@dimen/public_10dp"
-        android:drawableTop="@drawable/icon64_wx_logo"
-        android:text="微信好友"
-        android:gravity="center_horizontal"
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/public_10dp"
+        android:gravity="center"
+        android:text="分享至"
         android:textColor="@color/text_black_color"
         android:textSize="14sp"/>
 
-    <TextView
-        android:id="@+id/textView_circle"
-        android:layout_width="100dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:drawablePadding="@dimen/public_10dp"
-        android:drawableTop="@drawable/icon_res_download_moments"
-        android:text="朋友圈"
-        android:gravity="center_horizontal"
-        android:textColor="@color/text_black_color"
-        android:textSize="14sp"/>
+        android:layout_below="@+id/textView"
+        android:layout_marginTop="@dimen/public_20dp"
+        android:orientation="horizontal">
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/textView_friend"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="100dp"
+            android:drawablePadding="@dimen/public_10dp"
+            android:drawableTop="@drawable/icon64_wx_logo"
+            android:gravity="center_horizontal"
+            android:text="微信好友"
+            android:textColor="@color/text_black_color"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/textView_circle"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="100dp"
+            android:drawablePadding="@dimen/public_10dp"
+            android:drawableTop="@drawable/icon_res_download_moments"
+            android:gravity="center_horizontal"
+            android:text="朋友圈"
+            android:textColor="@color/text_black_color"
+            android:textSize="14sp"/>
+
+    </LinearLayout>
+</RelativeLayout>
