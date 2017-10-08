@@ -21,9 +21,12 @@ import dhcc.cn.com.fix_phone.rong.network.async.AsyncTaskManager;
 import dhcc.cn.com.fix_phone.rong.network.async.OnDataListener;
 import dhcc.cn.com.fix_phone.rong.network.http.HttpException;
 import dhcc.cn.com.fix_phone.utils.NToast;
+import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
+import me.yokeyword.fragmentation.anim.FragmentAnimator;
+import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
 
 
-public abstract class RongBaseActivity extends FragmentActivity implements OnDataListener {
+public abstract class RongBaseActivity extends SwipeBackActivity implements OnDataListener {
 
     protected Context mContext;
     public AsyncTaskManager mAsyncTaskManager;
@@ -261,16 +264,16 @@ public abstract class RongBaseActivity extends FragmentActivity implements OnDat
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
-    @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (null != this.getCurrentFocus() && event.getAction() == MotionEvent.ACTION_UP) {
             InputMethodManager mInputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
             return mInputMethodManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
         }
         return super.onTouchEvent(event);
+    }
+
+    @Override
+    public FragmentAnimator onCreateFragmentAnimator() {
+        return new DefaultHorizontalAnimator();
     }
 }

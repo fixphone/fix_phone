@@ -8,16 +8,28 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.base.BaseFragment;
+import dhcc.cn.com.fix_phone.base.GlideImageLoader;
+import dhcc.cn.com.fix_phone.bean.BusinessResponse;
+import dhcc.cn.com.fix_phone.event.BusinessEvent;
+import dhcc.cn.com.fix_phone.remote.ApiManager;
 import dhcc.cn.com.fix_phone.ui.activity.AboutAppActivity;
 import dhcc.cn.com.fix_phone.ui.activity.FeedBackActivity;
 import dhcc.cn.com.fix_phone.ui.activity.MineCirCleActivity;
 import dhcc.cn.com.fix_phone.ui.activity.MyActivity;
 import dhcc.cn.com.fix_phone.ui.activity.PersonInfoActivity;
 import dhcc.cn.com.fix_phone.ui.activity.VipActivity;
+import dhcc.cn.com.fix_phone.ui.widget.RoundImageView;
 
 /**
  * 2017/9/16 23
@@ -34,6 +46,14 @@ public class MeFragment extends BaseFragment {
     View           mBottomLine;
     @BindView(R.id.title_name)
     TextView       mTitleNameTv;
+    @BindView(R.id.user_name)
+    TextView       user_name;
+    @BindView(R.id.user_mobile)
+    TextView       user_mobile;
+    @BindView(R.id.user_icon)
+    RoundImageView user_icon;
+
+    private BusinessResponse mResponse;
 
     public static MeFragment newInstance() {
         Bundle args = new Bundle();
@@ -49,6 +69,12 @@ public class MeFragment extends BaseFragment {
     }
 
     @Override
+    protected void init() {
+        super.init();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
     protected void initEvent() {
         super.initEvent();
         mContainerRl.setBackgroundColor(Color.TRANSPARENT);
@@ -59,12 +85,27 @@ public class MeFragment extends BaseFragment {
         mTitleRightTv.setTextColor(ContextCompat.getColor(getContext(), R.color.app_text_color_black));
     }
 
+    @Override
+    protected void initData() {
+        ApiManager.Instance().getUserInfo("");
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUserInfo(BusinessEvent event) {
+        mResponse = event.mResponse;
+        user_name.setText(mResponse.FObject.name);
+        user_mobile.setText(mResponse.FObject.phone);
+        Glide.with(getContext()).load(mResponse.FObject.headUrl).diskCacheStrategy(DiskCacheStrategy.ALL).into(user_icon);
+    }
+
     @OnClick({R.id.mine_info, R.id.mine_circle, R.id.mine_house, R.id.mine_suggest, R.id.mine_vip,
             R.id.mine_advert, R.id.mine_produce, R.id.mine_clear, R.id.mine_app, R.id.title_right})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.mine_info:
-                startActivity(PersonInfoActivity.class);
+                Intent intent = new Intent(getContext(), PersonInfoActivity.class);
+                intent.putExtra("BusinessResponse", mResponse);
+                startActivity(intent);
                 break;
             case R.id.mine_circle:
                 startActivity(new Intent(getActivity(), MineCirCleActivity.class).putExtra("title", "我的圈子").
@@ -102,5 +143,11 @@ public class MeFragment extends BaseFragment {
     private void startActivity(Class clazz) {
         Intent intent = new Intent(getActivity(), clazz);
         startActivity(intent);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

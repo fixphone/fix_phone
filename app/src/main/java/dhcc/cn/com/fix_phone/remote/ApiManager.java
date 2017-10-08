@@ -12,6 +12,7 @@ import dhcc.cn.com.fix_phone.bean.FavoResponse;
 import dhcc.cn.com.fix_phone.bean.LoginResponse;
 import dhcc.cn.com.fix_phone.bean.ProductImage;
 import dhcc.cn.com.fix_phone.bean.RegisterResponse;
+import dhcc.cn.com.fix_phone.bean.RongTokenResponse;
 import dhcc.cn.com.fix_phone.bean.TelCheckResponse;
 import dhcc.cn.com.fix_phone.event.BusinessEvent;
 import dhcc.cn.com.fix_phone.event.CirCleBusinessEvent;
@@ -22,6 +23,7 @@ import dhcc.cn.com.fix_phone.event.FavoResponseEvent;
 import dhcc.cn.com.fix_phone.event.LoginEvent;
 import dhcc.cn.com.fix_phone.event.ProductImageEvent;
 import dhcc.cn.com.fix_phone.event.RegisterEvent;
+import dhcc.cn.com.fix_phone.event.RongTokenEvent;
 import dhcc.cn.com.fix_phone.event.TelCheckEvent;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -206,6 +208,23 @@ public class ApiManager {
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void getRongToken(String accessToken){
+        mApi.getRongToken(accessToken).enqueue(new Callback<RongTokenResponse>() {
+            @Override
+            public void onResponse(Call<RongTokenResponse> call, Response<RongTokenResponse> response) {
+                if(response.code() == 200 && response.body().FIsSuccess){
+                    RongTokenResponse tokenResponse = response.body();
+                    EventBus.getDefault().post(new RongTokenEvent(tokenResponse.FObject));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RongTokenResponse> call, Throwable t) {
 
             }
         });

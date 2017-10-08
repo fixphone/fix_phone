@@ -65,7 +65,6 @@ public class NewFriendListActivity extends RongBaseActivity implements NewFriend
         rightButton.setOnClickListener(this);
     }
 
-
     @Override
     public Object doInBackground(int requestCode, String id) throws HttpException {
         switch (requestCode) {

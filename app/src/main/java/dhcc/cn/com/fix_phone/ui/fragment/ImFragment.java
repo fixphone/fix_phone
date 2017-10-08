@@ -5,10 +5,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -34,12 +37,15 @@ public class ImFragment extends BaseFragment implements DragPointView.OnDragList
 
     @BindView(R.id.im_title_rg)
     RadioGroup mTitleRg;
+    @BindView(R.id.list_item)
+    RadioButton list_item;
     @BindView(R.id.add_friend_iv)
     ImageView mAddFriendIv;
     @BindView(R.id.seal_num)
     DragPointView mUnreadNumView;
 
     private ConversationListFragment mConversationListFragment = null;
+    private ContactsFragment contactsFragment = null;
     private Conversation.ConversationType[] mConversationsTypes = null;
     private boolean isDebug;
 
@@ -64,6 +70,19 @@ public class ImFragment extends BaseFragment implements DragPointView.OnDragList
     }
 
     @Override
+    protected void initView(View view) {
+        super.initView(view);
+        contactsFragment = new ContactsFragment();
+        initConversationList();
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.content_fl, contactsFragment);
+        fragmentTransaction.add(R.id.content_fl, mConversationListFragment);
+        fragmentTransaction.commit();
+        list_item.setChecked(true);
+        changeFragment(mConversationListFragment);
+    }
+
+    @Override
     protected void initData() {
         super.initData();
     }
@@ -76,10 +95,10 @@ public class ImFragment extends BaseFragment implements DragPointView.OnDragList
             public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
                 switch (i){
                     case R.id.list_item:
-
+                        changeFragment(mConversationListFragment);
                         break;
                     case R.id.contacts_item:
-
+                        changeFragment(contactsFragment);
                         break;
                     default:
                         break;
@@ -99,6 +118,14 @@ public class ImFragment extends BaseFragment implements DragPointView.OnDragList
             }
         });
         mUnreadNumView.setDragListencer(this);
+    }
+
+    private void changeFragment(Fragment fragment){
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.hide(contactsFragment);
+        ft.hide(mConversationListFragment);
+        ft.show(fragment);
+        ft.commit();
     }
 
     private Fragment initConversationList() {
@@ -159,6 +186,12 @@ public class ImFragment extends BaseFragment implements DragPointView.OnDragList
             mUnreadNumView.setVisibility(View.VISIBLE);
             mUnreadNumView.setText("···");
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        System.out.println("-----");
     }
 
     @Override

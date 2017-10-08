@@ -1,13 +1,24 @@
 package dhcc.cn.com.fix_phone.ui.activity;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.OnClick;
+import dhcc.cn.com.fix_phone.MyApplication;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
+import dhcc.cn.com.fix_phone.base.GlideImageLoader;
+import dhcc.cn.com.fix_phone.bean.BusinessResponse;
+import dhcc.cn.com.fix_phone.event.BusinessEvent;
+import dhcc.cn.com.fix_phone.remote.ApiManager;
 
 /**
  * Created by songyang on 2017\9\18 0018.
@@ -48,6 +59,8 @@ public class PersonInfoActivity extends BaseActivity {
     @BindView(R.id.info_company_profile_tv)
     TextView info_company_profile_tv;
 
+    private BusinessResponse mResponse;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_person_info;
@@ -57,6 +70,33 @@ public class PersonInfoActivity extends BaseActivity {
     protected void initEvent() {
         super.initEvent();
         title_name.setText("店铺资料");
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+        if(getIntent() != null && getIntent().hasExtra("BusinessResponse")){
+            mResponse = (BusinessResponse)getIntent().getSerializableExtra("BusinessResponse");
+            setViewState(mResponse);
+        }
+    }
+
+    private void setViewState(BusinessResponse mResponse){
+        info_company_name_tv.setText(setText(mResponse.FObject.companyName));
+        info_contact_name_tv.setText(setText(mResponse.FObject.contact));
+        info_postcode_tv.setText(setText(mResponse.FObject.postCode));
+        info_mobile_phone_tv.setText(setText(mResponse.FObject.contactMobile));
+        info_phone_num_tv.setText(setText(mResponse.FObject.contactPhone));
+        info_address_tv.setText(setText(mResponse.FObject.address));
+        info_company_profile_tv.setText(setText(mResponse.FObject.companyProfile));
+
+    }
+
+    private String setText(String s){
+        if(TextUtils.isEmpty(s)){
+            return "";
+        }
+        return s;
     }
 
     @OnClick({R.id.title_back, R.id.info_company_name_rl, R.id.info_contact_name_rl, R.id.info_postcode_rl,

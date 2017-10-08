@@ -170,7 +170,6 @@ public class UserDetailActivity extends RongBaseActivity implements View.OnClick
         }
     }
 
-
     private void syncPersonalInfo() {
         mIsFriendsRelationship = SealUserInfoManager.getInstance().isFriendsRelationship(mFriend.getUserId());
         if (mIsFriendsRelationship) {
@@ -449,11 +448,11 @@ public class UserDetailActivity extends RongBaseActivity implements View.OnClick
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressedSupport() {
         if (mType == CLICK_CONVERSATION_USER_PORTRAIT) {
             SealAppContext.getInstance().popActivity(this);
         }
-        super.onBackPressed();
+        super.onBackPressedSupport();
     }
 
     @Override

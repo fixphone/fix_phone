@@ -39,9 +39,15 @@
         <activity
             android:name=".ui.activity.MainActivity"
             android:screenOrientation="portrait"
-            android:launchMode="singleTask"
-            >
-
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="dhcc.cn.com.fix_phone"
+                    android:path="/conversationlist"
+                    android:scheme="rong" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".ui.activity.PersonInfoActivity"
@@ -123,8 +129,8 @@
 
 
         <!--<meta-data-->
-        <!--android:name="RONG_CLOUD_APP_KEY"-->
-        <!--android:value="e0x9wycfx7flq" />-->
+            <!--android:name="RONG_CLOUD_APP_KEY"-->
+            <!--android:value="k51hidwqk9m4b" />-->
 
         <!-- 正式 n19jmcy59f1q9  测试 p5tvi9dst25b4  小乔 e0x9wycfx7flq-->
 

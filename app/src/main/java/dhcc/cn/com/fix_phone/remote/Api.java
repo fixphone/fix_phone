@@ -10,6 +10,7 @@ import dhcc.cn.com.fix_phone.bean.FavoResponse;
 import dhcc.cn.com.fix_phone.bean.LoginResponse;
 import dhcc.cn.com.fix_phone.bean.ProductImage;
 import dhcc.cn.com.fix_phone.bean.RegisterResponse;
+import dhcc.cn.com.fix_phone.bean.RongTokenResponse;
 import dhcc.cn.com.fix_phone.bean.TelCheckResponse;
 import dhcc.cn.com.fix_phone.bean.UploadResponse;
 import io.reactivex.Observable;
@@ -279,5 +280,7 @@ public interface Api {
     @GET("/Order/GetSuccessOrder")
     Call<String> GetSuccessOrder(@Header("accessToken") String accessToken);
 
-
+    //51.获取融云token
+    @GET("/Account/GetRongToken")
+    Call<RongTokenResponse> getRongToken(@Header("accessToken") String accessToken);
 }

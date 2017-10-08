@@ -1,6 +1,9 @@
 package dhcc.cn.com.fix_phone.ui.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
@@ -17,25 +20,45 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dhcc.cn.com.fix_phone.MyApplication;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
+import dhcc.cn.com.fix_phone.base.RongBaseActivity;
 import dhcc.cn.com.fix_phone.event.LoginEvent;
+import dhcc.cn.com.fix_phone.event.RongTokenEvent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
+import dhcc.cn.com.fix_phone.rong.SealConst;
+import dhcc.cn.com.fix_phone.rong.SealUserInfoManager;
+import dhcc.cn.com.fix_phone.rong.network.http.HttpException;
+import dhcc.cn.com.fix_phone.rong.response.GetTokenResponse;
+import dhcc.cn.com.fix_phone.rong.response.GetUserInfoByIdResponse;
+import dhcc.cn.com.fix_phone.rong.response.LoginResponse;
+import dhcc.cn.com.fix_phone.ui.widget.LoadDialog;
 import dhcc.cn.com.fix_phone.utils.AMUtils;
+import dhcc.cn.com.fix_phone.utils.CommonUtils;
+import dhcc.cn.com.fix_phone.utils.NLog;
+import dhcc.cn.com.fix_phone.utils.NToast;
+import dhcc.cn.com.fix_phone.utils.RongGenerate;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.UserInfo;
 
 /**
  * Created by Administrator on 2017/9/24 0024.
  *
  */
 
-public class LoginActivity extends BaseActivity{
+public class LoginActivity extends RongBaseActivity{
 
     private static final String TAG = "LoginActivity";
     public static final int REG_CODE = 0x0001;
     private static final String IMG_TAG_HIDE = "hide";
     private static final String IMG_TAG_SHOW = "show";
+    private static final int LOGIN = 5;
+    private static final int GET_TOKEN = 6;
+    private static final int SYNC_USER_INFO = 9;
 
     @BindView(R.id.title_name)
     TextView title_name;
@@ -49,21 +72,22 @@ public class LoginActivity extends BaseActivity{
     ImageView eye_state;
 
     private Toast toast;
+    private SharedPreferences sp;
+    private SharedPreferences.Editor editor;
+    private String loginToken;
+    private String phoneString;
+    private String passwordString;
+    private String connectResultId;
 
     @Override
-    protected void init() {
-        super.init();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+        setHeadVisibility(View.GONE);
+        ButterKnife.bind(this);
+        sp = getSharedPreferences("config", MODE_PRIVATE);
+        editor = sp.edit();
         EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.activity_login;
-    }
-
-    @Override
-    protected void initEvent() {
-        super.initEvent();
         title_name.setText("");
         title_back_iv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.button_cancel_icon));
         eye_state.setTag(IMG_TAG_HIDE);
@@ -119,32 +143,120 @@ public class LoginActivity extends BaseActivity{
     }
 
     public void login(){
-        String phone = phone_num_et.getText().toString();
-        String psw = pass_word_et.getText().toString();
-        if(!AMUtils.isMobile(phone)){
+        phoneString = phone_num_et.getText().toString();
+        passwordString = pass_word_et.getText().toString();
+        if(!AMUtils.isMobile(phoneString)){
             toast.setText("请填写正确的手机号码");
             toast.show();
             return;
         }
-        if(TextUtils.isEmpty(psw)){
+        if(TextUtils.isEmpty(passwordString)){
             toast.setText("密码不能为空");
             toast.show();
             return;
         }
-        ApiManager.Instance().login(phone, psw);
+        ApiManager.Instance().login(phoneString, passwordString);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void loginResult(LoginEvent loginEvent){
         Log.d(TAG, "getCode: " + loginEvent.loginResponse.FMsg);
         MyApplication.setLoginResponse(loginEvent.loginResponse);
-        startActivity(MainActivity.class);
-        finish();
+        ApiManager.Instance().getRongToken(loginEvent.loginResponse.FObject.accessToken);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getToken(RongTokenEvent tokenEvent){
+        Log.d(TAG, "getToken: " + tokenEvent.tokenBody.imToken);
+        loginToken = tokenEvent.tokenBody.imToken;
+        if (!TextUtils.isEmpty(loginToken)) {
+            RongIM.connect(loginToken, new RongIMClient.ConnectCallback() {
+                @Override
+                public void onTokenIncorrect() {
+                    NLog.e("connect", "onTokenIncorrect");
+                }
+
+                @Override
+                public void onSuccess(String s) {
+                    connectResultId = s;
+                    NLog.e("connect", "onSuccess userid:" + s);
+                    editor.putString(SealConst.SEALTALK_LOGIN_ID, s);
+                    editor.apply();
+                    SealUserInfoManager.getInstance().openDB();
+                    request(SYNC_USER_INFO, true);
+                }
+
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {
+                    NLog.e("connect", "onError errorcode:" + errorCode.getValue());
+                }
+            });
+        }
+        goToMain();
     }
 
     @Override
-    protected void destroy() {
-        super.destroy();
+    protected void onDestroy() {
+        super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public Object doInBackground(int requestCode, String id) throws HttpException {
+        switch (requestCode) {
+            case SYNC_USER_INFO:
+                return action.getUserInfoById(connectResultId);
+        }
+        return null;
+    }
+
+    @Override
+    public void onSuccess(int requestCode, Object result) {
+        if (result != null) {
+            switch (requestCode) {
+                case SYNC_USER_INFO:
+                    GetUserInfoByIdResponse userInfoByIdResponse = (GetUserInfoByIdResponse) result;
+                    if (userInfoByIdResponse.getCode() == 200) {
+                        if (TextUtils.isEmpty(userInfoByIdResponse.getResult().getPortraitUri())) {
+                            userInfoByIdResponse.getResult().setPortraitUri(RongGenerate.generateDefaultAvatar(userInfoByIdResponse.getResult().getNickname(), userInfoByIdResponse.getResult().getId()));
+                        }
+                        String nickName = userInfoByIdResponse.getResult().getNickname();
+                        String portraitUri = userInfoByIdResponse.getResult().getPortraitUri();
+                        editor.putString(SealConst.SEALTALK_LOGIN_NAME, nickName);
+                        editor.putString(SealConst.SEALTALK_LOGING_PORTRAIT, portraitUri);
+                        editor.apply();
+                        RongIM.getInstance().refreshUserInfoCache(new UserInfo(connectResultId, nickName, Uri.parse(portraitUri)));
+                    }
+                    //不继续在login界面同步好友,群组,群组成员信息
+                    SealUserInfoManager.getInstance().getAllUserInfo();
+                    goToMain();
+                    break;
+            }
+        }
+    }
+
+    @Override
+    public void onFailure(int requestCode, int state, Object result) {
+        if (!CommonUtils.isNetworkConnected(mContext)) {
+            LoadDialog.dismiss(mContext);
+            NToast.shortToast(mContext, "网络不可用");
+            return;
+        }
+        switch (requestCode) {
+            case SYNC_USER_INFO:
+                LoadDialog.dismiss(mContext);
+                NToast.shortToast(mContext, "同步用户信息接口请求失败");
+                break;
+        }
+    }
+
+    private void goToMain() {
+        editor.putString("loginToken", loginToken);
+        editor.putString(SealConst.SEALTALK_LOGING_PHONE, phoneString);
+        editor.putString(SealConst.SEALTALK_LOGING_PASSWORD, passwordString);
+        editor.apply();
+        LoadDialog.dismiss(mContext);
+        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        finish();
     }
 }
