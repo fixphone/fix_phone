@@ -17,10 +17,39 @@ android {
             abiFilters "armeabi-v7a"
         }
     }
+
+    signingConfigs {
+        releaseconfig {
+            keyAlias 'fixphone'
+            keyPassword 'fix123'
+            storeFile file('../app/fixphonekeystore.jks')
+            storePassword 'fix123'
+        }
+    }
+
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            signingConfig signingConfigs.releaseconfig
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable false
+            jniDebuggable false
+            renderscriptDebuggable false
+            zipAlignEnabled true
+            minifyEnabled true
+        }
+
+        debug {
+            minifyEnabled true
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            signingConfig signingConfigs.releaseconfig
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            versionNameSuffix "-debug"
+            zipAlignEnabled false
+            shrinkResources false
+            jniDebuggable false
+            debuggable true
         }
     }
 
@@ -40,6 +69,28 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
+
+    productFlavors {
+        dev {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "dev"]
+        }
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                if (variant.buildType.name == "release") {
+                    def fileName = "fixPhone_V${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk"
+                    output.outputFile = new File(outputFile.parent, fileName)
+                }
+            }
+        }
+    }
+}
+
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
 }
 
 repositories {
