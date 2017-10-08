@@ -7,6 +7,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
+import dhcc.cn.com.fix_phone.MyApplication;
 import dhcc.cn.com.fix_phone.bean.CircleBusiness;
 import dhcc.cn.com.fix_phone.bean.CircleDetailAd;
 import dhcc.cn.com.fix_phone.bean.CircleItem;
@@ -191,6 +192,7 @@ public class CirclePresenter implements CircleContract.Presenter {
                 videoInfo.FIsFooterData = video.FIsFooterData;
                 videoInfo.FUUID = video.FUUID;
                 circleItem.setType(CircleItem.TYPE_VIDEO);
+                MyApplication.putMessage(video.FFileName,video.FUUID);
             }
             circleItem.setVideoInfo(videoInfo);
 
@@ -204,7 +206,7 @@ public class CirclePresenter implements CircleContract.Presenter {
                     photoInfo.FIsFooterData = imageList.get(j).FIsFooterData;
                     photoInfo.FOriginalUrl = imageList.get(j).FOriginalUrl;
                     photoInfo.FUUID = imageList.get(j).FUUID;
-
+                    MyApplication.putMessage(imageList.get(j).FOriginalUrl,imageList.get(j).FUUID);
                     list.add(photoInfo);
                 }
                 circleItem.setPhotos(list);

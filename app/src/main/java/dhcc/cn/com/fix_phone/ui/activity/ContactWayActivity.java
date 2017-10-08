@@ -11,6 +11,7 @@ import butterknife.OnClick;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
 import dhcc.cn.com.fix_phone.bean.BusinessResponse;
+import io.rong.imkit.RongIM;
 
 /**
  * 2017/10/6 11
@@ -37,11 +38,16 @@ public class ContactWayActivity extends BaseActivity {
     TextView  mInfoCompanyProfileTv;
 
     private BusinessResponse mBusiness;
+    private String           mweChatId;
+    private String           mName;
 
     @Override
     protected void init() {
         Intent intent = getIntent();
         mBusiness = (BusinessResponse) intent.getSerializableExtra("mResponse");
+        mName = intent.getStringExtra("name");
+        mweChatId = intent.getStringExtra("weChatId");
+
     }
 
     @Override
@@ -70,7 +76,7 @@ public class ContactWayActivity extends BaseActivity {
         mImageViewCommunication.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                RongIM.getInstance().startPrivateChat(ContactWayActivity.this, mweChatId, mName);
             }
         });
     }

@@ -23,6 +23,7 @@ import dhcc.cn.com.fix_phone.base.GlideImageLoader;
 import dhcc.cn.com.fix_phone.bean.BusinessResponse;
 import dhcc.cn.com.fix_phone.event.BusinessEvent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
+import io.rong.imkit.RongIM;
 
 /**
  * 2017/9/26 21
@@ -52,6 +53,7 @@ public class BusinessActivity extends BaseActivity {
     private String           mName;
     private String           mHeadurl;
     private String           mUserID;
+    private String           mweChatId;
     private BusinessResponse mResponse;
 
     @Override
@@ -65,6 +67,7 @@ public class BusinessActivity extends BaseActivity {
         mName = intent.getStringExtra("name");
         mHeadurl = intent.getStringExtra("headurl");
         mUserID = intent.getStringExtra("userID");
+        mweChatId = intent.getStringExtra("weChatId");
         EventBus.getDefault().register(this);
     }
 
@@ -85,6 +88,13 @@ public class BusinessActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+
+        mCommunication.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RongIM.getInstance().startPrivateChat(BusinessActivity.this, mweChatId, mName);
             }
         });
     }
@@ -126,13 +136,18 @@ public class BusinessActivity extends BaseActivity {
                 Intent intent = new Intent(BusinessActivity.this, ProductActivity.class);
                 intent.putExtra("name", mName).
                         putExtra("headurl", mHeadurl).
+                        putExtra("weChatId", mweChatId).
                         putExtra("userID", mUserID);
                 startActivity(intent);
                 break;
 
             case R.id.textView_phone:
                 Intent intent2 = new Intent(BusinessActivity.this, ContactWayActivity.class);
-                intent2.putExtra("mResponse", mResponse);
+                intent2.putExtra("mResponse", mResponse).
+                        putExtra("name", mName).
+                        putExtra("headurl", mHeadurl).
+                        putExtra("weChatId", mweChatId).
+                        putExtra("userID", mUserID);
                 startActivity(intent2);
                 break;
 

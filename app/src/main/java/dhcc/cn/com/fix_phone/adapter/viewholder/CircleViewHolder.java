@@ -1,5 +1,6 @@
 package dhcc.cn.com.fix_phone.adapter.viewholder;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -10,7 +11,6 @@ import android.view.ViewStub;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -31,6 +31,7 @@ import dhcc.cn.com.fix_phone.ui.widget.videolist.widget.TextureVideoView;
 import dhcc.cn.com.fix_phone.utils.GlideCircleTransform;
 import dhcc.cn.com.fix_phone.utils.UIUtils;
 import dhcc.cn.com.fix_phone.utils.UrlUtils;
+import io.rong.imkit.RongIM;
 
 /**
  * Created by yiw on 2016/8/16.
@@ -42,6 +43,12 @@ public abstract class CircleViewHolder extends RecyclerView.ViewHolder implement
     public final static int TYPE_VIDEO = 3;
 
     protected Context context = UIUtils.getContext();
+
+    protected Activity mActivity;
+
+    public void setActivity(Activity activity) {
+        mActivity = activity;
+    }
 
     public int viewType;
 
@@ -158,7 +165,7 @@ public abstract class CircleViewHolder extends RecyclerView.ViewHolder implement
         mCommunication.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "" + phone, Toast.LENGTH_SHORT).show();
+                RongIM.getInstance().startPrivateChat(mActivity,circleItem.getUser().FCreatorID+"",circleItem.getUser().FCompanyName);
             }
         });
 
@@ -168,6 +175,7 @@ public abstract class CircleViewHolder extends RecyclerView.ViewHolder implement
                 Intent intent = new Intent(context, BusinessActivity.class);
                 intent.putExtra("name",circleItem.getUser().FUserName).
                         putExtra("headurl",circleItem.getUser().FHeadUrl).
+                        putExtra("weChatId",circleItem.getUser().FCreatorID).
                         putExtra("userID",circleItem.getUser().FCreatorID+"");
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);

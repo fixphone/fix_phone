@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.multidex.MultiDexApplication;
+import android.support.v4.util.ArrayMap;
 import android.text.TextUtils;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -16,6 +17,8 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+
+import java.util.Map;
 
 import dhcc.cn.com.fix_phone.bean.LoginResponse;
 import dhcc.cn.com.fix_phone.remote.ApiService;
@@ -45,6 +48,7 @@ public class MyApplication extends MultiDexApplication {
     private static DisplayImageOptions options;
     private static LoginResponse       loginResponse;
     private static String              currentTypeId;
+    private static Map<String, String> map = new ArrayMap<>();
 
     public static Context getContext() {
         return mContext;
@@ -178,5 +182,13 @@ public class MyApplication extends MultiDexApplication {
 
     public static void setCurrentTypeId(String currentTypeId) {
         MyApplication.currentTypeId = currentTypeId;
+    }
+
+    public static void putMessage(String path, String uuid) {
+        map.put(path, uuid);
+    }
+
+    public static String getMessage(String path) {
+        return map.get(path);
     }
 }

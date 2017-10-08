@@ -5,6 +5,7 @@ import dhcc.cn.com.fix_phone.bean.BusinessResponse;
 import dhcc.cn.com.fix_phone.bean.CirCleADResponse;
 import dhcc.cn.com.fix_phone.bean.CircleBusiness;
 import dhcc.cn.com.fix_phone.bean.CircleDetailAd;
+import dhcc.cn.com.fix_phone.bean.CollectResponse;
 import dhcc.cn.com.fix_phone.bean.FavoResponse;
 import dhcc.cn.com.fix_phone.bean.LoginResponse;
 import dhcc.cn.com.fix_phone.bean.ProductImage;
@@ -182,22 +183,22 @@ public interface Api {
 
     //30.添加图片收藏
     @POST("/Favo/AddPicture")
-    Call<String> AddPictureFavo(@Header("accessToken") String accessToken,
-                                @Query("uuid") String uuid);
+    Call<CollectResponse> AddPictureFavo(@Header("accessToken") String accessToken,
+                                         @Query("uuid") String uuid);
 
     //31.删除图片收藏
     @POST("/Favo/DeletePicture")
-    Call<String> DeletePictureFavo(@Header("accessToken") String accessToken,
+    Call<CollectResponse> DeletePictureFavo(@Header("accessToken") String accessToken,
                                    @Query("uuid") String uuid);
 
     //32.添加视频收藏
     @POST("/Favo/AddVideo")
-    Call<String> AddVideoFavo(@Header("accessToken") String accessToken,
+    Call<CollectResponse> AddVideoFavo(@Header("accessToken") String accessToken,
                               @Query("uuid") String uuid);
 
     //33.删除视频收藏
     @POST("/Favo/DeleteVideo")
-    Call<String> DeleteVideoFavo(@Header("accessToken") String accessToken,
+    Call<CollectResponse> DeleteVideoFavo(@Header("accessToken") String accessToken,
                                  @Query("uuid") String uuid);
 
     //34.上传投诉建议图片

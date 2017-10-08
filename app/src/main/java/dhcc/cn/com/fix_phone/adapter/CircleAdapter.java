@@ -1,6 +1,6 @@
 package dhcc.cn.com.fix_phone.adapter;
 
-import android.content.Context;
+import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +34,7 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
 
 
     private CirclePresenter                           presenter;
-    private Context                                   context;
+    private Activity                                  context;
     private List<CircleDetailAd.FObjectBean.ListBean> mList; // 广告原始数据
     private List<String> imageList = new ArrayList<>(); // 广告
 
@@ -42,7 +42,7 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
         this.presenter = presenter;
     }
 
-    public CircleAdapter(Context context) {
+    public CircleAdapter(Activity context) {
         this.context = context;
     }
 
@@ -98,6 +98,7 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
         } else {
             final int realPosition = position - HEADVIEW_SIZE;
             final CircleViewHolder holder = (CircleViewHolder) viewHolder;
+            holder.setActivity(context);
             holder.setData((CircleItem) datas.get(realPosition));
 
             switch (holder.viewType) {

@@ -24,6 +24,7 @@ import dhcc.cn.com.fix_phone.adapter.ImageAdapter;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
 import dhcc.cn.com.fix_phone.event.ProductImageEvent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
+import io.rong.imkit.RongIM;
 
 /**
  * 2017/10/1 16
@@ -39,9 +40,10 @@ public class ProductActivity extends BaseActivity {
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
 
-    private String mName;
-    private String mHeadurl;
-    private String mUserID;
+    private String       mName;
+    private String       mHeadurl;
+    private String       mUserID;
+    private String       mweChatId;
     private ImageAdapter mImageAdapter;
     private List<String> mStrings;
 
@@ -56,6 +58,7 @@ public class ProductActivity extends BaseActivity {
         mName = intent.getStringExtra("name");
         mHeadurl = intent.getStringExtra("headurl");
         mUserID = intent.getStringExtra("userID");
+        mweChatId = intent.getStringExtra("weChatId");
         EventBus.getDefault().register(this);
     }
 
@@ -98,7 +101,7 @@ public class ProductActivity extends BaseActivity {
         mImageViewCommunication.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                RongIM.getInstance().startPrivateChat(ProductActivity.this, mweChatId, mName);
             }
         });
 

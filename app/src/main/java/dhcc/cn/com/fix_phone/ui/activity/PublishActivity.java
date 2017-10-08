@@ -407,7 +407,7 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
             mFileVideo = new File(photo_path);
             if (mFileVideo.exists() && mFileVideo.getName().endsWith("mp4")) {
                 Log.d(TAG, "onActivityResult: " + photo_path);
-                Glide.with(this).load(Uri.fromFile(mFileVideo)).placeholder(R.drawable.menu_0).into(mSelector);
+                Glide.with(this).load(Uri.fromFile(mFileVideo)).placeholder(R.drawable.add_camera).into(mSelector);
                 mTextViewVideo.setText("已拍好视频，发布您的生意圈");
             }
         }

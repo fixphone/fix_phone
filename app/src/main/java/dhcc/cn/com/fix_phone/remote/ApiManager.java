@@ -1,35 +1,28 @@
 package dhcc.cn.com.fix_phone.remote;
 
-import com.orhanobut.logger.Logger;
-
 import org.greenrobot.eventbus.EventBus;
-
-import java.io.File;
 
 import dhcc.cn.com.fix_phone.MyApplication;
 import dhcc.cn.com.fix_phone.bean.BusinessResponse;
 import dhcc.cn.com.fix_phone.bean.CirCleADResponse;
 import dhcc.cn.com.fix_phone.bean.CircleBusiness;
 import dhcc.cn.com.fix_phone.bean.CircleDetailAd;
+import dhcc.cn.com.fix_phone.bean.CollectResponse;
 import dhcc.cn.com.fix_phone.bean.FavoResponse;
 import dhcc.cn.com.fix_phone.bean.LoginResponse;
 import dhcc.cn.com.fix_phone.bean.ProductImage;
 import dhcc.cn.com.fix_phone.bean.RegisterResponse;
 import dhcc.cn.com.fix_phone.bean.TelCheckResponse;
-import dhcc.cn.com.fix_phone.bean.UploadResponse;
 import dhcc.cn.com.fix_phone.event.BusinessEvent;
 import dhcc.cn.com.fix_phone.event.CirCleBusinessEvent;
 import dhcc.cn.com.fix_phone.event.CircleAdEvent;
 import dhcc.cn.com.fix_phone.event.CircleDetailAdEvent;
+import dhcc.cn.com.fix_phone.event.CollectEvent;
 import dhcc.cn.com.fix_phone.event.FavoResponseEvent;
 import dhcc.cn.com.fix_phone.event.LoginEvent;
 import dhcc.cn.com.fix_phone.event.ProductImageEvent;
 import dhcc.cn.com.fix_phone.event.RegisterEvent;
 import dhcc.cn.com.fix_phone.event.TelCheckEvent;
-import io.reactivex.Observable;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -307,17 +300,76 @@ public class ApiManager {
         });
     }
 
-    //12.上传生意圈图片
-    public Observable<UploadResponse> UploadPictureBusiness(final String file) {
-        Logger.d("UploadPictureBusiness", "UploadPictureBusiness");
-        return mApi.UploadPictureBusi(getLoginInfo().accessToken, createMutipartBody(file));
+    //30.添加图片收藏
+    public void AddPictureFavo(String uuid) {
+        mApi.AddPictureFavo(getLoginInfo().accessToken,uuid).enqueue(new Callback<CollectResponse>() {
+            @Override
+            public void onResponse(Call<CollectResponse> call, Response<CollectResponse> response) {
+                CollectResponse body = response.body();
+                if (response.code() == 200 && body != null) {
+                    EventBus.getDefault().post(new CollectEvent(true));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CollectResponse> call, Throwable t) {
+
+            }
+        });
     }
 
-    private MultipartBody.Part createMutipartBody(String filePath) {
-        File file = new File(filePath);
-        RequestBody requestFile = RequestBody.create(MediaType.parse("application/otcet-stream"), file);
-        MultipartBody.Part body = MultipartBody.Part.createFormData("aFile", file.getName(), requestFile);
-        return body;
+    //31.删除图片收藏
+    public void DeletePictureFavo(String uuid) {
+        mApi.DeletePictureFavo(getLoginInfo().accessToken,uuid).enqueue(new Callback<CollectResponse>() {
+            @Override
+            public void onResponse(Call<CollectResponse> call, Response<CollectResponse> response) {
+                CollectResponse body = response.body();
+                if (response.code() == 200 && body != null) {
+                    EventBus.getDefault().post(new CollectEvent(true));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CollectResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //32.添加视频收藏
+    public void AddVideoFavo(String uuid) {
+        mApi.AddVideoFavo(getLoginInfo().accessToken,uuid).enqueue(new Callback<CollectResponse>() {
+            @Override
+            public void onResponse(Call<CollectResponse> call, Response<CollectResponse> response) {
+                CollectResponse body = response.body();
+                if (response.code() == 200 && body != null) {
+                    EventBus.getDefault().post(new CollectEvent(true));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CollectResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //33.删除视频收藏
+    public void DeleteVideoFavo(String uuid) {
+        mApi.DeleteVideoFavo(getLoginInfo().accessToken,uuid).enqueue(new Callback<CollectResponse>() {
+            @Override
+            public void onResponse(Call<CollectResponse> call, Response<CollectResponse> response) {
+                CollectResponse body = response.body();
+                if (response.code() == 200 && body != null) {
+                    EventBus.getDefault().post(new CollectEvent(true));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CollectResponse> call, Throwable t) {
+
+            }
+        });
     }
 
 }
