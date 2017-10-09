@@ -41,7 +41,7 @@ android {
         }
 
         debug {
-            minifyEnabled true
+            minifyEnabled false
             buildConfigField "boolean", "LOG_DEBUG", "true"
             signingConfig signingConfigs.releaseconfig
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'

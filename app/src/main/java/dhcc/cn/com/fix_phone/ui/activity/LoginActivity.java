@@ -22,6 +22,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import dhcc.cn.com.fix_phone.Account;
 import dhcc.cn.com.fix_phone.MyApplication;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
@@ -92,6 +93,8 @@ public class LoginActivity extends RongBaseActivity{
         title_back_iv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.button_cancel_icon));
         eye_state.setTag(IMG_TAG_HIDE);
         toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
+        String phone = Account.getUserPhone();
+        phone_num_et.setText(phone);
     }
 
     @OnClick({R.id.title_back_iv, R.id.eye_state, R.id.login_confirm, R.id.registration_tv, R.id.forget_pass})
@@ -162,6 +165,7 @@ public class LoginActivity extends RongBaseActivity{
     public void loginResult(LoginEvent loginEvent){
         Log.d(TAG, "getCode: " + loginEvent.loginResponse.FMsg);
         MyApplication.setLoginResponse(loginEvent.loginResponse);
+        Account.setUserPhone(loginEvent.loginResponse.FObject.phone);
         ApiManager.Instance().getRongToken(loginEvent.loginResponse.FObject.accessToken);
     }
 

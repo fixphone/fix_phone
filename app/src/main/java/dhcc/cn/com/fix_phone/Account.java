@@ -13,9 +13,7 @@ public final class Account {
 
     private static final String PHONE = "phone";
     private static final String LOGIN = "login";
-    private static final String MESSAGE = "message";
     private static final String LOGIN_TOKEN = "login_token";
-    private static final String QN_SERVER_URL = "qn_server_url";
 
     //获取用户id
     public static String getUserPhone() {
@@ -23,8 +21,8 @@ public final class Account {
     }
 
     //保存用户id
-    public static void setUserPhone(String userId) {
-        AppSharedPreferences.getInstance(MyApplication.getContext()).set(PHONE, userId);
+    public static void setUserPhone(String userPhone) {
+        AppSharedPreferences.getInstance(MyApplication.getContext()).set(PHONE, userPhone);
     }
 
     //获取用户登录token
