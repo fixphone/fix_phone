@@ -26,6 +26,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.List;
 
 import butterknife.BindView;
+import dhcc.cn.com.fix_phone.Account;
 import dhcc.cn.com.fix_phone.MyApplication;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.adapter.ImageProductAdapter;
@@ -68,7 +69,7 @@ public class MyProductActivity extends BaseActivity implements CommonDeleteFragm
     @Override
     protected void init() {
         Intent intent = getIntent();
-        mUserID = MyApplication.getLoginResponse().FObject.userID;
+        mUserID = Account.getUserId();
         mType = intent.getIntExtra("type", 0);
         EventBus.getDefault().register(this);
     }

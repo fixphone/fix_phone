@@ -24,6 +24,7 @@ import dhcc.cn.com.fix_phone.event.TelCheckEvent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
 import dhcc.cn.com.fix_phone.ui.widget.MyCountDownTimer;
 import dhcc.cn.com.fix_phone.utils.AMUtils;
+import dhcc.cn.com.fix_phone.utils.MD5;
 
 /**
  * Created by Administrator on 2017/9/24 0024.
@@ -137,7 +138,7 @@ public class RegistrationActivity extends BaseActivity {
             toast.show();
             return;
         }
-        ApiManager.Instance().register(phoneNum, code, passWord);
+        ApiManager.Instance().register(phoneNum, code, MD5.encrypt(passWord));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

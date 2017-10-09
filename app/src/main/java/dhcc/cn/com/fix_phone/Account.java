@@ -1,5 +1,6 @@
 package dhcc.cn.com.fix_phone;
 
+import dhcc.cn.com.fix_phone.bean.LoginInfo;
 import dhcc.cn.com.fix_phone.bean.User;
 import dhcc.cn.com.fix_phone.utils.AppSharedPreferences;
 
@@ -11,29 +12,19 @@ import dhcc.cn.com.fix_phone.utils.AppSharedPreferences;
  */
 public final class Account {
 
-    private static final String PHONE = "phone";
+    private static final String USER_ID = "userId";
     private static final String LOGIN = "login";
-    private static final String LOGIN_TOKEN = "login_token";
 
     //获取用户id
-    public static String getUserPhone() {
-        return AppSharedPreferences.getInstance(MyApplication.getContext()).get(PHONE);
+    public static String getUserId() {
+        return AppSharedPreferences.getInstance(MyApplication.getContext()).get(USER_ID);
     }
 
     //保存用户id
-    public static void setUserPhone(String userPhone) {
-        AppSharedPreferences.getInstance(MyApplication.getContext()).set(PHONE, userPhone);
+    public static void setUserId(String userId) {
+        AppSharedPreferences.getInstance(MyApplication.getContext()).set(USER_ID, userId);
     }
 
-    //获取用户登录token
-    public static String getLoginToken() {
-        return AppSharedPreferences.getInstance(MyApplication.getContext()).get(LOGIN_TOKEN);
-    }
-
-    //保存用户登录token
-    public static void setLoginToken(String token) {
-        AppSharedPreferences.getInstance(MyApplication.getContext()).set(LOGIN_TOKEN, token);
-    }
 
     //获取登录状态
     public static boolean isLogin() {
@@ -46,18 +37,27 @@ public final class Account {
     }
 
     //保存用户信息
-    public static void setUser(User user) {
-        user.save();
+    public static void setLoginInfo(LoginInfo loginInfo) {
+        loginInfo.save();
     }
 
     //保存用户信息
-    public static void setUserHeadUrl(String FPhone, String FHeadUrl) {
-        User user = User.getUser(FPhone);
-        user.FHeadUrl = FHeadUrl;
-        user.save();
+    public static LoginInfo getLoginInfo() {
+        return LoginInfo.getLoginInfo(getUserId());
     }
 
+    //保存登录令牌
+    public static void setAccessToken(String userId, String accessToken) {
+        LoginInfo loginInfo = LoginInfo.getLoginInfo(userId);
+        loginInfo.accessToken = accessToken;
+        loginInfo.save();
+    }
 
+    //获取登录令牌
+    public static String getAccessToken(){
+        LoginInfo loginInfo = LoginInfo.getLoginInfo(getUserId());
+        return loginInfo.getAccessToken();
+    }
 
 
 }

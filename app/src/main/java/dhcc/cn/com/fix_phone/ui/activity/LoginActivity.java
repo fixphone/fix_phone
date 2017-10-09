@@ -36,6 +36,7 @@ import dhcc.cn.com.fix_phone.rong.response.GetUserInfoByIdResponse;
 import dhcc.cn.com.fix_phone.ui.widget.LoadDialog;
 import dhcc.cn.com.fix_phone.utils.AMUtils;
 import dhcc.cn.com.fix_phone.utils.CommonUtils;
+import dhcc.cn.com.fix_phone.utils.MD5;
 import dhcc.cn.com.fix_phone.utils.NLog;
 import dhcc.cn.com.fix_phone.utils.NToast;
 import dhcc.cn.com.fix_phone.utils.RongGenerate;
@@ -89,7 +90,7 @@ public class LoginActivity extends RongBaseActivity {
         title_back_iv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.button_cancel_icon));
         eye_state.setTag(IMG_TAG_HIDE);
         toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
-        String phone = Account.getUserPhone();
+        String phone = Account.getLoginInfo() == null ? "" : Account.getLoginInfo().getPhone();
         phone_num_et.setText(phone);
     }
 
@@ -154,22 +155,15 @@ public class LoginActivity extends RongBaseActivity {
             toast.show();
             return;
         }
-        ApiManager.Instance().login(phoneString, passwordString);
+        ApiManager.Instance().login(phoneString, MD5.encrypt(passwordString));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void loginResult(LoginEvent loginEvent) {
-        if (loginEvent.loginResponse != null) {
-            if (loginEvent.loginResponse.FIsSuccess) {
-                MyApplication.setLoginResponse(loginEvent.loginResponse);
-                Account.setUserPhone(loginEvent.loginResponse.FObject.phone);
-                ApiManager.Instance().getRongToken(loginEvent.loginResponse.FObject.accessToken);
-            } else {
-                Toast.makeText(mContext, "" + loginEvent.loginResponse.FMsg, Toast.LENGTH_SHORT).show();
-            }
-        } else {
-            Toast.makeText(mContext, "" + loginEvent.errorMessage, Toast.LENGTH_SHORT).show();
-        }
+    public void loginResult(LoginEvent loginEvent){
+        Log.d(TAG, "getCode: " + loginEvent.loginResponse.FMsg);
+        Account.setUserId(loginEvent.loginResponse.FObject.userID);
+        Account.setLoginInfo(loginEvent.loginResponse.FObject);
+        ApiManager.Instance().getRongToken(loginEvent.loginResponse.FObject.accessToken);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

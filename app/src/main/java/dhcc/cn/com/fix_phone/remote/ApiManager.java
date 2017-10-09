@@ -2,6 +2,7 @@ package dhcc.cn.com.fix_phone.remote;
 
 import org.greenrobot.eventbus.EventBus;
 
+import dhcc.cn.com.fix_phone.Account;
 import dhcc.cn.com.fix_phone.MyApplication;
 import dhcc.cn.com.fix_phone.bean.BusinessResponse;
 import dhcc.cn.com.fix_phone.bean.CirCleADResponse;
@@ -9,6 +10,7 @@ import dhcc.cn.com.fix_phone.bean.CircleBusiness;
 import dhcc.cn.com.fix_phone.bean.CircleDetailAd;
 import dhcc.cn.com.fix_phone.bean.CollectResponse;
 import dhcc.cn.com.fix_phone.bean.FavoResponse;
+import dhcc.cn.com.fix_phone.bean.LoginInfo;
 import dhcc.cn.com.fix_phone.bean.LoginResponse;
 import dhcc.cn.com.fix_phone.bean.ProductImage;
 import dhcc.cn.com.fix_phone.bean.RegisterResponse;
@@ -37,8 +39,8 @@ import retrofit2.Response;
 public class ApiManager {
     private Api mApi;
 
-    private static LoginResponse.LoginBody getLoginInfo() {
-        return MyApplication.getLoginResponse().FObject;
+    private static LoginInfo getLoginInfo() {
+        return Account.getLoginInfo();
     }
 
     private ApiManager() {

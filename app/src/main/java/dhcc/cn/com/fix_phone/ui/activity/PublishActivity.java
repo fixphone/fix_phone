@@ -46,6 +46,7 @@ import java.util.concurrent.CountDownLatch;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import dhcc.cn.com.fix_phone.Account;
 import dhcc.cn.com.fix_phone.MyApplication;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.adapter.SelectImageAdapter;
@@ -252,7 +253,7 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
                 .addParams("images", mList.isEmpty() ? "" : GsonUtils.toJson(mList))
                 .addParams("videoId", mList.isEmpty() ? "" : mList.get(0))
                 .addHeader("accessKey", "JHD2017")
-                .addHeader("accessToken", MyApplication.getLoginResponse().FObject.accessToken)
+                .addHeader("accessToken", Account.getAccessToken())
                 .build()
                 .execute(new StringCallback() {
                     @Override
@@ -275,7 +276,7 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
                 .url("http://120.77.202.151:8080/Busi/UploadPicture")
                 .addFile("mFile", file.getName(), file)
                 .addHeader("accessKey", "JHD2017")
-                .addHeader("accessToken", MyApplication.getLoginResponse().FObject.accessToken)
+                .addHeader("accessToken", Account.getAccessToken())
                 .build()
                 .execute();
         Log.d(TAG, "uploadVideoFile: " + response.body().string());
@@ -291,7 +292,7 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
                 .url("http://120.77.202.151:8080/Busi/UploadVideo")
                 .addFile("mFile", file.getName(), file)
                 .addHeader("accessKey", "JHD2017")
-                .addHeader("accessToken", MyApplication.getLoginResponse().FObject.accessToken)
+                .addHeader("accessToken", Account.getAccessToken())
                 .build()
                 .execute();
         Log.d(TAG, "uploadVideoFile: " + response.body().string());

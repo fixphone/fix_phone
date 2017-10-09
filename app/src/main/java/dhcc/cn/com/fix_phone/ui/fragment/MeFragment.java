@@ -1,7 +1,9 @@
 package dhcc.cn.com.fix_phone.ui.fragment;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
@@ -22,6 +24,7 @@ import dhcc.cn.com.fix_phone.base.BaseFragment;
 import dhcc.cn.com.fix_phone.bean.BusinessResponse;
 import dhcc.cn.com.fix_phone.event.BusinessEvent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
+import dhcc.cn.com.fix_phone.rong.SealConst;
 import dhcc.cn.com.fix_phone.ui.activity.AboutAppActivity;
 import dhcc.cn.com.fix_phone.ui.activity.FeedBackActivity;
 import dhcc.cn.com.fix_phone.ui.activity.MineCirCleActivity;
@@ -30,6 +33,8 @@ import dhcc.cn.com.fix_phone.ui.activity.MyProductActivity;
 import dhcc.cn.com.fix_phone.ui.activity.PersonInfoActivity;
 import dhcc.cn.com.fix_phone.ui.activity.VipActivity;
 import dhcc.cn.com.fix_phone.ui.widget.RoundImageView;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.UserInfo;
 
 /**
  * 2017/9/16 23
@@ -54,6 +59,7 @@ public class MeFragment extends BaseFragment {
     RoundImageView user_icon;
 
     private BusinessResponse mResponse;
+    private SharedPreferences sp;
 
     public static MeFragment newInstance() {
         Bundle args = new Bundle();
@@ -83,6 +89,7 @@ public class MeFragment extends BaseFragment {
         mTitleNameTv.setVisibility(View.GONE);
         mTitleRightTv.setText("设置");
         mTitleRightTv.setTextColor(ContextCompat.getColor(getContext(), R.color.app_text_color_black));
+        sp = getContext().getSharedPreferences("config", getContext().MODE_PRIVATE);
     }
 
     @Override
@@ -96,6 +103,7 @@ public class MeFragment extends BaseFragment {
         user_name.setText(mResponse.FObject.name);
         user_mobile.setText(mResponse.FObject.phone);
         Glide.with(getContext()).load(mResponse.FObject.headUrl).diskCacheStrategy(DiskCacheStrategy.ALL).into(user_icon);
+        RongIM.getInstance().setCurrentUserInfo(new UserInfo(sp.getString(SealConst.SEALTALK_LOGIN_ID, ""), mResponse.FObject.name, Uri.parse(mResponse.FObject.headUrl)));
     }
 
     @OnClick({R.id.mine_info, R.id.mine_circle, R.id.mine_house, R.id.mine_suggest, R.id.mine_vip,

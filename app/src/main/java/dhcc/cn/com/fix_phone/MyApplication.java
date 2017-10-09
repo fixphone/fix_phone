@@ -9,6 +9,7 @@ import android.support.multidex.MultiDexApplication;
 import android.support.v4.util.ArrayMap;
 import android.text.TextUtils;
 
+import com.raizlabs.android.dbflow.config.FlowManager;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreater;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreater;
@@ -21,6 +22,7 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import java.util.Map;
 
 import dhcc.cn.com.fix_phone.bean.LoginResponse;
+import dhcc.cn.com.fix_phone.db.DBManager;
 import dhcc.cn.com.fix_phone.remote.ApiService;
 import dhcc.cn.com.fix_phone.rong.SealAppContext;
 import dhcc.cn.com.fix_phone.rong.SealUserInfoManager;
@@ -46,7 +48,6 @@ public class MyApplication extends MultiDexApplication {
     private static Handler             mHandler;
     private static long                mMainThreadId;
     private static DisplayImageOptions options;
-    private static LoginResponse       loginResponse;
     private static String              currentTypeId;
     private static Map<String, String> map = new ArrayMap<>();
 
@@ -79,7 +80,7 @@ public class MyApplication extends MultiDexApplication {
         //Pid Process
         //Uid User
         super.onCreate();
-
+        FlowManager.init(getApplicationContext());
         ApiService.Instance().getService();
 
         setGlobalRefreshStyle();
@@ -166,14 +167,6 @@ public class MyApplication extends MultiDexApplication {
                 return new ClassicsFooter(mContext);
             }
         });
-    }
-
-    public static LoginResponse getLoginResponse() {
-        return loginResponse;
-    }
-
-    public static void setLoginResponse(LoginResponse loginResponse) {
-        MyApplication.loginResponse = loginResponse;
     }
 
     public static String getCurrentTypeId() {
