@@ -25,6 +25,8 @@ import dhcc.cn.com.fix_phone.event.ProductImageEvent;
 import dhcc.cn.com.fix_phone.event.RegisterEvent;
 import dhcc.cn.com.fix_phone.event.RongTokenEvent;
 import dhcc.cn.com.fix_phone.event.TelCheckEvent;
+import dhcc.cn.com.fix_phone.bean.ImageResponse;
+import dhcc.cn.com.fix_phone.event.ImageResponeEvent;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -305,15 +307,29 @@ public class ApiManager {
     }
 
     public void GetStoreList(String useId) {
-        mApi.GetStoreList(useId).enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+        mApi.GetStoreList(useId).enqueue(new Callback<ImageResponse>() {
 
+            @Override
+            public void onResponse(Call<ImageResponse> call, Response<ImageResponse> response) {
+                if (response.code() == 200) {
+                    ImageResponse body = response.body();
+                    if (body != null) {
+                        EventBus.getDefault().post(new ImageResponeEvent(body));
+                    }
+                } else {
+                    ImageResponeEvent event = new ImageResponeEvent(null);
+                    event.errorMessage = "服务器返回错误";
+                    event.isOk = false;
+                    EventBus.getDefault().post(event);
+                }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
-
+            public void onFailure(Call<ImageResponse> call, Throwable t) {
+                ImageResponeEvent event = new ImageResponeEvent(null);
+                event.errorMessage = t.getMessage();
+                event.isOk = false;
+                EventBus.getDefault().post(event);
             }
         });
     }

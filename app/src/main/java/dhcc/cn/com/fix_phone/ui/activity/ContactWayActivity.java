@@ -76,7 +76,15 @@ public class ContactWayActivity extends BaseActivity {
         mImageViewCommunication.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RongIM.getInstance().startPrivateChat(ContactWayActivity.this, mweChatId, mName);
+                try {
+                    try {
+                        RongIM.getInstance().startPrivateChat(ContactWayActivity.this, mweChatId, mName);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

@@ -24,4 +24,6 @@
         android:layout_below="@+id/textView_title"
         android:background="@color/white"/>
 
+    <include layout="@layout/business_bottom"/>
+
 </RelativeLayout>

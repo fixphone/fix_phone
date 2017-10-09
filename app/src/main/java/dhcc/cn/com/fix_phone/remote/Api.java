@@ -13,6 +13,7 @@ import dhcc.cn.com.fix_phone.bean.RegisterResponse;
 import dhcc.cn.com.fix_phone.bean.RongTokenResponse;
 import dhcc.cn.com.fix_phone.bean.TelCheckResponse;
 import dhcc.cn.com.fix_phone.bean.UploadResponse;
+import dhcc.cn.com.fix_phone.bean.ImageResponse;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -142,7 +143,7 @@ public interface Api {
     Call<String> UploadIcon();
 
     //21.删除产品图片
-    @POST("/Product/DeleteProductIcon")
+    @POST("/Product/DeleteIcon")
     Call<FavoResponse> DeleteProductIcon(@Header("accessToken") String accessToken,
                                          @Query("url") String url);
 
@@ -157,7 +158,7 @@ public interface Api {
 
     //24.获取店铺广告
     @GET("/Adver/GetStoreList")
-    Call<String> GetStoreList(@Query("userId") String userId);
+    Call<ImageResponse> GetStoreList(@Query("userId") String userId);
 
     //25.添加店铺广告
     @POST("/Adver/AddStoreAdver")

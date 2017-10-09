@@ -101,7 +101,11 @@ public class ProductActivity extends BaseActivity {
         mImageViewCommunication.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RongIM.getInstance().startPrivateChat(ProductActivity.this, mweChatId, mName);
+                try {
+                    RongIM.getInstance().startPrivateChat(ProductActivity.this, mweChatId, mName);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 

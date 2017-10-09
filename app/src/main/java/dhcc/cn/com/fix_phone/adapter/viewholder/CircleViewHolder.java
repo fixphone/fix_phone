@@ -165,7 +165,11 @@ public abstract class CircleViewHolder extends RecyclerView.ViewHolder implement
         mCommunication.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RongIM.getInstance().startPrivateChat(mActivity,circleItem.getUser().FCreatorID+"",circleItem.getUser().FCompanyName);
+                try {
+                    RongIM.getInstance().startPrivateChat(mActivity,circleItem.getUser().FCreatorID+"",circleItem.getUser().FCompanyName);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 

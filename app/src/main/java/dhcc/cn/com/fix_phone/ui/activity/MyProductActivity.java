@@ -13,6 +13,7 @@ import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.adapter.ImageProductAdapter;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
 import dhcc.cn.com.fix_phone.event.FavoResponseEvent;
+import dhcc.cn.com.fix_phone.event.ImageResponeEvent;
 import dhcc.cn.com.fix_phone.event.ProductImageEvent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
 import dhcc.cn.com.fix_phone.ui.fragment.CommonDeleteFragment;
@@ -40,15 +42,17 @@ import dhcc.cn.com.fix_phone.ui.fragment.CommonDeleteFragment;
 public class MyProductActivity extends BaseActivity implements CommonDeleteFragment.OnConfirmClickListener {
 
     @BindView(R.id.toolbar_title)
-    TextView     mToolbarTitle;
+    TextView       mToolbarTitle;
     @BindView(R.id.toolbar)
-    Toolbar      mToolbar;
+    Toolbar        mToolbar;
     @BindView(R.id.recyclerView)
-    RecyclerView mRecyclerView;
+    RecyclerView   mRecyclerView;
     @BindView(R.id.imageView_communication)
-    ImageView    mCommIcon;
+    ImageView      mCommIcon;
     @BindView(R.id.textView_title)
-    TextView     mTextViewDesc;
+    TextView       mTextViewDesc;
+    @BindView(R.id.relativeLayout)
+    RelativeLayout mBottomLayout;
 
     private String              mUserID;
     private int                 mType;
@@ -76,6 +80,7 @@ public class MyProductActivity extends BaseActivity implements CommonDeleteFragm
 
     @Override
     protected void initView() {
+        mBottomLayout.setVisibility(View.GONE);
         mCommIcon.setVisibility(View.GONE);
         if (mType == 1) {
             mToolbarTitle.setText("店铺广告");
@@ -93,7 +98,7 @@ public class MyProductActivity extends BaseActivity implements CommonDeleteFragm
                 outRect.set(5, 5, 5, 5);
             }
         });
-        mImageAdapter = new ImageProductAdapter(R.layout.item_image_check, null);
+        mImageAdapter = new ImageProductAdapter(R.layout.item_image_check_myproduct, null);
         mRecyclerView.setAdapter(mImageAdapter);
     }
 
@@ -160,9 +165,19 @@ public class MyProductActivity extends BaseActivity implements CommonDeleteFragm
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onshowImage(ImageResponeEvent event) {
+        if (event.mImageResponse.FIsSuccess) {
+            mStrings = event.mImageResponse.FObject.list;
+            mImageAdapter.setNewData(mStrings);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onshowImage(ProductImageEvent event) {
-        mStrings = event.mProductImage.FObject.list;
-        mImageAdapter.setNewData(mStrings);
+        if (event.mProductImage.FIsSuccess) {
+            mStrings = event.mProductImage.FObject.list;
+            mImageAdapter.setNewData(mStrings);
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -170,6 +185,7 @@ public class MyProductActivity extends BaseActivity implements CommonDeleteFragm
         Toast.makeText(this, "" + event.mResponse.FMsg, Toast.LENGTH_SHORT).show();
         if (event.mResponse.FIsSuccess) {
             mImageAdapter.remove(deletePosition);
+            Toast.makeText(this, "" + event.mResponse.FMsg, Toast.LENGTH_SHORT).show();
         }
     }
 

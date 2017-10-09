@@ -94,7 +94,11 @@ public class BusinessActivity extends BaseActivity {
         mCommunication.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RongIM.getInstance().startPrivateChat(BusinessActivity.this, mweChatId, mName);
+                try {
+                    RongIM.getInstance().startPrivateChat(BusinessActivity.this, mweChatId, mName);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

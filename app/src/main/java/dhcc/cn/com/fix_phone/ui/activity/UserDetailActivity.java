@@ -208,9 +208,17 @@ public class UserDetailActivity extends RongBaseActivity implements View.OnClick
     public void startChat(View view) {
         String displayName = mFriend.getDisplayName();
         if (!TextUtils.isEmpty(displayName)) {
-            RongIM.getInstance().startPrivateChat(mContext, mFriend.getUserId(), displayName);
+            try {
+                RongIM.getInstance().startPrivateChat(mContext, mFriend.getUserId(), displayName);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } else {
-            RongIM.getInstance().startPrivateChat(mContext, mFriend.getUserId(), mFriend.getName());
+            try {
+                RongIM.getInstance().startPrivateChat(mContext, mFriend.getUserId(), mFriend.getName());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         finish();
     }

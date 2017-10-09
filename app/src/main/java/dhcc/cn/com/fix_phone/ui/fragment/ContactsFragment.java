@@ -201,7 +201,11 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
                 startActivityForResult(intent, 20);
                 break;
             case R.id.contact_me_item:
-                RongIM.getInstance().startPrivateChat(getActivity(), mId, mCacheName);
+                try {
+                    RongIM.getInstance().startPrivateChat(getActivity(), mId, mCacheName);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
         }
     }

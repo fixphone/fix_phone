@@ -160,9 +160,13 @@ public class LoginActivity extends RongBaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void loginResult(LoginEvent loginEvent) {
         if (loginEvent.loginResponse != null) {
-            MyApplication.setLoginResponse(loginEvent.loginResponse);
-            Account.setUserPhone(loginEvent.loginResponse.FObject.phone);
-            ApiManager.Instance().getRongToken(loginEvent.loginResponse.FObject.accessToken);
+            if (loginEvent.loginResponse.FIsSuccess) {
+                MyApplication.setLoginResponse(loginEvent.loginResponse);
+                Account.setUserPhone(loginEvent.loginResponse.FObject.phone);
+                ApiManager.Instance().getRongToken(loginEvent.loginResponse.FObject.accessToken);
+            } else {
+                Toast.makeText(mContext, "" + loginEvent.loginResponse.FMsg, Toast.LENGTH_SHORT).show();
+            }
         } else {
             Toast.makeText(mContext, "" + loginEvent.errorMessage, Toast.LENGTH_SHORT).show();
         }
