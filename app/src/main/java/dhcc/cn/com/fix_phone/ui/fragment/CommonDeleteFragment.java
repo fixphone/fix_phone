@@ -26,8 +26,8 @@ public class CommonDeleteFragment extends DialogFragment implements View.OnClick
 
     public static CommonDeleteFragment newInstance(String title, String desc) {
         Bundle args = new Bundle();
-        args.putString("title",title);
-        args.putString("desc",desc);
+        args.putString("title", title);
+        args.putString("desc", desc);
         CommonDeleteFragment fragment = new CommonDeleteFragment();
         fragment.setArguments(args);
         return fragment;
@@ -75,9 +75,15 @@ public class CommonDeleteFragment extends DialogFragment implements View.OnClick
                 dismiss();
                 break;
             case R.id.textView_confirm:
+                OnConfirmClickListener clickListener = (OnConfirmClickListener) getActivity();
+                clickListener.onConfirm();
                 dismiss();
                 break;
         }
+    }
+
+    public interface OnConfirmClickListener {
+        void onConfirm();
     }
 
 }

@@ -25,7 +25,6 @@ import butterknife.OnClick;
 import dhcc.cn.com.fix_phone.Account;
 import dhcc.cn.com.fix_phone.MyApplication;
 import dhcc.cn.com.fix_phone.R;
-import dhcc.cn.com.fix_phone.base.BaseActivity;
 import dhcc.cn.com.fix_phone.base.RongBaseActivity;
 import dhcc.cn.com.fix_phone.event.LoginEvent;
 import dhcc.cn.com.fix_phone.event.RongTokenEvent;
@@ -33,9 +32,7 @@ import dhcc.cn.com.fix_phone.remote.ApiManager;
 import dhcc.cn.com.fix_phone.rong.SealConst;
 import dhcc.cn.com.fix_phone.rong.SealUserInfoManager;
 import dhcc.cn.com.fix_phone.rong.network.http.HttpException;
-import dhcc.cn.com.fix_phone.rong.response.GetTokenResponse;
 import dhcc.cn.com.fix_phone.rong.response.GetUserInfoByIdResponse;
-import dhcc.cn.com.fix_phone.rong.response.LoginResponse;
 import dhcc.cn.com.fix_phone.ui.widget.LoadDialog;
 import dhcc.cn.com.fix_phone.utils.AMUtils;
 import dhcc.cn.com.fix_phone.utils.CommonUtils;
@@ -48,37 +45,36 @@ import io.rong.imlib.model.UserInfo;
 
 /**
  * Created by Administrator on 2017/9/24 0024.
- *
  */
 
-public class LoginActivity extends RongBaseActivity{
+public class LoginActivity extends RongBaseActivity {
 
-    private static final String TAG = "LoginActivity";
-    public static final int REG_CODE = 0x0001;
-    private static final String IMG_TAG_HIDE = "hide";
-    private static final String IMG_TAG_SHOW = "show";
-    private static final int LOGIN = 5;
-    private static final int GET_TOKEN = 6;
-    private static final int SYNC_USER_INFO = 9;
+    private static final String TAG            = "LoginActivity";
+    public static final  int    REG_CODE       = 0x0001;
+    private static final String IMG_TAG_HIDE   = "hide";
+    private static final String IMG_TAG_SHOW   = "show";
+    private static final int    LOGIN          = 5;
+    private static final int    GET_TOKEN      = 6;
+    private static final int    SYNC_USER_INFO = 9;
 
     @BindView(R.id.title_name)
-    TextView title_name;
+    TextView  title_name;
     @BindView(R.id.phone_num_et)
-    EditText phone_num_et;
+    EditText  phone_num_et;
     @BindView(R.id.pass_word_et)
-    EditText pass_word_et;
+    EditText  pass_word_et;
     @BindView(R.id.title_back_iv)
     ImageView title_back_iv;
     @BindView(R.id.eye_state)
     ImageView eye_state;
 
-    private Toast toast;
-    private SharedPreferences sp;
+    private Toast                    toast;
+    private SharedPreferences        sp;
     private SharedPreferences.Editor editor;
-    private String loginToken;
-    private String phoneString;
-    private String passwordString;
-    private String connectResultId;
+    private String                   loginToken;
+    private String                   phoneString;
+    private String                   passwordString;
+    private String                   connectResultId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,8 +94,8 @@ public class LoginActivity extends RongBaseActivity{
     }
 
     @OnClick({R.id.title_back_iv, R.id.eye_state, R.id.login_confirm, R.id.registration_tv, R.id.forget_pass})
-    public void onClick(View view){
-        switch (view.getId()){
+    public void onClick(View view) {
+        switch (view.getId()) {
             case R.id.title_back_iv:
                 finish();
                 break;
@@ -127,7 +123,7 @@ public class LoginActivity extends RongBaseActivity{
         }
     }
 
-    private void startActivity(Class clazz){
+    private void startActivity(Class clazz) {
         Intent intent = new Intent(this, clazz);
         startActivityForResult(intent, REG_CODE);
     }
@@ -135,8 +131,8 @@ public class LoginActivity extends RongBaseActivity{
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REG_CODE){
-            if(resultCode == RegistrationActivity.REG_SUCCESS){
+        if (requestCode == REG_CODE) {
+            if (resultCode == RegistrationActivity.REG_SUCCESS) {
                 String phone = data.getStringExtra("phone");
                 String passWord = data.getStringExtra("passWord");
                 phone_num_et.setText(phone);
@@ -145,15 +141,15 @@ public class LoginActivity extends RongBaseActivity{
         }
     }
 
-    public void login(){
+    public void login() {
         phoneString = phone_num_et.getText().toString();
         passwordString = pass_word_et.getText().toString();
-        if(!AMUtils.isMobile(phoneString)){
+        if (!AMUtils.isMobile(phoneString)) {
             toast.setText("请填写正确的手机号码");
             toast.show();
             return;
         }
-        if(TextUtils.isEmpty(passwordString)){
+        if (TextUtils.isEmpty(passwordString)) {
             toast.setText("密码不能为空");
             toast.show();
             return;
@@ -162,41 +158,49 @@ public class LoginActivity extends RongBaseActivity{
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void loginResult(LoginEvent loginEvent){
-        Log.d(TAG, "getCode: " + loginEvent.loginResponse.FMsg);
-        MyApplication.setLoginResponse(loginEvent.loginResponse);
-        Account.setUserPhone(loginEvent.loginResponse.FObject.phone);
-        ApiManager.Instance().getRongToken(loginEvent.loginResponse.FObject.accessToken);
+    public void loginResult(LoginEvent loginEvent) {
+        if (loginEvent.loginResponse != null) {
+            MyApplication.setLoginResponse(loginEvent.loginResponse);
+            Account.setUserPhone(loginEvent.loginResponse.FObject.phone);
+            ApiManager.Instance().getRongToken(loginEvent.loginResponse.FObject.accessToken);
+        } else {
+            Toast.makeText(mContext, "" + loginEvent.errorMessage, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void getToken(RongTokenEvent tokenEvent){
-        Log.d(TAG, "getToken: " + tokenEvent.tokenBody.imToken);
-        loginToken = tokenEvent.tokenBody.imToken;
-        if (!TextUtils.isEmpty(loginToken)) {
-            RongIM.connect(loginToken, new RongIMClient.ConnectCallback() {
-                @Override
-                public void onTokenIncorrect() {
-                    NLog.e("connect", "onTokenIncorrect");
-                }
+    public void getToken(RongTokenEvent tokenEvent) {
+        if (tokenEvent.tokenBody != null) {
+            Log.d(TAG, "getToken: " + tokenEvent.tokenBody.imToken);
+            loginToken = tokenEvent.tokenBody.imToken;
+            if (!TextUtils.isEmpty(loginToken)) {
+                RongIM.connect(loginToken, new RongIMClient.ConnectCallback() {
+                    @Override
+                    public void onTokenIncorrect() {
+                        NLog.e("connect", "onTokenIncorrect");
+                    }
 
-                @Override
-                public void onSuccess(String s) {
-                    connectResultId = s;
-                    NLog.e("connect", "onSuccess userid:" + s);
-                    editor.putString(SealConst.SEALTALK_LOGIN_ID, s);
-                    editor.apply();
-                    SealUserInfoManager.getInstance().openDB();
-                    request(SYNC_USER_INFO, true);
-                }
+                    @Override
+                    public void onSuccess(String s) {
+                        connectResultId = s;
+                        NLog.e("connect", "onSuccess userid:" + s);
+                        editor.putString(SealConst.SEALTALK_LOGIN_ID, s);
+                        editor.apply();
+                        SealUserInfoManager.getInstance().openDB();
+                        request(SYNC_USER_INFO, true);
+                    }
 
-                @Override
-                public void onError(RongIMClient.ErrorCode errorCode) {
-                    NLog.e("connect", "onError errorcode:" + errorCode.getValue());
-                }
-            });
+                    @Override
+                    public void onError(RongIMClient.ErrorCode errorCode) {
+                        NLog.e("connect", "onError errorcode:" + errorCode.getValue());
+                    }
+                });
+            }
+            goToMain();
+        } else {
+            Toast.makeText(mContext, "" + tokenEvent.errorMessage, Toast.LENGTH_SHORT).show();
         }
-        goToMain();
+
     }
 
     @Override

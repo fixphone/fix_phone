@@ -6,7 +6,7 @@ import dhcc.cn.com.fix_phone.bean.RongTokenResponse;
  * Created by Administrator on 2017/10/8 0008.
  */
 
-public class RongTokenEvent {
+public class RongTokenEvent extends BaseEvent{
 
     public RongTokenResponse.TokenBody tokenBody;
 

@@ -95,7 +95,7 @@ public interface Api {
     @Multipart
     @POST("/Busi/UploadPicture")
     @Headers("accessKey:JHD2017")
-    Observable<UploadResponse> UploadPictureBusi(@Header("accessToken") String accessToken, @Part MultipartBody.Part file );
+    Observable<UploadResponse> UploadPictureBusi(@Header("accessToken") String accessToken, @Part MultipartBody.Part file);
 
     //13.上传生意圈视频
     @Multipart
@@ -142,9 +142,9 @@ public interface Api {
     Call<String> UploadIcon();
 
     //21.删除产品图片
-    @POST("/Product/DeleteIcon")
-    Call<String> DeleteIcon(@Header("accessToken") String accessToken,
-                            @Query("url") String url);
+    @POST("/Product/DeleteProductIcon")
+    Call<FavoResponse> DeleteProductIcon(@Header("accessToken") String accessToken,
+                                         @Query("url") String url);
 
     //22获取首页广告
     @GET("/Adver/GetIndexList")
@@ -165,8 +165,8 @@ public interface Api {
 
     //26.删除店铺广告
     @POST("/Adver/DeleteStoreAdver")
-    Call<String> DeleteStoreAdver(@Header("accessToken") String accessToken,
-                                  @Query("url") String url);
+    Call<FavoResponse> DeleteStoreAdver(@Header("accessToken") String accessToken,
+                                        @Query("url") String url);
 
     //27.收藏列表
     @POST("/Favo/GetList")
@@ -190,17 +190,17 @@ public interface Api {
     //31.删除图片收藏
     @POST("/Favo/DeletePicture")
     Call<CollectResponse> DeletePictureFavo(@Header("accessToken") String accessToken,
-                                   @Query("uuid") String uuid);
+                                            @Query("uuid") String uuid);
 
     //32.添加视频收藏
     @POST("/Favo/AddVideo")
     Call<CollectResponse> AddVideoFavo(@Header("accessToken") String accessToken,
-                              @Query("uuid") String uuid);
+                                       @Query("uuid") String uuid);
 
     //33.删除视频收藏
     @POST("/Favo/DeleteVideo")
     Call<CollectResponse> DeleteVideoFavo(@Header("accessToken") String accessToken,
-                                 @Query("uuid") String uuid);
+                                          @Query("uuid") String uuid);
 
     //34.上传投诉建议图片
     @POST("Suggestion/UploadPicture")

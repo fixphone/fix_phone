@@ -6,7 +6,7 @@ import dhcc.cn.com.fix_phone.bean.LoginResponse;
  * Created by Administrator on 2017/9/25 0025.
  */
 
-public class LoginEvent {
+public class LoginEvent extends BaseEvent{
 
     public LoginResponse loginResponse;
 

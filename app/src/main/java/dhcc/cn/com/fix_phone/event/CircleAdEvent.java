@@ -7,7 +7,7 @@ import dhcc.cn.com.fix_phone.bean.CirCleADResponse;
 /**
  * 2017/9/17 16
  */
-public class CircleAdEvent {
+public class CircleAdEvent extends BaseEvent{
     public List<CirCleADResponse.FObjectBean.ListBean> mListBeans;
 
     public CircleAdEvent(List<CirCleADResponse.FObjectBean.ListBean> mListBeans) {

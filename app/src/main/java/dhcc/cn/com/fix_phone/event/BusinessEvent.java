@@ -5,7 +5,7 @@ import dhcc.cn.com.fix_phone.bean.BusinessResponse;
 /**
  * 2017/10/1 13
  */
-public class BusinessEvent {
+public class BusinessEvent extends BaseEvent{
     public BusinessResponse mResponse;
 
     public BusinessEvent(BusinessResponse response) {

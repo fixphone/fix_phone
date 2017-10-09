@@ -57,17 +57,25 @@ public class ApiManager {
             public void onResponse(Call<CirCleADResponse> call, Response<CirCleADResponse> response) {
                 if (response.code() == 200) {
                     CirCleADResponse body = response.body();
-                    if (body != null && body.FIsSuccess) {
+                    if (body != null) {
                         if (body.FObject != null && !body.FObject.list.isEmpty()) {
                             EventBus.getDefault().post(new CircleAdEvent(body.FObject.list));
                         }
                     }
+                } else {
+                    CircleAdEvent event = new CircleAdEvent(null);
+                    event.errorMessage = "服务器返回错误";
+                    event.isOk = false;
+                    EventBus.getDefault().post(event);
                 }
             }
 
             @Override
             public void onFailure(Call<CirCleADResponse> call, Throwable t) {
-
+                CircleAdEvent event = new CircleAdEvent(null);
+                event.errorMessage = t.getMessage();
+                event.isOk = false;
+                EventBus.getDefault().post(event);
             }
         });
     }
@@ -83,12 +91,20 @@ public class ApiManager {
                             EventBus.getDefault().post(new CircleDetailAdEvent(body.FObject.list));
                         }
                     }
+                } else {
+                    CircleDetailAdEvent event = new CircleDetailAdEvent(null);
+                    event.errorMessage = "服务器返回错误";
+                    event.isOk = false;
+                    EventBus.getDefault().post(event);
                 }
             }
 
             @Override
             public void onFailure(Call<CircleDetailAd> call, Throwable t) {
-
+                CircleDetailAdEvent event = new CircleDetailAdEvent(null);
+                event.errorMessage = t.getMessage();
+                event.isOk = false;
+                EventBus.getDefault().post(event);
             }
         });
     }
@@ -102,12 +118,20 @@ public class ApiManager {
                     if (business != null && business.FIsSuccess) {
                         EventBus.getDefault().post(new CirCleBusinessEvent(business.FObject));
                     }
+                } else {
+                    CirCleBusinessEvent event = new CirCleBusinessEvent(null);
+                    event.errorMessage = "服务器返回错误";
+                    event.isOk = false;
+                    EventBus.getDefault().post(event);
                 }
             }
 
             @Override
             public void onFailure(Call<CircleBusiness> call, Throwable t) {
-
+                CirCleBusinessEvent event = new CirCleBusinessEvent(null);
+                event.errorMessage = t.getMessage();
+                event.isOk = false;
+                EventBus.getDefault().post(event);
             }
         });
     }
@@ -125,12 +149,20 @@ public class ApiManager {
                     if (business != null && business.FIsSuccess) {
                         EventBus.getDefault().post(new CirCleBusinessEvent(business.FObject));
                     }
+                } else {
+                    CirCleBusinessEvent event = new CirCleBusinessEvent(null);
+                    event.errorMessage = "服务器返回错误";
+                    event.isOk = false;
+                    EventBus.getDefault().post(event);
                 }
             }
 
             @Override
             public void onFailure(Call<CircleBusiness> call, Throwable t) {
-
+                CirCleBusinessEvent event = new CirCleBusinessEvent(null);
+                event.errorMessage = t.getMessage();
+                event.isOk = false;
+                EventBus.getDefault().post(event);
             }
         });
 
@@ -145,12 +177,20 @@ public class ApiManager {
                     if (businessResponse != null && businessResponse.FIsSuccess) {
                         EventBus.getDefault().post(new BusinessEvent(response.body()));
                     }
+                } else {
+                    BusinessEvent event = new BusinessEvent(null);
+                    event.errorMessage = "服务器返回错误";
+                    event.isOk = false;
+                    EventBus.getDefault().post(event);
                 }
             }
 
             @Override
             public void onFailure(Call<BusinessResponse> call, Throwable t) {
-
+                BusinessEvent event = new BusinessEvent(null);
+                event.errorMessage = t.getMessage();
+                event.isOk = false;
+                EventBus.getDefault().post(event);
             }
         });
     }
@@ -165,12 +205,20 @@ public class ApiManager {
                     if (telCheckResponse != null && telCheckResponse.FIsSuccess) {
                         EventBus.getDefault().post(new TelCheckEvent(telCheckResponse));
                     }
+                } else {
+                    TelCheckEvent event = new TelCheckEvent(null);
+                    event.errorMessage = "服务器返回错误";
+                    event.isOk = false;
+                    EventBus.getDefault().post(event);
                 }
             }
 
             @Override
             public void onFailure(Call<TelCheckResponse> call, Throwable t) {
-
+                TelCheckEvent event = new TelCheckEvent(null);
+                event.errorMessage = t.getMessage();
+                event.isOk = false;
+                EventBus.getDefault().post(event);
             }
         });
     }
@@ -184,12 +232,20 @@ public class ApiManager {
                     if (registerResponse != null) {
                         EventBus.getDefault().post(new RegisterEvent(registerResponse));
                     }
+                } else {
+                    RegisterEvent event = new RegisterEvent(null);
+                    event.errorMessage = "服务器返回错误";
+                    event.isOk = false;
+                    EventBus.getDefault().post(event);
                 }
             }
 
             @Override
             public void onFailure(Call<RegisterResponse> call, Throwable t) {
-
+                RegisterEvent event = new RegisterEvent(null);
+                event.errorMessage = t.getMessage();
+                event.isOk = false;
+                EventBus.getDefault().post(event);
             }
         });
     }
@@ -198,34 +254,52 @@ public class ApiManager {
         mApi.login(phone, psw).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                if (response.code() == 200 && response.body() != null && response.body().FIsSuccess) {
+                if (response.code() == 200) {
                     LoginResponse loginResponse = response.body();
                     if (loginResponse != null) {
                         EventBus.getDefault().post(new LoginEvent(loginResponse));
                     }
+                } else {
+                    LoginEvent event = new LoginEvent(null);
+                    event.errorMessage = "服务器返回错误";
+                    event.isOk = false;
+                    EventBus.getDefault().post(event);
                 }
             }
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
-
+                LoginEvent event = new LoginEvent(null);
+                event.errorMessage = t.getMessage();
+                event.isOk = false;
+                EventBus.getDefault().post(event);
             }
         });
     }
 
-    public void getRongToken(String accessToken){
+    public void getRongToken(String accessToken) {
         mApi.getRongToken(accessToken).enqueue(new Callback<RongTokenResponse>() {
             @Override
             public void onResponse(Call<RongTokenResponse> call, Response<RongTokenResponse> response) {
-                if(response.code() == 200 && response.body().FIsSuccess){
+                if (response.code() == 200) {
                     RongTokenResponse tokenResponse = response.body();
-                    EventBus.getDefault().post(new RongTokenEvent(tokenResponse.FObject));
+                    if (tokenResponse != null) {
+                        EventBus.getDefault().post(new RongTokenEvent(tokenResponse.FObject));
+                    }
+                } else {
+                    RongTokenEvent event = new RongTokenEvent(null);
+                    event.errorMessage = "服务器返回错误";
+                    event.isOk = false;
+                    EventBus.getDefault().post(event);
                 }
             }
 
             @Override
             public void onFailure(Call<RongTokenResponse> call, Throwable t) {
-
+                RongTokenEvent event = new RongTokenEvent(null);
+                event.errorMessage = t.getMessage();
+                event.isOk = false;
+                EventBus.getDefault().post(event);
             }
         });
     }
@@ -239,6 +313,42 @@ public class ApiManager {
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //26.删除店铺广告
+    public void DeleteStoreAdver(String url) {
+        mApi.DeleteStoreAdver(getLoginInfo().accessToken, url).enqueue(new Callback<FavoResponse>() {
+            @Override
+            public void onResponse(Call<FavoResponse> call, Response<FavoResponse> response) {
+                FavoResponse body = response.body();
+                if (response.code() == 200 && body != null) {
+                    EventBus.getDefault().post(new FavoResponseEvent(body));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FavoResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //21.删除产品图片
+    public void DeleteProductIcon(String url) {
+        mApi.DeleteProductIcon(getLoginInfo().accessToken, url).enqueue(new Callback<FavoResponse>() {
+            @Override
+            public void onResponse(Call<FavoResponse> call, Response<FavoResponse> response) {
+                FavoResponse body = response.body();
+                if (response.code() == 200 && body != null) {
+                    EventBus.getDefault().post(new FavoResponseEvent(body));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FavoResponse> call, Throwable t) {
 
             }
         });
@@ -321,7 +431,7 @@ public class ApiManager {
 
     //30.添加图片收藏
     public void AddPictureFavo(String uuid) {
-        mApi.AddPictureFavo(getLoginInfo().accessToken,uuid).enqueue(new Callback<CollectResponse>() {
+        mApi.AddPictureFavo(getLoginInfo().accessToken, uuid).enqueue(new Callback<CollectResponse>() {
             @Override
             public void onResponse(Call<CollectResponse> call, Response<CollectResponse> response) {
                 CollectResponse body = response.body();
@@ -339,7 +449,7 @@ public class ApiManager {
 
     //31.删除图片收藏
     public void DeletePictureFavo(String uuid) {
-        mApi.DeletePictureFavo(getLoginInfo().accessToken,uuid).enqueue(new Callback<CollectResponse>() {
+        mApi.DeletePictureFavo(getLoginInfo().accessToken, uuid).enqueue(new Callback<CollectResponse>() {
             @Override
             public void onResponse(Call<CollectResponse> call, Response<CollectResponse> response) {
                 CollectResponse body = response.body();
@@ -357,7 +467,7 @@ public class ApiManager {
 
     //32.添加视频收藏
     public void AddVideoFavo(String uuid) {
-        mApi.AddVideoFavo(getLoginInfo().accessToken,uuid).enqueue(new Callback<CollectResponse>() {
+        mApi.AddVideoFavo(getLoginInfo().accessToken, uuid).enqueue(new Callback<CollectResponse>() {
             @Override
             public void onResponse(Call<CollectResponse> call, Response<CollectResponse> response) {
                 CollectResponse body = response.body();
@@ -375,7 +485,7 @@ public class ApiManager {
 
     //33.删除视频收藏
     public void DeleteVideoFavo(String uuid) {
-        mApi.DeleteVideoFavo(getLoginInfo().accessToken,uuid).enqueue(new Callback<CollectResponse>() {
+        mApi.DeleteVideoFavo(getLoginInfo().accessToken, uuid).enqueue(new Callback<CollectResponse>() {
             @Override
             public void onResponse(Call<CollectResponse> call, Response<CollectResponse> response) {
                 CollectResponse body = response.body();
