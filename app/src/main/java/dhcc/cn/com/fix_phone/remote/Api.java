@@ -54,15 +54,16 @@ public interface Api {
     //5.修改密码
     @POST("/Account/ChangePwd")
     Call<LoginResponse> ChangePwd(@Query("phone") String phone,
-                                  @Query("code") String code);
+                                  @Query("oldPwd") String oldPwd,
+                                  @Query("pwd") String pwd);
 
     //6.发送修改密码验证码  --使用注册的手机号码发送验证码的方式登录。
     @POST("/Account/SendChangePwdPhoneCode")
-    Call<LoginResponse> SendChangePwdPhoneCode(@Query("phone") String phone);
+    Call<TelCheckResponse> SendChangePwdPhoneCode(@Query("phone") String phone);
 
     //7.修改密码-手机验证
     @POST("/Account/ChangePwdByCode")
-    Call<LoginResponse> ChangePwdByCode(@Query("phone") String phone,
+    Call<TelCheckResponse> ChangePwdByCode(@Query("phone") String phone,
                                         @Query("code") String code,
                                         @Query("pwd") String pwd);
 

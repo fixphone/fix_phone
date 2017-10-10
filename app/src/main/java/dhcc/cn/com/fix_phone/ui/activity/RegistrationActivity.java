@@ -22,6 +22,7 @@ import dhcc.cn.com.fix_phone.base.BaseActivity;
 import dhcc.cn.com.fix_phone.event.RegisterEvent;
 import dhcc.cn.com.fix_phone.event.TelCheckEvent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
+import dhcc.cn.com.fix_phone.ui.widget.LoadDialog;
 import dhcc.cn.com.fix_phone.ui.widget.MyCountDownTimer;
 import dhcc.cn.com.fix_phone.utils.AMUtils;
 import dhcc.cn.com.fix_phone.utils.MD5;
@@ -53,6 +54,7 @@ public class RegistrationActivity extends BaseActivity {
 
     private MyCountDownTimer myCountDownTimer;
     private Toast            toast;
+    private LoadDialog       loadDialog;
 
     @Override
     public int getLayoutId() {
@@ -68,7 +70,7 @@ public class RegistrationActivity extends BaseActivity {
     @Override
     protected void destroy() {
         super.destroy();
-        EventBus.getDefault().register(this);
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -78,6 +80,7 @@ public class RegistrationActivity extends BaseActivity {
         eye_state.setTag(IMG_TAG_HIDE);
         myCountDownTimer = new MyCountDownTimer(120 * 1000, 1000, get_code_tv, this);
         toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
+        loadDialog = new LoadDialog(this, false, "");
     }
 
     @OnClick({R.id.title_back, R.id.get_code_tv, R.id.eye_state, R.id.confirm_btn})
@@ -138,6 +141,7 @@ public class RegistrationActivity extends BaseActivity {
             toast.show();
             return;
         }
+        loadDialog.show();
         ApiManager.Instance().register(phoneNum, code, MD5.encrypt(passWord));
     }
 
@@ -148,6 +152,7 @@ public class RegistrationActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getCode(RegisterEvent registerEvent) {
+        loadDialog.dismiss();
         Log.d(TAG, "getCode: " + registerEvent.registerResponse.FMsg);
         Intent intent = getIntent();
         intent.putExtra("phone", phone_num_et.getText().toString());

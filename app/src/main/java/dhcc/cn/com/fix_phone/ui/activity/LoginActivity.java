@@ -76,6 +76,7 @@ public class LoginActivity extends RongBaseActivity {
     private String                   phoneString;
     private String                   passwordString;
     private String                   connectResultId;
+    private LoadDialog               loadDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +93,7 @@ public class LoginActivity extends RongBaseActivity {
         toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
         String phone = Account.getLoginInfo() == null ? "" : Account.getLoginInfo().getPhone();
         phone_num_et.setText(phone);
+        loadDialog = new LoadDialog(this, false, "");
     }
 
     @OnClick({R.id.title_back_iv, R.id.eye_state, R.id.login_confirm, R.id.registration_tv, R.id.forget_pass})
@@ -156,14 +158,20 @@ public class LoginActivity extends RongBaseActivity {
             return;
         }
         ApiManager.Instance().login(phoneString, MD5.encrypt(passwordString));
+        loadDialog.show();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void loginResult(LoginEvent loginEvent){
-        Log.d(TAG, "getCode: " + loginEvent.loginResponse.FMsg);
-        Account.setUserId(loginEvent.loginResponse.FObject.userID);
-        Account.setLoginInfo(loginEvent.loginResponse.FObject);
-        ApiManager.Instance().getRongToken(loginEvent.loginResponse.FObject.accessToken);
+        loadDialog.dismiss();
+        if(loginEvent.loginResponse != null && loginEvent.loginResponse.FObject != null){
+            Account.setUserId(loginEvent.loginResponse.FObject.userID);
+            Account.setLoginInfo(loginEvent.loginResponse.FObject);
+            ApiManager.Instance().getRongToken(loginEvent.loginResponse.FObject.accessToken);
+        }else {
+            toast.setText(loginEvent.errorMessage);
+            toast.show();
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

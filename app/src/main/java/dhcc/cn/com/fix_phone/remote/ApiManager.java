@@ -22,6 +22,7 @@ import dhcc.cn.com.fix_phone.event.CircleAdEvent;
 import dhcc.cn.com.fix_phone.event.CircleDetailAdEvent;
 import dhcc.cn.com.fix_phone.event.CollectEvent;
 import dhcc.cn.com.fix_phone.event.FavoResponseEvent;
+import dhcc.cn.com.fix_phone.event.FindPswEvent;
 import dhcc.cn.com.fix_phone.event.LoginEvent;
 import dhcc.cn.com.fix_phone.event.ProductImageEvent;
 import dhcc.cn.com.fix_phone.event.RegisterEvent;
@@ -227,6 +228,7 @@ public class ApiManager {
         });
     }
 
+    //2.手机号码注册
     public void register(String phone, String code, String pwd) {
         mApi.register(phone, code, pwd).enqueue(new Callback<RegisterResponse>() {
             @Override
@@ -254,6 +256,7 @@ public class ApiManager {
         });
     }
 
+    //3.账号密码登录
     public void login(String phone, String psw) {
         mApi.login(phone, psw).enqueue(new Callback<LoginResponse>() {
             @Override
@@ -261,7 +264,10 @@ public class ApiManager {
                 if (response.code() == 200) {
                     LoginResponse loginResponse = response.body();
                     if (loginResponse != null) {
-                        EventBus.getDefault().post(new LoginEvent(loginResponse));
+                        LoginEvent event = new LoginEvent(loginResponse);
+                        event.errorMessage = loginResponse.FMsg;
+                        event.isOk = true;
+                        EventBus.getDefault().post(event);
                     }
                 } else {
                     LoginEvent event = new LoginEvent(null);
@@ -274,6 +280,62 @@ public class ApiManager {
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 LoginEvent event = new LoginEvent(null);
+                event.errorMessage = t.getMessage();
+                event.isOk = false;
+                EventBus.getDefault().post(event);
+            }
+        });
+    }
+
+    //6.发送修改密码验证码
+    public void sendChangePwdPhoneCode(String phone){
+        mApi.SendChangePwdPhoneCode(phone).enqueue(new Callback<TelCheckResponse>() {
+            @Override
+            public void onResponse(Call<TelCheckResponse> call, Response<TelCheckResponse> response) {
+                if (response.code() == 200) {
+                    TelCheckResponse telCheckResponse = response.body();
+                    if (telCheckResponse != null && telCheckResponse.FIsSuccess) {
+                        EventBus.getDefault().post(new TelCheckEvent(telCheckResponse));
+                    }
+                } else {
+                    TelCheckEvent event = new TelCheckEvent(null);
+                    event.errorMessage = "服务器返回错误";
+                    event.isOk = false;
+                    EventBus.getDefault().post(event);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TelCheckResponse> call, Throwable t) {
+                TelCheckEvent event = new TelCheckEvent(null);
+                event.errorMessage = t.getMessage();
+                event.isOk = false;
+                EventBus.getDefault().post(event);
+            }
+        });
+    }
+
+    //7.修改密码-手机验证
+    public void ChangePwdByCode(String phone, String code, String psw){
+        mApi.ChangePwdByCode(phone, code, psw).enqueue(new Callback<TelCheckResponse>() {
+            @Override
+            public void onResponse(Call<TelCheckResponse> call, Response<TelCheckResponse> response) {
+                if (response.code() == 200) {
+                    TelCheckResponse telCheckResponse = response.body();
+                    if (telCheckResponse != null && telCheckResponse.FIsSuccess) {
+                        EventBus.getDefault().post(new FindPswEvent(telCheckResponse));
+                    }
+                } else {
+                    FindPswEvent event = new FindPswEvent(null);
+                    event.errorMessage = "服务器返回错误";
+                    event.isOk = false;
+                    EventBus.getDefault().post(event);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TelCheckResponse> call, Throwable t) {
+                FindPswEvent event = new FindPswEvent(null);
                 event.errorMessage = t.getMessage();
                 event.isOk = false;
                 EventBus.getDefault().post(event);

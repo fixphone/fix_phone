@@ -92,7 +92,7 @@
             android:paddingRight="@dimen/public_30dp"
             android:singleLine="true"
             android:password="true"
-            android:hint="输入密码"/>
+            android:hint="输入新密码"/>
 
         <ImageView
             android:id="@+id/eye_state"
