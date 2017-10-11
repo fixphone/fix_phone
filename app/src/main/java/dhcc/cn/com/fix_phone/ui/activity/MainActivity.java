@@ -1,10 +1,17 @@
 package dhcc.cn.com.fix_phone.ui.activity;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import butterknife.BindView;
+import dhcc.cn.com.fix_phone.Account;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
+import dhcc.cn.com.fix_phone.event.LoginEvent;
+import dhcc.cn.com.fix_phone.remote.ApiManager;
 import dhcc.cn.com.fix_phone.ui.fragment.CircleFragment;
 import dhcc.cn.com.fix_phone.ui.fragment.ImFragment;
 import dhcc.cn.com.fix_phone.ui.fragment.MeFragment;
@@ -42,6 +49,12 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
     protected void initEvent() {
         super.initEvent();
         mTabLayout.addOnTabSelectedListener(this);
+        if(!Account.isLogin()){
+            startActivity(new Intent(this, LoginActivity.class));
+            return;
+        }
+        String refreshToken = Account.getLoginInfo().getRefreshToken();
+        ApiManager.Instance().RefreshToken(refreshToken);
     }
 
     @Override
@@ -63,6 +76,13 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
     @Override
     protected void onResume() {
         super.onResume();
+    }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void refreshTokenResult(LoginEvent loginEvent){
+        if(loginEvent.loginResponse != null && loginEvent.loginResponse.FObject != null){
+            Account.setAccessToken(Account.getUserId(), loginEvent.loginResponse.FObject.getAccessToken());
+            ApiManager.Instance().getRongToken(loginEvent.loginResponse.FObject.accessToken);
+        }
     }
 }

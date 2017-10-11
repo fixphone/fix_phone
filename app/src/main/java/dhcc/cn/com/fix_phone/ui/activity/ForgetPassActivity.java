@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -61,6 +62,7 @@ public class ForgetPassActivity extends BaseActivity{
     @Override
     protected void initEvent() {
         super.initEvent();
+        EventBus.getDefault().register(this);
         title_name.setText("密码找回");
         eye_state.setTag(IMG_TAG_HIDE);
         myCountDownTimer = new MyCountDownTimer(120 * 1000, 1000, get_code_tv, this);
@@ -130,7 +132,19 @@ public class ForgetPassActivity extends BaseActivity{
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void findPsw(FindPswEvent findPswEvent) {
-        Log.d(TAG, "getCode: " + findPswEvent.telCheckResponse.FMsg);
+        loadDialog.dismiss();
+        if(findPswEvent.telCheckResponse != null){
+            toast.setText(findPswEvent.telCheckResponse.FMsg);
+            toast.show();
+        }else {
+            toast.setText(findPswEvent.errorMessage);
+            toast.show();
+        }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 }

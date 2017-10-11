@@ -124,7 +124,7 @@ public interface Api {
 
     //18.修改店铺资料
     @POST("/Account/ChangeUserInfo")
-    Call<String> ChangeUserInfo(@Header("accessToken") String accessToken,
+    Call<BusinessResponse> ChangeUserInfo(@Header("accessToken") String accessToken,
                                 @Query("name") String name,
                                 @Query("companyName") String companyName,
                                 @Query("companyProfile") String companyProfile,

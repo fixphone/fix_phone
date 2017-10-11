@@ -173,8 +173,40 @@ public class ApiManager {
 
     }
 
+    //17.获取店铺资料
     public void getUserInfo(String useId) {
         mApi.getUserInfo(getLoginInfo().accessToken, useId).enqueue(new Callback<BusinessResponse>() {
+            @Override
+            public void onResponse(Call<BusinessResponse> call, Response<BusinessResponse> response) {
+                if (response.code() == 200) {
+                    BusinessResponse businessResponse = response.body();
+                    if (businessResponse != null && businessResponse.FIsSuccess) {
+                        EventBus.getDefault().post(new BusinessEvent(response.body()));
+                    }
+                } else {
+                    BusinessEvent event = new BusinessEvent(null);
+                    event.errorMessage = "服务器返回错误";
+                    event.isOk = false;
+                    EventBus.getDefault().post(event);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BusinessResponse> call, Throwable t) {
+                BusinessEvent event = new BusinessEvent(null);
+                event.errorMessage = t.getMessage();
+                event.isOk = false;
+                EventBus.getDefault().post(event);
+            }
+        });
+    }
+
+    //18.修改店铺资料
+    public void ChangeUserInfo(String accessToken, String name, String companyName, String companyProfile,
+                               String contact, String postCode, String contactMobile, String contactPhone,
+                               String address){
+        mApi.ChangeUserInfo(accessToken, name, companyName, companyProfile, contact, postCode, contactMobile,
+                contactPhone, address).enqueue(new Callback<BusinessResponse>() {
             @Override
             public void onResponse(Call<BusinessResponse> call, Response<BusinessResponse> response) {
                 if (response.code() == 200) {
@@ -336,6 +368,37 @@ public class ApiManager {
             @Override
             public void onFailure(Call<TelCheckResponse> call, Throwable t) {
                 FindPswEvent event = new FindPswEvent(null);
+                event.errorMessage = t.getMessage();
+                event.isOk = false;
+                EventBus.getDefault().post(event);
+            }
+        });
+    }
+
+    //8.刷新调用令牌
+    public void RefreshToken(String refreshToken){
+        mApi.RefreshToken(refreshToken).enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                if (response.code() == 200) {
+                    LoginResponse loginResponse = response.body();
+                    if (loginResponse != null) {
+                        LoginEvent event = new LoginEvent(loginResponse);
+                        event.errorMessage = loginResponse.FMsg;
+                        event.isOk = true;
+                        EventBus.getDefault().post(event);
+                    }
+                } else {
+                    LoginEvent event = new LoginEvent(null);
+                    event.errorMessage = "服务器返回错误";
+                    event.isOk = false;
+                    EventBus.getDefault().post(event);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                LoginEvent event = new LoginEvent(null);
                 event.errorMessage = t.getMessage();
                 event.isOk = false;
                 EventBus.getDefault().post(event);

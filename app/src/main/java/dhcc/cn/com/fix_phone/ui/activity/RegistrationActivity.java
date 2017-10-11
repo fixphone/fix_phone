@@ -153,11 +153,15 @@ public class RegistrationActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getCode(RegisterEvent registerEvent) {
         loadDialog.dismiss();
-        Log.d(TAG, "getCode: " + registerEvent.registerResponse.FMsg);
-        Intent intent = getIntent();
-        intent.putExtra("phone", phone_num_et.getText().toString());
-        intent.putExtra("passWord", pass_word_et.getText().toString());
-        setResult(REG_SUCCESS, intent);
-        finish();
+        if(registerEvent.registerResponse != null){
+            Intent intent = getIntent();
+            intent.putExtra("phone", phone_num_et.getText().toString());
+            intent.putExtra("passWord", pass_word_et.getText().toString());
+            setResult(REG_SUCCESS, intent);
+            finish();
+        }else {
+            toast.setText(registerEvent.errorMessage);
+            toast.show();
+        }
     }
 }

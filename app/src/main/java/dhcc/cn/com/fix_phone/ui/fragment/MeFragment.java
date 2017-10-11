@@ -5,10 +5,12 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -32,6 +34,7 @@ import dhcc.cn.com.fix_phone.ui.activity.MyActivity;
 import dhcc.cn.com.fix_phone.ui.activity.MyProductActivity;
 import dhcc.cn.com.fix_phone.ui.activity.PersonInfoActivity;
 import dhcc.cn.com.fix_phone.ui.activity.VipActivity;
+import dhcc.cn.com.fix_phone.ui.widget.LoadDialog;
 import dhcc.cn.com.fix_phone.ui.widget.RoundImageView;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.UserInfo;
@@ -60,6 +63,8 @@ public class MeFragment extends BaseFragment {
 
     private BusinessResponse mResponse;
     private SharedPreferences sp;
+    private LoadDialog loadDialog;
+    private Toast toast;
 
     public static MeFragment newInstance() {
         Bundle args = new Bundle();
@@ -90,6 +95,8 @@ public class MeFragment extends BaseFragment {
         mTitleRightTv.setText("设置");
         mTitleRightTv.setTextColor(ContextCompat.getColor(getContext(), R.color.app_text_color_black));
         sp = getContext().getSharedPreferences("config", getContext().MODE_PRIVATE);
+        loadDialog = new LoadDialog(getContext(), false, "");
+        toast = Toast.makeText(getContext(), "", Toast.LENGTH_SHORT);
     }
 
     @Override
@@ -136,13 +143,21 @@ public class MeFragment extends BaseFragment {
                 startActivity(new Intent(getActivity(), MyProductActivity.class).putExtra("type", 2));
                 break;
             case R.id.mine_clear:
-
+                loadDialog.show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadDialog.dismiss();
+                        toast.setText("已清空");
+                        toast.show();
+                    }
+                }, 1000);
                 break;
             case R.id.mine_app:
                 startActivity(AboutAppActivity.class);
                 break;
             case R.id.title_right:
-                startActivity(MyActivity.class);
+                startActivity(new Intent(getContext(), MyActivity.class).putExtra("BusinessResponse", mResponse));
                 break;
             default:
                 break;
