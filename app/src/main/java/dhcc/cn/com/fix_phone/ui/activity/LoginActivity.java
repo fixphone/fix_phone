@@ -1,9 +1,12 @@
 package dhcc.cn.com.fix_phone.ui.activity;
 
+import android.app.ActivityManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Process;
+import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
@@ -167,6 +170,7 @@ public class LoginActivity extends RongBaseActivity {
         if(loginEvent.loginResponse != null && loginEvent.loginResponse.FObject != null){
             Account.setUserId(loginEvent.loginResponse.FObject.userID);
             Account.setLoginInfo(loginEvent.loginResponse.FObject);
+            Account.setLogin(true);
             ApiManager.Instance().getRongToken(loginEvent.loginResponse.FObject.accessToken);
         }else {
             toast.setText(loginEvent.errorMessage);

@@ -33,14 +33,8 @@ public class PersonInfoActivity extends BaseActivity {
     public static final String ACTION_PHONE = "手机";
     public static final String ACTION_MOBILE_PHONE = "电话";
     public static final String ACTION_ADDRESS = "经营地址";
-    public static final String ACTION_PROFILE = "公司简介";
-    public static final int ACTION_NAME_CODE = 1;
-    public static final int ACTION_CONTACT_CODE = 2;
-    public static final int ACTION_POSTCODE_CODE = 3;
-    public static final int ACTION_PHONE_CODE = 4;
-    public static final int ACTION_MOBILE_PHONE_CODE = 5;
-    public static final int ACTION_ADDRESS_CODE = 6;
-    public static final int ACTION_PROFILE_CODE = 7;
+    public static final String ACTION_PROFILE = "企业简介";
+    public static final int ACTION_REQUEST_CODE = 0x0010;
 
     @BindView(R.id.title_name)
     TextView title_name;
@@ -107,35 +101,47 @@ public class PersonInfoActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.info_company_name_rl:
-                startActivity(ResetPersonInfoActivity.class, ACTION_NAME, ACTION_NAME_CODE, info_company_name_tv.getText().toString());
+                startActivity(ResetPersonInfoActivity.class, ACTION_NAME, info_company_name_tv.getText().toString());
                 break;
             case R.id.info_contact_name_rl:
-                startActivity(ResetPersonInfoActivity.class, ACTION_CONTACT, ACTION_CONTACT_CODE, info_contact_name_tv.getText().toString());
+                startActivity(ResetPersonInfoActivity.class, ACTION_CONTACT, info_contact_name_tv.getText().toString());
                 break;
             case R.id.info_postcode_rl:
-                startActivity(ResetPersonInfoActivity.class, ACTION_POSTCODE, ACTION_POSTCODE_CODE, info_postcode_tv.getText().toString());
+                startActivity(ResetPersonInfoActivity.class, ACTION_POSTCODE, info_postcode_tv.getText().toString());
                 break;
             case R.id.info_mobile_phone_rl:
-                startActivity(ResetPersonInfoActivity.class, ACTION_PHONE, ACTION_PHONE_CODE, info_phone_num_tv.getText().toString());
+                startActivity(ResetPersonInfoActivity.class, ACTION_PHONE, info_phone_num_tv.getText().toString());
                 break;
             case R.id.info_phone_num_rl:
-                startActivity(ResetPersonInfoActivity.class, ACTION_MOBILE_PHONE, ACTION_MOBILE_PHONE_CODE, info_mobile_phone_tv.getText().toString());
+                startActivity(ResetPersonInfoActivity.class, ACTION_MOBILE_PHONE, info_mobile_phone_tv.getText().toString());
                 break;
             case R.id.info_address_rl:
-                startActivity(ResetPersonInfoActivity.class, ACTION_ADDRESS, ACTION_ADDRESS_CODE, info_address_tv.getText().toString());
+                startActivity(ResetPersonInfoActivity.class, ACTION_ADDRESS, info_address_tv.getText().toString());
                 break;
             case R.id.info_company_profile_rl:
-                startActivity(ResetPersonInfoActivity.class, ACTION_PROFILE, ACTION_PROFILE_CODE, info_company_profile_tv.getText().toString());
+                startActivity(ResetPersonInfoActivity.class, ACTION_PROFILE, info_company_profile_tv.getText().toString());
                 break;
             default:
                 break;
         }
     }
 
-    private void startActivity(Class clazz, String action, int code, String content){
+    private void startActivity(Class clazz, String action, String content){
         Intent intent = new Intent(this, clazz);
         intent.putExtra("Action", action);
         intent.putExtra("Content", content);
-        startActivityForResult(intent, code);
+        intent.putExtra("Bean", mResponse);
+        startActivityForResult(intent, ACTION_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == ACTION_REQUEST_CODE){
+            if(resultCode == ResetPersonInfoActivity.RESULT_CODE){
+                mResponse = (BusinessResponse)data.getSerializableExtra("resp");
+                setViewState(mResponse);
+            }
+        }
     }
 }
