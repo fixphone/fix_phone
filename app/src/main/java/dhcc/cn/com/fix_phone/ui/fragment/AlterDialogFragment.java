@@ -8,8 +8,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
-
+import android.widget.Toast;
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import dhcc.cn.com.fix_phone.R;
+import dhcc.cn.com.fix_phone.conf.Constants;
+import dhcc.cn.com.fix_phone.utils.AMUtils;
+import java.util.HashMap;
 
 /**
  * 2017/10/8 19
@@ -19,10 +27,17 @@ public class AlterDialogFragment extends DialogFragment implements View.OnClickL
     private TextView mFriend;
     private TextView mCircle;
 
+    public static IWXAPI mWXApi;
+    private HashMap<String, String> wechatMap = new HashMap<String, String>();
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        mWXApi = WXAPIFactory.createWXAPI(getActivity(), Constants.APP_ID, true);
+        mWXApi.registerApp(Constants.APP_ID);
+
         View rootView = inflater.inflate(R.layout.fragment_alter_dialog, container, false);
         return rootView;
     }
@@ -41,9 +56,56 @@ public class AlterDialogFragment extends DialogFragment implements View.OnClickL
         int id = view.getId();
         switch (id) {
             case R.id.textView_friend:
+                initWechatShareData();
+                shareWechat();
                 break;
             case R.id.textView_circle:
+
                 break;
         }
+    }
+
+    private void initWechatShareData() {
+        wechatMap.put(Constants.WX_TITLE, Constants.wxTitle);
+        wechatMap.put(Constants.WX_IMGPATH, Constants.wxImgPath);
+        wechatMap.put(Constants.WX_URL, Constants.wxUrl);
+        wechatMap.put(Constants.WX_CONTENT, Constants.wxContent);
+    }
+
+    private void shareWechat() {
+        if (!AMUtils.checkInstallation(getActivity(), Constants.WECHAT_PACKAGE_NAME)) {
+            Toast.makeText(getActivity(), "请安装微信", Toast.LENGTH_SHORT).show();
+        }
+        if (wechatMap == null) {
+            Toast.makeText(getActivity(), "分享错误", Toast.LENGTH_SHORT).show();
+        }
+
+        WXWebpageObject webpage = new WXWebpageObject();
+        webpage.webpageUrl = wechatMap.get(Constants.WX_URL);
+        final WXMediaMessage msg = new WXMediaMessage(webpage);
+        msg.title = wechatMap.get(Constants.WX_TITLE);
+        msg.description = wechatMap.get(Constants.WX_CONTENT);
+        //runOnUiThread(new Runnable() {
+        //    @Override
+        //    public void run() {
+        //        Glide.with(this).load(wechatMap.get(Constants.WX_IMGPATH))
+        //            .asBitmap().into(new SimpleTarget<Bitmap>(Constants.SHARE_IMAGE_WIDTH, Constants.SHARE_IMAGE_HEIGHT) {
+        //            @Override
+        //            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+        //                msg.setThumbImage(resource);
+        //            }
+        //        });
+        //    }
+        //});
+
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.transaction = buildTransaction("webpage");
+        req.message = msg;
+        req.scene = SendMessageToWX.Req.WXSceneSession;
+        mWXApi.sendReq(req);
+    }
+
+    private String buildTransaction(final String type) {
+        return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
     }
 }

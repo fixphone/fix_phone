@@ -274,10 +274,14 @@
             android:name=".ui.activity.PublishActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
+
+        <!-- wechat share -->
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:screenOrientation="portrait"
+            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar"/>
+
         <activity
             android:name=".ui.activity.MyProductActivity"
             android:screenOrientation="portrait"
