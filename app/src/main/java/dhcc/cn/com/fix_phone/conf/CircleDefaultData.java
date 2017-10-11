@@ -49,7 +49,7 @@ public class CircleDefaultData {
         phoneTitle.addSubItem(new CircleFragmentItem("Business", "手机买卖", R.drawable.menu_4));
         phoneTitle.addSubItem(new CircleFragmentItem("Tool", "维修工具", R.drawable.menu_5));
         phoneTitle.addSubItem(new CircleFragmentItem("Device", "设备", R.drawable.menu_6));
-        phoneTitle.addSubItem(new CircleFragmentItem("PolarizedLight", "跑单曝光", R.drawable.menu_7));
+        phoneTitle.addSubItem(new CircleFragmentItem("EscapedExpose", "跑单曝光", R.drawable.menu_7));
 
         CircleFragmentTitle computeTitle = new CircleFragmentTitle("电脑/笔记本/电视");
         list.add(computeTitle);
@@ -60,7 +60,7 @@ public class CircleDefaultData {
         computeTitle.addSubItem(new CircleFragmentItem("Comp_Chassis", "机壳背光", R.drawable.menu_12));
         computeTitle.addSubItem(new CircleFragmentItem("Comp_Whole", "整机", R.drawable.menu_13));
         computeTitle.addSubItem(new CircleFragmentItem("Comp_Device", "设备", R.drawable.menu_14));
-        computeTitle.addSubItem(new CircleFragmentItem("Comp_PolarizedLight", "跑单曝光", R.drawable.menu_15));
+        computeTitle.addSubItem(new CircleFragmentItem("Comp_EscapedExpose", "跑单曝光", R.drawable.menu_15));
 
         return list;
     }
