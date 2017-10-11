@@ -56,6 +56,7 @@ public class ForgetPassActivity extends BaseActivity{
 
     @Override
     public int getLayoutId() {
+        Log.d(TAG, "getLayoutId: ");
         return R.layout.activity_registration;
     }
 

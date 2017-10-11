@@ -60,18 +60,31 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 0) {
-            return TYPE_HEAD;
+        if (!CircleDefaultData.getBusinessList().contains(MyApplication.getCurrentTypeId())) {
+            if (position == 0) {
+                return TYPE_HEAD;
+            }
+            CircleItem item = (CircleItem) datas.get(position - 1);
+            if (CircleItem.TYPE_URL.equals(item.getType())) {
+                return CircleViewHolder.TYPE_URL;
+            } else if (CircleItem.TYPE_IMG.equals(item.getType())) {
+                return CircleViewHolder.TYPE_IMAGE;
+            } else if (CircleItem.TYPE_VIDEO.equals(item.getType())) {
+                return CircleViewHolder.TYPE_VIDEO;
+            }
+            return super.getItemViewType(position);
+        } else {
+            CircleItem item = (CircleItem) datas.get(position);
+            if (CircleItem.TYPE_URL.equals(item.getType())) {
+                return CircleViewHolder.TYPE_URL;
+            } else if (CircleItem.TYPE_IMG.equals(item.getType())) {
+                return CircleViewHolder.TYPE_IMAGE;
+            } else if (CircleItem.TYPE_VIDEO.equals(item.getType())) {
+                return CircleViewHolder.TYPE_VIDEO;
+            }
+            return super.getItemViewType(position);
         }
-        CircleItem item = (CircleItem) datas.get(position - 1);
-        if (CircleItem.TYPE_URL.equals(item.getType())) {
-            return CircleViewHolder.TYPE_URL;
-        } else if (CircleItem.TYPE_IMG.equals(item.getType())) {
-            return CircleViewHolder.TYPE_IMAGE;
-        } else if (CircleItem.TYPE_VIDEO.equals(item.getType())) {
-            return CircleViewHolder.TYPE_VIDEO;
-        }
-        return super.getItemViewType(position);
+
     }
 
     @Override
@@ -96,16 +109,15 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int position) {
         if (getItemViewType(position) == TYPE_HEAD) {
-            if (!CircleDefaultData.getBusinessList().contains(MyApplication.getCurrentTypeId())) {
-                HeaderViewHolder headerViewHolder = (HeaderViewHolder) viewHolder;
-                headerViewHolder.setBannerData();
-            } else {
-                HeaderViewHolder headerViewHolder = (HeaderViewHolder) viewHolder;
-                headerViewHolder.itemView.setVisibility(View.GONE);
-            }
-
+            HeaderViewHolder headerViewHolder = (HeaderViewHolder) viewHolder;
+            headerViewHolder.setBannerData();
         } else {
-            final int realPosition = position - HEADVIEW_SIZE;
+            final int realPosition;
+            if (!CircleDefaultData.getBusinessList().contains(MyApplication.getCurrentTypeId())) {
+                realPosition = position - HEADVIEW_SIZE;
+            } else {
+                realPosition = position;
+            }
             final CircleViewHolder holder = (CircleViewHolder) viewHolder;
             holder.setActivity(context);
             holder.setData((CircleItem) datas.get(realPosition));
@@ -182,7 +194,7 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
 
     @Override
     public int getItemCount() {
-        return datas.size() + 1;//有head需要加1
+        return !CircleDefaultData.getBusinessList().contains(MyApplication.getCurrentTypeId()) ? datas.size() + 1 : datas.size();//有head需要加1
     }
 
     public class HeaderViewHolder extends RecyclerView.ViewHolder {

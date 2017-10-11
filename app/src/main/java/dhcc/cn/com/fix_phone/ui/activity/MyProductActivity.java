@@ -1,5 +1,6 @@
 package dhcc.cn.com.fix_phone.ui.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
@@ -12,6 +13,7 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,6 +23,7 @@ import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.squareup.okhttp.Request;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
@@ -45,6 +48,8 @@ import dhcc.cn.com.fix_phone.event.ImageResponeEvent;
 import dhcc.cn.com.fix_phone.event.ProductImageEvent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
 import dhcc.cn.com.fix_phone.ui.fragment.CommonDeleteFragment;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * 2017/10/1 16
@@ -70,6 +75,7 @@ public class MyProductActivity extends BaseActivity implements CommonDeleteFragm
     private List<String>        mStrings;
     private int                 deletePosition;
     private View                mFootView;
+    private static final String TAG = "MyProductActivity";
 
     @Override
     public int getLayoutId() {
@@ -174,11 +180,36 @@ public class MyProductActivity extends BaseActivity implements CommonDeleteFragm
         mFootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mType == 1) {
-                    selectPhoto(1);
-                } else {
-                    selectPhoto(5);
-                }
+                RxPermissions rxPermissions = new RxPermissions(MyProductActivity.this);
+                rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(new Observer<Boolean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Boolean aBoolean) {
+                        if (aBoolean) {
+                            if (mType == 1) {
+                                selectPhoto(1);
+                            } else {
+                                selectPhoto(5);
+                            }
+                        } else {
+                            Toast.makeText(MyProductActivity.this, R.string.permission_request_denied, Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
             }
         });
     }
@@ -274,7 +305,7 @@ public class MyProductActivity extends BaseActivity implements CommonDeleteFragm
 
                     @Override
                     public void onResponse(String response) {
-
+                        Log.d(TAG, "onResponse: "+ response);
                     }
                 });
     }
