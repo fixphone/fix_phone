@@ -17,23 +17,23 @@ import dhcc.cn.com.fix_phone.bean.CircleFragmentTitle;
  */
 public class CircleDefaultData {
 
-    public static Map<Integer,String> getCirCleDefailtMap(){
-        Map<Integer,String> map = new ArrayMap<>();
-        map.put(R.id.Accessories,"Accessories");
-        map.put(R.id.LiquidCrystal,"LiquidCrystal");
-        map.put(R.id.Module,"Module");
-        map.put(R.id.Maintain,"Maintain");
-        map.put(R.id.Business,"Business");
-        map.put(R.id.Tool,"Tool");
-        map.put(R.id.Device,"Device");
-        map.put(R.id.Comp_Module,"Comp_Module");
-        map.put(R.id.Comp_LiquidCrystal,"Comp_LiquidCrystal");
-        map.put(R.id.Comp_TabMaintain,"Comp_TabMaintain");
-        map.put(R.id.Comp_Accessories,"Comp_Accessories");
-        map.put(R.id.Comp_Chassis,"Comp_Chassis");
-        map.put(R.id.Comp_Whole,"Comp_Whole");
-        map.put(R.id.Comp_Device,"Comp_Device");
-        map.put(R.id.Comp_PolarizedLight,"Comp_PolarizedLight");
+    public static Map<Integer, String> getCirCleDefailtMap() {
+        Map<Integer, String> map = new ArrayMap<>();
+        map.put(R.id.Accessories, "Accessories");
+        map.put(R.id.LiquidCrystal, "LiquidCrystal");
+        map.put(R.id.Module, "Module");
+        map.put(R.id.Maintain, "Maintain");
+        map.put(R.id.Business, "Business");
+        map.put(R.id.Tool, "Tool");
+        map.put(R.id.Device, "Device");
+        map.put(R.id.Comp_Module, "Comp_Module");
+        map.put(R.id.Comp_LiquidCrystal, "Comp_LiquidCrystal");
+        map.put(R.id.Comp_TabMaintain, "Comp_TabMaintain");
+        map.put(R.id.Comp_Accessories, "Comp_Accessories");
+        map.put(R.id.Comp_Chassis, "Comp_Chassis");
+        map.put(R.id.Comp_Whole, "Comp_Whole");
+        map.put(R.id.Comp_Device, "Comp_Device");
+        map.put(R.id.Comp_PolarizedLight, "Comp_PolarizedLight");
         return map;
     }
 
@@ -62,6 +62,13 @@ public class CircleDefaultData {
         computeTitle.addSubItem(new CircleFragmentItem("Comp_Device", "设备", R.drawable.menu_14));
         computeTitle.addSubItem(new CircleFragmentItem("Comp_EscapedExpose", "跑单曝光", R.drawable.menu_15));
 
+        return list;
+    }
+
+    public static List<String> getBusinessList() {
+        List<String> list = new ArrayList<>();
+        list.add("EscapedExpose");
+        list.add("Comp_EscapedExpose");
         return list;
     }
 }

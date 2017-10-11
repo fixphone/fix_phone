@@ -12,6 +12,7 @@ import com.youth.banner.Banner;
 import java.util.ArrayList;
 import java.util.List;
 
+import dhcc.cn.com.fix_phone.MyApplication;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.adapter.viewholder.CircleViewHolder;
 import dhcc.cn.com.fix_phone.adapter.viewholder.ImageViewHolder;
@@ -21,6 +22,7 @@ import dhcc.cn.com.fix_phone.base.GlideImageLoader;
 import dhcc.cn.com.fix_phone.bean.CircleDetailAd;
 import dhcc.cn.com.fix_phone.bean.CircleItem;
 import dhcc.cn.com.fix_phone.bean.PhotoInfo;
+import dhcc.cn.com.fix_phone.conf.CircleDefaultData;
 import dhcc.cn.com.fix_phone.mvp.presenter.CirclePresenter;
 import dhcc.cn.com.fix_phone.ui.activity.ImagePagerActivity;
 import dhcc.cn.com.fix_phone.ui.widget.MultiImageView;
@@ -30,9 +32,9 @@ import dhcc.cn.com.fix_phone.ui.widget.SnsPopupWindow;
  * Created by yiwei on 16/5/17.
  */
 public class CircleAdapter extends BaseRecycleViewAdapter {
-    public final static int TYPE_HEAD     = 0;
-    public static final int HEADVIEW_SIZE = 1;
-    private static final String TAG = "CircleAdapter";
+    public final static  int    TYPE_HEAD     = 0;
+    public static final  int    HEADVIEW_SIZE = 1;
+    private static final String TAG           = "CircleAdapter";
 
     private CirclePresenter                           presenter;
     private Activity                                  context;
@@ -94,8 +96,14 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int position) {
         if (getItemViewType(position) == TYPE_HEAD) {
-            HeaderViewHolder headerViewHolder = (HeaderViewHolder) viewHolder;
-            headerViewHolder.setBannerData();
+            if (!CircleDefaultData.getBusinessList().contains(MyApplication.getCurrentTypeId())) {
+                HeaderViewHolder headerViewHolder = (HeaderViewHolder) viewHolder;
+                headerViewHolder.setBannerData();
+            } else {
+                HeaderViewHolder headerViewHolder = (HeaderViewHolder) viewHolder;
+                headerViewHolder.itemView.setVisibility(View.GONE);
+            }
+
         } else {
             final int realPosition = position - HEADVIEW_SIZE;
             final CircleViewHolder holder = (CircleViewHolder) viewHolder;
@@ -206,7 +214,7 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
     private OnPopWindowClickListener mOnPopWindowClickListener;
 
 
-    public interface OnVideoLongClickListener{
+    public interface OnVideoLongClickListener {
         void onVideoLongClickListener(CircleItem circleItem);
     }
 
