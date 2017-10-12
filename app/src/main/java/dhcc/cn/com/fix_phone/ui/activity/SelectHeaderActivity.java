@@ -5,8 +5,12 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.io.IOException;
 
@@ -14,6 +18,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
+import dhcc.cn.com.fix_phone.bean.BusinessResponse;
 import dhcc.cn.com.fix_phone.utils.ImageActions;
 
 /**
@@ -29,8 +34,11 @@ public class SelectHeaderActivity extends BaseActivity{
 
     @BindView(R.id.title_name)
     TextView title_name;
+    @BindView(R.id.header_icon)
+    ImageView header_icon;
 
     private Intent resultIntent;
+    private BusinessResponse mResponse;
 
     @Override
     public int getLayoutId() {
@@ -41,6 +49,16 @@ public class SelectHeaderActivity extends BaseActivity{
     protected void initEvent() {
         super.initEvent();
         title_name.setText("修改店铺头像");
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+        Intent intent = getIntent();
+        if(intent != null && intent.hasExtra("Action")){
+            mResponse = (BusinessResponse)getIntent().getSerializableExtra("Action");
+            Glide.with(this).load(mResponse.FObject.headUrl).diskCacheStrategy(DiskCacheStrategy.ALL).into(header_icon);
+        }
     }
 
     @OnClick({R.id.title_back, R.id.photo_take_btn, R.id.photo_album_btn})

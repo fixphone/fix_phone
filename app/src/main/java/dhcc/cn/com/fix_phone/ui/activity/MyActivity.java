@@ -58,12 +58,12 @@ public class MyActivity extends BaseActivity{
                 finish();
                 break;
             case R.id.my_header_icon:
-                startActivity(SelectHeaderActivity.class);
+                startActivity(new Intent(this, SelectHeaderActivity.class).putExtra("Action", mResponse));
                 break;
             case R.id.my_phone_num:
                 break;
             case R.id.my_reset_pass:
-                startActivity(ResetPassWordActivity.class);
+                startActivity(new Intent(this, ResetPassWordActivity.class));
                 break;
             case R.id.my_exit:
                 exit();
@@ -80,11 +80,6 @@ public class MyActivity extends BaseActivity{
         Account.setLogin(false);
         Intent intent = new Intent(this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-    }
-
-    private void startActivity(Class clazz){
-        Intent intent = new Intent(this, clazz);
         startActivity(intent);
     }
 }

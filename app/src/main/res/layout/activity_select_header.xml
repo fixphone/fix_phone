@@ -11,6 +11,7 @@
         layout="@layout/layout_title"/>
 
     <ImageView
+        android:id="@+id/header_icon"
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="1"
