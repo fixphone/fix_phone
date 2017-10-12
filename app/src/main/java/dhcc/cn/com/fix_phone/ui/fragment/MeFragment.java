@@ -21,6 +21,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import dhcc.cn.com.fix_phone.Account;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.base.BaseFragment;
 import dhcc.cn.com.fix_phone.bean.BusinessResponse;
@@ -101,7 +102,7 @@ public class MeFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        ApiManager.Instance().getUserInfo("");
+        ApiManager.Instance().getUserInfo(Account.getUserId());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -110,7 +111,7 @@ public class MeFragment extends BaseFragment {
         user_name.setText(mResponse.FObject.name);
         user_mobile.setText(mResponse.FObject.phone);
         Glide.with(getContext()).load(mResponse.FObject.headUrl).diskCacheStrategy(DiskCacheStrategy.ALL).into(user_icon);
-        RongIM.getInstance().setCurrentUserInfo(new UserInfo(sp.getString(SealConst.SEALTALK_LOGIN_ID, ""), mResponse.FObject.name, Uri.parse(mResponse.FObject.headUrl)));
+        RongIM.getInstance().setCurrentUserInfo(new UserInfo(Account.getUserId(), mResponse.FObject.name, Uri.parse(mResponse.FObject.headUrl)));
     }
 
     @OnClick({R.id.mine_info, R.id.mine_circle, R.id.mine_house, R.id.mine_suggest, R.id.mine_vip,

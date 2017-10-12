@@ -53,7 +53,7 @@ public interface Api {
 
     //5.修改密码
     @POST("/Account/ChangePwd")
-    Call<LoginResponse> ChangePwd(@Query("phone") String phone,
+    Call<TelCheckResponse> ChangePwd(@Query("phone") String phone,
                                   @Query("oldPwd") String oldPwd,
                                   @Query("pwd") String pwd);
 

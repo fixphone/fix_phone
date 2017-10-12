@@ -1,16 +1,29 @@
 package dhcc.cn.com.fix_phone.ui.activity;
 
+import android.content.Intent;
+import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import dhcc.cn.com.fix_phone.Account;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
+import dhcc.cn.com.fix_phone.event.RegisterEvent;
+import dhcc.cn.com.fix_phone.event.TelCheckEvent;
+import dhcc.cn.com.fix_phone.remote.ApiManager;
+import dhcc.cn.com.fix_phone.ui.widget.LoadDialog;
+import dhcc.cn.com.fix_phone.utils.MD5;
 
 /**
  * Created by songyang on 2017\9\22 0022.
@@ -32,6 +45,8 @@ public class ResetPassWordActivity extends BaseActivity{
     @BindView(R.id.reset_pass_word)
     EditText reset_pass_word;
 
+    private Toast toast;
+    private LoadDialog loadDialog;
 
     @Override
     public int getLayoutId() {
@@ -41,9 +56,12 @@ public class ResetPassWordActivity extends BaseActivity{
     @Override
     protected void initEvent() {
         super.initEvent();
+        EventBus.getDefault().register(this);
         title_name.setText("修改密码");
         old_eye_state.setTag(IMG_TAG_HIDE);
         eye_state.setTag(IMG_TAG_HIDE);
+        toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
+        loadDialog = new LoadDialog(this, false, "");
     }
 
     @OnClick({R.id.title_back, R.id.old_eye_state, R.id.eye_state, R.id.reset_confirm})
@@ -77,8 +95,46 @@ public class ResetPassWordActivity extends BaseActivity{
                 reset_pass_word.setSelection(reset_pass_word.getText().toString().length());
                 break;
             case R.id.reset_confirm:
-
+                changePsw(Account.getLoginInfo().getPhone(), old_reset_pass_word.getText().toString(), reset_pass_word.getText().toString());
                 break;
         }
+    }
+
+    public void changePsw(String phone, String oldPwd, String pwd){
+        if(TextUtils.isEmpty(oldPwd)){
+            toast.setText("旧密码不能为空");
+            toast.show();
+            return;
+        }
+        if(TextUtils.isEmpty(pwd)){
+            toast.setText("密码不能为空");
+            toast.show();
+            return;
+        }
+        ApiManager.Instance().ChangePwd(phone, MD5.encrypt(oldPwd), MD5.encrypt(pwd));
+        loadDialog.show();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void result(TelCheckEvent telCheckEvent) {
+        loadDialog.dismiss();
+        if(telCheckEvent.telCheckResponse != null){
+            if(telCheckEvent.telCheckResponse.FIsSuccess){
+                toast.setText("成功");
+                toast.show();
+            }else {
+                toast.setText(telCheckEvent.telCheckResponse.FMsg);
+                toast.show();
+            }
+        }else {
+            toast.setText(telCheckEvent.errorMessage);
+            toast.show();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

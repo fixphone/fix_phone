@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Environment;
@@ -15,25 +16,44 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.zhihu.matisse.Matisse;
+import com.zhihu.matisse.MimeType;
+import com.zhihu.matisse.engine.impl.GlideEngine;
+import com.zhihu.matisse.internal.entity.CaptureStrategy;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CountDownLatch;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import dhcc.cn.com.fix_phone.Account;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.adapter.AddPhotoAdapter;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
+import dhcc.cn.com.fix_phone.bean.UploadResponse;
+import dhcc.cn.com.fix_phone.event.PublishSuccessEvent;
 import dhcc.cn.com.fix_phone.utils.FileUtils;
+import dhcc.cn.com.fix_phone.utils.GsonUtils;
 import dhcc.cn.com.fix_phone.utils.UIUtils;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -44,11 +64,9 @@ import io.reactivex.disposables.Disposable;
 
 public class FeedBackActivity extends BaseActivity{
 
+    private static final String TAG = "FeedBackActivity";
     public static String TAKEPHOTO_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera/";
-    public static final int COMPLETE_RESULT_CODE = 21; //上传完成返回
-    private final static int CAMERA_REQUEST_CODE = 22;//拍照请求code
-    private final static int IMAGE_REQUEST_CODE = 23;//图库
-    private final static int CAMERA_DISPOSE_CODE = 25;//图片处理
+    private static final int REQUEST_CODE_CHOOSE_PHOTO = 100;
 
     @BindView(R.id.title_name)
     TextView title_name;
@@ -61,6 +79,7 @@ public class FeedBackActivity extends BaseActivity{
 
     private AddPhotoAdapter mPhotoAdapter;
     private List<String> mList;
+    private CopyOnWriteArrayList<String> writeList = new CopyOnWriteArrayList<>();
     private String photo_path = "";
 
     @Override
@@ -70,13 +89,7 @@ public class FeedBackActivity extends BaseActivity{
 
     @OnClick(R.id.btn_confirm)
     public void onClick(){
-//        if(mList != null && mList.size() > 1){
-//            showProgressMessage(getString(com.magic.photoviewlib.R.string.uploading));
-//            ImageRequestListener requestListener = new ImageRequest();
-//            requestListener.requestQINIUConfig(userId, token, 1);
-//        }else {
-//            Toast.makeText(getContext(), getString(com.magic.photoviewlib.R.string.please_add_photo), Toast.LENGTH_SHORT).show();
-//        }
+        uploadPhoto();
     }
 
     @OnClick(R.id.title_back)
@@ -124,7 +137,7 @@ public class FeedBackActivity extends BaseActivity{
             @Override
             public void onItemClick(View view, int position) {
                 if (position == mList.size() - 1 && TextUtils.isEmpty(mList.get(position))) {
-                    addSelectDialog();
+                    applyPermission(4 - mPhotoAdapter.getItemCount());
                 } else {
                     //点击此处应该是删除还是编辑？如果是编辑，删除在哪里？该如何设计？
                     deleteDialog(position);
@@ -136,41 +149,6 @@ public class FeedBackActivity extends BaseActivity{
         }
         mList.add("");
         mPhotoAdapter.setList(mList);
-    }
-
-    private void addSelectDialog() {
-        AlertDialog.Builder ab = new AlertDialog.Builder(this);
-        ab.setItems(new String[]{"拍照", "从手机相册里选择"}, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (which == 0) {
-                    applyPermission();
-                } else {
-                    getImageFromStorage();
-                }
-            }
-        });
-        ab.create().show();
-    }
-
-    /**
-     * 拍照
-     */
-    private void photograph() {
-        photo_path = TAKEPHOTO_PATH + getCurrentTime("yyyyMMddHHmmss") + ".jpg";
-        File file = FileUtils.createFile(photo_path);
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
-        intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
-        startActivityForResult(intent, CAMERA_REQUEST_CODE);
-    }
-
-    /**
-     * 图库
-     */
-    private void getImageFromStorage() {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, IMAGE_REQUEST_CODE);
     }
 
     private void deleteDialog(final int position) {
@@ -198,39 +176,15 @@ public class FeedBackActivity extends BaseActivity{
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        String path = "";
-        if (requestCode == CAMERA_REQUEST_CODE) {
-            System.out.println("path: "+photo_path);
-            if(resultCode != RESULT_OK) return;
-            //拍照
-//            imageDispose(photo_path);
-        } else if (requestCode == IMAGE_REQUEST_CODE && data != null) {
-            if(resultCode != RESULT_OK) return;
-            //图库
-            Uri selectedImage = data.getData();
-            photo_path = FileUtils.getPathFromCursor(selectedImage, this);
-//            imageDispose(photo_path);
-        } else if (requestCode == CAMERA_DISPOSE_CODE) {
-            //图片处理
-            if (resultCode == Activity.RESULT_OK && data != null) {
-//                path = data.getStringExtra(LPhotoEditActivity.LPHOTO_EDIT_RESULT_KEY);
+        if (requestCode == REQUEST_CODE_CHOOSE_PHOTO && resultCode == RESULT_OK) {
+            List<String> strings = Matisse.obtainPathResult(data);
+            if (!strings.isEmpty()) {
+                mList.addAll(mList.size() - 1, strings);
+                if(mList.size() == 4){
+                    mList.remove(mList.size() - 1);
+                }
+                mPhotoAdapter.notifyDataSetChanged();
             }
-            if (TextUtils.isEmpty(path)) {
-                path = photo_path;
-            }
-        } else {
-            return;
-        }
-        //更新页面数据
-        if (!TextUtils.isEmpty(photo_path)) {
-            Uri localUri = Uri.parse("file://" + path);
-            Intent localIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, localUri);
-            sendBroadcast(localIntent);
-            mList.add(mList.size() - 1, photo_path);
-            if(mList.size() == 4){
-                mList.remove(mList.size() - 1);
-            }
-            mPhotoAdapter.notifyDataSetChanged();
         }
     }
 
@@ -241,31 +195,7 @@ public class FeedBackActivity extends BaseActivity{
         return format.format(date);
     }
 
-    static public final int REQUEST_CODE_ASK_PERMISSIONS = 101;
-
-    private void applyPermission() {
-        /*if (Build.VERSION.SDK_INT >= 23) {
-            int checkPermission = checkSelfPermission(Manifest.permission.CAMERA);
-            if (checkPermission != PackageManager.PERMISSION_GRANTED) {
-                if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
-                    requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_ASK_PERMISSIONS);
-                } else {
-                    new AlertDialog.Builder(FeedBackActivity.this)
-                            .setMessage("您需要在设置里打开相机权限。")
-                            .setPositiveButton("确认", new DialogInterface.OnClickListener() {
-                                @TargetApi(Build.VERSION_CODES.M)
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_ASK_PERMISSIONS);
-                                }
-                            })
-                            .setNegativeButton("取消", null)
-                            .create().show();
-                }
-                return;
-            }
-        }
-        photograph();*/
+    private void applyPermission(final int number) {
         RxPermissions rxPermissions = new RxPermissions(this);
         rxPermissions.request(Manifest.permission.CAMERA).subscribe(new Observer<Boolean>() {
             @Override
@@ -276,7 +206,7 @@ public class FeedBackActivity extends BaseActivity{
             @Override
             public void onNext(Boolean aBoolean) {
                 if (aBoolean) {
-                    photograph();
+                    selectPhoto(number);
                 } else {
                     Toast.makeText(FeedBackActivity.this, R.string.permission_request_denied, Toast.LENGTH_LONG).show();
                 }
@@ -292,5 +222,103 @@ public class FeedBackActivity extends BaseActivity{
 
             }
         });
+    }
+
+    private void selectPhoto(int number) {
+        Matisse.from(this)
+                .choose(MimeType.ofImage()) // 选择 mime 的类型
+                .countable(true)
+                .capture(true)
+                .captureStrategy(new CaptureStrategy(true, "dhcc.cn.com.fix_phone.FileProvider"))
+                .maxSelectable(number) // 图片选择的最多数量
+                .gridExpectedSize(getResources().getDimensionPixelSize(R.dimen.grid_expected_size))
+                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                .thumbnailScale(0.85f) // 缩略图的比例
+                .imageEngine(new GlideEngine()) // 使用的图片加载引擎
+                .forResult(REQUEST_CODE_CHOOSE_PHOTO); // 设置作为标记的请求码
+
+    }
+
+    private void uploadPhoto() {
+        List<String> photoList = removeNull(mList);
+        if (photoList.isEmpty()) {
+            postUploadMessage();
+        } else {
+            writeList = new CopyOnWriteArrayList<>();
+            final CountDownLatch startSignal = new CountDownLatch(photoList.size());
+            for (int i = 0; i < photoList.size(); i++) {
+                final File file = new File(photoList.get(i));
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            uploadPhotoFile(writeList, file, startSignal);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
+            }
+            // 成功以后
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        startSignal.await();
+                        postUploadMessage();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+        }
+    }
+
+    private void uploadPhotoFile(final CopyOnWriteArrayList<String> list, File file, final CountDownLatch startSignal) throws IOException {
+        Response response = OkHttpUtils
+                .post()
+                .url("http://120.77.202.151:8080/Busi/UploadPicture")
+                .addFile("mFile", file.getName(), file)
+                .addHeader("accessKey", "JHD2017")
+                .addHeader("accessToken", Account.getAccessToken())
+                .build()
+                .execute();
+        Log.d(TAG, "uploadPhotoFile: " + response.body().string());
+        Gson gson = new Gson();
+        UploadResponse uploadResponse = gson.fromJson(response.body().string(), UploadResponse.class);
+        list.add(uploadResponse.FObject.uuid);
+        startSignal.countDown();
+    }
+
+    private void postUploadMessage() {
+        OkHttpUtils
+                .post()
+                .url("http://120.77.202.151:8080/Suggestion/Add")
+                .addParams("content", content_et.getText().toString())
+                .addParams("images", writeList.isEmpty() ? "" : GsonUtils.toJson(writeList))
+                .addHeader("accessKey", "JHD2017")
+                .addHeader("accessToken", Account.getAccessToken())
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Request request, Exception e) {
+                        Log.d(TAG, "onError: " + e.toString());
+                    }
+
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d(TAG, "onResponse: " + response);
+                    }
+                });
+    }
+
+    private List<String> removeNull(List<String> list){
+        List<String> temp = new ArrayList<>();
+        for(String s : list){
+            if(!TextUtils.isEmpty(s)){
+                temp.add(s);
+            }
+        }
+        return temp;
     }
 }

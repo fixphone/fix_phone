@@ -32,6 +32,7 @@ import dhcc.cn.com.fix_phone.event.TelCheckEvent;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Query;
 
 /**
  * 2017/9/17 16
@@ -315,6 +316,34 @@ public class ApiManager {
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 LoginEvent event = new LoginEvent(null);
+                event.errorMessage = t.getMessage();
+                event.isOk = false;
+                EventBus.getDefault().post(event);
+            }
+        });
+    }
+
+    //5.修改密码
+    public void ChangePwd(String phone, String oldPwd, String pwd){
+        mApi.ChangePwd(phone, oldPwd, pwd).enqueue(new Callback<TelCheckResponse>() {
+            @Override
+            public void onResponse(Call<TelCheckResponse> call, Response<TelCheckResponse> response) {
+                if (response.code() == 200) {
+                    TelCheckResponse telCheckResponse = response.body();
+                    if (telCheckResponse != null && telCheckResponse.FIsSuccess) {
+                        EventBus.getDefault().post(new TelCheckEvent(telCheckResponse));
+                    }
+                } else {
+                    TelCheckEvent event = new TelCheckEvent(null);
+                    event.errorMessage = "服务器返回错误";
+                    event.isOk = false;
+                    EventBus.getDefault().post(event);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TelCheckResponse> call, Throwable t) {
+                TelCheckEvent event = new TelCheckEvent(null);
                 event.errorMessage = t.getMessage();
                 event.isOk = false;
                 EventBus.getDefault().post(event);
