@@ -37,6 +37,7 @@ public class AlterDialogFragment extends DialogFragment implements View.OnClickL
 
         mWXApi = WXAPIFactory.createWXAPI(getActivity(), Constants.APP_ID, true);
         mWXApi.registerApp(Constants.APP_ID);
+        initWechatShareData();
 
         View rootView = inflater.inflate(R.layout.fragment_alter_dialog, container, false);
         return rootView;
@@ -56,11 +57,10 @@ public class AlterDialogFragment extends DialogFragment implements View.OnClickL
         int id = view.getId();
         switch (id) {
             case R.id.textView_friend:
-                initWechatShareData();
                 shareWechat();
                 break;
             case R.id.textView_circle:
-
+                shareCircle();
                 break;
         }
     }
@@ -102,6 +102,20 @@ public class AlterDialogFragment extends DialogFragment implements View.OnClickL
         req.transaction = buildTransaction("webpage");
         req.message = msg;
         req.scene = SendMessageToWX.Req.WXSceneSession;
+        mWXApi.sendReq(req);
+    }
+
+    private void shareCircle() {
+        WXWebpageObject webpage = new WXWebpageObject();
+        webpage.webpageUrl = wechatMap.get(Constants.WX_URL);
+        final WXMediaMessage msg = new WXMediaMessage(webpage);
+        msg.title = wechatMap.get(Constants.WX_TITLE);
+        msg.description = wechatMap.get(Constants.WX_CONTENT);
+
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.transaction = buildTransaction("webpage");
+        req.message = msg;
+        req.scene = SendMessageToWX.Req.WXSceneTimeline;
         mWXApi.sendReq(req);
     }
 

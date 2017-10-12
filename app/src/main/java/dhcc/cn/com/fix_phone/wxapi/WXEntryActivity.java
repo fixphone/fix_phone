@@ -13,6 +13,7 @@ import com.tencent.mm.opensdk.modelmsg.WXAppExtendObject;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
+import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.ui.fragment.AlterDialogFragment;
 
 public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHandler {
@@ -103,7 +104,7 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
 
         //如果分享的时候，该已经开启，那么微信开始这个activity时，会调用onNewIntent，所以这里要处理微信的返回结果
         setIntent(intent);
-        AlterDialogFragment.mWXApi.handleIntent(getIntent(), this);
+        AlterDialogFragment.mWXApi.handleIntent(intent, this);
     }
 
     // 微信发送请求到第三方应用时，会回调到该方法
@@ -126,9 +127,9 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
     public void onResp(BaseResp resp) {
         int result = 0;
 
-        Toast.makeText(this, "baseresp.getType = " + resp.getType(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "baseresp.getType = " + resp.getType(), Toast.LENGTH_SHORT).show();
 
-		/*switch (resp.errCode) {
+		switch (resp.errCode) {
 		case BaseResp.ErrCode.ERR_OK:
 			result = R.string.errcode_success;
 			break;
@@ -138,13 +139,13 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
 		case BaseResp.ErrCode.ERR_AUTH_DENIED:
 			result = R.string.errcode_deny;
 			break;
-		case BaseResp.ErrCode.ERR_UNSUPPORT:
-			result = R.string.errcode_unsupported;
-			break;
+		//case BaseResp.ErrCode.ERR_UNSUPPORT:
+		//	result = R.string.errcode_unsupported;
+		//	break;
 		default:
 			result = R.string.errcode_unknown;
 			break;
-		}*/
+		}
 
         Toast.makeText(this, result, Toast.LENGTH_LONG).show();
     }
