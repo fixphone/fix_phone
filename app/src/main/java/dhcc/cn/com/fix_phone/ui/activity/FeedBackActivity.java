@@ -23,8 +23,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
@@ -32,8 +30,6 @@ import com.zhihu.matisse.engine.impl.GlideEngine;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.io.IOException;
@@ -51,15 +47,17 @@ import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.adapter.AddPhotoAdapter;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
 import dhcc.cn.com.fix_phone.bean.UploadResponse;
-import dhcc.cn.com.fix_phone.event.PublishSuccessEvent;
-import dhcc.cn.com.fix_phone.utils.FileUtils;
 import dhcc.cn.com.fix_phone.utils.GsonUtils;
 import dhcc.cn.com.fix_phone.utils.UIUtils;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+import okhttp3.Call;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by songyang on 2017\9\22 0022.
+ *
  */
 
 public class FeedBackActivity extends BaseActivity{
@@ -301,12 +299,12 @@ public class FeedBackActivity extends BaseActivity{
                 .build()
                 .execute(new StringCallback() {
                     @Override
-                    public void onError(Request request, Exception e) {
+                    public void onError(Call call, Exception e, int id) {
                         Log.d(TAG, "onError: " + e.toString());
                     }
 
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(String response, int id) {
                         Log.d(TAG, "onResponse: " + response);
                     }
                 });
