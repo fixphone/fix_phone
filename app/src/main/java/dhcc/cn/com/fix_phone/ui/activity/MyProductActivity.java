@@ -1,6 +1,8 @@
 package dhcc.cn.com.fix_phone.ui.activity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
@@ -11,6 +13,8 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -18,16 +22,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.squareup.okhttp.Request;
+import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.zhihu.matisse.Matisse;
+import com.zhihu.matisse.MimeType;
+import com.zhihu.matisse.engine.impl.GlideEngine;
+import com.zhihu.matisse.internal.entity.CaptureStrategy;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.File;
 import java.util.List;
 
 import butterknife.BindView;
 import dhcc.cn.com.fix_phone.Account;
-import dhcc.cn.com.fix_phone.MyApplication;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.adapter.ImageProductAdapter;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
@@ -36,6 +48,8 @@ import dhcc.cn.com.fix_phone.event.ImageResponeEvent;
 import dhcc.cn.com.fix_phone.event.ProductImageEvent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
 import dhcc.cn.com.fix_phone.ui.fragment.CommonDeleteFragment;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * 2017/10/1 16
@@ -60,6 +74,8 @@ public class MyProductActivity extends BaseActivity implements CommonDeleteFragm
     private ImageProductAdapter mImageAdapter;
     private List<String>        mStrings;
     private int                 deletePosition;
+    private View                mFootView;
+    private static final String TAG = "MyProductActivity";
 
     @Override
     public int getLayoutId() {
@@ -100,6 +116,8 @@ public class MyProductActivity extends BaseActivity implements CommonDeleteFragm
             }
         });
         mImageAdapter = new ImageProductAdapter(R.layout.item_image_check_myproduct, null);
+        mFootView = LayoutInflater.from(this).inflate(R.layout.item_image, mRecyclerView, false);
+        mImageAdapter.addFooterView(mFootView);
         mRecyclerView.setAdapter(mImageAdapter);
     }
 
@@ -158,6 +176,42 @@ public class MyProductActivity extends BaseActivity implements CommonDeleteFragm
                 }
             }
         });
+
+        mFootView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RxPermissions rxPermissions = new RxPermissions(MyProductActivity.this);
+                rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(new Observer<Boolean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Boolean aBoolean) {
+                        if (aBoolean) {
+                            if (mType == 1) {
+                                selectPhoto(1);
+                            } else {
+                                selectPhoto(5);
+                            }
+                        } else {
+                            Toast.makeText(MyProductActivity.this, R.string.permission_request_denied, Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+            }
+        });
     }
 
     private void createDialog(String title, String desc) {
@@ -197,5 +251,62 @@ public class MyProductActivity extends BaseActivity implements CommonDeleteFragm
         } else {
             ApiManager.Instance().DeleteProductIcon(mImageAdapter.getItem(deletePosition));
         }
+    }
+
+    private static final int REQUEST_CODE_CHOOSE_PHOTO = 100;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_CHOOSE_PHOTO && resultCode == RESULT_OK) {
+            List<String> strings = Matisse.obtainPathResult(data);
+            if (mType == 1) { // 上传广告
+                if (strings != null && !strings.isEmpty()) {
+                    File file = new File(strings.get(0));
+                    uploadPhotoFile(file,"/Adver/AddStoreAdver");
+                }
+            } else {
+                if (strings != null && !strings.isEmpty()) {
+                    for (String string : strings) {
+                        File file = new File(string);
+                        uploadPhotoFile(file,"/Product/UploadIcon");
+                    }
+                }
+            }
+        }
+    }
+
+    private void selectPhoto(int number) {
+        Matisse.from(this)
+                .choose(MimeType.ofImage()) // 选择 mime 的类型
+                .countable(true)
+                .capture(true)
+                .captureStrategy(new CaptureStrategy(true, "dhcc.cn.com.fix_phone.FileProvider"))
+                .maxSelectable(number) // 图片选择的最多数量
+                .gridExpectedSize(getResources().getDimensionPixelSize(R.dimen.grid_expected_size))
+                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                .thumbnailScale(0.85f) // 缩略图的比例
+                .imageEngine(new GlideEngine()) // 使用的图片加载引擎
+                .forResult(REQUEST_CODE_CHOOSE_PHOTO); // 设置作为标记的请求码
+    }
+
+    private void uploadPhotoFile(File file, String path) {
+        OkHttpUtils.post()
+                .url("http://120.77.202.151:8080" + path)
+                .addFile("mFile", file.getName(), file)
+                .addHeader("accessKey", "JHD2017")
+                .addHeader("accessToken", Account.getAccessToken())
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Request request, Exception e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d(TAG, "onResponse: "+ response);
+                    }
+                });
     }
 }

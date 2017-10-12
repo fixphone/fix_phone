@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import dhcc.cn.com.fix_phone.Account;
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
@@ -36,9 +35,9 @@ public abstract class BaseActivity<T extends BasePresenter> extends SwipeBackAct
     @Override
     protected void onResume() {
         super.onResume();
-        if(!Account.isLogin()){
+/*        if(!Account.isLogin()){
             finish();
-        }
+        }*/
     }
 
     protected void init() {

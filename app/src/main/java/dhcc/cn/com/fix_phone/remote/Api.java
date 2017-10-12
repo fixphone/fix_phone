@@ -140,7 +140,7 @@ public interface Api {
                                       @Query("userID") String userID);
 
     //20.上传产品图片 --头像的二进制数据
-    @POST("/ Product/UploadIcon")
+    @POST("/Product/UploadIcon")
     Call<String> UploadIcon();
 
     //21.删除产品图片

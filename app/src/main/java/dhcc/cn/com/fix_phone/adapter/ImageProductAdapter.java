@@ -2,6 +2,7 @@ package dhcc.cn.com.fix_phone.adapter;
 
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -31,5 +32,9 @@ public class ImageProductAdapter extends BaseQuickAdapter<String, BaseViewHolder
         delete.setVisibility(View.VISIBLE);
 
         helper.addOnClickListener(R.id.imageView_delete);
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
     }
 }

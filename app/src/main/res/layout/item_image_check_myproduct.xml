@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/imageView_icon"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:scaleType="fitXY"
         android:src="@drawable/add_camera"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,8 +21,6 @@
         android:id="@+id/imageView_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="3dp"
-        android:layout_marginTop="3dp"
         android:padding="5dp"
         android:visibility="gone"
         app:layout_constraintRight_toRightOf="@+id/imageView_icon"

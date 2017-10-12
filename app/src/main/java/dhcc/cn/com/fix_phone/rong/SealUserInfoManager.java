@@ -59,21 +59,21 @@ import io.rong.imlib.model.UserInfo;
  */
 public class SealUserInfoManager implements OnDataListener {
 
-    private final static String TAG = "SealUserInfoManager";
-    private static final int GET_TOKEN = 800;
+    private final static String TAG       = "SealUserInfoManager";
+    private static final int    GET_TOKEN = 800;
 
     /**
      * 用户信息全部未同步
      */
-    private static final int NONE = 0;//00000
+    private static final int NONE             = 0;//00000
     /**
      * 好友信息同步成功
      */
-    private static final int FRIEND = 1;//00001
+    private static final int FRIEND           = 1;//00001
     /**
      * 群组信息同步成功
      */
-    private static final int GROUPS = 2;//00010
+    private static final int GROUPS           = 2;//00010
     /**
      * 群成员信息部分同步成功,n个群组n次访问网络,存在部分同步的情况
      */
@@ -81,32 +81,32 @@ public class SealUserInfoManager implements OnDataListener {
     /**
      * 群成员信息同步成功
      */
-    private static final int GROUPMEMBERS = 8;//01000
+    private static final int GROUPMEMBERS     = 8;//01000
     /**
      * 黑名单信息同步成功
      */
-    private static final int BLACKLIST = 16;//10000
+    private static final int BLACKLIST        = 16;//10000
     /**
      * 用户信息全部同步成功
      */
-    private static final int ALL = 27;//11011
+    private static final int ALL              = 27;//11011
 
     private static SealUserInfoManager sInstance;
-    private final Context mContext;
-    private final AsyncTaskManager mAsyncTaskManager;
-    private final SealAction action;
-    private DBManager mDBManager;
-    private Handler mWorkHandler;
-    private HandlerThread mWorkThread;
-    static Handler mHandler;
-    private SharedPreferences sp;
-    private List<Groups> mGroupsList;//同步群组成员信息时需要这个数据
-    private int mGetAllUserInfoState;
+    private final  Context             mContext;
+    private final  AsyncTaskManager    mAsyncTaskManager;
+    private final  SealAction          action;
+    private        DBManager           mDBManager;
+    private        Handler             mWorkHandler;
+    private        HandlerThread       mWorkThread;
+    static         Handler             mHandler;
+    private        SharedPreferences   sp;
+    private        List<Groups>        mGroupsList;//同步群组成员信息时需要这个数据
+    private        int                 mGetAllUserInfoState;
     private boolean doingGetAllUserInfo = false;
-    private FriendDao mFriendDao;
-    private GroupsDao mGroupsDao;
-    private GroupMemberDao mGroupMemberDao;
-    private BlackListDao mBlackListDao;
+    private FriendDao                       mFriendDao;
+    private GroupsDao                       mGroupsDao;
+    private GroupMemberDao                  mGroupMemberDao;
+    private BlackListDao                    mBlackListDao;
     private LinkedHashMap<String, UserInfo> mUserInfoCache;
 
     public static SealUserInfoManager getInstance() {
@@ -952,31 +952,33 @@ public class SealUserInfoManager implements OnDataListener {
      * @param callback 获取好友信息的回调
      */
     public void getFriends(final ResultCallback<List<Friend>> callback) {
-        mWorkHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                List<Friend> friendsList;
-                if (!doingGetAllUserInfo && !hasGetFriends()) {
-                    if (!isNetworkConnected()) {
-                        onCallBackFail(callback);
-                        return;
+        if (mWorkHandler != null) {
+            mWorkHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    List<Friend> friendsList;
+                    if (!doingGetAllUserInfo && !hasGetFriends()) {
+                        if (!isNetworkConnected()) {
+                            onCallBackFail(callback);
+                            return;
+                        }
+                        try {
+                            friendsList = pullFriends();
+                            sp.edit().putInt("getAllUserInfoState", mGetAllUserInfoState).apply();
+                        } catch (HttpException e) {
+                            onCallBackFail(callback);
+                            NLog.d(TAG, "getFriends occurs HttpException e=" + e.toString() + "mGetAllUserInfoState=" + mGetAllUserInfoState);
+                            return;
+                        }
+                    } else {
+                        friendsList = getFriends();
                     }
-                    try {
-                        friendsList = pullFriends();
-                        sp.edit().putInt("getAllUserInfoState", mGetAllUserInfoState).apply();
-                    } catch (HttpException e) {
-                        onCallBackFail(callback);
-                        NLog.d(TAG, "getFriends occurs HttpException e=" + e.toString() + "mGetAllUserInfoState=" + mGetAllUserInfoState);
-                        return;
+                    if (callback != null) {
+                        callback.onCallback(friendsList);
                     }
-                } else {
-                    friendsList = getFriends();
                 }
-                if (callback != null) {
-                    callback.onCallback(friendsList);
-                }
-            }
-        });
+            });
+        }
     }
 
     private List<Friend> syncGetFriends() {

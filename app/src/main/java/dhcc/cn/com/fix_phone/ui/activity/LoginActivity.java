@@ -1,12 +1,9 @@
 package dhcc.cn.com.fix_phone.ui.activity;
 
-import android.app.ActivityManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Process;
-import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
@@ -26,7 +23,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dhcc.cn.com.fix_phone.Account;
-import dhcc.cn.com.fix_phone.MyApplication;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.base.RongBaseActivity;
 import dhcc.cn.com.fix_phone.event.LoginEvent;
@@ -165,14 +161,14 @@ public class LoginActivity extends RongBaseActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void loginResult(LoginEvent loginEvent){
+    public void loginResult(LoginEvent loginEvent) {
         loadDialog.dismiss();
-        if(loginEvent.loginResponse != null && loginEvent.loginResponse.FObject != null){
+        if (loginEvent.loginResponse != null && loginEvent.loginResponse.FObject != null) {
             Account.setUserId(loginEvent.loginResponse.FObject.userID);
             Account.setLoginInfo(loginEvent.loginResponse.FObject);
             Account.setLogin(true);
             ApiManager.Instance().getRongToken(loginEvent.loginResponse.FObject.accessToken);
-        }else {
+        } else {
             toast.setText(loginEvent.errorMessage);
             toast.show();
         }

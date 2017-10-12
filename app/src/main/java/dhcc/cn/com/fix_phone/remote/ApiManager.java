@@ -3,13 +3,13 @@ package dhcc.cn.com.fix_phone.remote;
 import org.greenrobot.eventbus.EventBus;
 
 import dhcc.cn.com.fix_phone.Account;
-import dhcc.cn.com.fix_phone.MyApplication;
 import dhcc.cn.com.fix_phone.bean.BusinessResponse;
 import dhcc.cn.com.fix_phone.bean.CirCleADResponse;
 import dhcc.cn.com.fix_phone.bean.CircleBusiness;
 import dhcc.cn.com.fix_phone.bean.CircleDetailAd;
 import dhcc.cn.com.fix_phone.bean.CollectResponse;
 import dhcc.cn.com.fix_phone.bean.FavoResponse;
+import dhcc.cn.com.fix_phone.bean.ImageResponse;
 import dhcc.cn.com.fix_phone.bean.LoginInfo;
 import dhcc.cn.com.fix_phone.bean.LoginResponse;
 import dhcc.cn.com.fix_phone.bean.ProductImage;
@@ -23,13 +23,12 @@ import dhcc.cn.com.fix_phone.event.CircleDetailAdEvent;
 import dhcc.cn.com.fix_phone.event.CollectEvent;
 import dhcc.cn.com.fix_phone.event.FavoResponseEvent;
 import dhcc.cn.com.fix_phone.event.FindPswEvent;
+import dhcc.cn.com.fix_phone.event.ImageResponeEvent;
 import dhcc.cn.com.fix_phone.event.LoginEvent;
 import dhcc.cn.com.fix_phone.event.ProductImageEvent;
 import dhcc.cn.com.fix_phone.event.RegisterEvent;
 import dhcc.cn.com.fix_phone.event.RongTokenEvent;
 import dhcc.cn.com.fix_phone.event.TelCheckEvent;
-import dhcc.cn.com.fix_phone.bean.ImageResponse;
-import dhcc.cn.com.fix_phone.event.ImageResponeEvent;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,7 +40,11 @@ public class ApiManager {
     private Api mApi;
 
     private static LoginInfo getLoginInfo() {
-        return Account.getLoginInfo();
+        LoginInfo loginInfo = Account.getLoginInfo();
+        if (loginInfo == null) {
+            loginInfo = new LoginInfo();
+        }
+        return loginInfo;
     }
 
     private ApiManager() {
