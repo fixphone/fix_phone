@@ -1,5 +1,6 @@
 package dhcc.cn.com.fix_phone.ui.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+<<<<<<< e3c638d2b5a4b7b81108747a7fedda1828a12a4a
 import com.squareup.okhttp.Request;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
@@ -21,6 +23,10 @@ import com.zhihu.matisse.internal.entity.CaptureStrategy;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.io.File;
+=======
+import com.tbruyelle.rxpermissions2.RxPermissions;
+
+>>>>>>> commit
 import java.io.IOException;
 
 import butterknife.BindView;
@@ -34,8 +40,13 @@ import dhcc.cn.com.fix_phone.remote.ApiManager;
 import dhcc.cn.com.fix_phone.ui.widget.LoadDialog;
 import dhcc.cn.com.fix_phone.utils.GsonUtils;
 import dhcc.cn.com.fix_phone.utils.ImageActions;
+<<<<<<< e3c638d2b5a4b7b81108747a7fedda1828a12a4a
 import dhcc.cn.com.fix_phone.utils.PhotoUtils;
 import dhcc.cn.com.fix_phone.utils.UploadFileUtil;
+=======
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+>>>>>>> commit
 
 /**
  * Created by Administrator on 2017/9/21 0021.
@@ -84,30 +95,89 @@ public class SelectHeaderActivity extends BaseActivity{
 
     @OnClick({R.id.title_back, R.id.photo_take_btn, R.id.photo_album_btn})
     public void onClick(View view){
+        RxPermissions rxPermissions = new RxPermissions(this);
         switch (view.getId()){
             case R.id.title_back:
                 finish();
                 break;
             case R.id.photo_take_btn:
-                if (!ImageActions.isImageCaptureAvailable(this)) {
-                    Toast.makeText(this, "您的手机不主持拍照功能", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                try {
-                    resultIntent = ImageActions.actionCapture(this);
-                } catch (IOException e) {
-                    Toast.makeText(this, "存储空间不可用，无法使用拍照功能", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                startActivityForResult(resultIntent, CAMERA_REQUEST_CODE);
+                rxPermissions.request(Manifest.permission.CAMERA).subscribe(new Observer<Boolean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Boolean aBoolean) {
+                        if (aBoolean) {
+                            camera();
+                        } else {
+                            Toast.makeText(SelectHeaderActivity.this, R.string.permission_request_denied, Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
                 break;
             case R.id.photo_album_btn:
-                Intent intent = ImageActions.actionPickImage();
-                startActivityForResult(intent, GALLERY_REQUEST_CODE);
+                rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(new Observer<Boolean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Boolean aBoolean) {
+                        if (aBoolean) {
+                            getPhoto();
+                        } else {
+                            Toast.makeText(SelectHeaderActivity.this, R.string.permission_request_denied, Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
                 break;
             default:
                 break;
         }
+    }
+
+    private void getPhoto() {
+        Intent intent = ImageActions.actionPickImage();
+        startActivityForResult(intent, GALLERY_REQUEST_CODE);
+    }
+
+    private void camera() {
+        if (!ImageActions.isImageCaptureAvailable(this)) {
+            Toast.makeText(this, "您的手机不主持拍照功能", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        try {
+            resultIntent = ImageActions.actionCapture(this);
+        } catch (IOException e) {
+            Toast.makeText(this, "存储空间不可用，无法使用拍照功能", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        startActivityForResult(resultIntent, CAMERA_REQUEST_CODE);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
