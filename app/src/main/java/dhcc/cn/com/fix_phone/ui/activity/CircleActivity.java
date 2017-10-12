@@ -24,7 +24,6 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.squareup.okhttp.Request;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.FileCallBack;
 
@@ -42,6 +41,7 @@ import dhcc.cn.com.fix_phone.mvp.contract.CircleContract;
 import dhcc.cn.com.fix_phone.mvp.presenter.CirclePresenter;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
 import dhcc.cn.com.fix_phone.ui.fragment.AlterDialogFragment;
+import okhttp3.Call;
 
 import static dhcc.cn.com.fix_phone.ui.activity.FeedBackActivity.getCurrentTime;
 
@@ -363,17 +363,12 @@ public class CircleActivity extends YWActivity implements CircleContract.View {
                                 OkHttpUtils.get().url(fFileName).build().
                                         execute(new FileCallBack(storePath, getCurrentTime("yyyyMMddHHmmss") + ".mp4") {
                                             @Override
-                                            public void inProgress(float progress) {
+                                            public void onError(Call call, Exception e, int id) {
 
                                             }
 
                                             @Override
-                                            public void onError(Request request, Exception e) {
-
-                                            }
-
-                                            @Override
-                                            public void onResponse(File file) {
+                                            public void onResponse(File response, int id) {
                                                 Toast.makeText(CircleActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
                                             }
                                         });

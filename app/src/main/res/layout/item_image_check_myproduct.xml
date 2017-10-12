@@ -10,7 +10,6 @@
         android:id="@+id/imageView_icon"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:scaleType="fitXY"
         android:src="@drawable/add_camera"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

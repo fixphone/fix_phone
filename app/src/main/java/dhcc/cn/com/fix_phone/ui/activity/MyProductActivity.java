@@ -13,6 +13,7 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.squareup.okhttp.Request;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
@@ -36,6 +36,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 import butterknife.BindView;
 import dhcc.cn.com.fix_phone.Account;
@@ -47,9 +48,11 @@ import dhcc.cn.com.fix_phone.event.ImageResponeEvent;
 import dhcc.cn.com.fix_phone.event.ProductImageEvent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
 import dhcc.cn.com.fix_phone.ui.fragment.CommonDeleteFragment;
+import dhcc.cn.com.fix_phone.ui.widget.LoadDialog;
 import dhcc.cn.com.fix_phone.utils.UploadFileUtil;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+import okhttp3.Call;
 
 /**
  * 2017/10/1 16
@@ -76,6 +79,7 @@ public class MyProductActivity extends BaseActivity implements CommonDeleteFragm
     private int                 deletePosition;
     private View                mFootView;
     private static final String TAG = "MyProductActivity";
+    private LoadDialog loadDialog;
 
     @Override
     public int getLayoutId() {
@@ -97,6 +101,7 @@ public class MyProductActivity extends BaseActivity implements CommonDeleteFragm
 
     @Override
     protected void initView() {
+        loadDialog = new LoadDialog(this, false, "");
         mBottomLayout.setVisibility(View.GONE);
         mCommIcon.setVisibility(View.GONE);
         if (mType == 1) {
@@ -262,35 +267,60 @@ public class MyProductActivity extends BaseActivity implements CommonDeleteFragm
             List<String> strings = Matisse.obtainPathResult(data);
             if (mType == 1) { // 上传广告
                 if (strings != null && !strings.isEmpty()) {
+                    loadDialog.show();
                     File file = new File(strings.get(0));
                     UploadFileUtil.uploadPhotoFile(file, "/Adver/AddStoreAdver", new StringCallback() {
                         @Override
-                        public void onError(Request request, Exception e) {
-
+                        public void onError(Call call, Exception e, int id) {
+                            if (loadDialog != null)
+                                loadDialog.dismiss();
+                            Log.d(TAG, "onError: " + e);
                         }
 
                         @Override
-                        public void onResponse(String response) {
-
+                        public void onResponse(String response, int id) {
+                            if (loadDialog != null)
+                                loadDialog.dismiss();
+                            try {
+                                initData();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                     });
                 }
             } else {
                 if (strings != null && !strings.isEmpty()) {
+                    loadDialog.show();
+                    final CountDownLatch startSignal = new CountDownLatch(strings.size());
                     for (String string : strings) {
                         File file = new File(string);
                         UploadFileUtil.uploadPhotoFile(file, "/Product/UploadIcon", new StringCallback() {
                             @Override
-                            public void onError(Request request, Exception e) {
-
+                            public void onError(Call request, Exception e, int id) {
+                                startSignal.countDown();
                             }
 
                             @Override
-                            public void onResponse(String response) {
-
+                            public void onResponse(String response, int id) {
+                                startSignal.countDown();
                             }
                         });
                     }
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                startSignal.await();
+                                if (loadDialog != null) {
+                                    loadDialog.dismiss();
+                                }
+                                initData();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }).start();
                 }
             }
         }

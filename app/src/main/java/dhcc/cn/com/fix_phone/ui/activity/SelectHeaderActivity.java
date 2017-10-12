@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
@@ -14,19 +13,10 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-<<<<<<< e3c638d2b5a4b7b81108747a7fedda1828a12a4a
-import com.squareup.okhttp.Request;
-import com.zhihu.matisse.Matisse;
-import com.zhihu.matisse.MimeType;
-import com.zhihu.matisse.engine.impl.GlideEngine;
-import com.zhihu.matisse.internal.entity.CaptureStrategy;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.io.File;
-=======
-import com.tbruyelle.rxpermissions2.RxPermissions;
-
->>>>>>> commit
 import java.io.IOException;
 
 import butterknife.BindView;
@@ -40,36 +30,31 @@ import dhcc.cn.com.fix_phone.remote.ApiManager;
 import dhcc.cn.com.fix_phone.ui.widget.LoadDialog;
 import dhcc.cn.com.fix_phone.utils.GsonUtils;
 import dhcc.cn.com.fix_phone.utils.ImageActions;
-<<<<<<< e3c638d2b5a4b7b81108747a7fedda1828a12a4a
-import dhcc.cn.com.fix_phone.utils.PhotoUtils;
 import dhcc.cn.com.fix_phone.utils.UploadFileUtil;
-=======
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
->>>>>>> commit
 
 /**
  * Created by Administrator on 2017/9/21 0021.
- *
  */
 
-public class SelectHeaderActivity extends BaseActivity{
+public class SelectHeaderActivity extends BaseActivity {
 
-    private static final String TAG = "SelectHeaderActivity";
-    private static final int REQUEST_CODE_CHOOSE_PHOTO = 0x0100;
-    public static final int RESULT_CODE = 0x0020;
-    private static final int GALLERY_REQUEST_CODE = 0;
-    private static final int CAMERA_REQUEST_CODE = 1;
-    private static final int CROP_REQUEST_CODE = 2;
+    private static final String TAG                       = "SelectHeaderActivity";
+    private static final int    REQUEST_CODE_CHOOSE_PHOTO = 0x0100;
+    public static final  int    RESULT_CODE               = 0x0020;
+    private static final int    GALLERY_REQUEST_CODE      = 0;
+    private static final int    CAMERA_REQUEST_CODE       = 1;
+    private static final int    CROP_REQUEST_CODE         = 2;
 
     @BindView(R.id.title_name)
-    TextView title_name;
+    TextView  title_name;
     @BindView(R.id.header_icon)
     ImageView header_icon;
 
-    private Intent resultIntent;
+    private Intent           resultIntent;
     private BusinessResponse mResponse;
-    private LoadDialog loadDialog;
+    private LoadDialog       loadDialog;
 
     @Override
     public int getLayoutId() {
@@ -87,16 +72,16 @@ public class SelectHeaderActivity extends BaseActivity{
     protected void initData() {
         super.initData();
         Intent intent = getIntent();
-        if(intent != null && intent.hasExtra("Action")){
-            mResponse = (BusinessResponse)getIntent().getSerializableExtra("Action");
+        if (intent != null && intent.hasExtra("Action")) {
+            mResponse = (BusinessResponse) getIntent().getSerializableExtra("Action");
             Glide.with(this).load(mResponse.FObject.headUrl).diskCacheStrategy(DiskCacheStrategy.ALL).into(header_icon);
         }
     }
 
     @OnClick({R.id.title_back, R.id.photo_take_btn, R.id.photo_album_btn})
-    public void onClick(View view){
+    public void onClick(View view) {
         RxPermissions rxPermissions = new RxPermissions(this);
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.title_back:
                 finish();
                 break;
@@ -205,19 +190,21 @@ public class SelectHeaderActivity extends BaseActivity{
         }
     }
 
-    public void upLoadingHeadPic(String path){
+    public void upLoadingHeadPic(String path) {
         loadDialog.show();
         File file = new File(path);
         UploadFileUtil.uploadPhotoFile(file, "/Account/UploadIcon", new StringCallback() {
             @Override
-            public void onError(Request request, Exception e) {
-                if(loadDialog != null) loadDialog.dismiss();
+            public void onError(okhttp3.Call call, Exception e, int id) {
+                if (loadDialog != null)
+                    loadDialog.dismiss();
                 Log.d(TAG, "onError: " + e);
             }
 
             @Override
-            public void onResponse(String response) {
-                if(loadDialog != null) loadDialog.dismiss();
+            public void onResponse(String response, int id) {
+                if (loadDialog != null)
+                    loadDialog.dismiss();
                 try {
                     UploadIconResponse resp = GsonUtils.getSingleBean(response, UploadIconResponse.class);
                     Glide.with(SelectHeaderActivity.this).load(resp.FObject.fullUrl).diskCacheStrategy(DiskCacheStrategy.ALL).into(header_icon);

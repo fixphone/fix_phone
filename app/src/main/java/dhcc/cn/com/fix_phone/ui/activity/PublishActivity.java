@@ -25,8 +25,6 @@ import com.bumptech.glide.Glide;
 import com.github.rubensousa.bottomsheetbuilder.BottomSheetBuilder;
 import com.github.rubensousa.bottomsheetbuilder.adapter.BottomSheetItemClickListener;
 import com.google.gson.Gson;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
@@ -47,7 +45,6 @@ import java.util.concurrent.CountDownLatch;
 import butterknife.BindView;
 import butterknife.OnClick;
 import dhcc.cn.com.fix_phone.Account;
-import dhcc.cn.com.fix_phone.MyApplication;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.adapter.SelectImageAdapter;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
@@ -105,7 +102,7 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
     @Override
     protected void init() {
         Intent intent = getIntent();
-        mType = intent.getIntExtra("type", 0);
+        mType = intent.getIntExtra("type", 1);
         mMap = CircleDefaultData.getCirCleDefailtMap();
         mAdapter = new SelectImageAdapter(this, null);
     }
@@ -182,7 +179,7 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
             postUploadMessage();
         } else {
             mList = new CopyOnWriteArrayList<>();
-            Log.d(TAG, "uploadVideo: "+ mFileVideo.length());
+            Log.d(TAG, "uploadVideo: " + mFileVideo.length());
             final CountDownLatch startSignal = new CountDownLatch(1);
             new Thread(new Runnable() {
                 @Override
@@ -218,16 +215,7 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
             final CountDownLatch startSignal = new CountDownLatch(mAdapter.getData().size());
             for (int i = 0; i < mAdapter.getData().size(); i++) {
                 final File file = new File(mAdapter.getData().get(i));
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            uploadPhotoFile(mList, file, startSignal);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }).start();
+                uploadPhotoFile(mList, file, startSignal);
             }
             // 成功以后
             new Thread(new Runnable() {
@@ -245,8 +233,8 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
     }
 
     private void postUploadMessage() {
-        OkHttpUtils
-                .post()
+        Log.d(TAG, "postUploadMessage: "+ mList.toString());
+        OkHttpUtils.post()
                 .url("http://120.77.202.151:8080/Busi/Publish")
                 .addParams("type", mSelectType)
                 .addParams("content", getEditText())
@@ -256,13 +244,14 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
                 .addHeader("accessToken", Account.getAccessToken())
                 .build()
                 .execute(new StringCallback() {
+
                     @Override
-                    public void onError(Request request, Exception e) {
+                    public void onError(okhttp3.Call call, Exception e, int id) {
                         Log.d(TAG, "onError: " + e.toString());
                     }
 
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(String response, int id) {
                         Log.d(TAG, "onResponse: " + response);
                         EventBus.getDefault().post(new PublishSuccessEvent(true));
                         finish();
@@ -270,36 +259,56 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
                 });
     }
 
-    private void uploadPhotoFile(final CopyOnWriteArrayList<String> list, File file, final CountDownLatch startSignal) throws IOException {
-        Response response = OkHttpUtils
-                .post()
+    private void uploadPhotoFile(final CopyOnWriteArrayList<String> list, File file, final CountDownLatch startSignal) {
+        OkHttpUtils.post()
                 .url("http://120.77.202.151:8080/Busi/UploadPicture")
                 .addFile("mFile", file.getName(), file)
                 .addHeader("accessKey", "JHD2017")
                 .addHeader("accessToken", Account.getAccessToken())
                 .build()
-                .execute();
-        Log.d(TAG, "uploadVideoFile: " + response.body().string());
-        Gson gson = new Gson();
-        UploadResponse uploadResponse = gson.fromJson(response.body().string(), UploadResponse.class);
-        list.add(uploadResponse.FObject.uuid);
-        startSignal.countDown();
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(okhttp3.Call call, Exception e, int id) {
+                        Log.d(TAG, "onError: " + e.toString());
+                        startSignal.countDown();
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        Log.d(TAG, "uploadPhotoFile: " + response);
+                        Gson gson = new Gson();
+                        UploadResponse uploadResponse = gson.fromJson(response, UploadResponse.class);
+                        list.add(uploadResponse.FObject.uuid);
+                        startSignal.countDown();
+                    }
+                });
+
     }
 
     private void uploadVideoFile(final CopyOnWriteArrayList<String> list, File file, final CountDownLatch startSignal) throws IOException {
-        Response response = OkHttpUtils
-                .post()
+        OkHttpUtils.post()
                 .url("http://120.77.202.151:8080/Busi/UploadVideo")
                 .addFile("mFile", file.getName(), file)
                 .addHeader("accessKey", "JHD2017")
                 .addHeader("accessToken", Account.getAccessToken())
                 .build()
-                .execute();
-        Log.d(TAG, "uploadVideoFile: " + response.body().string());
-        Gson gson = new Gson();
-        UploadResponse uploadResponse = gson.fromJson(response.body().string(), UploadResponse.class);
-        list.add(uploadResponse.FObject.uuid);
-        startSignal.countDown();
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(okhttp3.Call call, Exception e, int id) {
+                        Log.d(TAG, "onError: " + e.toString());
+                        startSignal.countDown();
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        Log.d(TAG, "onResponse: "+ response);
+                        Gson gson = new Gson();
+                        UploadResponse uploadResponse = gson.fromJson(response, UploadResponse.class);
+                        list.add(uploadResponse.FObject.uuid);
+                        startSignal.countDown();
+                    }
+                });
+
     }
 
     private void applyPermission() {
