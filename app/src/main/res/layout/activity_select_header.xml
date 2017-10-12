@@ -10,13 +10,19 @@
         android:layout_height="@dimen/public_50dp"
         layout="@layout/layout_title"/>
 
-    <ImageView
-        android:id="@+id/header_icon"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:layout_weight="1"
-        android:src="@drawable/contact_more_hover"
-        android:scaleType="fitXY"/>
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/header_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/user_default_icon"
+            android:layout_centerInParent="true"
+            android:scaleType="fitXY"/>
+    </RelativeLayout>
 
     <Button
         android:id="@+id/photo_take_btn"

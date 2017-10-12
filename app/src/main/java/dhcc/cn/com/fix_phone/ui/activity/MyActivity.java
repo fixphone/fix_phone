@@ -28,6 +28,7 @@ public class MyActivity extends BaseActivity {
     @BindView(R.id.title_name)
     TextView  title_name;
 
+    private static final int SELECT_ICON_CODE = 0x0015;
     private BusinessResponse mResponse;
 
     @Override
@@ -57,7 +58,7 @@ public class MyActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.my_header_icon:
-                startActivity(new Intent(this, SelectHeaderActivity.class).putExtra("Action", mResponse));
+                startActivityForResult(new Intent(this, SelectHeaderActivity.class).putExtra("Action", mResponse),SELECT_ICON_CODE);
                 break;
             case R.id.my_phone_num:
                 break;
@@ -82,5 +83,16 @@ public class MyActivity extends BaseActivity {
         Intent intent = new Intent(this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == SELECT_ICON_CODE){
+            if(resultCode == SelectHeaderActivity.RESULT_CODE){
+                mResponse = (BusinessResponse)data.getSerializableExtra("result");
+                Glide.with(this).load(mResponse.FObject.headUrl).diskCacheStrategy(DiskCacheStrategy.ALL).into(my_icon);
+            }
+        }
     }
 }

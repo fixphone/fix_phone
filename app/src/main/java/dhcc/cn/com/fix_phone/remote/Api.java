@@ -210,7 +210,7 @@ public interface Api {
 
     //35.提交投诉建议
     @POST("/Suggestion/Add")
-    Call<String> AddSuggestion();
+    Call<String> AddSuggestion(@Header("accessToken") String accessToken, @Header("uuid") String... uuid);
 
     //36.获取好友列表
     @POST("/Friend/GetList")

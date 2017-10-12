@@ -3,7 +3,9 @@ package dhcc.cn.com.fix_phone.ui.activity;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,15 +13,29 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.squareup.okhttp.Request;
+import com.zhihu.matisse.Matisse;
+import com.zhihu.matisse.MimeType;
+import com.zhihu.matisse.engine.impl.GlideEngine;
+import com.zhihu.matisse.internal.entity.CaptureStrategy;
+import com.zhy.http.okhttp.callback.StringCallback;
 
+import java.io.File;
 import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import dhcc.cn.com.fix_phone.Account;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
 import dhcc.cn.com.fix_phone.bean.BusinessResponse;
+import dhcc.cn.com.fix_phone.bean.UploadIconResponse;
+import dhcc.cn.com.fix_phone.remote.ApiManager;
+import dhcc.cn.com.fix_phone.ui.widget.LoadDialog;
+import dhcc.cn.com.fix_phone.utils.GsonUtils;
 import dhcc.cn.com.fix_phone.utils.ImageActions;
+import dhcc.cn.com.fix_phone.utils.PhotoUtils;
+import dhcc.cn.com.fix_phone.utils.UploadFileUtil;
 
 /**
  * Created by Administrator on 2017/9/21 0021.
@@ -28,6 +44,9 @@ import dhcc.cn.com.fix_phone.utils.ImageActions;
 
 public class SelectHeaderActivity extends BaseActivity{
 
+    private static final String TAG = "SelectHeaderActivity";
+    private static final int REQUEST_CODE_CHOOSE_PHOTO = 0x0100;
+    public static final int RESULT_CODE = 0x0020;
     private static final int GALLERY_REQUEST_CODE = 0;
     private static final int CAMERA_REQUEST_CODE = 1;
     private static final int CROP_REQUEST_CODE = 2;
@@ -39,6 +58,7 @@ public class SelectHeaderActivity extends BaseActivity{
 
     private Intent resultIntent;
     private BusinessResponse mResponse;
+    private LoadDialog loadDialog;
 
     @Override
     public int getLayoutId() {
@@ -49,6 +69,7 @@ public class SelectHeaderActivity extends BaseActivity{
     protected void initEvent() {
         super.initEvent();
         title_name.setText("修改店铺头像");
+        loadDialog = new LoadDialog(this, false, "");
     }
 
     @Override
@@ -115,6 +136,33 @@ public class SelectHeaderActivity extends BaseActivity{
     }
 
     public void upLoadingHeadPic(String path){
+        loadDialog.show();
+        File file = new File(path);
+        UploadFileUtil.uploadPhotoFile(file, "/Account/UploadIcon", new StringCallback() {
+            @Override
+            public void onError(Request request, Exception e) {
+                if(loadDialog != null) loadDialog.dismiss();
+                Log.d(TAG, "onError: " + e);
+            }
 
+            @Override
+            public void onResponse(String response) {
+                if(loadDialog != null) loadDialog.dismiss();
+                try {
+                    UploadIconResponse resp = GsonUtils.getSingleBean(response, UploadIconResponse.class);
+                    Glide.with(SelectHeaderActivity.this).load(resp.FObject.fullUrl).diskCacheStrategy(DiskCacheStrategy.ALL).into(header_icon);
+                    mResponse.FObject.headUrl = resp.FObject.fullUrl;
+                    ApiManager.Instance().getUserInfo(Account.getUserId());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressedSupport() {
+        setResult(RESULT_CODE, getIntent().putExtra("result", mResponse));
+        super.onBackPressedSupport();
     }
 }
