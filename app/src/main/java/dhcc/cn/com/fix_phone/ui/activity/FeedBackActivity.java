@@ -1,18 +1,14 @@
 package dhcc.cn.com.fix_phone.ui.activity;
 
 import android.Manifest;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Rect;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,7 +23,6 @@ import android.widget.Toast;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -249,7 +244,7 @@ public class FeedBackActivity extends BaseActivity{
     static public final int REQUEST_CODE_ASK_PERMISSIONS = 101;
 
     private void applyPermission() {
-        if (Build.VERSION.SDK_INT >= 23) {
+        /*if (Build.VERSION.SDK_INT >= 23) {
             int checkPermission = checkSelfPermission(Manifest.permission.CAMERA);
             if (checkPermission != PackageManager.PERMISSION_GRANTED) {
                 if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
@@ -270,6 +265,32 @@ public class FeedBackActivity extends BaseActivity{
                 return;
             }
         }
-        photograph();
+        photograph();*/
+        RxPermissions rxPermissions = new RxPermissions(this);
+        rxPermissions.request(Manifest.permission.CAMERA).subscribe(new Observer<Boolean>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(Boolean aBoolean) {
+                if (aBoolean) {
+                    photograph();
+                } else {
+                    Toast.makeText(FeedBackActivity.this, R.string.permission_request_denied, Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
     }
 }

@@ -13,9 +13,9 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,7 +28,6 @@ import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
-import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.greenrobot.eventbus.EventBus;
@@ -48,6 +47,7 @@ import dhcc.cn.com.fix_phone.event.ImageResponeEvent;
 import dhcc.cn.com.fix_phone.event.ProductImageEvent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
 import dhcc.cn.com.fix_phone.ui.fragment.CommonDeleteFragment;
+import dhcc.cn.com.fix_phone.utils.UploadFileUtil;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -112,11 +112,11 @@ public class MyProductActivity extends BaseActivity implements CommonDeleteFragm
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
                 super.getItemOffsets(outRect, view, parent, state);
-                outRect.set(5, 5, 5, 5);
+                outRect.set(20, 20, 20, 20);
             }
         });
         mImageAdapter = new ImageProductAdapter(R.layout.item_image_check_myproduct, null);
-        mFootView = LayoutInflater.from(this).inflate(R.layout.item_image, mRecyclerView, false);
+        mFootView = LayoutInflater.from(this).inflate(R.layout.item_image_product, (ViewGroup) mRecyclerView.getParent(), false);
         mImageAdapter.addFooterView(mFootView);
         mRecyclerView.setAdapter(mImageAdapter);
     }
@@ -181,7 +181,7 @@ public class MyProductActivity extends BaseActivity implements CommonDeleteFragm
             @Override
             public void onClick(View view) {
                 RxPermissions rxPermissions = new RxPermissions(MyProductActivity.this);
-                rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(new Observer<Boolean>() {
+                rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA).subscribe(new Observer<Boolean>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
@@ -263,13 +263,33 @@ public class MyProductActivity extends BaseActivity implements CommonDeleteFragm
             if (mType == 1) { // 上传广告
                 if (strings != null && !strings.isEmpty()) {
                     File file = new File(strings.get(0));
-                    uploadPhotoFile(file,"/Adver/AddStoreAdver");
+                    UploadFileUtil.uploadPhotoFile(file, "/Adver/AddStoreAdver", new StringCallback() {
+                        @Override
+                        public void onError(Request request, Exception e) {
+
+                        }
+
+                        @Override
+                        public void onResponse(String response) {
+
+                        }
+                    });
                 }
             } else {
                 if (strings != null && !strings.isEmpty()) {
                     for (String string : strings) {
                         File file = new File(string);
-                        uploadPhotoFile(file,"/Product/UploadIcon");
+                        UploadFileUtil.uploadPhotoFile(file, "/Product/UploadIcon", new StringCallback() {
+                            @Override
+                            public void onError(Request request, Exception e) {
+
+                            }
+
+                            @Override
+                            public void onResponse(String response) {
+
+                            }
+                        });
                     }
                 }
             }
@@ -288,25 +308,5 @@ public class MyProductActivity extends BaseActivity implements CommonDeleteFragm
                 .thumbnailScale(0.85f) // 缩略图的比例
                 .imageEngine(new GlideEngine()) // 使用的图片加载引擎
                 .forResult(REQUEST_CODE_CHOOSE_PHOTO); // 设置作为标记的请求码
-    }
-
-    private void uploadPhotoFile(File file, String path) {
-        OkHttpUtils.post()
-                .url("http://120.77.202.151:8080" + path)
-                .addFile("mFile", file.getName(), file)
-                .addHeader("accessKey", "JHD2017")
-                .addHeader("accessToken", Account.getAccessToken())
-                .build()
-                .execute(new StringCallback() {
-                    @Override
-                    public void onError(Request request, Exception e) {
-
-                    }
-
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d(TAG, "onResponse: "+ response);
-                    }
-                });
     }
 }

@@ -12,7 +12,7 @@ import dhcc.cn.com.fix_phone.Account;
  */
 public class UploadFileUtil {
 
-    private static void uploadPhotoFile(File file, String path, StringCallback stringCallback) {
+    public static void uploadPhotoFile(File file, String path, StringCallback stringCallback) {
         OkHttpUtils.post()
                 .url("http://120.77.202.151:8080" + path)
                 .addFile("mFile", file.getName(), file)

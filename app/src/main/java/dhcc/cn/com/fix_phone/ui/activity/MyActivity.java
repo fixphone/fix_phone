@@ -17,17 +17,16 @@ import dhcc.cn.com.fix_phone.bean.BusinessResponse;
 
 /**
  * Created by Administrator on 2017/9/21 0021.
- *
  */
 
-public class MyActivity extends BaseActivity{
+public class MyActivity extends BaseActivity {
 
     @BindView(R.id.my_icon)
     ImageView my_icon;
     @BindView(R.id.my_phone_num_tv)
-    TextView my_phone_num_tv;
+    TextView  my_phone_num_tv;
     @BindView(R.id.title_name)
-    TextView title_name;
+    TextView  title_name;
 
     private BusinessResponse mResponse;
 
@@ -45,15 +44,15 @@ public class MyActivity extends BaseActivity{
     @Override
     protected void initData() {
         super.initData();
-        if(getIntent() != null && getIntent().hasExtra("BusinessResponse")){
-            mResponse = (BusinessResponse)getIntent().getSerializableExtra("BusinessResponse");
+        if (getIntent() != null && getIntent().hasExtra("BusinessResponse")) {
+            mResponse = (BusinessResponse) getIntent().getSerializableExtra("BusinessResponse");
             setViewState(mResponse);
         }
     }
 
     @OnClick({R.id.title_back, R.id.my_header_icon, R.id.my_phone_num, R.id.my_reset_pass, R.id.my_exit})
-    public void onClick(View view){
-        switch (view.getId()){
+    public void onClick(View view) {
+        switch (view.getId()) {
             case R.id.title_back:
                 finish();
                 break;
@@ -71,12 +70,14 @@ public class MyActivity extends BaseActivity{
         }
     }
 
-    private void setViewState(BusinessResponse mResponse){
-        Glide.with(this).load(mResponse.FObject.headUrl).diskCacheStrategy(DiskCacheStrategy.ALL).into(my_icon);
-        my_phone_num_tv.setText(mResponse.FObject.phone);
+    private void setViewState(BusinessResponse mResponse) {
+        if (mResponse != null && mResponse.FObject != null) {
+            Glide.with(this).load(mResponse.FObject.headUrl).diskCacheStrategy(DiskCacheStrategy.ALL).into(my_icon);
+            my_phone_num_tv.setText(mResponse.FObject.phone);
+        }
     }
 
-    private void exit(){
+    private void exit() {
         Account.setLogin(false);
         Intent intent = new Intent(this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
