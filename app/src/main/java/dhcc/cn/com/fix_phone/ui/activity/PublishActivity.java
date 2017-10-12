@@ -36,7 +36,6 @@ import com.zhy.http.okhttp.callback.StringCallback;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -181,16 +180,7 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
             mList = new CopyOnWriteArrayList<>();
             Log.d(TAG, "uploadVideo: " + mFileVideo.length());
             final CountDownLatch startSignal = new CountDownLatch(1);
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        uploadVideoFile(mList, mFileVideo, startSignal);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
+            uploadVideoFile(mList, mFileVideo, startSignal);
 
             // 成功以后
             new Thread(new Runnable() {
@@ -214,6 +204,7 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
             mList = new CopyOnWriteArrayList<>();
             final CountDownLatch startSignal = new CountDownLatch(mAdapter.getData().size());
             for (int i = 0; i < mAdapter.getData().size(); i++) {
+                mLoadDialog.show();
                 final File file = new File(mAdapter.getData().get(i));
                 uploadPhotoFile(mList, file, startSignal);
             }
@@ -233,9 +224,8 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
     }
 
     private void postUploadMessage() {
-        Log.d(TAG, "postUploadMessage: "+ mList.toString());
-        OkHttpUtils.post()
-                .url("http://120.77.202.151:8080/Busi/Publish")
+        Log.d(TAG, "postUploadMessage: " + mList.toString());
+        OkHttpUtils.post().url("http://120.77.202.151:8080/Busi/Publish")
                 .addParams("type", mSelectType)
                 .addParams("content", getEditText())
                 .addParams("images", mList.isEmpty() ? "" : GsonUtils.toJson(mList))
@@ -248,11 +238,17 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
                     @Override
                     public void onError(okhttp3.Call call, Exception e, int id) {
                         Log.d(TAG, "onError: " + e.toString());
+                        if (mLoadDialog != null) {
+                            mLoadDialog.dismiss();
+                        }
                     }
 
                     @Override
                     public void onResponse(String response, int id) {
-                        Log.d(TAG, "onResponse: " + response);
+                        if (mLoadDialog != null) {
+                            mLoadDialog.dismiss();
+                        }
+                        Log.d(TAG, "postUploadMessage: " + response);
                         EventBus.getDefault().post(new PublishSuccessEvent(true));
                         finish();
                     }
@@ -285,7 +281,7 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
 
     }
 
-    private void uploadVideoFile(final CopyOnWriteArrayList<String> list, File file, final CountDownLatch startSignal) throws IOException {
+    private void uploadVideoFile(final CopyOnWriteArrayList<String> list, File file, final CountDownLatch startSignal) {
         OkHttpUtils.post()
                 .url("http://120.77.202.151:8080/Busi/UploadVideo")
                 .addFile("mFile", file.getName(), file)
@@ -301,7 +297,7 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
 
                     @Override
                     public void onResponse(String response, int id) {
-                        Log.d(TAG, "onResponse: "+ response);
+                        Log.d(TAG, "onResponse: " + response);
                         Gson gson = new Gson();
                         UploadResponse uploadResponse = gson.fromJson(response, UploadResponse.class);
                         list.add(uploadResponse.FObject.uuid);

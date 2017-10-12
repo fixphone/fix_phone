@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import dhcc.cn.com.fix_phone.ui.widget.LoadDialog;
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
@@ -13,8 +14,9 @@ import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
  * 2016/10/27 13
  */
 public abstract class BaseActivity<T extends BasePresenter> extends SwipeBackActivity implements BaseView {
-    private T        mPresenter;
-    private Unbinder mUnbinder;
+    private   T          mPresenter;
+    private   Unbinder   mUnbinder;
+    protected LoadDialog mLoadDialog;
 
     @Override
     @SuppressWarnings("unchecked")
@@ -27,6 +29,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends SwipeBackAct
             mPresenter.attachView(this);
         }
         init();
+        mLoadDialog = new LoadDialog(this, false, "");
         initView();
         initData();
         initEvent();
@@ -49,6 +52,9 @@ public abstract class BaseActivity<T extends BasePresenter> extends SwipeBackAct
         super.onDestroy();
         if (mPresenter != null) {
             mPresenter.detachView();
+        }
+        if (mLoadDialog != null) {
+            mLoadDialog.dismiss();
         }
         mUnbinder.unbind();
         destroy();
