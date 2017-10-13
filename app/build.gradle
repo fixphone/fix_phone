@@ -6,7 +6,7 @@ android {
     buildToolsVersion '26.0.0'
     defaultConfig {
         applicationId "dhcc.cn.com.fix_phone"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -152,4 +152,8 @@ dependencies {
     //微信
     compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
     compile project(':okhttputils')
+
+    compile 'com.github.nanchen2251:CompressHelper:1.0.5'
+    //视频播放
+    compile 'cn.jzvd:jiaozivideoplayer:6.0.2'
 }

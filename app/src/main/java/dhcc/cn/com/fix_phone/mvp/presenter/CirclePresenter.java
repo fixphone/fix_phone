@@ -128,7 +128,6 @@ public class CirclePresenter implements CircleContract.Presenter {
     public void onShowBusiness(CirCleBusinessEvent event) {
         CircleBusiness.FObjectBean bean = event.mFObjectBean;
         List<CircleItem> circleItems = transformCircleItem(bean);
-        view.showTextViewNumber(circleItems.isEmpty());
         view.updateCircleItem(circleItems);
     }
 

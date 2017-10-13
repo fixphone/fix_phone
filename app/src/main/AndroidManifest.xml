@@ -278,14 +278,19 @@
         <!-- wechat share -->
         <activity
             android:name=".wxapi.WXEntryActivity"
-            android:screenOrientation="portrait"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
             android:name=".ui.activity.MyProductActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity
+            android:name=".ui.activity.ExtendsNormalActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="dhcc.cn.com.fix_phone.MyGlideModule"

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
@@ -66,13 +68,45 @@
                 android:background="@color/white"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/imageView_selector"
+                <FrameLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/add_camera"
-                    android:gravity="top|left"
-                    android:padding="@dimen/public_5dp"/>
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/imageView_selector"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:padding="@dimen/public_5dp"
+                        android:src="@drawable/add_camera"/>
+
+                    <android.support.constraint.ConstraintLayout
+                        android:id="@+id/video_icon"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:id="@+id/imageView_icon"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:padding="@dimen/public_5dp"
+                            android:src="@drawable/add_camera"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <ImageView
+                            android:id="@+id/imageView_delete"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            app:layout_constraintRight_toRightOf="@+id/imageView_icon"
+                            app:layout_constraintTop_toTopOf="@+id/imageView_icon"
+                            app:srcCompat="@drawable/button_delete"/>
+                    </android.support.constraint.ConstraintLayout>
+
+                </FrameLayout>
 
                 <TextView
                     android:id="@+id/textView_video"
@@ -89,10 +123,10 @@
                 android:id="@+id/photo_select_recycle_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
                 android:layout_gravity="center|left"
                 android:layout_marginBottom="@dimen/public_20dp"
                 android:layout_marginTop="@dimen/public_20dp"
+                android:background="@color/white"
                 android:overScrollMode="never"
                 android:visibility="gone"/>
 

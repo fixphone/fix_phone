@@ -28,8 +28,8 @@ public class ImageProductAdapter extends BaseQuickAdapter<String, BaseViewHolder
     @Override
     protected void convert(BaseViewHolder helper, String item) {
         ImageView view = helper.getView(R.id.imageView_icon);
-        Log.d(TAG, "convert: "+ item);
-        Glide.with(mContext).load(item).diskCacheStrategy(DiskCacheStrategy.ALL).into(view);
+        Log.d(TAG, "convert: " + item);
+        Glide.with(mContext).load(item).centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL).into(view);
         ImageView delete = helper.getView(R.id.imageView_delete);
         delete.setVisibility(View.VISIBLE);
 

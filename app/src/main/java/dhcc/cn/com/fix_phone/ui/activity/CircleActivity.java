@@ -102,7 +102,6 @@ public class CircleActivity extends YWActivity implements CircleContract.View {
             }
         });
 
-
         mRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
@@ -175,7 +174,7 @@ public class CircleActivity extends YWActivity implements CircleContract.View {
 
     private void showShareDialog() {
         AlterDialogFragment fragment = new AlterDialogFragment();
-        fragment.show(getSupportFragmentManager(),"AlterDialogFragment");
+        fragment.show(getSupportFragmentManager(), "AlterDialogFragment");
     }
 
     private void createBottomDialog() {
@@ -292,6 +291,7 @@ public class CircleActivity extends YWActivity implements CircleContract.View {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void updateCircleItem(List<CircleItem> circleItems) {
         if (isLoadMore) {
             mRefreshLayout.finishLoadmore(200);
@@ -300,6 +300,7 @@ public class CircleActivity extends YWActivity implements CircleContract.View {
             mRefreshLayout.finishRefresh(200);
             circleAdapter.setData(circleItems);
         }
+        showTextViewNumber(circleAdapter.getData().isEmpty());
         circleAdapter.notifyDataSetChanged();
     }
 

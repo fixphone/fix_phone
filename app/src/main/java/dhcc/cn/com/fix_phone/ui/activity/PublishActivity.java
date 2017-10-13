@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -51,9 +52,9 @@ import dhcc.cn.com.fix_phone.bean.UploadResponse;
 import dhcc.cn.com.fix_phone.conf.CircleDefaultData;
 import dhcc.cn.com.fix_phone.event.PublishSuccessEvent;
 import dhcc.cn.com.fix_phone.utils.FileUtils;
-import dhcc.cn.com.fix_phone.utils.GsonUtils;
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
+import dhcc.cn.com.fix_phone.utils.UploadFileUtil;
+import io.reactivex.functions.Consumer;
+import okhttp3.Call;
 
 import static dhcc.cn.com.fix_phone.ui.activity.FeedBackActivity.TAKEPHOTO_PATH;
 import static dhcc.cn.com.fix_phone.ui.activity.FeedBackActivity.getCurrentTime;
@@ -88,6 +89,13 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
     TextView       mTextViewVideo;
     @BindView(R.id.LinearLayout_show)
     LinearLayout   mLinearLayout;
+
+    @BindView(R.id.video_icon)
+    ConstraintLayout mConstraintLayout;
+    @BindView(R.id.imageView_icon)
+    ImageView        mVideoIcon;
+    @BindView(R.id.imageView_delete)
+    ImageView        mVideoDelete;
 
     private BottomSheetDialog    mDialog;
     private int                  mType;
@@ -140,6 +148,24 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
     protected void initEvent() {
         mAdapter.setOnAddClickListener(this);
         mAdapter.setOnDeleteClickListener(this);
+
+        mVideoDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mFileVideo = null;
+                mConstraintLayout.setVisibility(View.GONE);
+                mSelector.setVisibility(View.VISIBLE);
+            }
+        });
+
+        mVideoIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mFileVideo != null && mFileVideo.getName().endsWith("mp4")) {
+                    startActivity(new Intent(PublishActivity.this,ExtendsNormalActivity.class).putExtra("path",mFileVideo.getAbsolutePath()));
+                }
+            }
+        });
     }
 
     @OnClick({R.id.title_back, R.id.textView_type, R.id.btn_confirm, R.id.imageView_selector})
@@ -178,9 +204,10 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
             postUploadMessage();
         } else {
             mList = new CopyOnWriteArrayList<>();
-            Log.d(TAG, "uploadVideo: " + mFileVideo.length());
+            Log.d(TAG, "uploadVideo: " + mFileVideo.length() * 1.0f / (1024 * 1024));
+            mLoadDialog.show();
             final CountDownLatch startSignal = new CountDownLatch(1);
-            uploadVideoFile(mList, mFileVideo, startSignal);
+            uploadFile("/Busi/UploadVideo", mList, mFileVideo, startSignal);
 
             // 成功以后
             new Thread(new Runnable() {
@@ -206,7 +233,7 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
             for (int i = 0; i < mAdapter.getData().size(); i++) {
                 mLoadDialog.show();
                 final File file = new File(mAdapter.getData().get(i));
-                uploadPhotoFile(mList, file, startSignal);
+                uploadFile("/Busi/UploadPicture", mList, file, startSignal);
             }
             // 成功以后
             new Thread(new Runnable() {
@@ -224,19 +251,26 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
     }
 
     private void postUploadMessage() {
-        Log.d(TAG, "postUploadMessage: " + mList.toString());
+        if (mType == 1) {
+            uploadMessage(mList.toString(), "");
+        } else {
+            uploadMessage("", mList.get(0));
+        }
+    }
+
+    private void uploadMessage(String photoUUId, String videoUUid) {
         OkHttpUtils.post().url("http://120.77.202.151:8080/Busi/Publish")
                 .addParams("type", mSelectType)
                 .addParams("content", getEditText())
-                .addParams("images", mList.isEmpty() ? "" : GsonUtils.toJson(mList))
-                .addParams("videoId", mList.isEmpty() ? "" : mList.get(0))
+                .addParams("images", photoUUId)
+                .addParams("videoId", videoUUid)
                 .addHeader("accessKey", "JHD2017")
                 .addHeader("accessToken", Account.getAccessToken())
                 .build()
                 .execute(new StringCallback() {
 
                     @Override
-                    public void onError(okhttp3.Call call, Exception e, int id) {
+                    public void onError(Call call, Exception e, int id) {
                         Log.d(TAG, "onError: " + e.toString());
                         if (mLoadDialog != null) {
                             mLoadDialog.dismiss();
@@ -255,83 +289,35 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
                 });
     }
 
-    private void uploadPhotoFile(final CopyOnWriteArrayList<String> list, File file, final CountDownLatch startSignal) {
-        OkHttpUtils.post()
-                .url("http://120.77.202.151:8080/Busi/UploadPicture")
-                .addFile("mFile", file.getName(), file)
-                .addHeader("accessKey", "JHD2017")
-                .addHeader("accessToken", Account.getAccessToken())
-                .build()
-                .execute(new StringCallback() {
-                    @Override
-                    public void onError(okhttp3.Call call, Exception e, int id) {
-                        Log.d(TAG, "onError: " + e.toString());
-                        startSignal.countDown();
-                    }
+    private void uploadFile(String path, final CopyOnWriteArrayList<String> list, File file, final CountDownLatch startSignal) {
+        UploadFileUtil.uploadPhotoFile(file, path, new StringCallback() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                Log.d(TAG, "onError: " + e.toString());
+                startSignal.countDown();
+            }
 
-                    @Override
-                    public void onResponse(String response, int id) {
-                        Log.d(TAG, "uploadPhotoFile: " + response);
-                        Gson gson = new Gson();
-                        UploadResponse uploadResponse = gson.fromJson(response, UploadResponse.class);
-                        list.add(uploadResponse.FObject.uuid);
-                        startSignal.countDown();
-                    }
-                });
-
-    }
-
-    private void uploadVideoFile(final CopyOnWriteArrayList<String> list, File file, final CountDownLatch startSignal) {
-        OkHttpUtils.post()
-                .url("http://120.77.202.151:8080/Busi/UploadVideo")
-                .addFile("mFile", file.getName(), file)
-                .addHeader("accessKey", "JHD2017")
-                .addHeader("accessToken", Account.getAccessToken())
-                .build()
-                .execute(new StringCallback() {
-                    @Override
-                    public void onError(okhttp3.Call call, Exception e, int id) {
-                        Log.d(TAG, "onError: " + e.toString());
-                        startSignal.countDown();
-                    }
-
-                    @Override
-                    public void onResponse(String response, int id) {
-                        Log.d(TAG, "onResponse: " + response);
-                        Gson gson = new Gson();
-                        UploadResponse uploadResponse = gson.fromJson(response, UploadResponse.class);
-                        list.add(uploadResponse.FObject.uuid);
-                        startSignal.countDown();
-                    }
-                });
-
+            @Override
+            public void onResponse(String response, int id) {
+                Log.d(TAG, "uploadPhotoFile: " + response);
+                Gson gson = new Gson();
+                UploadResponse uploadResponse = gson.fromJson(response, UploadResponse.class);
+                list.add(uploadResponse.FObject.uuid);
+                startSignal.countDown();
+            }
+        });
     }
 
     private void applyPermission() {
         RxPermissions rxPermissions = new RxPermissions(this);
-        rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA).subscribe(new Observer<Boolean>() {
+        rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA).subscribe(new Consumer<Boolean>() {
             @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onNext(Boolean aBoolean) {
+            public void accept(Boolean aBoolean) throws Exception {
                 if (aBoolean) {
                     handleSelector();
                 } else {
                     Toast.makeText(PublishActivity.this, R.string.permission_request_denied, Toast.LENGTH_LONG).show();
                 }
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-
             }
         });
     }
@@ -340,12 +326,8 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
         if (mType == 1) {
             selectPhoto(currentNumber - mAdapter.getData().size());
         } else if (mType == 2) {
-            createVideo();
+            getVideo();
         }
-    }
-
-    private void createVideo() {
-        getVideo();
     }
 
     private String photo_path = "";
@@ -358,7 +340,12 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
         File file = FileUtils.createFile(photo_path);
         Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
-        intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+        //画面质量
+        intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0);
+        //限制时长
+        intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 5);
+        //限制大小
+        intent.putExtra(MediaStore.EXTRA_SIZE_LIMIT, 320 * 480);
         startActivityForResult(intent, CAMERA_REQUEST_CODE);
     }
 
@@ -413,7 +400,9 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
             mFileVideo = new File(photo_path);
             if (mFileVideo.exists() && mFileVideo.getName().endsWith("mp4")) {
                 Log.d(TAG, "onActivityResult: " + photo_path);
-                Glide.with(this).load(Uri.fromFile(mFileVideo)).placeholder(R.drawable.add_camera).into(mSelector);
+                mConstraintLayout.setVisibility(View.VISIBLE);
+                mSelector.setVisibility(View.GONE);
+                Glide.with(this).load(Uri.fromFile(mFileVideo)).error(R.drawable.menu_0).into(mVideoIcon);
                 mTextViewVideo.setText("已拍好视频，发布您的生意圈");
             }
         }
@@ -434,4 +423,5 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
         Log.d(TAG, "getEditText: " + trim);
         return trim;
     }
+
 }
