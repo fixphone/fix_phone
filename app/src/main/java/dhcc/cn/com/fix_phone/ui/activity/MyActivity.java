@@ -14,6 +14,7 @@ import dhcc.cn.com.fix_phone.Account;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
 import dhcc.cn.com.fix_phone.bean.BusinessResponse;
+import io.rong.imkit.RongIM;
 
 /**
  * Created by Administrator on 2017/9/21 0021.
@@ -79,6 +80,7 @@ public class MyActivity extends BaseActivity {
     }
 
     private void exit() {
+        RongIM.getInstance().logout();
         Account.setLogin(false);
         Intent intent = new Intent(this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);

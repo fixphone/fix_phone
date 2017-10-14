@@ -54,7 +54,7 @@
                 <category android:name="android.intent.category.DEFAULT"/>
                 <data
                     android:host="dhcc.cn.com.fix_phone"
-                    android:path="/conversationlist"
+                    android:path="/conversation"
                     android:scheme="rong"/>
             </intent-filter>
         </activity>

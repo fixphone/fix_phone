@@ -124,6 +124,8 @@ public class MyApplication extends MultiDexApplication {
         }
     }
 
+
+
     public static DisplayImageOptions getOptions() {
         return options;
     }
