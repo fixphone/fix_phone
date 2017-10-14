@@ -8,8 +8,10 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.support.annotation.CheckResult;
+import android.support.v4.content.FileProvider;
 import android.widget.ImageView;
 
 import java.io.File;
@@ -61,7 +63,7 @@ public class ImageActions {
     @CheckResult
     public static Intent actionCapture(Context context) throws IOException {
         File outputImage = generateImageFile(context, ".jpg");
-        return CaptureCompat.actionCaptureImage(Uri.fromFile(outputImage));
+        return CaptureCompat.actionCaptureImage(context, outputImage);
     }
 
     @CheckResult
@@ -160,8 +162,13 @@ public class ImageActions {
             return new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         }
 
-        private static Intent actionCaptureImage(Uri output) {
-            return baseAction().putExtra(MediaStore.EXTRA_OUTPUT, output);
+        private static Intent actionCaptureImage(Context context, File outputImage) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Uri contentUri = FileProvider.getUriForFile(context, "dhcc.cn.com.fix_phone.FileProvider", outputImage);
+                return baseAction().putExtra(MediaStore.EXTRA_OUTPUT, contentUri);
+            } else {
+                return baseAction().putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(outputImage));
+            }
         }
 
         private static Uri getCapturedImage(Context context, Intent requestIntent, int resultCode, Intent data) {

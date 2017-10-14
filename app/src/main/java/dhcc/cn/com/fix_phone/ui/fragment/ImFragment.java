@@ -12,13 +12,18 @@ import android.widget.RadioGroup;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.adapter.ConversationListAdapterEx;
 import dhcc.cn.com.fix_phone.base.BaseFragment;
+import dhcc.cn.com.fix_phone.base.GlideImageLoader;
+import dhcc.cn.com.fix_phone.bean.CirCleADResponse;
+import dhcc.cn.com.fix_phone.event.CircleAdEvent;
 import dhcc.cn.com.fix_phone.ui.activity.NewFriendListActivity;
 import dhcc.cn.com.fix_phone.ui.widget.DragPointView;
 import dhcc.cn.com.fix_phone.utils.NToast;
@@ -216,8 +221,7 @@ public class ImFragment extends BaseFragment implements DragPointView.OnDragList
         }, mConversationsTypes);
     }
 
-    @Subscribe
-    public void onShow(){
-
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onShowAd(CircleAdEvent event) {
     }
 }

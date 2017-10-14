@@ -21,8 +21,8 @@ public class PersonInfoActivity extends BaseActivity {
     public static final String ACTION_NAME = "公司名称";
     public static final String ACTION_CONTACT = "联系人";
     public static final String ACTION_POSTCODE = "邮编";
-    public static final String ACTION_PHONE = "手机";
-    public static final String ACTION_MOBILE_PHONE = "电话";
+    public static final String ACTION_PHONE = "电话";
+    public static final String ACTION_MOBILE_PHONE = "手机";
     public static final String ACTION_ADDRESS = "经营地址";
     public static final String ACTION_PROFILE = "企业简介";
     public static final int ACTION_REQUEST_CODE = 0x0010;
@@ -101,10 +101,10 @@ public class PersonInfoActivity extends BaseActivity {
                 startActivity(ResetPersonInfoActivity.class, ACTION_POSTCODE, info_postcode_tv.getText().toString());
                 break;
             case R.id.info_mobile_phone_rl:
-                startActivity(ResetPersonInfoActivity.class, ACTION_PHONE, info_phone_num_tv.getText().toString());
+                startActivity(ResetPersonInfoActivity.class, ACTION_MOBILE_PHONE, info_mobile_phone_tv.getText().toString());
                 break;
             case R.id.info_phone_num_rl:
-                startActivity(ResetPersonInfoActivity.class, ACTION_MOBILE_PHONE, info_mobile_phone_tv.getText().toString());
+                startActivity(ResetPersonInfoActivity.class, ACTION_PHONE, info_phone_num_tv.getText().toString());
                 break;
             case R.id.info_address_rl:
                 startActivity(ResetPersonInfoActivity.class, ACTION_ADDRESS, info_address_tv.getText().toString());

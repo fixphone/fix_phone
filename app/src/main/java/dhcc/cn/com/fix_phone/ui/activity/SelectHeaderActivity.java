@@ -139,7 +139,6 @@ public class SelectHeaderActivity extends BaseActivity {
 
                     }
                 });
-
                 break;
             default:
                 break;
