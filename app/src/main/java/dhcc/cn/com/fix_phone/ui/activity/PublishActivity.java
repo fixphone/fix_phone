@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Rect;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomSheetDialog;
+import android.support.v4.content.FileProvider;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -310,7 +312,7 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
 
     private void applyPermission() {
         RxPermissions rxPermissions = new RxPermissions(this);
-        rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA).subscribe(new Consumer<Boolean>() {
+        rxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA).subscribe(new Consumer<Boolean>() {
             @Override
             public void accept(Boolean aBoolean) throws Exception {
                 if (aBoolean) {
@@ -339,14 +341,20 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
         photo_path = TAKEPHOTO_PATH + getCurrentTime("yyyyMMddHHmmss") + ".mp4";
         File file = FileUtils.createFile(photo_path);
         Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
         //画面质量
         intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0);
         //限制时长
         intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 5);
         //限制大小
         intent.putExtra(MediaStore.EXTRA_SIZE_LIMIT, 320 * 480);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Uri contentUri = FileProvider.getUriForFile(this, "dhcc.cn.com.fix_phone.FileProvider", file);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, contentUri);
+        } else {
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
+        }
         startActivityForResult(intent, CAMERA_REQUEST_CODE);
+
     }
 
     private void selectPhoto(int number) {
