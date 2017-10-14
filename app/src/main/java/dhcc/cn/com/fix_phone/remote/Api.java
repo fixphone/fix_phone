@@ -12,11 +12,14 @@ import dhcc.cn.com.fix_phone.bean.ProductImage;
 import dhcc.cn.com.fix_phone.bean.RegisterResponse;
 import dhcc.cn.com.fix_phone.bean.RongTokenResponse;
 import dhcc.cn.com.fix_phone.bean.TelCheckResponse;
+import dhcc.cn.com.fix_phone.bean.TokenResponse;
 import dhcc.cn.com.fix_phone.bean.UploadResponse;
 import dhcc.cn.com.fix_phone.bean.ImageResponse;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
@@ -285,4 +288,11 @@ public interface Api {
     //51.获取融云token
     @GET("/Account/GetRongToken")
     Call<RongTokenResponse> getRongToken(@Header("accessToken") String accessToken);
+
+    @FormUrlEncoded
+    @POST("http://api.cn.ronghub.com/user/getToken.json")
+    Call<TokenResponse> getToken(@Header("App-Key") String appKey, @Header("Nonce") String nonce,
+                                 @Header("Timestamp") String timestamp, @Header("Signature") String signature,
+                                 @Field("userId") String userId, @Field("name") String name,
+                                 @Field("portraitUri")String portraitUri);
 }

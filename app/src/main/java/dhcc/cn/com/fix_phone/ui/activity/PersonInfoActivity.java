@@ -5,20 +5,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.OnClick;
-import dhcc.cn.com.fix_phone.MyApplication;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
-import dhcc.cn.com.fix_phone.base.GlideImageLoader;
 import dhcc.cn.com.fix_phone.bean.BusinessResponse;
-import dhcc.cn.com.fix_phone.event.BusinessEvent;
-import dhcc.cn.com.fix_phone.remote.ApiManager;
 
 /**
  * Created by songyang on 2017\9\18 0018.

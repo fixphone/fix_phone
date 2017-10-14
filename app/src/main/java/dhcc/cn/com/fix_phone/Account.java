@@ -14,6 +14,8 @@ public final class Account {
 
     private static final String USER_ID = "userId";
     private static final String LOGIN = "login";
+    public static final String APP_KEY = "k51hidwqk9m4b";
+    public static final String APP_SECRET = "zZQxChOoo3G";
 
     //获取用户id
     public static String getUserId() {

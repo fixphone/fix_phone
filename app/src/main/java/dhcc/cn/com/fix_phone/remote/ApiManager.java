@@ -16,6 +16,7 @@ import dhcc.cn.com.fix_phone.bean.ProductImage;
 import dhcc.cn.com.fix_phone.bean.RegisterResponse;
 import dhcc.cn.com.fix_phone.bean.RongTokenResponse;
 import dhcc.cn.com.fix_phone.bean.TelCheckResponse;
+import dhcc.cn.com.fix_phone.bean.TokenResponse;
 import dhcc.cn.com.fix_phone.event.BusinessEvent;
 import dhcc.cn.com.fix_phone.event.CirCleBusinessEvent;
 import dhcc.cn.com.fix_phone.event.CircleAdEvent;
@@ -29,9 +30,11 @@ import dhcc.cn.com.fix_phone.event.ProductImageEvent;
 import dhcc.cn.com.fix_phone.event.RegisterEvent;
 import dhcc.cn.com.fix_phone.event.RongTokenEvent;
 import dhcc.cn.com.fix_phone.event.TelCheckEvent;
+import dhcc.cn.com.fix_phone.event.TokenEvent;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Field;
 import retrofit2.http.Query;
 
 /**
@@ -458,6 +461,33 @@ public class ApiManager {
             @Override
             public void onFailure(Call<RongTokenResponse> call, Throwable t) {
                 RongTokenEvent event = new RongTokenEvent(null);
+                event.errorMessage = t.getMessage();
+                event.isOk = false;
+                EventBus.getDefault().post(event);
+            }
+        });
+    }
+
+    public void getToken(String appKey, String nonce, String timestamp, String signature, String userId,
+                         String name, String portraitUri){
+        mApi.getToken(appKey, nonce, timestamp, signature, userId, name, portraitUri).enqueue(new Callback<TokenResponse>() {
+            @Override
+            public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {
+                    if(response.isSuccessful() && response.body() != null){
+                        TokenResponse tokenResponse = response.body();
+                        TokenEvent event = new TokenEvent(tokenResponse);
+                        EventBus.getDefault().post(event);
+                    }else {
+                        TokenEvent event = new TokenEvent(null);
+                        event.errorMessage = "服务器返回错误";
+                        event.isOk = false;
+                        EventBus.getDefault().post(event);
+                    }
+            }
+
+            @Override
+            public void onFailure(Call<TokenResponse> call, Throwable t) {
+                TokenEvent event = new TokenEvent(null);
                 event.errorMessage = t.getMessage();
                 event.isOk = false;
                 EventBus.getDefault().post(event);
