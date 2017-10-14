@@ -135,7 +135,7 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
                     break;
                 case CircleViewHolder.TYPE_VIDEO: // 视频处理
                     if (holder instanceof VideoViewHolder) {
-                        ((VideoViewHolder) holder).videoView.videoPlayer.setOnLongClickListener(new View.OnLongClickListener() {
+                        ((VideoViewHolder) holder).getFrameLayout().setOnLongClickListener(new View.OnLongClickListener() {
                             @Override
                             public boolean onLongClick(View view) {
                                 Log.d(TAG, "onLongClick: ");
@@ -143,6 +143,16 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
                                     mOnVideoLongClickListener.onVideoLongClickListener((CircleItem) datas.get(realPosition));
                                 }
                                 return true;
+                            }
+                        });
+                        
+                        ((VideoViewHolder) holder).getFrameLayout().setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Log.d(TAG, "onClick: ");
+                                if (mOnVideoClickListener != null) {
+                                    mOnVideoClickListener.onVideoClickListener((CircleItem) datas.get(realPosition));
+                                }
                             }
                         });
                     }
@@ -234,5 +244,15 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
 
     public void setOnVideoLongClickListener(OnVideoLongClickListener onVideoLongClickListener) {
         mOnVideoLongClickListener = onVideoLongClickListener;
+    }
+
+    public interface OnVideoClickListener {
+        void onVideoClickListener(CircleItem circleItem);
+    }
+
+    private OnVideoClickListener mOnVideoClickListener;
+
+    public void setOnVideoClickListener(OnVideoClickListener onVideoClickListener) {
+        mOnVideoClickListener = onVideoClickListener;
     }
 }

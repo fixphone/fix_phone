@@ -156,6 +156,15 @@ public class CircleActivity extends YWActivity implements CircleContract.View {
             }
         });
 
+        circleAdapter.setOnVideoClickListener(new CircleAdapter.OnVideoClickListener() {
+            @Override
+            public void onVideoClickListener(CircleItem circleItem) {
+                startActivity(new Intent(CircleActivity.this, ExtendsNormalActivity.class).
+                        putExtra("path", circleItem.getVideoInfo().FFileName).
+                        putExtra("imagePath", circleItem.getVideoInfo().FCaptureFileName));
+            }
+        });
+
         mSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
