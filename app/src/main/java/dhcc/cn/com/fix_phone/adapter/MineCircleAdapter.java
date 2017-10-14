@@ -2,6 +2,7 @@ package dhcc.cn.com.fix_phone.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,8 @@ import dhcc.cn.com.fix_phone.bean.CircleItem;
 import dhcc.cn.com.fix_phone.bean.PhotoInfo;
 import dhcc.cn.com.fix_phone.ui.activity.ImagePagerActivity;
 import dhcc.cn.com.fix_phone.ui.widget.MultiImageView;
+
+import static com.zhy.http.okhttp.log.LoggerInterceptor.TAG;
 
 /**
  * Created by yiwei on 16/5/17.
@@ -75,7 +78,18 @@ public class MineCircleAdapter extends BaseRecycleViewAdapter {
 
                 break;
             case CircleViewHolder.TYPE_VIDEO: // 视频处理
+                if (holder instanceof VideoViewHolder) {
 
+                    ((VideoViewHolder) holder).getFrameLayout().setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Log.d(TAG, "onClick: ");
+                            if (mOnVideoClickListener != null) {
+                                mOnVideoClickListener.onVideoClickListener((CircleItem) datas.get(position));
+                            }
+                        }
+                    });
+                }
 
                 break;
             default:
@@ -122,5 +136,15 @@ public class MineCircleAdapter extends BaseRecycleViewAdapter {
 
     public void setDeleteClickListener(OnDeleteClickListener deleteClickListener) {
         mDeleteClickListener = deleteClickListener;
+    }
+
+    public interface OnVideoClickListener {
+        void onVideoClickListener(CircleItem circleItem);
+    }
+
+    private OnVideoClickListener mOnVideoClickListener;
+
+    public void setOnVideoClickListener(OnVideoClickListener onVideoClickListener) {
+        mOnVideoClickListener = onVideoClickListener;
     }
 }

@@ -18,21 +18,9 @@ public class DeleteDialogFragment extends DialogFragment implements View.OnClick
 
     private TextView mCancel;
     private TextView mConfirm;
-    private String   mFInterID;
 
-    public static DeleteDialogFragment newInstance(String id) {
-        Bundle args = new Bundle();
-        args.putString("FInterID", id);
-        DeleteDialogFragment fragment = new DeleteDialogFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Bundle arguments = getArguments();
-        mFInterID = arguments.getString("FInterID");
+    public static DeleteDialogFragment newInstance() {
+        return new DeleteDialogFragment();
     }
 
     @Nullable
@@ -61,13 +49,13 @@ public class DeleteDialogFragment extends DialogFragment implements View.OnClick
                 break;
             case R.id.textView_confirm:
                 SelectListener listener = (SelectListener) getActivity();
-                listener.onSelector(mFInterID);
+                listener.onSelector();
                 dismiss();
                 break;
         }
     }
 
     public interface SelectListener {
-        void onSelector(String id);
+        void onSelector();
     }
 }

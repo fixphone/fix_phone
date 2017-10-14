@@ -63,6 +63,7 @@ public class MineCirCleActivity extends BaseActivity implements DeleteDialogFrag
     private MineCircleAdapter mAdapter;
     private int               mResourceType;
     private int               mCurrentPosition;
+    private String mFInterID;
 
     @Override
     public int getLayoutId() {
@@ -107,8 +108,18 @@ public class MineCirCleActivity extends BaseActivity implements DeleteDialogFrag
             @Override
             public void onDelete(int position, CircleItem item) {
                 mCurrentPosition = position;
-                DeleteDialogFragment deleteFragment = DeleteDialogFragment.newInstance(item.getUser().FInterID);
+                mFInterID = item.getUser().FInterID;
+                DeleteDialogFragment deleteFragment = DeleteDialogFragment.newInstance();
                 deleteFragment.show(getSupportFragmentManager(), "deleteFragment");
+            }
+        });
+
+        mAdapter.setOnVideoClickListener(new MineCircleAdapter.OnVideoClickListener() {
+            @Override
+            public void onVideoClickListener(CircleItem circleItem) {
+                startActivity(new Intent(MineCirCleActivity.this, ExtendsNormalActivity.class).
+                        putExtra("path", circleItem.getVideoInfo().FFileName).
+                        putExtra("imagePath", circleItem.getVideoInfo().FCaptureFileName));
             }
         });
     }
@@ -154,11 +165,11 @@ public class MineCirCleActivity extends BaseActivity implements DeleteDialogFrag
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onShowBusiness(FavoResponseEvent event) {
+    public void onDelete(FavoResponseEvent event) {
         FavoResponse response = event.mResponse;
         if (response.FIsSuccess) {
             mAdapter.getData().remove(mCurrentPosition);
-            mAdapter.notifyItemRemoved(mCurrentPosition);
+            mAdapter.notifyDataSetChanged();
         }
         Toast.makeText(this, "" + response.FMsg, Toast.LENGTH_SHORT).show();
     }
@@ -248,7 +259,7 @@ public class MineCirCleActivity extends BaseActivity implements DeleteDialogFrag
     }
 
     @Override
-    public void onSelector(String fInterID) {
-        ApiManager.Instance().deleteFavo(fInterID);
+    public void onSelector() {
+        ApiManager.Instance().deleteFavo(mFInterID);
     }
 }
