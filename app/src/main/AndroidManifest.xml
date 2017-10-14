@@ -43,6 +43,11 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
+
+                <data
+                    android:host="dhcc.cn.com.fix_phone"
+                    android:pathPrefix="/push_message"
+                    android:scheme="rong" />
             </intent-filter>
         </activity>
         <activity

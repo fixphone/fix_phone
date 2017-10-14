@@ -2,9 +2,11 @@ package dhcc.cn.com.fix_phone.ui.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
@@ -23,9 +25,13 @@ import dhcc.cn.com.fix_phone.rong.SealUserInfoManager;
 import dhcc.cn.com.fix_phone.ui.fragment.CircleFragment;
 import dhcc.cn.com.fix_phone.ui.fragment.ImFragment;
 import dhcc.cn.com.fix_phone.ui.fragment.MeFragment;
+import dhcc.cn.com.fix_phone.ui.widget.LoadDialog;
 import dhcc.cn.com.fix_phone.utils.NLog;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.manager.IUnReadMessageObserver;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
+import io.rong.message.ContactNotificationMessage;
 import me.yokeyword.fragmentation.SupportFragment;
 import me.yokeyword.fragmentation.SwipeBackLayout;
 
@@ -67,6 +73,9 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
         super.initEvent();
         mTabLayout.addOnTabSelectedListener(this);
         EventBus.getDefault().register(this);
+        getConversationPush();
+        getPushMessage();
+
         if(!Account.isLogin()){
             startActivity(new Intent(this, LoginActivity.class));
             return;
@@ -109,6 +118,68 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    private void getConversationPush() {
+        if (getIntent() != null && getIntent().hasExtra("PUSH_CONVERSATIONTYPE") && getIntent().hasExtra("PUSH_TARGETID")) {
+            final String conversationType = getIntent().getStringExtra("PUSH_CONVERSATIONTYPE");
+            final String targetId = getIntent().getStringExtra("PUSH_TARGETID");
+            RongIM.getInstance().getConversation(Conversation.ConversationType.valueOf(conversationType), targetId, new RongIMClient.ResultCallback<Conversation>() {
+                @Override
+                public void onSuccess(Conversation conversation) {
+                    if (conversation != null) {
+                        if (conversation.getLatestMessage() instanceof ContactNotificationMessage) { //好友消息的push
+                            startActivity(new Intent(MainActivity.this, NewFriendListActivity.class));
+                        } else {
+                            Uri uri = Uri.parse("rong://" + getApplicationInfo().packageName).buildUpon().appendPath("conversation")
+                                    .appendPath(conversationType).appendQueryParameter("targetId", targetId).build();
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setData(uri);
+                            startActivity(intent);
+                        }
+                    }
+                }
+
+                @Override
+                public void onError(RongIMClient.ErrorCode e) {
+
+                }
+            });
+        }
+    }
+
+    private void getPushMessage() {
+        Intent intent = getIntent();
+        if (intent != null && intent.getData() != null && intent.getData().getScheme().equals("rong")) {
+            String path = intent.getData().getPath();
+            if (path.contains("push_message")) {
+                SharedPreferences sharedPreferences = getSharedPreferences("config", MODE_PRIVATE);
+                String cacheToken = sharedPreferences.getString("loginToken", "");
+                if (TextUtils.isEmpty(cacheToken)) {
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                } else {
+                    if (!RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED)) {
+                        LoadDialog.show(MainActivity.this);
+                        RongIM.connect(cacheToken, new RongIMClient.ConnectCallback() {
+                            @Override
+                            public void onTokenIncorrect() {
+                                LoadDialog.dismiss(MainActivity.this);
+                            }
+
+                            @Override
+                            public void onSuccess(String s) {
+                                LoadDialog.dismiss(MainActivity.this);
+                            }
+
+                            @Override
+                            public void onError(RongIMClient.ErrorCode e) {
+                                LoadDialog.dismiss(MainActivity.this);
+                            }
+                        });
+                    }
+                }
+            }
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

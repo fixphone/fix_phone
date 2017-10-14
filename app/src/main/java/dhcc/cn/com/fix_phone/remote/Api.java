@@ -7,6 +7,7 @@ import dhcc.cn.com.fix_phone.bean.CircleBusiness;
 import dhcc.cn.com.fix_phone.bean.CircleDetailAd;
 import dhcc.cn.com.fix_phone.bean.CollectResponse;
 import dhcc.cn.com.fix_phone.bean.FavoResponse;
+import dhcc.cn.com.fix_phone.bean.GetFriendResponse;
 import dhcc.cn.com.fix_phone.bean.LoginResponse;
 import dhcc.cn.com.fix_phone.bean.ProductImage;
 import dhcc.cn.com.fix_phone.bean.RegisterResponse;
@@ -217,8 +218,8 @@ public interface Api {
 
     //36.获取好友列表
     @POST("/Friend/GetList")
-    Call<String> GetListFriend(@Header("accessToken") String accessToken,
-                               @Query("companyName") String companyName);
+    Call<GetFriendResponse> GetListFriend(@Header("accessToken") String accessToken,
+                                          @Query("companyName") String companyName);
 
     //37.查找用户
     @POST("/Friend/QueryUser")

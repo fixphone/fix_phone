@@ -23,10 +23,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import dhcc.cn.com.fix_phone.Account;
 import dhcc.cn.com.fix_phone.MyApplication;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.adapter.FriendListAdapter;
 import dhcc.cn.com.fix_phone.db.Friend;
+import dhcc.cn.com.fix_phone.remote.ApiManager;
 import dhcc.cn.com.fix_phone.rong.BroadcastManager;
 import dhcc.cn.com.fix_phone.rong.CharacterParser;
 import dhcc.cn.com.fix_phone.rong.SealAppContext;
@@ -60,7 +62,6 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
      * 中部展示的字母提示
      */
     private TextView mDialogTextView;
-
     private List<Friend> mFriendList;
     private List<Friend> mFilteredFriendList;
     /**
@@ -74,12 +75,10 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
     /**
      * 根据拼音来排列ListView里面的数据类
      */
-
     private String mId;
     private String mCacheName;
 
     private static final int CLICK_CONTACT_FRAGMENT_FRIEND = 2;
-
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_address, container, false);
@@ -143,7 +142,6 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
         mPinyinComparator = PinyinComparator.getInstance();
     }
 
-
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
@@ -159,7 +157,6 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
      */
     private void filterData(String filterStr) {
         List<Friend> filterDateList = new ArrayList<>();
-
         try {
             if (TextUtils.isEmpty(filterStr)) {
                 filterDateList = mFriendList;
@@ -188,9 +185,6 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
         mFilteredFriendList = filterDateList;
         mFriendListAdapter.updateListView(filterDateList);
     }
-
-
-
 
     @Override
     public void onClick(View v) {

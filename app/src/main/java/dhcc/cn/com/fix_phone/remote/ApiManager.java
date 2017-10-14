@@ -9,6 +9,7 @@ import dhcc.cn.com.fix_phone.bean.CircleBusiness;
 import dhcc.cn.com.fix_phone.bean.CircleDetailAd;
 import dhcc.cn.com.fix_phone.bean.CollectResponse;
 import dhcc.cn.com.fix_phone.bean.FavoResponse;
+import dhcc.cn.com.fix_phone.bean.GetFriendResponse;
 import dhcc.cn.com.fix_phone.bean.ImageResponse;
 import dhcc.cn.com.fix_phone.bean.LoginInfo;
 import dhcc.cn.com.fix_phone.bean.LoginResponse;
@@ -24,6 +25,7 @@ import dhcc.cn.com.fix_phone.event.CircleDetailAdEvent;
 import dhcc.cn.com.fix_phone.event.CollectEvent;
 import dhcc.cn.com.fix_phone.event.FavoResponseEvent;
 import dhcc.cn.com.fix_phone.event.FindPswEvent;
+import dhcc.cn.com.fix_phone.event.GetFriendEvent;
 import dhcc.cn.com.fix_phone.event.ImageResponeEvent;
 import dhcc.cn.com.fix_phone.event.LoginEvent;
 import dhcc.cn.com.fix_phone.event.ProductImageEvent;
@@ -34,8 +36,6 @@ import dhcc.cn.com.fix_phone.event.TokenEvent;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Field;
-import retrofit2.http.Query;
 
 /**
  * 2017/9/17 16
@@ -702,6 +702,32 @@ public class ApiManager {
             @Override
             public void onFailure(Call<CollectResponse> call, Throwable t) {
 
+            }
+        });
+    }
+
+    //36.获取好友列表
+    public void GetListFriend(String accessToken, String companyName){
+        mApi.GetListFriend(accessToken, companyName).enqueue(new Callback<GetFriendResponse>() {
+            @Override
+            public void onResponse(Call<GetFriendResponse> call, Response<GetFriendResponse> response) {
+                GetFriendResponse getFriendResponse = response.body();
+                if(response.code() == 200 && getFriendResponse != null){
+                    EventBus.getDefault().post(new GetFriendEvent(getFriendResponse));
+                }else {
+                    GetFriendEvent event = new GetFriendEvent(null);
+                    event.errorMessage = "服务器返回错误";
+                    event.isOk = false;
+                    EventBus.getDefault().post(event);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetFriendResponse> call, Throwable t) {
+                GetFriendEvent event = new GetFriendEvent(null);
+                event.errorMessage = t.getMessage();
+                event.isOk = false;
+                EventBus.getDefault().post(event);
             }
         });
     }

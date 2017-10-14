@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,7 +67,7 @@ public class ImFragment extends BaseFragment implements DragPointView.OnDragList
 
     @Override
     protected void init() {
-        super.init();
+        EventBus.getDefault().register(this);
         isDebug = getContext().getSharedPreferences("config", getContext().MODE_PRIVATE).getBoolean("isDebug", false);
     }
 
@@ -192,6 +194,12 @@ public class ImFragment extends BaseFragment implements DragPointView.OnDragList
     public void onDestroyView() {
         super.onDestroyView();
         System.out.println("-----");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
