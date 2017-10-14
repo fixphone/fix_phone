@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -27,7 +28,6 @@ import dhcc.cn.com.fix_phone.base.BaseFragment;
 import dhcc.cn.com.fix_phone.bean.BusinessResponse;
 import dhcc.cn.com.fix_phone.event.BusinessEvent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
-import dhcc.cn.com.fix_phone.rong.SealConst;
 import dhcc.cn.com.fix_phone.ui.activity.AboutAppActivity;
 import dhcc.cn.com.fix_phone.ui.activity.FeedBackActivity;
 import dhcc.cn.com.fix_phone.ui.activity.MineCirCleActivity;
@@ -44,7 +44,7 @@ import io.rong.imlib.model.UserInfo;
  * 2017/9/16 23
  */
 public class MeFragment extends BaseFragment {
-
+    private static final String TAG = "MeFragment";
     @BindView(R.id.container_rl)
     RelativeLayout mContainerRl;
     @BindView(R.id.title_back)
@@ -107,6 +107,7 @@ public class MeFragment extends BaseFragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onUserInfo(BusinessEvent event) {
+        Log.d(TAG, "onUserInfo: ");
         mResponse = event.mResponse;
         user_name.setText(mResponse.FObject.name);
         user_mobile.setText(mResponse.FObject.phone);

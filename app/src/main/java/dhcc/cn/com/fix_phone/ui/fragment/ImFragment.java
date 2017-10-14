@@ -2,7 +2,6 @@ package dhcc.cn.com.fix_phone.ui.fragment;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -12,12 +11,11 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnCheckedChanged;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.adapter.ConversationListAdapterEx;
 import dhcc.cn.com.fix_phone.base.BaseFragment;
@@ -52,12 +50,7 @@ public class ImFragment extends BaseFragment implements DragPointView.OnDragList
     private boolean isDebug;
 
     public static ImFragment newInstance() {
-        
-        Bundle args = new Bundle();
-        
-        ImFragment fragment = new ImFragment();
-        fragment.setArguments(args);
-        return fragment;
+        return new ImFragment();
     }
     
     @Override
@@ -76,7 +69,7 @@ public class ImFragment extends BaseFragment implements DragPointView.OnDragList
         super.initView(view);
         contactsFragment = new ContactsFragment();
         initConversationList();
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.content_fl, contactsFragment);
         fragmentTransaction.add(R.id.content_fl, mConversationListFragment);
         fragmentTransaction.commit();
@@ -123,7 +116,7 @@ public class ImFragment extends BaseFragment implements DragPointView.OnDragList
     }
 
     private void changeFragment(Fragment fragment){
-        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
         ft.hide(contactsFragment);
         ft.hide(mConversationListFragment);
         ft.show(fragment);
@@ -221,5 +214,10 @@ public class ImFragment extends BaseFragment implements DragPointView.OnDragList
 
             }
         }, mConversationsTypes);
+    }
+
+    @Subscribe
+    public void onShow(){
+
     }
 }
