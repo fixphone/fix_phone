@@ -217,7 +217,7 @@ public interface Api {
     Call<String> AddSuggestion(@Header("accessToken") String accessToken, @Header("uuid") String... uuid);
 
     //36.获取好友列表
-    @POST("/Friend/GetList")
+    @GET("/Friend/GetList")
     Call<GetFriendResponse> GetListFriend(@Header("accessToken") String accessToken,
                                           @Query("companyName") String companyName);
 

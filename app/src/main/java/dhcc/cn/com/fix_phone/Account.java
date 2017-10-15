@@ -1,7 +1,6 @@
 package dhcc.cn.com.fix_phone;
 
 import dhcc.cn.com.fix_phone.bean.LoginInfo;
-import dhcc.cn.com.fix_phone.bean.User;
 import dhcc.cn.com.fix_phone.utils.AppSharedPreferences;
 
 
@@ -26,7 +25,6 @@ public final class Account {
     public static void setUserId(String userId) {
         AppSharedPreferences.getInstance(MyApplication.getContext()).set(USER_ID, userId);
     }
-
 
     //获取登录状态
     public static boolean isLogin() {
