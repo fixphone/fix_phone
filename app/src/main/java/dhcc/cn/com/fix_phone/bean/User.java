@@ -6,7 +6,7 @@ package dhcc.cn.com.fix_phone.bean;
  * @Description: TODO(这里用一句话描述这个类的作用)
  * @date 2015-12-28 下午3:45:04
  */
-public class User{
+public class User {
     /**
      * FCompanyName : 18899767529
      * FContent : 估计
@@ -27,41 +27,47 @@ public class User{
      * FUserTypeNumber : VIP
      */
 
-    public  String  FCompanyName;
+    public String FCompanyName;
 
-    public  String  FContent;
+    public String FContent;
 
-    public  String  FCreateDate;
+    public String FCreateDate;
 
-    public  int     FCreatorID;
+    public int FCreatorID;
 
-    public  String  FHeadUrl;
+    public String FHeadUrl;
 
-    public  String  FInterID;
+    public String FInterID;
 
-    public  boolean FIsFooterData;
+    public boolean FIsFooterData;
 
-    public  String  FPhone;
+    public String FPhone;
 
-    public  String  FShareUrl;
+    public String FShareUrl;
 
-    public  String  FTimeAgo;
+    public String FTimeAgo;
 
-    public  int     FTypeID;
+    public int FTypeID;
 
-    public  String  FTypeName;
+    public String FTypeName;
 
-    public  String  FTypeNumber;
+    public String FTypeNumber;
 
-    public  String  FUserName;
+    public String FUserName;
 
-    public  int     FUserType;
+    public int FUserType;
 
-    public  String  FUserTypeName;
+    public String FUserTypeName;
 
-    public  String  FUserTypeNumber;
+    public String FUserTypeNumber;
 
     public boolean mExpand;
+
+    public String FFavoriteUserID;
+
+    public String FFavoriteDate;
+
+    public String FFavoriteType;
 
     public String getFCompanyName() {
         return FCompanyName;

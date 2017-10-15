@@ -64,7 +64,7 @@ public class CircleBusiness {
             public String          FCreateDate;
             public int             FCreatorID;
             public String          FHeadUrl;
-            public String             FInterID;
+            public String          FInterID;
             public boolean         FIsFooterData;
             public String          FPhone;
             public String          FShareUrl;
@@ -78,6 +78,9 @@ public class CircleBusiness {
             public String          FUserTypeNumber;
             public VideoBean       Video;
             public List<ImageBean> ImageList;
+            public String          FFavoriteUserID;
+            public String          FFavoriteDate;
+            public String          FFavoriteType;
 
             public static class VideoBean {
                 /**

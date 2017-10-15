@@ -283,11 +283,11 @@
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <!-- wechat share -->
-        <activity
+        <!--<activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"/>-->
 
         <activity
             android:name=".ui.activity.MyProductActivity"

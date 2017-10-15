@@ -40,8 +40,8 @@ public class Constants {
     //微信包名
     public static final String WECHAT_PACKAGE_NAME = "com.tencent.mm";
 
-    public static String wxTitle = "送你人人聚财218元投资红包，来和我一起赚钱吧！";
+    public static String wxTitle = "速通交易";
     public static String wxImgPath = "http://mobile.rrjc.com:80/upload/fund/20160901/201609010934238567.jpg";
     public static String wxUrl = "http://mobile.rrjc.com/wapzhuce?userid=33795298";
-    public static String wxContent = "【人人聚财】有抵押更可靠，车贷直营规模第1名！预计年化收益15%，218元红包投资就到手，赶快来领！";
+    public static String wxContent = "【速通交易】速通交易APP是一款电子行业沟通信息平台，专注服务于液晶显示屏、整机、内置配件耗材及维修设备工厂、生产商、贸易商、华强北数万家档口以及全国电子行业商户需求，解决QQ、微信群人数的限制。";
 }

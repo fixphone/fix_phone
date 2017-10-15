@@ -3,21 +3,25 @@ package dhcc.cn.com.fix_phone.ui.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
+import java.util.HashMap;
+
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.conf.Constants;
 import dhcc.cn.com.fix_phone.utils.AMUtils;
-import java.util.HashMap;
 
 /**
  * 2017/10/8 19
@@ -26,9 +30,25 @@ public class AlterDialogFragment extends DialogFragment implements View.OnClickL
 
     private TextView mFriend;
     private TextView mCircle;
-
+    private static final String TAG = "AlterDialogFragment";
     public static IWXAPI mWXApi;
     private HashMap<String, String> wechatMap = new HashMap<String, String>();
+    private String mUrl;
+
+    public static AlterDialogFragment newInstance(String url) {
+        Bundle args = new Bundle();
+        args.putString("url",url);
+        AlterDialogFragment fragment = new AlterDialogFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mUrl = getArguments().getString("url");
+        Log.d(TAG, "onCreate: "+ mUrl);
+    }
 
     @Nullable
     @Override
@@ -66,9 +86,9 @@ public class AlterDialogFragment extends DialogFragment implements View.OnClickL
     }
 
     private void initWechatShareData() {
+        //        wechatMap.put(Constants.WX_URL, mUrl);
         wechatMap.put(Constants.WX_TITLE, Constants.wxTitle);
-        wechatMap.put(Constants.WX_IMGPATH, Constants.wxImgPath);
-        wechatMap.put(Constants.WX_URL, Constants.wxUrl);
+        wechatMap.put(Constants.WX_URL, mUrl);
         wechatMap.put(Constants.WX_CONTENT, Constants.wxContent);
     }
 
@@ -85,18 +105,6 @@ public class AlterDialogFragment extends DialogFragment implements View.OnClickL
         final WXMediaMessage msg = new WXMediaMessage(webpage);
         msg.title = wechatMap.get(Constants.WX_TITLE);
         msg.description = wechatMap.get(Constants.WX_CONTENT);
-        //runOnUiThread(new Runnable() {
-        //    @Override
-        //    public void run() {
-        //        Glide.with(this).load(wechatMap.get(Constants.WX_IMGPATH))
-        //            .asBitmap().into(new SimpleTarget<Bitmap>(Constants.SHARE_IMAGE_WIDTH, Constants.SHARE_IMAGE_HEIGHT) {
-        //            @Override
-        //            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-        //                msg.setThumbImage(resource);
-        //            }
-        //        });
-        //    }
-        //});
 
         SendMessageToWX.Req req = new SendMessageToWX.Req();
         req.transaction = buildTransaction("webpage");
