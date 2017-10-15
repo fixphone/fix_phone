@@ -8,6 +8,7 @@ import dhcc.cn.com.fix_phone.bean.CircleDetailAd;
 import dhcc.cn.com.fix_phone.bean.CollectResponse;
 import dhcc.cn.com.fix_phone.bean.FavoResponse;
 import dhcc.cn.com.fix_phone.bean.GetFriendResponse;
+import dhcc.cn.com.fix_phone.bean.ImageResponse;
 import dhcc.cn.com.fix_phone.bean.LoginResponse;
 import dhcc.cn.com.fix_phone.bean.ProductImage;
 import dhcc.cn.com.fix_phone.bean.RegisterResponse;
@@ -15,7 +16,6 @@ import dhcc.cn.com.fix_phone.bean.RongTokenResponse;
 import dhcc.cn.com.fix_phone.bean.TelCheckResponse;
 import dhcc.cn.com.fix_phone.bean.TokenResponse;
 import dhcc.cn.com.fix_phone.bean.UploadResponse;
-import dhcc.cn.com.fix_phone.bean.ImageResponse;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -58,8 +58,8 @@ public interface Api {
     //5.修改密码
     @POST("/Account/ChangePwd")
     Call<TelCheckResponse> ChangePwd(@Query("phone") String phone,
-                                  @Query("oldPwd") String oldPwd,
-                                  @Query("pwd") String pwd);
+                                     @Query("oldPwd") String oldPwd,
+                                     @Query("pwd") String pwd);
 
     //6.发送修改密码验证码  --使用注册的手机号码发送验证码的方式登录。
     @POST("/Account/SendChangePwdPhoneCode")
@@ -68,8 +68,8 @@ public interface Api {
     //7.修改密码-手机验证
     @POST("/Account/ChangePwdByCode")
     Call<TelCheckResponse> ChangePwdByCode(@Query("phone") String phone,
-                                        @Query("code") String code,
-                                        @Query("pwd") String pwd);
+                                           @Query("code") String code,
+                                           @Query("pwd") String pwd);
 
     //8.刷新调用令牌
     @GET("/Account/RefreshToken")
@@ -112,6 +112,7 @@ public interface Api {
     @POST("/Busi/Publish")
     Call<String> PublishBusi(@Part MultipartBody.Part file);
 
+
     //15.删除生意圈
     @POST("/Busi/Delete")
     Call<String> DeleteBusi(@Header("accessToken") String accessToken,
@@ -129,14 +130,14 @@ public interface Api {
     //18.修改店铺资料
     @POST("/Account/ChangeUserInfo")
     Call<BusinessResponse> ChangeUserInfo(@Header("accessToken") String accessToken,
-                                @Query("name") String name,
-                                @Query("companyName") String companyName,
-                                @Query("companyProfile") String companyProfile,
-                                @Query("contact") String contact,
-                                @Query("postCode") String postCode,
-                                @Query("contactMobile") String contactMobile,
-                                @Query("contactPhone") String contactPhone,
-                                @Query("address") String address);
+                                          @Query("name") String name,
+                                          @Query("companyName") String companyName,
+                                          @Query("companyProfile") String companyProfile,
+                                          @Query("contact") String contact,
+                                          @Query("postCode") String postCode,
+                                          @Query("contactMobile") String contactMobile,
+                                          @Query("contactPhone") String contactPhone,
+                                          @Query("address") String address);
 
     //19.获取产品图片
     @GET("/Product/GetList")
@@ -295,5 +296,5 @@ public interface Api {
     Call<TokenResponse> getToken(@Header("App-Key") String appKey, @Header("Nonce") String nonce,
                                  @Header("Timestamp") String timestamp, @Header("Signature") String signature,
                                  @Field("userId") String userId, @Field("name") String name,
-                                 @Field("portraitUri")String portraitUri);
+                                 @Field("portraitUri") String portraitUri);
 }

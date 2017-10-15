@@ -28,6 +28,7 @@ import com.bumptech.glide.Glide;
 import com.github.rubensousa.bottomsheetbuilder.BottomSheetBuilder;
 import com.github.rubensousa.bottomsheetbuilder.adapter.BottomSheetItemClickListener;
 import com.google.gson.Gson;
+import com.nanchen.compresshelper.CompressHelper;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
@@ -47,6 +48,7 @@ import java.util.concurrent.CountDownLatch;
 import butterknife.BindView;
 import butterknife.OnClick;
 import dhcc.cn.com.fix_phone.Account;
+import dhcc.cn.com.fix_phone.MyApplication;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.adapter.SelectImageAdapter;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
@@ -54,8 +56,14 @@ import dhcc.cn.com.fix_phone.bean.UploadResponse;
 import dhcc.cn.com.fix_phone.conf.CircleDefaultData;
 import dhcc.cn.com.fix_phone.event.PublishSuccessEvent;
 import dhcc.cn.com.fix_phone.utils.FileUtils;
+import dhcc.cn.com.fix_phone.utils.ImageUtil;
 import dhcc.cn.com.fix_phone.utils.UploadFileUtil;
+import io.reactivex.Observable;
+import io.reactivex.SingleObserver;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.Call;
 
 import static dhcc.cn.com.fix_phone.ui.activity.FeedBackActivity.TAKEPHOTO_PATH;
@@ -164,7 +172,7 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
             @Override
             public void onClick(View view) {
                 if (mFileVideo != null && mFileVideo.getName().endsWith("mp4")) {
-                    startActivity(new Intent(PublishActivity.this,ExtendsNormalActivity.class).putExtra("path",mFileVideo.getAbsolutePath()));
+                    startActivity(new Intent(PublishActivity.this, ExtendsNormalActivity.class).putExtra("path", mFileVideo.getAbsolutePath()));
                 }
             }
         });
@@ -184,6 +192,7 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
                 if (TextUtils.isEmpty(mSelectType)) {
                     Toast.makeText(this, "请选择要发布生意的类别", Toast.LENGTH_SHORT).show();
                 } else {
+                    mLoadDialog.show();
                     confirmCircle();
                 }
                 break;
@@ -194,11 +203,49 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
     }
 
     private void confirmCircle() {
-        if (mType == 1) {
-            uploadPhoto();
-        } else if (mType == 2) {
-            uploadVideo();
-        }
+        Observable.fromIterable(mAdapter.getData()).map(new Function<String, File>() {
+            @Override
+            public File apply(String s) throws Exception {
+                File file = new File(s);
+                if (ImageUtil.isImage(file)) {
+                    return CompressHelper.getDefault(MyApplication.getContext()).compressToFile(new File(s));
+                } else {
+                    return file;
+                }
+            }
+        }).toList().observeOn(Schedulers.newThread()).subscribe(new SingleObserver<List<File>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onSuccess(List<File> files) {
+                UploadFileUtil.uploadFileAndContent("/Busi/PublishSimple", files, getEditText(), mSelectType, new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        mLoadDialog.dismiss();
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        if (mLoadDialog != null) {
+                            mLoadDialog.dismiss();
+                        }
+                        Log.d(TAG, "postUploadMessage: " + response);
+                        EventBus.getDefault().post(new PublishSuccessEvent(true));
+                        finish();
+                    }
+                });
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        });
+
+
     }
 
     private void uploadVideo() {
@@ -230,26 +277,54 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
         if (mAdapter.getData().isEmpty()) {
             postUploadMessage();
         } else {
-            mList = new CopyOnWriteArrayList<>();
-            final CountDownLatch startSignal = new CountDownLatch(mAdapter.getData().size());
-            for (int i = 0; i < mAdapter.getData().size(); i++) {
-                mLoadDialog.show();
-                final File file = new File(mAdapter.getData().get(i));
-                uploadFile("/Busi/UploadPicture", mList, file, startSignal);
-            }
-            // 成功以后
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        startSignal.await();
-                        postUploadMessage();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
+            uploadPhotoImage();
         }
+    }
+
+    private void uploadObservable() {
+        Observable.fromIterable(mAdapter.getData()).map(new Function<String, File>() {
+            @Override
+            public File apply(String s) throws Exception {
+                return CompressHelper.getDefault(MyApplication.getContext()).compressToFile(new File(s));
+            }
+        }).toList().observeOn(Schedulers.newThread()).subscribe(new SingleObserver<List<File>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onSuccess(List<File> files) {
+               // ApiManager.Instance().publishSimpleBusi(mSelectType, getEditText(), files);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        });
+    }
+
+    private void uploadPhotoImage() {
+        mList = new CopyOnWriteArrayList<>();
+        final CountDownLatch startSignal = new CountDownLatch(mAdapter.getData().size());
+        for (int i = 0; i < mAdapter.getData().size(); i++) {
+            mLoadDialog.show();
+            final File file = new File(mAdapter.getData().get(i));
+            uploadFile("/Busi/UploadPicture", mList, file, startSignal);
+        }
+        // 成功以后
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    startSignal.await();
+                    postUploadMessage();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     private void postUploadMessage() {
@@ -258,6 +333,10 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
         } else {
             uploadMessage("", mList.get(0));
         }
+    }
+
+    private void uploadBussiness() {
+
     }
 
     private void uploadMessage(String photoUUId, String videoUUid) {
@@ -312,7 +391,7 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
 
     private void applyPermission() {
         RxPermissions rxPermissions = new RxPermissions(this);
-        rxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA).subscribe(new Consumer<Boolean>() {
+        rxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA).subscribe(new Consumer<Boolean>() {
             @Override
             public void accept(Boolean aBoolean) throws Exception {
                 if (aBoolean) {
@@ -407,6 +486,7 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
             mFileVideo = new File(photo_path);
             if (mFileVideo.exists() && mFileVideo.getName().endsWith("mp4")) {
+                mAdapter.addData(photo_path);
                 Log.d(TAG, "onActivityResult: " + photo_path);
                 mConstraintLayout.setVisibility(View.VISIBLE);
                 mSelector.setVisibility(View.GONE);

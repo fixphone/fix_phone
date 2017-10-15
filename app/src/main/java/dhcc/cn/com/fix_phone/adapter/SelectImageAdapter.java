@@ -81,6 +81,10 @@ public class SelectImageAdapter extends RecyclerView.Adapter<SelectImageAdapter.
         notifyDataSetChanged();
     }
 
+    public void addData(String s) {
+        mData.add(s);
+    }
+
     public void remove(int position) {
         mData.remove(position);
         notifyDataSetChanged();

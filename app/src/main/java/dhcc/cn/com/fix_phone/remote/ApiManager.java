@@ -211,7 +211,7 @@ public class ApiManager {
     //18.修改店铺资料
     public void ChangeUserInfo(String accessToken, String name, String companyName, String companyProfile,
                                String contact, String postCode, String contactMobile, String contactPhone,
-                               String address){
+                               String address) {
         mApi.ChangeUserInfo(accessToken, name, companyName, companyProfile, contact, postCode, contactMobile,
                 contactPhone, address).enqueue(new Callback<BusinessResponse>() {
             @Override
@@ -327,7 +327,7 @@ public class ApiManager {
     }
 
     //5.修改密码
-    public void ChangePwd(String phone, String oldPwd, String pwd){
+    public void ChangePwd(String phone, String oldPwd, String pwd) {
         mApi.ChangePwd(phone, oldPwd, pwd).enqueue(new Callback<TelCheckResponse>() {
             @Override
             public void onResponse(Call<TelCheckResponse> call, Response<TelCheckResponse> response) {
@@ -355,7 +355,7 @@ public class ApiManager {
     }
 
     //6.发送修改密码验证码
-    public void sendChangePwdPhoneCode(String phone){
+    public void sendChangePwdPhoneCode(String phone) {
         mApi.SendChangePwdPhoneCode(phone).enqueue(new Callback<TelCheckResponse>() {
             @Override
             public void onResponse(Call<TelCheckResponse> call, Response<TelCheckResponse> response) {
@@ -383,7 +383,7 @@ public class ApiManager {
     }
 
     //7.修改密码-手机验证
-    public void ChangePwdByCode(String phone, String code, String psw){
+    public void ChangePwdByCode(String phone, String code, String psw) {
         mApi.ChangePwdByCode(phone, code, psw).enqueue(new Callback<TelCheckResponse>() {
             @Override
             public void onResponse(Call<TelCheckResponse> call, Response<TelCheckResponse> response) {
@@ -411,7 +411,7 @@ public class ApiManager {
     }
 
     //8.刷新调用令牌
-    public void RefreshToken(String refreshToken){
+    public void RefreshToken(String refreshToken) {
         mApi.RefreshToken(refreshToken).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
@@ -469,20 +469,20 @@ public class ApiManager {
     }
 
     public void getToken(String appKey, String nonce, String timestamp, String signature, String userId,
-                         String name, String portraitUri){
+                         String name, String portraitUri) {
         mApi.getToken(appKey, nonce, timestamp, signature, userId, name, portraitUri).enqueue(new Callback<TokenResponse>() {
             @Override
             public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {
-                    if(response.isSuccessful() && response.body() != null){
-                        TokenResponse tokenResponse = response.body();
-                        TokenEvent event = new TokenEvent(tokenResponse);
-                        EventBus.getDefault().post(event);
-                    }else {
-                        TokenEvent event = new TokenEvent(null);
-                        event.errorMessage = "服务器返回错误";
-                        event.isOk = false;
-                        EventBus.getDefault().post(event);
-                    }
+                if (response.isSuccessful() && response.body() != null) {
+                    TokenResponse tokenResponse = response.body();
+                    TokenEvent event = new TokenEvent(tokenResponse);
+                    EventBus.getDefault().post(event);
+                } else {
+                    TokenEvent event = new TokenEvent(null);
+                    event.errorMessage = "服务器返回错误";
+                    event.isOk = false;
+                    EventBus.getDefault().post(event);
+                }
             }
 
             @Override
@@ -707,14 +707,14 @@ public class ApiManager {
     }
 
     //36.获取好友列表
-    public void GetListFriend(String accessToken, String companyName){
+    public void GetListFriend(String accessToken, String companyName) {
         mApi.GetListFriend(accessToken, companyName).enqueue(new Callback<GetFriendResponse>() {
             @Override
             public void onResponse(Call<GetFriendResponse> call, Response<GetFriendResponse> response) {
                 GetFriendResponse getFriendResponse = response.body();
-                if(response.code() == 200 && getFriendResponse != null){
+                if (response.code() == 200 && getFriendResponse != null) {
                     EventBus.getDefault().post(new GetFriendEvent(getFriendResponse));
-                }else {
+                } else {
                     GetFriendEvent event = new GetFriendEvent(null);
                     event.errorMessage = "服务器返回错误";
                     event.isOk = false;

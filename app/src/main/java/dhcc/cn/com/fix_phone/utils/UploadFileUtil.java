@@ -5,6 +5,9 @@ import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import dhcc.cn.com.fix_phone.Account;
 import dhcc.cn.com.fix_phone.MyApplication;
@@ -40,5 +43,25 @@ public class UploadFileUtil {
                 .addHeader("accessToken", Account.getAccessToken())
                 .build()
                 .execute(stringCallback);
+    }
+
+    public static void uploadFileAndContent(String path, List<File> files , String Content, String selectType,StringCallback callback){
+        OkHttpUtils.post()
+                .url("http://120.77.202.151:8080" + path)
+                .addHeader("accessKey", "JHD2017")
+                .addHeader("accessToken", Account.getAccessToken())
+                .addParams("type", selectType)
+                .addParams("content", Content)
+                .files("image",listToMap(files))
+                .build()
+                .execute(callback);
+    }
+
+    private static Map<String,File> listToMap(List<File> list){
+        Map<String,File> map = new HashMap<>(list.size());
+        for (File file : list) {
+            map.put(file.getName(),file);
+        }
+        return map;
     }
 }
