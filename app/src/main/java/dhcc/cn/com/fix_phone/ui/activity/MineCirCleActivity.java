@@ -64,7 +64,6 @@ public class MineCirCleActivity extends BaseActivity implements DeleteDialogFrag
     private int               mResourceType;
     private int               mCurrentPosition;
     private String            mFInterID;
-    private String mFFavoriteUserID;
 
     @Override
     public int getLayoutId() {
@@ -110,7 +109,6 @@ public class MineCirCleActivity extends BaseActivity implements DeleteDialogFrag
             public void onDelete(int position, CircleItem item) {
                 mCurrentPosition = position;
                 mFInterID = item.getUser().FInterID;
-                mFFavoriteUserID = item.getUser().FFavoriteUserID;
                 DeleteDialogFragment deleteFragment = DeleteDialogFragment.newInstance();
                 deleteFragment.show(getSupportFragmentManager(), "deleteFragment");
             }
@@ -266,7 +264,7 @@ public class MineCirCleActivity extends BaseActivity implements DeleteDialogFrag
         if (mResourceType == 1) {
             ApiManager.Instance().DeleteBusi(mFInterID);
         } else {
-            ApiManager.Instance().deleteFavo(mFFavoriteUserID);
+            ApiManager.Instance().deleteFavo(mFInterID);
         }
     }
 }
