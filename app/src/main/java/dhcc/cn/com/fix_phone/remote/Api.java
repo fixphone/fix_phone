@@ -297,4 +297,9 @@ public interface Api {
                                  @Header("Timestamp") String timestamp, @Header("Signature") String signature,
                                  @Field("userId") String userId, @Field("name") String name,
                                  @Field("portraitUri") String portraitUri);
+
+    //52.删除收藏
+    @POST("/Favo/DeleteFavo")
+    Call<FavoResponse> DeleteItemFavo(@Header("accessToken") String accessToken,
+                                  @Query("uuid") String interId);
 }

@@ -69,6 +69,8 @@ public class User {
 
     public String FFavoriteType;
 
+    public String FUUID;
+
     public String getFCompanyName() {
         return FCompanyName;
     }

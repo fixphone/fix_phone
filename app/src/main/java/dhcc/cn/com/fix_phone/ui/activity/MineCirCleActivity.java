@@ -64,7 +64,7 @@ public class MineCirCleActivity extends BaseActivity implements DeleteDialogFrag
     private int               mResourceType;
     private int               mCurrentPosition;
     private String            mFInterID;
-    private String mFavoriteType;
+    private String            mFUUID;
 
     @Override
     public int getLayoutId() {
@@ -110,7 +110,7 @@ public class MineCirCleActivity extends BaseActivity implements DeleteDialogFrag
             public void onDelete(int position, CircleItem item) {
                 mCurrentPosition = position;
                 mFInterID = item.getUser().FInterID;
-                mFavoriteType = item.getUser().FFavoriteType;
+                mFUUID = item.getUser().FUUID;
                 DeleteDialogFragment deleteFragment = DeleteDialogFragment.newInstance();
                 deleteFragment.show(getSupportFragmentManager(), "deleteFragment");
             }
@@ -215,6 +215,7 @@ public class MineCirCleActivity extends BaseActivity implements DeleteDialogFrag
             user.FFavoriteUserID = rowsBean.FFavoriteUserID;
             user.FFavoriteDate = rowsBean.FFavoriteDate;
             user.FFavoriteType = rowsBean.FFavoriteType;
+            user.FUUID = rowsBean.FUUID;
             circleItem.setUser(user);
             circleItem.setType(CircleItem.TYPE_URL);
 
@@ -268,19 +269,7 @@ public class MineCirCleActivity extends BaseActivity implements DeleteDialogFrag
         if (mResourceType == 1) {
             ApiManager.Instance().DeleteBusi(mFInterID);
         } else {
-            switch (mFavoriteType) {
-                case "1":
-                    ApiManager.Instance().deleteFavo(mFInterID);
-                    break;
-                case "2":
-                    ApiManager.Instance().DeletePictureFavo(mFInterID);
-                    break;
-                case "3":
-                    ApiManager.Instance().DeleteVideoFavo(mFInterID);
-                    break;
-                default:
-                    break;
-            }
+            ApiManager.Instance().DeleteItemFavo(mFUUID);
         }
     }
 }

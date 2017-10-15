@@ -643,6 +643,25 @@ public class ApiManager {
         });
     }
 
+    //29.删除收藏
+    public void DeleteItemFavo(String uuid) {
+        mApi.DeleteItemFavo(getLoginInfo().accessToken, uuid).enqueue(new Callback<FavoResponse>() {
+            @Override
+            public void onResponse(Call<FavoResponse> call, Response<FavoResponse> response) {
+                FavoResponse body = response.body();
+                if (response.code() == 200 && body != null) {
+                    Log.d(TAG, "onResponse: " + body);
+                    EventBus.getDefault().post(new FavoResponseEvent(body));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FavoResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
     //30.添加图片收藏
     public void AddPictureFavo(String uuid) {
         mApi.AddPictureFavo(getLoginInfo().accessToken, uuid).enqueue(new Callback<FavoResponse>() {
@@ -757,15 +776,16 @@ public class ApiManager {
             }
         });
     }
+
     //37.查找用户
-    public void QueryUserFriend(String accessToken, String queryField){
+    public void QueryUserFriend(String accessToken, String queryField) {
         mApi.QueryUserFriend(accessToken, queryField).enqueue(new Callback<QueryUserResponse>() {
             @Override
             public void onResponse(Call<QueryUserResponse> call, Response<QueryUserResponse> response) {
                 QueryUserResponse queryUserResponse = response.body();
-                if(response.code() == 200 && queryUserResponse != null){
+                if (response.code() == 200 && queryUserResponse != null) {
                     EventBus.getDefault().post(new QueryUserEvent(queryUserResponse));
-                }else {
+                } else {
                     QueryUserEvent event = new QueryUserEvent(null);
                     event.errorMessage = "服务器返回错误";
                     event.isOk = false;
@@ -773,6 +793,7 @@ public class ApiManager {
                 }
             }
 
+            @Override
             public void onFailure(Call<QueryUserResponse> call, Throwable t) {
                 QueryUserEvent event = new QueryUserEvent(null);
                 event.errorMessage = t.getMessage();
@@ -783,14 +804,14 @@ public class ApiManager {
     }
 
     //38.添加好友
-    public void AddFriend(String accessToken, String friendId){
+    public void AddFriend(String accessToken, String friendId) {
         mApi.AddFriend(accessToken, friendId).enqueue(new Callback<AddFriendResponse>() {
             @Override
             public void onResponse(Call<AddFriendResponse> call, Response<AddFriendResponse> response) {
                 AddFriendResponse addFriendResponse = response.body();
-                if(response.code() == 200 && addFriendResponse != null){
+                if (response.code() == 200 && addFriendResponse != null) {
                     EventBus.getDefault().post(new AddFriendEvent(addFriendResponse));
-                }else {
+                } else {
                     AddFriendEvent event = new AddFriendEvent(null);
                     event.errorMessage = "服务器返回错误";
                     event.isOk = false;
@@ -809,14 +830,14 @@ public class ApiManager {
     }
 
     //39.删除好友
-    public void DeleteFriend(String accessToken, String friendId){
+    public void DeleteFriend(String accessToken, String friendId) {
         mApi.DeleteFriend(accessToken, friendId).enqueue(new Callback<TelCheckResponse>() {
             @Override
             public void onResponse(Call<TelCheckResponse> call, Response<TelCheckResponse> response) {
                 TelCheckResponse telCheckResponse = response.body();
-                if(response.code() == 200 && telCheckResponse != null){
+                if (response.code() == 200 && telCheckResponse != null) {
                     EventBus.getDefault().post(new DeleteFriendEvent(telCheckResponse));
-                }else {
+                } else {
                     DeleteFriendEvent event = new DeleteFriendEvent(null);
                     event.errorMessage = "服务器返回错误";
                     event.isOk = false;

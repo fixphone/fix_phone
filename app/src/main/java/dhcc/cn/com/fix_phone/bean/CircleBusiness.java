@@ -81,6 +81,7 @@ public class CircleBusiness {
             public String          FFavoriteUserID;
             public String          FFavoriteDate;
             public String          FFavoriteType;
+            public String          FUUID;
 
             public static class VideoBean {
                 /**
