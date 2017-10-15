@@ -63,7 +63,7 @@ public class MineCirCleActivity extends BaseActivity implements DeleteDialogFrag
     private MineCircleAdapter mAdapter;
     private int               mResourceType;
     private int               mCurrentPosition;
-    private String mFInterID;
+    private String            mFInterID;
 
     @Override
     public int getLayoutId() {
@@ -260,6 +260,10 @@ public class MineCirCleActivity extends BaseActivity implements DeleteDialogFrag
 
     @Override
     public void onSelector() {
-        ApiManager.Instance().deleteFavo(mFInterID);
+        if (mResourceType == 1) {
+            ApiManager.Instance().DeleteBusi(mFInterID);
+        } else {
+            ApiManager.Instance().deleteFavo(mFInterID);
+        }
     }
 }

@@ -1,5 +1,7 @@
 package dhcc.cn.com.fix_phone.remote;
 
+import android.util.Log;
+
 import org.greenrobot.eventbus.EventBus;
 
 import dhcc.cn.com.fix_phone.Account;
@@ -36,6 +38,8 @@ import dhcc.cn.com.fix_phone.event.TokenEvent;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.zhy.http.okhttp.log.LoggerInterceptor.TAG;
 
 /**
  * 2017/9/17 16
@@ -623,6 +627,7 @@ public class ApiManager {
             public void onResponse(Call<FavoResponse> call, Response<FavoResponse> response) {
                 FavoResponse body = response.body();
                 if (response.code() == 200 && body != null) {
+                    Log.d(TAG, "onResponse: " + body);
                     EventBus.getDefault().post(new FavoResponseEvent(body));
                 }
             }
@@ -728,6 +733,24 @@ public class ApiManager {
                 event.errorMessage = t.getMessage();
                 event.isOk = false;
                 EventBus.getDefault().post(event);
+            }
+        });
+    }
+
+    //15.删除生意圈
+    public void DeleteBusi(String FInterID) {
+        mApi.DeleteBusi(getLoginInfo().accessToken, FInterID).enqueue(new Callback<FavoResponse>() {
+            @Override
+            public void onResponse(Call<FavoResponse> call, Response<FavoResponse> response) {
+                FavoResponse body = response.body();
+                if (response.code() == 200 && body != null) {
+                    EventBus.getDefault().post(new FavoResponseEvent(body));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FavoResponse> call, Throwable t) {
+
             }
         });
     }

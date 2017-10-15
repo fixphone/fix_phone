@@ -112,10 +112,9 @@ public interface Api {
     @POST("/Busi/Publish")
     Call<String> PublishBusi(@Part MultipartBody.Part file);
 
-
     //15.删除生意圈
     @POST("/Busi/Delete")
-    Call<String> DeleteBusi(@Header("accessToken") String accessToken,
+    Call<FavoResponse> DeleteBusi(@Header("accessToken") String accessToken,
                             @Query("FInterID") String FInterID);
 
     //16.上传店铺头像

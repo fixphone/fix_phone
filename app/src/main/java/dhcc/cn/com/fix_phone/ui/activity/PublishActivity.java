@@ -27,14 +27,12 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.github.rubensousa.bottomsheetbuilder.BottomSheetBuilder;
 import com.github.rubensousa.bottomsheetbuilder.adapter.BottomSheetItemClickListener;
-import com.google.gson.Gson;
 import com.nanchen.compresshelper.CompressHelper;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
-import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.greenrobot.eventbus.EventBus;
@@ -43,16 +41,13 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.CountDownLatch;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import dhcc.cn.com.fix_phone.Account;
 import dhcc.cn.com.fix_phone.MyApplication;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.adapter.SelectImageAdapter;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
-import dhcc.cn.com.fix_phone.bean.UploadResponse;
 import dhcc.cn.com.fix_phone.conf.CircleDefaultData;
 import dhcc.cn.com.fix_phone.event.PublishSuccessEvent;
 import dhcc.cn.com.fix_phone.utils.FileUtils;
@@ -242,149 +237,6 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
             @Override
             public void onError(Throwable e) {
 
-            }
-        });
-
-
-    }
-
-    private void uploadVideo() {
-        if (mFileVideo == null || !mFileVideo.exists()) {
-            postUploadMessage();
-        } else {
-            mList = new CopyOnWriteArrayList<>();
-            Log.d(TAG, "uploadVideo: " + mFileVideo.length() * 1.0f / (1024 * 1024));
-            mLoadDialog.show();
-            final CountDownLatch startSignal = new CountDownLatch(1);
-            uploadFile("/Busi/UploadVideo", mList, mFileVideo, startSignal);
-
-            // 成功以后
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        startSignal.await();
-                        postUploadMessage();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
-        }
-    }
-
-    private void uploadPhoto() {
-        if (mAdapter.getData().isEmpty()) {
-            postUploadMessage();
-        } else {
-            uploadPhotoImage();
-        }
-    }
-
-    private void uploadObservable() {
-        Observable.fromIterable(mAdapter.getData()).map(new Function<String, File>() {
-            @Override
-            public File apply(String s) throws Exception {
-                return CompressHelper.getDefault(MyApplication.getContext()).compressToFile(new File(s));
-            }
-        }).toList().observeOn(Schedulers.newThread()).subscribe(new SingleObserver<List<File>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onSuccess(List<File> files) {
-               // ApiManager.Instance().publishSimpleBusi(mSelectType, getEditText(), files);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-        });
-    }
-
-    private void uploadPhotoImage() {
-        mList = new CopyOnWriteArrayList<>();
-        final CountDownLatch startSignal = new CountDownLatch(mAdapter.getData().size());
-        for (int i = 0; i < mAdapter.getData().size(); i++) {
-            mLoadDialog.show();
-            final File file = new File(mAdapter.getData().get(i));
-            uploadFile("/Busi/UploadPicture", mList, file, startSignal);
-        }
-        // 成功以后
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    startSignal.await();
-                    postUploadMessage();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
-
-    private void postUploadMessage() {
-        if (mType == 1) {
-            uploadMessage(mList.toString(), "");
-        } else {
-            uploadMessage("", mList.get(0));
-        }
-    }
-
-    private void uploadBussiness() {
-
-    }
-
-    private void uploadMessage(String photoUUId, String videoUUid) {
-        OkHttpUtils.post().url("http://120.77.202.151:8080/Busi/Publish")
-                .addParams("type", mSelectType)
-                .addParams("content", getEditText())
-                .addParams("images", photoUUId)
-                .addParams("videoId", videoUUid)
-                .addHeader("accessKey", "JHD2017")
-                .addHeader("accessToken", Account.getAccessToken())
-                .build()
-                .execute(new StringCallback() {
-
-                    @Override
-                    public void onError(Call call, Exception e, int id) {
-                        Log.d(TAG, "onError: " + e.toString());
-                        if (mLoadDialog != null) {
-                            mLoadDialog.dismiss();
-                        }
-                    }
-
-                    @Override
-                    public void onResponse(String response, int id) {
-                        if (mLoadDialog != null) {
-                            mLoadDialog.dismiss();
-                        }
-                        Log.d(TAG, "postUploadMessage: " + response);
-                        EventBus.getDefault().post(new PublishSuccessEvent(true));
-                        finish();
-                    }
-                });
-    }
-
-    private void uploadFile(String path, final CopyOnWriteArrayList<String> list, File file, final CountDownLatch startSignal) {
-        UploadFileUtil.uploadPhotoFile(file, path, new StringCallback() {
-            @Override
-            public void onError(Call call, Exception e, int id) {
-                Log.d(TAG, "onError: " + e.toString());
-                startSignal.countDown();
-            }
-
-            @Override
-            public void onResponse(String response, int id) {
-                Log.d(TAG, "uploadPhotoFile: " + response);
-                Gson gson = new Gson();
-                UploadResponse uploadResponse = gson.fromJson(response, UploadResponse.class);
-                list.add(uploadResponse.FObject.uuid);
-                startSignal.countDown();
             }
         });
     }
