@@ -64,6 +64,7 @@ public class MineCirCleActivity extends BaseActivity implements DeleteDialogFrag
     private int               mResourceType;
     private int               mCurrentPosition;
     private String            mFInterID;
+    private String mFavoriteType;
 
     @Override
     public int getLayoutId() {
@@ -109,6 +110,7 @@ public class MineCirCleActivity extends BaseActivity implements DeleteDialogFrag
             public void onDelete(int position, CircleItem item) {
                 mCurrentPosition = position;
                 mFInterID = item.getUser().FInterID;
+                mFavoriteType = item.getUser().FFavoriteType;
                 DeleteDialogFragment deleteFragment = DeleteDialogFragment.newInstance();
                 deleteFragment.show(getSupportFragmentManager(), "deleteFragment");
             }
@@ -211,6 +213,8 @@ public class MineCirCleActivity extends BaseActivity implements DeleteDialogFrag
             user.FUserTypeName = rowsBean.FUserTypeName;
             user.FUserTypeNumber = rowsBean.FUserTypeNumber;
             user.FFavoriteUserID = rowsBean.FFavoriteUserID;
+            user.FFavoriteDate = rowsBean.FFavoriteDate;
+            user.FFavoriteType = rowsBean.FFavoriteType;
             circleItem.setUser(user);
             circleItem.setType(CircleItem.TYPE_URL);
 
@@ -264,7 +268,19 @@ public class MineCirCleActivity extends BaseActivity implements DeleteDialogFrag
         if (mResourceType == 1) {
             ApiManager.Instance().DeleteBusi(mFInterID);
         } else {
-            ApiManager.Instance().deleteFavo(mFInterID);
+            switch (mFavoriteType) {
+                case "1":
+                    ApiManager.Instance().deleteFavo(mFInterID);
+                    break;
+                case "2":
+                    ApiManager.Instance().DeletePictureFavo(mFInterID);
+                    break;
+                case "3":
+                    ApiManager.Instance().DeleteVideoFavo(mFInterID);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

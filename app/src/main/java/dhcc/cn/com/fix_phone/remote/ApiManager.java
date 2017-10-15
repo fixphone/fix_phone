@@ -10,7 +10,6 @@ import dhcc.cn.com.fix_phone.bean.BusinessResponse;
 import dhcc.cn.com.fix_phone.bean.CirCleADResponse;
 import dhcc.cn.com.fix_phone.bean.CircleBusiness;
 import dhcc.cn.com.fix_phone.bean.CircleDetailAd;
-import dhcc.cn.com.fix_phone.bean.CollectResponse;
 import dhcc.cn.com.fix_phone.bean.FavoResponse;
 import dhcc.cn.com.fix_phone.bean.GetFriendResponse;
 import dhcc.cn.com.fix_phone.bean.ImageResponse;
@@ -646,17 +645,17 @@ public class ApiManager {
 
     //30.添加图片收藏
     public void AddPictureFavo(String uuid) {
-        mApi.AddPictureFavo(getLoginInfo().accessToken, uuid).enqueue(new Callback<CollectResponse>() {
+        mApi.AddPictureFavo(getLoginInfo().accessToken, uuid).enqueue(new Callback<FavoResponse>() {
             @Override
-            public void onResponse(Call<CollectResponse> call, Response<CollectResponse> response) {
-                CollectResponse body = response.body();
+            public void onResponse(Call<FavoResponse> call, Response<FavoResponse> response) {
+                FavoResponse body = response.body();
                 if (response.code() == 200 && body != null) {
                     EventBus.getDefault().post(new CollectEvent(true));
                 }
             }
 
             @Override
-            public void onFailure(Call<CollectResponse> call, Throwable t) {
+            public void onFailure(Call<FavoResponse> call, Throwable t) {
 
             }
         });
@@ -664,17 +663,17 @@ public class ApiManager {
 
     //31.删除图片收藏
     public void DeletePictureFavo(String uuid) {
-        mApi.DeletePictureFavo(getLoginInfo().accessToken, uuid).enqueue(new Callback<CollectResponse>() {
+        mApi.DeletePictureFavo(getLoginInfo().accessToken, uuid).enqueue(new Callback<FavoResponse>() {
             @Override
-            public void onResponse(Call<CollectResponse> call, Response<CollectResponse> response) {
-                CollectResponse body = response.body();
+            public void onResponse(Call<FavoResponse> call, Response<FavoResponse> response) {
+                FavoResponse body = response.body();
                 if (response.code() == 200 && body != null) {
                     EventBus.getDefault().post(new CollectEvent(true));
                 }
             }
 
             @Override
-            public void onFailure(Call<CollectResponse> call, Throwable t) {
+            public void onFailure(Call<FavoResponse> call, Throwable t) {
 
             }
         });
@@ -682,17 +681,17 @@ public class ApiManager {
 
     //32.添加视频收藏
     public void AddVideoFavo(String uuid) {
-        mApi.AddVideoFavo(getLoginInfo().accessToken, uuid).enqueue(new Callback<CollectResponse>() {
+        mApi.AddVideoFavo(getLoginInfo().accessToken, uuid).enqueue(new Callback<FavoResponse>() {
             @Override
-            public void onResponse(Call<CollectResponse> call, Response<CollectResponse> response) {
-                CollectResponse body = response.body();
+            public void onResponse(Call<FavoResponse> call, Response<FavoResponse> response) {
+                FavoResponse body = response.body();
                 if (response.code() == 200 && body != null) {
                     EventBus.getDefault().post(new CollectEvent(true));
                 }
             }
 
             @Override
-            public void onFailure(Call<CollectResponse> call, Throwable t) {
+            public void onFailure(Call<FavoResponse> call, Throwable t) {
 
             }
         });
@@ -700,17 +699,17 @@ public class ApiManager {
 
     //33.删除视频收藏
     public void DeleteVideoFavo(String uuid) {
-        mApi.DeleteVideoFavo(getLoginInfo().accessToken, uuid).enqueue(new Callback<CollectResponse>() {
+        mApi.DeleteVideoFavo(getLoginInfo().accessToken, uuid).enqueue(new Callback<FavoResponse>() {
             @Override
-            public void onResponse(Call<CollectResponse> call, Response<CollectResponse> response) {
-                CollectResponse body = response.body();
+            public void onResponse(Call<FavoResponse> call, Response<FavoResponse> response) {
+                FavoResponse body = response.body();
                 if (response.code() == 200 && body != null) {
                     EventBus.getDefault().post(new CollectEvent(true));
                 }
             }
 
             @Override
-            public void onFailure(Call<CollectResponse> call, Throwable t) {
+            public void onFailure(Call<FavoResponse> call, Throwable t) {
 
             }
         });
