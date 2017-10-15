@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -14,16 +15,20 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import dhcc.cn.com.fix_phone.Account;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.adapter.ConversationListAdapterEx;
 import dhcc.cn.com.fix_phone.base.BaseFragment;
-import dhcc.cn.com.fix_phone.base.GlideImageLoader;
-import dhcc.cn.com.fix_phone.bean.CirCleADResponse;
-import dhcc.cn.com.fix_phone.event.CircleAdEvent;
+import dhcc.cn.com.fix_phone.bean.GetFriendResponse;
+import dhcc.cn.com.fix_phone.db.Friend;
+import dhcc.cn.com.fix_phone.event.GetFriendEvent;
+import dhcc.cn.com.fix_phone.remote.ApiManager;
+import dhcc.cn.com.fix_phone.rong.BroadcastManager;
+import dhcc.cn.com.fix_phone.rong.CharacterParser;
+import dhcc.cn.com.fix_phone.rong.SealUserInfoManager;
 import dhcc.cn.com.fix_phone.ui.activity.NewFriendListActivity;
 import dhcc.cn.com.fix_phone.ui.widget.DragPointView;
 import dhcc.cn.com.fix_phone.utils.NToast;
@@ -33,6 +38,9 @@ import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imkit.manager.IUnReadMessageObserver;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
+
+import static dhcc.cn.com.fix_phone.rong.SealAppContext.UPDATE_FRIEND;
+import static dhcc.cn.com.fix_phone.rong.SealAppContext.UPDATE_RED_DOT;
 
 /**
  * 2017/9/16 23
@@ -49,6 +57,7 @@ public class ImFragment extends BaseFragment implements DragPointView.OnDragList
     @BindView(R.id.seal_num)
     DragPointView mUnreadNumView;
 
+    private static final String TAG = "ImFragment";
     private ConversationListFragment mConversationListFragment = null;
     private ContactsFragment contactsFragment = null;
     private Conversation.ConversationType[] mConversationsTypes = null;
@@ -80,6 +89,7 @@ public class ImFragment extends BaseFragment implements DragPointView.OnDragList
         fragmentTransaction.commit();
         list_item.setChecked(true);
         changeFragment(mConversationListFragment);
+        ApiManager.Instance().GetListFriend(Account.getAccessToken(), "");
     }
 
     @Override
@@ -222,6 +232,20 @@ public class ImFragment extends BaseFragment implements DragPointView.OnDragList
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onShowAd(CircleAdEvent event) {
+    public void getFriend(GetFriendEvent event) {
+        if(event.getFriendResponse != null){
+            Log.d(TAG, "getFriend: " + event.getFriendResponse.FObject.list);
+            if(event.getFriendResponse.FObject != null && event.getFriendResponse.FObject.list != null){
+                for(GetFriendResponse.FriendList.Friend f : event.getFriendResponse.FObject.list){
+                    Friend friend = new Friend(f.FFriendID, f.FCompanyName,
+                            null, null, null, null, null, null,
+                            CharacterParser.getInstance().getSpelling(f.FCompanyName),
+                            null);
+                    SealUserInfoManager.getInstance().addFriend(friend);
+                }
+                BroadcastManager.getInstance(getContext()).sendBroadcast(UPDATE_FRIEND);
+                BroadcastManager.getInstance(getContext()).sendBroadcast(UPDATE_RED_DOT);
+            }
+        }
     }
 }

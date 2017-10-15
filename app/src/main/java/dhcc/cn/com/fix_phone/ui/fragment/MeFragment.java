@@ -28,6 +28,7 @@ import dhcc.cn.com.fix_phone.base.BaseFragment;
 import dhcc.cn.com.fix_phone.bean.BusinessResponse;
 import dhcc.cn.com.fix_phone.event.BusinessEvent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
+import dhcc.cn.com.fix_phone.rong.SealConst;
 import dhcc.cn.com.fix_phone.ui.activity.AboutAppActivity;
 import dhcc.cn.com.fix_phone.ui.activity.FeedBackActivity;
 import dhcc.cn.com.fix_phone.ui.activity.MineCirCleActivity;
@@ -64,6 +65,7 @@ public class MeFragment extends BaseFragment {
 
     private BusinessResponse mResponse;
     private SharedPreferences sp;
+    private SharedPreferences.Editor editor;
     private LoadDialog loadDialog;
     private Toast toast;
 
@@ -96,6 +98,7 @@ public class MeFragment extends BaseFragment {
         mTitleRightTv.setText("设置");
         mTitleRightTv.setTextColor(ContextCompat.getColor(getContext(), R.color.app_text_color_black));
         sp = getContext().getSharedPreferences("config", getContext().MODE_PRIVATE);
+        editor = sp.edit();
         loadDialog = new LoadDialog(getContext(), false, "");
         toast = Toast.makeText(getContext(), "", Toast.LENGTH_SHORT);
     }
@@ -113,6 +116,8 @@ public class MeFragment extends BaseFragment {
         user_mobile.setText(mResponse.FObject.phone);
         Glide.with(getContext()).load(mResponse.FObject.headUrl).diskCacheStrategy(DiskCacheStrategy.ALL).into(user_icon);
         RongIM.getInstance().setCurrentUserInfo(new UserInfo(Account.getUserId(), mResponse.FObject.name, Uri.parse(mResponse.FObject.headUrl)));
+        editor.putString(SealConst.SEALTALK_LOGIN_NAME, mResponse.FObject.name);
+        editor.apply();
     }
 
     @OnClick({R.id.mine_info, R.id.mine_circle, R.id.mine_house, R.id.mine_suggest, R.id.mine_vip,

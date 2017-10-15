@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -15,10 +16,25 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import dhcc.cn.com.fix_phone.Account;
 import dhcc.cn.com.fix_phone.MyApplication;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.base.RongBaseActivity;
+import dhcc.cn.com.fix_phone.bean.GetFriendResponse;
 import dhcc.cn.com.fix_phone.db.Friend;
+import dhcc.cn.com.fix_phone.event.AddFriendEvent;
+import dhcc.cn.com.fix_phone.event.GetFriendEvent;
+import dhcc.cn.com.fix_phone.event.QueryUserEvent;
+import dhcc.cn.com.fix_phone.remote.ApiManager;
+import dhcc.cn.com.fix_phone.rong.BroadcastManager;
+import dhcc.cn.com.fix_phone.rong.CharacterParser;
 import dhcc.cn.com.fix_phone.rong.SealAppContext;
 import dhcc.cn.com.fix_phone.rong.SealConst;
 import dhcc.cn.com.fix_phone.rong.SealUserInfoManager;
@@ -35,8 +51,12 @@ import dhcc.cn.com.fix_phone.utils.NToast;
 import io.rong.imageloader.core.ImageLoader;
 import io.rong.imlib.model.UserInfo;
 
+import static dhcc.cn.com.fix_phone.rong.SealAppContext.UPDATE_FRIEND;
+import static dhcc.cn.com.fix_phone.rong.SealAppContext.UPDATE_RED_DOT;
+
 public class SearchFriendActivity extends RongBaseActivity {
 
+    private static final String TAG = "SearchFriendActivity";
     private static final int CLICK_CONVERSATION_USER_PORTRAIT = 1;
     private static final int SEARCH_PHONE = 10;
     private static final int ADD_FRIEND = 11;
@@ -54,7 +74,16 @@ public class SearchFriendActivity extends RongBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        EventBus.getDefault().register(this);
         setTitle("增加好友");
+        mHeadRightText.setText("查找");
+        mHeadRightText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ApiManager.Instance().QueryUserFriend(Account.getAccessToken(), mEtSearch.getText().toString().trim());
+                LoadDialog.show(SearchFriendActivity.this);
+            }
+        });
 
         mEtSearch = (EditText) findViewById(R.id.search_edit);
         searchItem = (LinearLayout) findViewById(R.id.search_result);
@@ -68,16 +97,22 @@ public class SearchFriendActivity extends RongBaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() == 11) {
-                    mPhone = s.toString().trim();
-                    if (!AMUtils.isMobile(mPhone)) {
-                        NToast.shortToast(mContext, "非法手机号");
-                        return;
-                    }
-                    hintKbTwo();
-                    LoadDialog.show(mContext);
-                    request(SEARCH_PHONE, true);
-                } else {
+//                if (s.length() == 11) {
+//                    mPhone = s.toString().trim();
+//                    if (!AMUtils.isMobile(mPhone)) {
+//                        NToast.shortToast(mContext, "非法手机号");
+//                        return;
+//                    }
+//                    hintKbTwo();
+//                    LoadDialog.show(mContext);
+//                    request(SEARCH_PHONE, true);
+//                } else {
+//                    searchItem.setVisibility(View.GONE);
+//                }
+                if(s.length() > 0){
+                    mHeadRightText.setVisibility(View.VISIBLE);
+                }else {
+                    mHeadRightText.setVisibility(View.GONE);
                     searchItem.setVisibility(View.GONE);
                 }
             }
@@ -87,7 +122,48 @@ public class SearchFriendActivity extends RongBaseActivity {
 
             }
         });
+        searchItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isFriendOrSelf(mFriendId)) {
+                    Intent intent = new Intent(SearchFriendActivity.this, UserDetailActivity.class);
+                    intent.putExtra("friend", mFriend);
+                    intent.putExtra("type", CLICK_CONVERSATION_USER_PORTRAIT);
+                    startActivity(intent);
+                    SealAppContext.getInstance().pushActivity(SearchFriendActivity.this);
+                    return;
+                }
+                DialogWithYesOrNoUtils.getInstance().showEditDialog(mContext, getString(R.string.add_text), getString(R.string.add_friend), new DialogWithYesOrNoUtils.DialogCallBack() {
+                    @Override
+                    public void executeEvent() {
 
+                    }
+
+                    @Override
+                    public void updatePassword(String oldPassword, String newPassword) {
+
+                    }
+
+                    @Override
+                    public void executeEditEvent(String editText) {
+                        if (!CommonUtils.isNetworkConnected(mContext)) {
+                            NToast.shortToast(mContext, "网络不可用");
+                            return;
+                        }
+                        addFriendMessage = editText;
+                        if (TextUtils.isEmpty(editText)) {
+                            addFriendMessage = "我是" + getSharedPreferences("config", MODE_PRIVATE).getString(SealConst.SEALTALK_LOGIN_NAME, "");
+                        }
+                        if (!TextUtils.isEmpty(mFriendId)) {
+                            LoadDialog.show(mContext);
+                            ApiManager.Instance().AddFriend(Account.getAccessToken(), mFriendId);
+                        } else {
+                            NToast.shortToast(mContext, "id is null");
+                        }
+                    }
+                });
+            }
+        });
     }
 
     @Override
@@ -234,4 +310,43 @@ public class SearchFriendActivity extends RongBaseActivity {
         }
         return false;
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void queryUser(QueryUserEvent event) {
+        LoadDialog.dismiss(this);
+        if(event.queryUserResponse != null){
+            Log.d(TAG, "queryUser: " + event.queryUserResponse.FObject);
+            if(event.queryUserResponse.FObject != null && !event.queryUserResponse.FObject.list.isEmpty()){
+                searchItem.setVisibility(View.VISIBLE);
+                mFriendId = event.queryUserResponse.FObject.list.get(0).FFriendID;
+                Glide.with(this).load(event.queryUserResponse.FObject.list.get(0).FHeadUrl).diskCacheStrategy(DiskCacheStrategy.ALL).into(searchImage);
+                searchName.setText(event.queryUserResponse.FObject.list.get(0).FCompanyName);
+            }
+        }else {
+            NToast.shortToast(mContext, event.errorMessage);
+            LoadDialog.dismiss(mContext);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void addFriend(AddFriendEvent event) {
+        LoadDialog.dismiss(this);
+        if(event.addFriendResponse != null){
+            Log.d(TAG, "queryUser: " + event.addFriendResponse.FObject);
+            if(event.addFriendResponse.FObject != null){
+                NToast.shortToast(mContext, "请求成功");
+                LoadDialog.dismiss(mContext);
+            }
+        }else {
+        NToast.shortToast(mContext, "请求失败:" + event.errorMessage);
+        LoadDialog.dismiss(mContext);
+    }
+    }
+
 }

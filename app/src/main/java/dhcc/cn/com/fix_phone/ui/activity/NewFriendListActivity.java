@@ -139,6 +139,7 @@ public class NewFriendListActivity extends RongBaseActivity implements NewFriend
 
     @Override
     public void onFailure(int requestCode, int state, Object result) {
+        LoadDialog.dismiss(this);
         switch (requestCode) {
             case GET_ALL:
                 break;

@@ -5,6 +5,7 @@ import android.util.Log;
 import org.greenrobot.eventbus.EventBus;
 
 import dhcc.cn.com.fix_phone.Account;
+import dhcc.cn.com.fix_phone.bean.AddFriendResponse;
 import dhcc.cn.com.fix_phone.bean.BusinessResponse;
 import dhcc.cn.com.fix_phone.bean.CirCleADResponse;
 import dhcc.cn.com.fix_phone.bean.CircleBusiness;
@@ -16,21 +17,25 @@ import dhcc.cn.com.fix_phone.bean.ImageResponse;
 import dhcc.cn.com.fix_phone.bean.LoginInfo;
 import dhcc.cn.com.fix_phone.bean.LoginResponse;
 import dhcc.cn.com.fix_phone.bean.ProductImage;
+import dhcc.cn.com.fix_phone.bean.QueryUserResponse;
 import dhcc.cn.com.fix_phone.bean.RegisterResponse;
 import dhcc.cn.com.fix_phone.bean.RongTokenResponse;
 import dhcc.cn.com.fix_phone.bean.TelCheckResponse;
 import dhcc.cn.com.fix_phone.bean.TokenResponse;
+import dhcc.cn.com.fix_phone.event.AddFriendEvent;
 import dhcc.cn.com.fix_phone.event.BusinessEvent;
 import dhcc.cn.com.fix_phone.event.CirCleBusinessEvent;
 import dhcc.cn.com.fix_phone.event.CircleAdEvent;
 import dhcc.cn.com.fix_phone.event.CircleDetailAdEvent;
 import dhcc.cn.com.fix_phone.event.CollectEvent;
+import dhcc.cn.com.fix_phone.event.DeleteFriendEvent;
 import dhcc.cn.com.fix_phone.event.FavoResponseEvent;
 import dhcc.cn.com.fix_phone.event.FindPswEvent;
 import dhcc.cn.com.fix_phone.event.GetFriendEvent;
 import dhcc.cn.com.fix_phone.event.ImageResponeEvent;
 import dhcc.cn.com.fix_phone.event.LoginEvent;
 import dhcc.cn.com.fix_phone.event.ProductImageEvent;
+import dhcc.cn.com.fix_phone.event.QueryUserEvent;
 import dhcc.cn.com.fix_phone.event.RegisterEvent;
 import dhcc.cn.com.fix_phone.event.RongTokenEvent;
 import dhcc.cn.com.fix_phone.event.TelCheckEvent;
@@ -750,9 +755,83 @@ public class ApiManager {
 
             @Override
             public void onFailure(Call<FavoResponse> call, Throwable t) {
+            }
+        });
+    }
+    //37.查找用户
+    public void QueryUserFriend(String accessToken, String queryField){
+        mApi.QueryUserFriend(accessToken, queryField).enqueue(new Callback<QueryUserResponse>() {
+            @Override
+            public void onResponse(Call<QueryUserResponse> call, Response<QueryUserResponse> response) {
+                QueryUserResponse queryUserResponse = response.body();
+                if(response.code() == 200 && queryUserResponse != null){
+                    EventBus.getDefault().post(new QueryUserEvent(queryUserResponse));
+                }else {
+                    QueryUserEvent event = new QueryUserEvent(null);
+                    event.errorMessage = "服务器返回错误";
+                    event.isOk = false;
+                    EventBus.getDefault().post(event);
+                }
+            }
 
+            public void onFailure(Call<QueryUserResponse> call, Throwable t) {
+                QueryUserEvent event = new QueryUserEvent(null);
+                event.errorMessage = t.getMessage();
+                event.isOk = false;
+                EventBus.getDefault().post(event);
             }
         });
     }
 
+    //38.添加好友
+    public void AddFriend(String accessToken, String friendId){
+        mApi.AddFriend(accessToken, friendId).enqueue(new Callback<AddFriendResponse>() {
+            @Override
+            public void onResponse(Call<AddFriendResponse> call, Response<AddFriendResponse> response) {
+                AddFriendResponse addFriendResponse = response.body();
+                if(response.code() == 200 && addFriendResponse != null){
+                    EventBus.getDefault().post(new AddFriendEvent(addFriendResponse));
+                }else {
+                    AddFriendEvent event = new AddFriendEvent(null);
+                    event.errorMessage = "服务器返回错误";
+                    event.isOk = false;
+                    EventBus.getDefault().post(event);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AddFriendResponse> call, Throwable t) {
+                AddFriendEvent event = new AddFriendEvent(null);
+                event.errorMessage = t.getMessage();
+                event.isOk = false;
+                EventBus.getDefault().post(event);
+            }
+        });
+    }
+
+    //39.删除好友
+    public void DeleteFriend(String accessToken, String friendId){
+        mApi.DeleteFriend(accessToken, friendId).enqueue(new Callback<TelCheckResponse>() {
+            @Override
+            public void onResponse(Call<TelCheckResponse> call, Response<TelCheckResponse> response) {
+                TelCheckResponse telCheckResponse = response.body();
+                if(response.code() == 200 && telCheckResponse != null){
+                    EventBus.getDefault().post(new DeleteFriendEvent(telCheckResponse));
+                }else {
+                    DeleteFriendEvent event = new DeleteFriendEvent(null);
+                    event.errorMessage = "服务器返回错误";
+                    event.isOk = false;
+                    EventBus.getDefault().post(event);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TelCheckResponse> call, Throwable t) {
+                DeleteFriendEvent event = new DeleteFriendEvent(null);
+                event.errorMessage = t.getMessage();
+                event.isOk = false;
+                EventBus.getDefault().post(event);
+            }
+        });
+    }
 }

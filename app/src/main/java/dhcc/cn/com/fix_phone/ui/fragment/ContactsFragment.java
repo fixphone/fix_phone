@@ -2,11 +2,14 @@ package dhcc.cn.com.fix_phone.ui.fragment;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -19,6 +22,10 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -28,6 +35,7 @@ import dhcc.cn.com.fix_phone.MyApplication;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.adapter.FriendListAdapter;
 import dhcc.cn.com.fix_phone.db.Friend;
+import dhcc.cn.com.fix_phone.event.DeleteFriendEvent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
 import dhcc.cn.com.fix_phone.rong.BroadcastManager;
 import dhcc.cn.com.fix_phone.rong.CharacterParser;
@@ -36,6 +44,7 @@ import dhcc.cn.com.fix_phone.rong.SealConst;
 import dhcc.cn.com.fix_phone.rong.SealUserInfoManager;
 import dhcc.cn.com.fix_phone.ui.activity.NewFriendListActivity;
 import dhcc.cn.com.fix_phone.ui.activity.UserDetailActivity;
+import dhcc.cn.com.fix_phone.ui.widget.LoadDialog;
 import dhcc.cn.com.fix_phone.ui.widget.SelectableRoundedImageView;
 import dhcc.cn.com.fix_phone.utils.PinyinComparator;
 import io.rong.imageloader.core.ImageLoader;
@@ -82,6 +91,7 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_address, container, false);
+        EventBus.getDefault().register(this);
         initView(view);
         initData();
         updateUI();
@@ -196,7 +206,8 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.contact_me_item:
                 try {
-                    RongIM.getInstance().startPrivateChat(getActivity(), mId, mCacheName);
+//                    RongIM.getInstance().startPrivateChat(getActivity(), mId, mCacheName);
+                    RongIM.getInstance().startCustomerServiceChat(getActivity(), mId, mCacheName, null);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -235,6 +246,7 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
         try {
             BroadcastManager.getInstance(getActivity()).destroy(SealAppContext.UPDATE_FRIEND);
             BroadcastManager.getInstance(getActivity()).destroy(SealAppContext.UPDATE_RED_DOT);
@@ -300,8 +312,20 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
             mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                    Friend bean = mFriendList.get(position - 1);
-                    startFriendDetailsPage(bean);
+                    final Friend bean = mFriendList.get(position - 1);
+//                    startFriendDetailsPage(bean);
+                    new AlertDialog.Builder(getContext()).setTitle("删除好友").setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            ApiManager.Instance().DeleteFriend(Account.getAccessToken(), bean.getUserId());
+                            LoadDialog.show(getContext());
+                        }
+                    }).show();
                     return true;
                 }
             });
@@ -334,15 +358,18 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
     }
 
     private void updatePersonalUI() {
-        SharedPreferences sp = SealAppContext.getInstance().getContext().getSharedPreferences("config", Context.MODE_PRIVATE);
-        mId = sp.getString(SealConst.SEALTALK_LOGIN_ID, "");
-        mCacheName = sp.getString(SealConst.SEALTALK_LOGIN_NAME, "");
-        final String header = sp.getString(SealConst.SEALTALK_LOGING_PORTRAIT, "");
+//        SharedPreferences sp = SealAppContext.getInstance().getContext().getSharedPreferences("config", Context.MODE_PRIVATE);
+//        mId = sp.getString(SealConst.SEALTALK_LOGIN_ID, "");
+//        mCacheName = sp.getString(SealConst.SEALTALK_LOGIN_NAME, "");
+        mId = "KEFU150358816985468";
+        mCacheName = "速通交易客服";
+//        final String header = sp.getString(SealConst.SEALTALK_LOGING_PORTRAIT, "");
         mNameTextView.setText(mCacheName);
         if (!TextUtils.isEmpty(mId)) {
-            UserInfo userInfo = new UserInfo(mId, mCacheName, Uri.parse(header));
-            String portraitUri = SealUserInfoManager.getInstance().getPortraitUri(userInfo);
-            ImageLoader.getInstance().displayImage(portraitUri, mSelectableRoundedImageView, MyApplication.getOptions());
+//            UserInfo userInfo = new UserInfo(mId, mCacheName, Uri.parse(header));
+//            String portraitUri = SealUserInfoManager.getInstance().getPortraitUri(userInfo);
+            mSelectableRoundedImageView.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_launcher));
+//            ImageLoader.getInstance().displayImage("file:///android_asset/ic_launcher.png", mSelectableRoundedImageView, MyApplication.getOptions());
         }
     }
 
@@ -368,6 +395,14 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
             return spelling.replaceFirst(String.valueOf(first), String.valueOf(newFirst));
         } else {
             return "#";
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getFriend(DeleteFriendEvent event) {
+        if(event.telCheckResponse != null && event.telCheckResponse.FIsSuccess){
+            SealUserInfoManager.getInstance().deleteFriends();
+            ApiManager.Instance().GetListFriend(Account.getAccessToken(), "");
         }
     }
 }

@@ -1,6 +1,7 @@
 package dhcc.cn.com.fix_phone.remote;
 
 
+import dhcc.cn.com.fix_phone.bean.AddFriendResponse;
 import dhcc.cn.com.fix_phone.bean.BusinessResponse;
 import dhcc.cn.com.fix_phone.bean.CirCleADResponse;
 import dhcc.cn.com.fix_phone.bean.CircleBusiness;
@@ -11,6 +12,7 @@ import dhcc.cn.com.fix_phone.bean.GetFriendResponse;
 import dhcc.cn.com.fix_phone.bean.ImageResponse;
 import dhcc.cn.com.fix_phone.bean.LoginResponse;
 import dhcc.cn.com.fix_phone.bean.ProductImage;
+import dhcc.cn.com.fix_phone.bean.QueryUserResponse;
 import dhcc.cn.com.fix_phone.bean.RegisterResponse;
 import dhcc.cn.com.fix_phone.bean.RongTokenResponse;
 import dhcc.cn.com.fix_phone.bean.TelCheckResponse;
@@ -222,18 +224,18 @@ public interface Api {
                                           @Query("companyName") String companyName);
 
     //37.查找用户
-    @POST("/Friend/QueryUser")
-    Call<String> QueryUserFriend(@Header("accessToken") String accessToken,
-                                 @Query("queryField") String queryField);
+    @GET("/Friend/QueryUser")
+    Call<QueryUserResponse> QueryUserFriend(@Header("accessToken") String accessToken,
+                                            @Query("queryField") String queryField);
 
     //38.添加好友
-    @POST("/Friend/Add")
-    Call<String> AddFriend(@Header("accessToken") String accessToken,
-                           @Query("friendId") String friendId);
+    @GET("/Friend/Add")
+    Call<AddFriendResponse> AddFriend(@Header("accessToken") String accessToken,
+                                      @Query("friendId") String friendId);
 
     //39.删除好友
-    @POST("/Friend/Delete")
-    Call<String> DeleteFriend(@Header("accessToken") String accessToken,
+    @GET("/Friend/Delete")
+    Call<TelCheckResponse> DeleteFriend(@Header("accessToken") String accessToken,
                               @Query("friendId") String friendId);
 
     //40.判断是否好友

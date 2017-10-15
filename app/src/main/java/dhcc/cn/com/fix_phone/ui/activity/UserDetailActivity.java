@@ -46,6 +46,7 @@ import io.rong.imlib.model.UserOnlineStatusInfo;
 
 /**
  * Created by tiankui on 16/11/2.
+ *
  */
 
 public class UserDetailActivity extends RongBaseActivity implements View.OnClickListener {
