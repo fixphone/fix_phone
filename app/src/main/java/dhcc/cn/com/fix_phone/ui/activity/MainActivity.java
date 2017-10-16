@@ -19,6 +19,7 @@ import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
 import dhcc.cn.com.fix_phone.event.LoginEvent;
 import dhcc.cn.com.fix_phone.event.RongTokenEvent;
+import dhcc.cn.com.fix_phone.remote.Api;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
 import dhcc.cn.com.fix_phone.rong.SealConst;
 import dhcc.cn.com.fix_phone.rong.SealUserInfoManager;
@@ -91,6 +92,7 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
         String refreshToken = Account.getLoginInfo().getRefreshToken();
         ApiManager.Instance().RefreshToken(refreshToken);
         ApiManager.Instance().getRongToken(Account.getAccessToken());
+        ApiManager.Instance().getUserInfo(Account.getUserId());
     }
 
     @Override

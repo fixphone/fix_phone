@@ -234,11 +234,12 @@ public class ImFragment extends BaseFragment implements DragPointView.OnDragList
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getFriend(GetFriendEvent event) {
         if(event.getFriendResponse != null){
-            Log.d(TAG, "getFriend: " + event.getFriendResponse.FObject.list);
             if(event.getFriendResponse.FObject != null && event.getFriendResponse.FObject.list != null){
+                Log.d(TAG, "getFriend: " + event.getFriendResponse.FObject.list);
+                SealUserInfoManager.getInstance().deleteFriends();
                 for(GetFriendResponse.FriendList.Friend f : event.getFriendResponse.FObject.list){
-                    Friend friend = new Friend(f.FFriendID, f.FCompanyName,
-                            null, null, null, null, null, null,
+                    Friend friend = new Friend(f.FFriendID, f.FCompanyName, Uri.parse(f.FHeadUrl),
+                            null, null, null, null, null,
                             CharacterParser.getInstance().getSpelling(f.FCompanyName),
                             null);
                     SealUserInfoManager.getInstance().addFriend(friend);

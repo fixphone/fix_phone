@@ -46,7 +46,6 @@
                     android:ellipsize="end"
                     android:gravity="right"
                     android:singleLine="true"
-                    android:text="Laosi"
                     android:textColor="#A1A1A1"
                     android:textSize="15sp" />
             </RelativeLayout>
@@ -82,7 +81,6 @@
                     android:ellipsize="end"
                     android:gravity="right"
                     android:singleLine="true"
-                    android:text="Laosi"
                     android:textColor="#A1A1A1"
                     android:textSize="15sp" />
             </RelativeLayout>
@@ -118,7 +116,6 @@
                     android:ellipsize="end"
                     android:gravity="right"
                     android:singleLine="true"
-                    android:text="Laosi"
                     android:textColor="#A1A1A1"
                     android:textSize="15sp" />
             </RelativeLayout>
@@ -154,7 +151,6 @@
                     android:ellipsize="end"
                     android:gravity="right"
                     android:singleLine="true"
-                    android:text="Laosi"
                     android:textColor="#A1A1A1"
                     android:textSize="15sp" />
             </RelativeLayout>
@@ -190,7 +186,6 @@
                     android:ellipsize="end"
                     android:gravity="right"
                     android:singleLine="true"
-                    android:text="Laosi"
                     android:textColor="#A1A1A1"
                     android:textSize="15sp" />
             </RelativeLayout>
@@ -221,6 +216,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/public_5dp"
+                    android:layout_toRightOf="@id/info_address"
                     android:drawablePadding="@dimen/public_15dp"
                     android:drawableRight="@drawable/btn_arrow_right"
                     android:ellipsize="end"
@@ -265,10 +261,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/info_company_profile"
-                    android:layout_marginRight="@dimen/public_15dp"
+                    android:layout_marginRight="@dimen/public_10dp"
                     android:layout_marginTop="@dimen/public_5dp"
                     android:layout_toLeftOf="@id/profile_arrow"
-                    android:text="哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈"
                     android:textColor="#A1A1A1"
                     android:textSize="15sp" />
             </RelativeLayout>

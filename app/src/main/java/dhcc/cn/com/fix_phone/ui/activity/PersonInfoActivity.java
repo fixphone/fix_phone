@@ -62,6 +62,7 @@ public class PersonInfoActivity extends BaseActivity {
         super.initData();
         if(getIntent() != null && getIntent().hasExtra("BusinessResponse")){
             mResponse = (BusinessResponse)getIntent().getSerializableExtra("BusinessResponse");
+            if(mResponse != null)
             setViewState(mResponse);
         }
     }
@@ -74,7 +75,6 @@ public class PersonInfoActivity extends BaseActivity {
         info_phone_num_tv.setText(setText(mResponse.FObject.contactPhone));
         info_address_tv.setText(setText(mResponse.FObject.address));
         info_company_profile_tv.setText(setText(mResponse.FObject.companyProfile));
-
     }
 
     private String setText(String s){

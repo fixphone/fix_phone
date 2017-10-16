@@ -36,6 +36,7 @@ import dhcc.cn.com.fix_phone.utils.MD5;
 public class LoginActivity extends RongBaseActivity {
 
     private static final String TAG            = "LoginActivity";
+    public static final int LOGIN_BACK_CODE = 0x0010;
     public static final  int    REG_CODE       = 0x0001;
     private static final String IMG_TAG_HIDE   = "hide";
     private static final String IMG_TAG_SHOW   = "show";
@@ -76,7 +77,7 @@ public class LoginActivity extends RongBaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.title_back_iv:
-                finish();
+                onBackPressedSupport();
                 break;
             case R.id.eye_state:
                 if (eye_state.getTag().equals(IMG_TAG_HIDE)) {
@@ -140,7 +141,7 @@ public class LoginActivity extends RongBaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void loginResult(LoginEvent loginEvent) {
         loadDialog.dismiss();
-        if (loginEvent.loginResponse != null && loginEvent.loginResponse.FObject != null) {
+        if (loginEvent.loginResponse != null && loginEvent.loginResponse.FObject != null && loginEvent.loginResponse.FIsSuccess) {
             Account.setUserId(loginEvent.loginResponse.FObject.userID);
             Account.setLoginInfo(loginEvent.loginResponse.FObject);
             Account.setLogin(true);
@@ -155,6 +156,12 @@ public class LoginActivity extends RongBaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onBackPressedSupport() {
+        setResult(LOGIN_BACK_CODE, getIntent());
+        super.onBackPressedSupport();
     }
 
     private void goToMain() {

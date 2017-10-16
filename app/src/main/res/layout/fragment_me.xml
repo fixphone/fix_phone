@@ -55,8 +55,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="#FFFFFF"
-                            android:textSize="16sp"
-                            android:text="宋阳"/>
+                            android:textSize="16sp"/>
 
                         <TextView
                             android:id="@+id/user_mobile"
@@ -64,8 +63,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="#FFFFFF"
                             android:textSize="14sp"
-                            android:layout_marginTop="@dimen/dp_4"
-                            android:text="12306"/>
+                            android:layout_marginTop="@dimen/dp_4"/>
                     </LinearLayout>
 
                     <ImageView

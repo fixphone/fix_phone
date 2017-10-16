@@ -18,6 +18,7 @@ import io.rong.imkit.RongIM;
 
 /**
  * Created by Administrator on 2017/9/21 0021.
+ *
  */
 
 public class MyActivity extends BaseActivity {
@@ -29,6 +30,7 @@ public class MyActivity extends BaseActivity {
     @BindView(R.id.title_name)
     TextView  title_name;
 
+    private static final int LOGIN_OUT_CODE = 0x0013;
     private static final int SELECT_ICON_CODE = 0x0015;
     private BusinessResponse mResponse;
 
@@ -83,8 +85,7 @@ public class MyActivity extends BaseActivity {
         RongIM.getInstance().logout();
         Account.setLogin(false);
         Intent intent = new Intent(this, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+        startActivityForResult(intent, LOGIN_OUT_CODE);
     }
 
     @Override
@@ -94,6 +95,10 @@ public class MyActivity extends BaseActivity {
             if(resultCode == SelectHeaderActivity.RESULT_CODE){
                 mResponse = (BusinessResponse)data.getSerializableExtra("result");
                 Glide.with(this).load(mResponse.FObject.headUrl).diskCacheStrategy(DiskCacheStrategy.ALL).into(my_icon);
+            }
+        }else if(requestCode == LOGIN_OUT_CODE){
+            if(resultCode == LoginActivity.LOGIN_BACK_CODE){
+                finish();
             }
         }
     }

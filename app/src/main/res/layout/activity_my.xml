@@ -68,8 +68,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/text_color_gray"
             android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:text="13800000000"/>
+            android:layout_alignParentRight="true"/>
     </RelativeLayout>
 
     <View
