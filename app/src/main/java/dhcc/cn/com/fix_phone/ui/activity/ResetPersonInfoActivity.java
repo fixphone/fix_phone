@@ -149,7 +149,7 @@ public class ResetPersonInfoActivity extends BaseActivity{
 
     private void assignment(BusinessResponse businessResponse, String text){
         if(titleName.equals(PersonInfoActivity.ACTION_NAME)){
-            businessResponse.FObject.name = text;
+            businessResponse.FObject.companyName = text;
         }else if(titleName.equals(PersonInfoActivity.ACTION_CONTACT)){
             businessResponse.FObject.contact = text;
         }else if(titleName.equals(PersonInfoActivity.ACTION_POSTCODE)){

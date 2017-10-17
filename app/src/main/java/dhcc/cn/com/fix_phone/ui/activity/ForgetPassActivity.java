@@ -135,8 +135,14 @@ public class ForgetPassActivity extends BaseActivity{
     public void findPsw(FindPswEvent findPswEvent) {
         loadDialog.dismiss();
         if(findPswEvent.telCheckResponse != null){
-            toast.setText(findPswEvent.telCheckResponse.FMsg);
-            toast.show();
+            if(findPswEvent.telCheckResponse.FIsSuccess){
+                toast.setText("密码已找回");
+                toast.show();
+                finish();
+            }else {
+                toast.setText(findPswEvent.telCheckResponse.FMsg);
+                toast.show();
+            }
         }else {
             toast.setText(findPswEvent.errorMessage);
             toast.show();

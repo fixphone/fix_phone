@@ -35,7 +35,6 @@ import dhcc.cn.com.fix_phone.utils.MD5;
 
 public class LoginActivity extends RongBaseActivity {
 
-    private static final String TAG            = "LoginActivity";
     public static final int LOGIN_BACK_CODE = 0x0010;
     public static final  int    REG_CODE       = 0x0001;
     private static final String IMG_TAG_HIDE   = "hide";
@@ -64,8 +63,8 @@ public class LoginActivity extends RongBaseActivity {
         setHeadVisibility(View.GONE);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
-        title_name.setText("");
-        title_back_iv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.button_cancel_icon));
+        title_name.setText("登录");
+        title_back_iv.setVisibility(View.GONE);
         eye_state.setTag(IMG_TAG_HIDE);
         toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
         String phone = Account.getLoginInfo() == null ? "" : Account.getLoginInfo().getPhone();
@@ -165,7 +164,6 @@ public class LoginActivity extends RongBaseActivity {
     }
 
     private void goToMain() {
-        LoadDialog.dismiss(mContext);
         startActivity(new Intent(LoginActivity.this, MainActivity.class));
         finish();
     }

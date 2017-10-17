@@ -43,7 +43,6 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
 
     private SharedPreferences        sp;
     private SharedPreferences.Editor editor;
-    private String                   connectResultId;
 
     private SupportFragment[] mFragments = new SupportFragment[3];
 
@@ -76,21 +75,16 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
         EventBus.getDefault().register(this);
         getConversationPush();
         getPushMessage();
-
-        if(!Account.isLogin()){
-            startActivity(new Intent(this, LoginActivity.class));
-            return;
+        if(Account.isLogin()){
+            String refreshToken = Account.getLoginInfo().getRefreshToken();
+            if(!TextUtils.isEmpty(refreshToken))
+                ApiManager.Instance().RefreshToken(refreshToken);
         }
-        String refreshToken = Account.getLoginInfo().getRefreshToken();
-        ApiManager.Instance().RefreshToken(refreshToken);
-        ApiManager.Instance().getRongToken(Account.getAccessToken());
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        String refreshToken = Account.getLoginInfo().getRefreshToken();
-        ApiManager.Instance().RefreshToken(refreshToken);
         ApiManager.Instance().getRongToken(Account.getAccessToken());
         ApiManager.Instance().getUserInfo(Account.getUserId());
     }
@@ -186,9 +180,15 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void refreshTokenResult(LoginEvent loginEvent){
-        if(loginEvent.loginResponse != null && loginEvent.loginResponse.FObject != null){
-            Account.setAccessToken(Account.getUserId(), loginEvent.loginResponse.FObject.getAccessToken());
-            ApiManager.Instance().getRongToken(loginEvent.loginResponse.FObject.accessToken);
+        if(loginEvent.loginResponse != null){
+            if(loginEvent.loginResponse.FIsSuccess){
+                Account.setAccessToken(Account.getUserId(), loginEvent.loginResponse.FObject.getAccessToken());
+                ApiManager.Instance().getRongToken(loginEvent.loginResponse.FObject.accessToken);
+                ApiManager.Instance().getUserInfo(loginEvent.loginResponse.FObject.accessToken);
+            }else {
+                Account.setLogin(false);
+                Toast.makeText(this, "您的账号可能在其他地方登录了", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -205,7 +205,6 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
 
                     @Override
                     public void onSuccess(String s) {
-                        connectResultId = s;
                         NLog.e("connect", "onSuccess userid:" + s);
                         editor.putString(SealConst.SEALTALK_LOGIN_ID, s);
                         editor.putString("loginToken", loginToken);

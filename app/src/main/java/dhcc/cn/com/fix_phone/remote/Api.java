@@ -74,7 +74,7 @@ public interface Api {
 
     //8.刷新调用令牌
     @GET("/Account/RefreshToken")
-    Call<LoginResponse> RefreshToken(@Query("refreshToken") String refreshToken);
+    Call<LoginResponse> RefreshToken(@Header("refreshToken") String refreshToken);
 
     //9.获取融云Token
     @GET("/Account/LoginByCode")

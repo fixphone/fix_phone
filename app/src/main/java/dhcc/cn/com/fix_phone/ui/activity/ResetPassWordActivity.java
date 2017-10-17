@@ -1,6 +1,5 @@
 package dhcc.cn.com.fix_phone.ui.activity;
 
-import android.content.Intent;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -19,7 +18,6 @@ import butterknife.OnClick;
 import dhcc.cn.com.fix_phone.Account;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
-import dhcc.cn.com.fix_phone.event.RegisterEvent;
 import dhcc.cn.com.fix_phone.event.TelCheckEvent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
 import dhcc.cn.com.fix_phone.ui.widget.LoadDialog;
@@ -27,6 +25,7 @@ import dhcc.cn.com.fix_phone.utils.MD5;
 
 /**
  * Created by songyang on 2017\9\22 0022.
+ *
  */
 
 public class ResetPassWordActivity extends BaseActivity{
@@ -122,6 +121,7 @@ public class ResetPassWordActivity extends BaseActivity{
             if(telCheckEvent.telCheckResponse.FIsSuccess){
                 toast.setText("成功");
                 toast.show();
+                finish();
             }else {
                 toast.setText(telCheckEvent.telCheckResponse.FMsg);
                 toast.show();

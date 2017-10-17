@@ -154,11 +154,18 @@ public class RegistrationActivity extends BaseActivity {
     public void getCode(RegisterEvent registerEvent) {
         loadDialog.dismiss();
         if(registerEvent.registerResponse != null){
-            Intent intent = getIntent();
-            intent.putExtra("phone", phone_num_et.getText().toString());
-            intent.putExtra("passWord", pass_word_et.getText().toString());
-            setResult(REG_SUCCESS, intent);
-            finish();
+            if(registerEvent.registerResponse.FIsSuccess){
+                toast.setText("注册成功");
+                toast.show();
+                Intent intent = getIntent();
+                intent.putExtra("phone", phone_num_et.getText().toString());
+                intent.putExtra("passWord", pass_word_et.getText().toString());
+                setResult(REG_SUCCESS, intent);
+                finish();
+            }else {
+                toast.setText(registerEvent.registerResponse.FMsg);
+                toast.show();
+            }
         }else {
             toast.setText(registerEvent.errorMessage);
             toast.show();

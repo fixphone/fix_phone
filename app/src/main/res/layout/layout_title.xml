@@ -27,7 +27,6 @@
         android:layout_height="wrap_content"
         android:textColor="#080809"
         android:textSize="18sp"
-        android:text="Title"
         android:layout_centerInParent="true"/>
 
     <TextView

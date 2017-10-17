@@ -116,7 +116,7 @@ public class MeFragment extends BaseFragment {
         super.onResume();
         if(Account.isLogin()){
             if(mResponse != null){
-                setViewState(mResponse.FObject.name, mResponse.FObject.phone, mResponse.FObject.headUrl);
+                setViewState(mResponse.FObject.companyName, mResponse.FObject.phone, mResponse.FObject.headUrl);
             }
         }else {
             setViewState("", "", "");
@@ -127,7 +127,7 @@ public class MeFragment extends BaseFragment {
     public void onUserInfo(BusinessEvent event) {
         mResponse = event.mResponse;
         if(mResponse != null){
-            setViewState(mResponse.FObject.name, mResponse.FObject.phone, mResponse.FObject.headUrl);
+            setViewState(mResponse.FObject.companyName, mResponse.FObject.phone, mResponse.FObject.headUrl);
         }
     }
 
