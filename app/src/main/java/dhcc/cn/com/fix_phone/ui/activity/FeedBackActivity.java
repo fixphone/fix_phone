@@ -47,6 +47,7 @@ import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.adapter.AddPhotoAdapter;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
 import dhcc.cn.com.fix_phone.bean.UploadResponse;
+import dhcc.cn.com.fix_phone.ui.widget.LoadDialog;
 import dhcc.cn.com.fix_phone.utils.GsonUtils;
 import dhcc.cn.com.fix_phone.utils.UIUtils;
 import io.reactivex.Observer;
@@ -87,6 +88,7 @@ public class FeedBackActivity extends BaseActivity{
 
     @OnClick(R.id.btn_confirm)
     public void onClick(){
+        LoadDialog.show(this);
         uploadPhoto();
     }
 
@@ -300,11 +302,13 @@ public class FeedBackActivity extends BaseActivity{
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
+                        LoadDialog.dismiss(FeedBackActivity.this);
                         Log.d(TAG, "onError: " + e.toString());
                     }
 
                     @Override
                     public void onResponse(String response, int id) {
+                        LoadDialog.dismiss(FeedBackActivity.this);
                         Log.d(TAG, "onResponse: " + response);
                     }
                 });

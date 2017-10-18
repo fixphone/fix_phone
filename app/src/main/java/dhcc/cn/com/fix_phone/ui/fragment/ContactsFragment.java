@@ -257,19 +257,7 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
     }
 
     private void updateUI() {
-        SealUserInfoManager.getInstance().getFriends(new SealUserInfoManager.ResultCallback<List<Friend>>() {
-            @Override
-            public void onSuccess(List<Friend> friendsList) {
-                if (friendsList != null) {
-                    updateFriendsList(friendsList);
-                }
-            }
-
-            @Override
-            public void onError(String errString) {
-                updateFriendsList(null);
-            }
-        });
+        updateFriendsList(SealUserInfoManager.getInstance().getFriends());
     }
 
     private void updateFriendsList(List<Friend> friendsList) {
@@ -333,7 +321,7 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                }
+            }
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
