@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -31,30 +32,34 @@ import io.rong.imkit.RongIM;
 public class BusinessActivity extends BaseActivity {
     private static final String TAG = "BusinessActivity";
     @BindView(R.id.imageview_head)
-    ImageView mImageviewHead;
+    ImageView      mImageviewHead;
     @BindView(R.id.textView_product)
-    TextView  mTextViewProduct;
+    TextView       mTextViewProduct;
     @BindView(R.id.textView_phone)
-    TextView  mTextViewPhone;
+    TextView       mTextViewPhone;
     @BindView(R.id.banner)
-    Banner    mBanner;
+    Banner         mBanner;
     @BindView(R.id.textView_desc)
-    TextView  mTextViewDesc;
+    TextView       mTextViewDesc;
     @BindView(R.id.textView_home)
-    TextView  mTextViewHome;
+    TextView       mTextViewHome;
     @BindView(R.id.textView_circle)
-    TextView  mTextViewCircle;
+    TextView       mTextViewCircle;
     @BindView(R.id.toolbar_title)
-    TextView  mToolbarTitle;
+    TextView       mToolbarTitle;
     @BindView(R.id.imageView_communication)
-    ImageView mCommunication;
+    ImageView      mCommunication;
     @BindView(R.id.toolbar)
-    Toolbar   mToolbar;
+    Toolbar        mToolbar;
+    @BindView(R.id.relativeLayout)
+    RelativeLayout mRelativeLayout;
+
     private String           mName;
     private String           mHeadurl;
     private String           mUserID;
     private String           mweChatId;
     private BusinessResponse mResponse;
+    private int              type;
 
     @Override
     public int getLayoutId() {
@@ -68,6 +73,7 @@ public class BusinessActivity extends BaseActivity {
         mHeadurl = intent.getStringExtra("headurl");
         mUserID = intent.getStringExtra("userID");
         mweChatId = intent.getStringExtra("weChatId");
+        type = intent.getIntExtra("type", 0);
         EventBus.getDefault().register(this);
     }
 
@@ -75,6 +81,9 @@ public class BusinessActivity extends BaseActivity {
     protected void initView() {
         mToolbarTitle.setText(mName);
         Glide.with(this).load(mHeadurl).into(mImageviewHead);
+        if (type == 1) {
+            mRelativeLayout.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -154,7 +163,8 @@ public class BusinessActivity extends BaseActivity {
                         putExtra("userID", mUserID);
                 startActivity(intent2);
                 break;
-
+            default:
+                break;
         }
     }
 }

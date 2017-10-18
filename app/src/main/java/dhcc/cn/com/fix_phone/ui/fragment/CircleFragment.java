@@ -98,6 +98,7 @@ public class CircleFragment extends BaseFragment implements CircleFragmentAdapte
                 startActivity(new Intent(_mActivity, BusinessActivity.class).
                         putExtra("headurl",mListBeans.get(position).FUrl).
                         putExtra("name",mListBeans.get(position).FLinkName).
+                        putExtra("type",1).
                         putExtra("userID",mListBeans.get(position).FLinkID));
             }
         });
