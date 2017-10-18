@@ -1,6 +1,7 @@
 package dhcc.cn.com.fix_phone.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.youth.banner.Banner;
+import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,7 @@ import dhcc.cn.com.fix_phone.bean.CircleItem;
 import dhcc.cn.com.fix_phone.bean.PhotoInfo;
 import dhcc.cn.com.fix_phone.conf.CircleDefaultData;
 import dhcc.cn.com.fix_phone.mvp.presenter.CirclePresenter;
+import dhcc.cn.com.fix_phone.ui.activity.BusinessActivity;
 import dhcc.cn.com.fix_phone.ui.activity.ImagePagerActivity;
 import dhcc.cn.com.fix_phone.ui.widget.MultiImageView;
 import dhcc.cn.com.fix_phone.ui.widget.SnsPopupWindow;
@@ -213,6 +216,15 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
         public HeaderViewHolder(View itemView) {
             super(itemView);
             mBanner = itemView.findViewById(R.id.banner);
+            mBanner.setOnBannerListener(new OnBannerListener() {
+                @Override
+                public void OnBannerClick(int position) {
+                    context.startActivity(new Intent(context, BusinessActivity.class).
+                            putExtra("headurl", mList.get(position).FUrl).
+                            putExtra("name", mList.get(position).FLinkName).
+                            putExtra("userID", mList.get(position).FLinkID));
+                }
+            });
         }
 
         public void setBannerData() {

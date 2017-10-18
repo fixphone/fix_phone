@@ -2,6 +2,7 @@ package dhcc.cn.com.fix_phone.ui.activity;
 
 import android.content.Intent;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -75,6 +76,10 @@ public class BusinessActivity extends BaseActivity {
         mweChatId = intent.getStringExtra("weChatId");
         type = intent.getIntExtra("type", 0);
         EventBus.getDefault().register(this);
+        Log.d(TAG, "init: mUserID：" + mUserID);
+        Log.d(TAG, "init: mName：" + mName);
+        Log.d(TAG, "init: mweChatId：" + mweChatId);
+        Log.d(TAG, "init: type：" + type);
     }
 
     @Override
@@ -121,18 +126,21 @@ public class BusinessActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onUserInfo(BusinessEvent event) {
         mResponse = event.mResponse;
-        setViewData();
+        if (mResponse != null) {
+            setViewData();
 
-        List<String> imageList = mResponse.FObject.productList;
-        mBanner.setImageLoader(new GlideImageLoader());
-        mBanner.setImages(imageList);
-        mBanner.start();
+            List<String> imageList = mResponse.FObject.productList;
+            mBanner.setImageLoader(new GlideImageLoader());
+            mBanner.setImages(imageList);
+            mBanner.start();
+        }
     }
 
     private void setViewData() {
         mTextViewDesc.setText(mResponse.FObject.companyProfile);
         Glide.with(this).load(mHeadurl = mResponse.FObject.headUrl).into(mImageviewHead);
         mToolbarTitle.setText(mName = mResponse.FObject.companyName);
+        mweChatId = mResponse.FObject.phone;
     }
 
     @OnClick({R.id.textView_circle, R.id.textView_home, R.id.textView_product, R.id.textView_phone})

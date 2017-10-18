@@ -142,8 +142,9 @@ public class ImagePagerActivity extends YWActivity {
         private ImageSize      imageSize;
 
         public void setDatas(List<String> datas) {
-            if (datas != null)
+            if (datas != null){
                 this.datas = datas;
+            }
         }
 
         public void setImageSize(ImageSize imageSize) {
@@ -157,8 +158,9 @@ public class ImagePagerActivity extends YWActivity {
 
         @Override
         public int getCount() {
-            if (datas == null)
+            if (datas == null){
                 return 0;
+            }
             return datas.size();
         }
 
@@ -172,6 +174,13 @@ public class ImagePagerActivity extends YWActivity {
                     public boolean onLongClick(View view) {
                         createBottomDialog();
                         return true;
+                    }
+                });
+
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        finish();
                     }
                 });
 

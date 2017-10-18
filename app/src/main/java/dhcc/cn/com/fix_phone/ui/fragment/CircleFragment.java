@@ -3,6 +3,7 @@ package dhcc.cn.com.fix_phone.ui.fragment;
 import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,9 +46,9 @@ public class CircleFragment extends BaseFragment implements CircleFragmentAdapte
     @BindView(R.id.recyclerview)
     RecyclerView mRecyclerView;
 
-    private List<MultiItemEntity> mCircleItems;
-    private CircleFragmentAdapter mAdapter;
-    private Banner                mBanner;
+    private List<MultiItemEntity>                       mCircleItems;
+    private CircleFragmentAdapter                       mAdapter;
+    private Banner                                      mBanner;
     private List<CirCleADResponse.FObjectBean.ListBean> mListBeans;
 
     public static CircleFragment newInstance() {
@@ -85,8 +86,8 @@ public class CircleFragment extends BaseFragment implements CircleFragmentAdapte
         });
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(layoutManager);
-        mAdapter.expand(1,false,false);
-        mAdapter.expand(10,false,false);
+        mAdapter.expand(1, false, false);
+        mAdapter.expand(10, false, false);
     }
 
     @Override
@@ -95,11 +96,13 @@ public class CircleFragment extends BaseFragment implements CircleFragmentAdapte
         mBanner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
+                Log.d(TAG, "OnBannerClick: " + position);
                 startActivity(new Intent(_mActivity, BusinessActivity.class).
-                        putExtra("headurl",mListBeans.get(position).FUrl).
-                        putExtra("name",mListBeans.get(position).FLinkName).
-                        putExtra("type",1).
-                        putExtra("userID",mListBeans.get(position).FLinkID));
+                        putExtra("headurl", mListBeans.get(position).FUrl).
+                        putExtra("name", mListBeans.get(position).FLinkName).
+                        putExtra("type", 1).
+                        putExtra("weChatId", mListBeans.get(position).FLinkID).
+                        putExtra("userID", mListBeans.get(position).FLinkID));
             }
         });
     }
@@ -118,13 +121,15 @@ public class CircleFragment extends BaseFragment implements CircleFragmentAdapte
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onShowAd(CircleAdEvent event) {
         mListBeans = event.mListBeans;
-        List<String> imageList = new ArrayList<>();
-        for (CirCleADResponse.FObjectBean.ListBean list : mListBeans) {
-            imageList.add(list.FUrl);
+        if (mListBeans != null) {
+            List<String> imageList = new ArrayList<>();
+            for (CirCleADResponse.FObjectBean.ListBean list : mListBeans) {
+                imageList.add(list.FUrl);
+            }
+            mBanner.setImageLoader(new GlideImageLoader());
+            mBanner.setImages(imageList);
+            mBanner.start();
         }
-        mBanner.setImageLoader(new GlideImageLoader());
-        mBanner.setImages(imageList);
-        mBanner.start();
     }
 
     @Override

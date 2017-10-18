@@ -11,10 +11,10 @@ import dhcc.cn.com.fix_phone.utils.AppSharedPreferences;
  */
 public final class Account {
 
-    private static final String USER_ID = "userId";
-    private static final String LOGIN = "login";
-    public static final String APP_KEY = "k51hidwqk9m4b";
-    public static final String APP_SECRET = "zZQxChOoo3G";
+    private static final String USER_ID    = "userId";
+    private static final String LOGIN      = "login";
+    public static final  String APP_KEY    = "k51hidwqk9m4b";
+    public static final  String APP_SECRET = "zZQxChOoo3G";
 
     //获取用户id
     public static String getUserId() {
@@ -54,9 +54,13 @@ public final class Account {
     }
 
     //获取登录令牌
-    public static String getAccessToken(){
+    public static String getAccessToken() {
+        String accessToken = "";
         LoginInfo loginInfo = LoginInfo.getLoginInfo(getUserId());
-        return loginInfo.getAccessToken();
+        if (loginInfo != null && loginInfo.getAccessToken() != null) {
+            accessToken = loginInfo.getAccessToken();
+        }
+        return accessToken;
     }
 
 

@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -139,7 +138,10 @@ public class MeFragment extends BaseFragment {
         }else {
             Glide.with(getContext()).load(headUrl).diskCacheStrategy(DiskCacheStrategy.ALL).into(user_icon);
         }
-        RongIM.getInstance().setCurrentUserInfo(new UserInfo(Account.getUserId(), name, Uri.parse(headUrl)));
+        String userId = Account.getUserId();
+        if (!TextUtils.isEmpty(userId)) {
+            RongIM.getInstance().setCurrentUserInfo(new UserInfo(userId, name, Uri.parse(headUrl)));
+        }
         editor.putString(SealConst.SEALTALK_LOGIN_NAME, name);
         editor.apply();
     }

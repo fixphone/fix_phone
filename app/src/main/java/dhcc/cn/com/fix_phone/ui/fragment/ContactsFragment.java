@@ -4,8 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -31,7 +29,6 @@ import java.util.Collections;
 import java.util.List;
 
 import dhcc.cn.com.fix_phone.Account;
-import dhcc.cn.com.fix_phone.MyApplication;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.adapter.FriendListAdapter;
 import dhcc.cn.com.fix_phone.db.Friend;
@@ -47,10 +44,8 @@ import dhcc.cn.com.fix_phone.ui.activity.UserDetailActivity;
 import dhcc.cn.com.fix_phone.ui.widget.LoadDialog;
 import dhcc.cn.com.fix_phone.ui.widget.SelectableRoundedImageView;
 import dhcc.cn.com.fix_phone.utils.PinyinComparator;
-import io.rong.imageloader.core.ImageLoader;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.mention.SideBar;
-import io.rong.imlib.model.UserInfo;
 
 /**
  * tab 2 通讯录的 Fragment
@@ -261,6 +256,9 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
     }
 
     private void updateFriendsList(List<Friend> friendsList) {
+        if (friendsList == null) {
+            return;
+        }
         //updateUI fragment初始化和好友信息更新时都会调用,isReloadList表示是否是好友更新时调用
         boolean isReloadList = false;
         if (mFriendList != null && mFriendList.size() > 0) {

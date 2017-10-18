@@ -40,7 +40,7 @@ public class CircleDetailAd {
 
             public int FEntryID;
             public boolean FIsFooterData;
-            public int     FLinkID;
+            public String     FLinkID;
             public String  FLinkName;
             public String  FLinkNumber;
             public int     FLinkType;
