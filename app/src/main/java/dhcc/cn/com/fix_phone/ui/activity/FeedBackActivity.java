@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.nanchen.compresshelper.CompressHelper;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
@@ -30,6 +31,8 @@ import com.zhihu.matisse.engine.impl.GlideEngine;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,15 +46,23 @@ import java.util.concurrent.CountDownLatch;
 import butterknife.BindView;
 import butterknife.OnClick;
 import dhcc.cn.com.fix_phone.Account;
+import dhcc.cn.com.fix_phone.MyApplication;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.adapter.AddPhotoAdapter;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
 import dhcc.cn.com.fix_phone.bean.UploadResponse;
+import dhcc.cn.com.fix_phone.event.PublishSuccessEvent;
 import dhcc.cn.com.fix_phone.ui.widget.LoadDialog;
 import dhcc.cn.com.fix_phone.utils.GsonUtils;
+import dhcc.cn.com.fix_phone.utils.ImageUtil;
 import dhcc.cn.com.fix_phone.utils.UIUtils;
+import dhcc.cn.com.fix_phone.utils.UploadFileUtil;
+import io.reactivex.Observable;
 import io.reactivex.Observer;
+import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.Call;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -78,8 +89,7 @@ public class FeedBackActivity extends BaseActivity{
 
     private AddPhotoAdapter mPhotoAdapter;
     private List<String> mList;
-    private CopyOnWriteArrayList<String> writeList = new CopyOnWriteArrayList<>();
-    private String photo_path = "";
+    private Toast toast;
 
     @Override
     public int getLayoutId() {
@@ -88,7 +98,6 @@ public class FeedBackActivity extends BaseActivity{
 
     @OnClick(R.id.btn_confirm)
     public void onClick(){
-        LoadDialog.show(this);
         uploadPhoto();
     }
 
@@ -101,6 +110,7 @@ public class FeedBackActivity extends BaseActivity{
     protected void initEvent() {
         super.initEvent();
         title_name.setText("投诉建议");
+        toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
         content_et.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -240,78 +250,59 @@ public class FeedBackActivity extends BaseActivity{
     }
 
     private void uploadPhoto() {
-        List<String> photoList = removeNull(mList);
-        if (photoList.isEmpty()) {
-            postUploadMessage();
-        } else {
-            writeList = new CopyOnWriteArrayList<>();
-            final CountDownLatch startSignal = new CountDownLatch(photoList.size());
-            for (int i = 0; i < photoList.size(); i++) {
-                final File file = new File(photoList.get(i));
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            uploadPhotoFile(writeList, file, startSignal);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }).start();
-            }
-            // 成功以后
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        startSignal.await();
-                        postUploadMessage();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
+        if(TextUtils.isEmpty(content_et.getText().toString().trim())){
+            toast.setText("请输入反馈内容");
+            toast.show();
+            return;
         }
-    }
+        LoadDialog.show(this);
+        Observable.fromIterable(removeNull(mList)).map(new Function<String, File>() {
+            @Override
+            public File apply(String s) throws Exception {
+                File file = new File(s);
+                if (ImageUtil.isImage(file)) {
+                    return CompressHelper.getDefault(MyApplication.getContext()).compressToFile(new File(s));
+                } else {
+                    return file;
+                }
+            }
+        }).toList().observeOn(Schedulers.newThread()).subscribe(new SingleObserver<List<File>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
 
-    private void uploadPhotoFile(final CopyOnWriteArrayList<String> list, File file, final CountDownLatch startSignal) throws IOException {
-        Response response = OkHttpUtils
-                .post()
-                .url("http://120.77.202.151:8080/Busi/UploadPicture")
-                .addFile("mFile", file.getName(), file)
-                .addHeader("accessKey", "JHD2017")
-                .addHeader("accessToken", Account.getAccessToken())
-                .build()
-                .execute();
-        Log.d(TAG, "uploadPhotoFile: " + response.body().string());
-        Gson gson = new Gson();
-        UploadResponse uploadResponse = gson.fromJson(response.body().string(), UploadResponse.class);
-        list.add(uploadResponse.FObject.uuid);
-        startSignal.countDown();
-    }
+            }
 
-    private void postUploadMessage() {
-        OkHttpUtils
-                .post()
-                .url("http://120.77.202.151:8080/Suggestion/Add")
-                .addParams("content", content_et.getText().toString())
-                .addParams("images", writeList.isEmpty() ? "" : GsonUtils.toJson(writeList))
-                .addHeader("accessKey", "JHD2017")
-                .addHeader("accessToken", Account.getAccessToken())
-                .build()
-                .execute(new StringCallback() {
-                    @Override
-                    public void onError(Call call, Exception e, int id) {
-                        LoadDialog.dismiss(FeedBackActivity.this);
-                        Log.d(TAG, "onError: " + e.toString());
-                    }
+            @Override
+            public void onSuccess(List<File> files) {
+                OkHttpUtils
+                        .post()
+                        .url("http://120.77.202.151:8080/Suggestion/Add")
+                        .addHeader("accessKey", "JHD2017")
+                        .addHeader("accessToken", Account.getAccessToken())
+                        .addParams("content", content_et.getText().toString())
+                        .files("images", UploadFileUtil.listToMap(files))
+                        .build()
+                        .execute(new StringCallback() {
+                            @Override
+                            public void onError(Call call, Exception e, int id) {
+                                LoadDialog.dismiss(FeedBackActivity.this);
+                                Log.d(TAG, "onError: " + e.toString());
+                            }
 
-                    @Override
-                    public void onResponse(String response, int id) {
-                        LoadDialog.dismiss(FeedBackActivity.this);
-                        Log.d(TAG, "onResponse: " + response);
-                    }
-                });
+                            @Override
+                            public void onResponse(String response, int id) {
+                                LoadDialog.dismiss(FeedBackActivity.this);
+                                finish();
+                                Log.d(TAG, "onResponse: " + response);
+                            }
+                        });
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        });
     }
 
     private List<String> removeNull(List<String> list){

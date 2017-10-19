@@ -57,7 +57,7 @@ public class UploadFileUtil {
                 .execute(callback);
     }
 
-    private static Map<String,File> listToMap(List<File> list){
+    public static Map<String,File> listToMap(List<File> list){
         Map<String,File> map = new HashMap<>(list.size());
         for (File file : list) {
             map.put(file.getName(),file);
