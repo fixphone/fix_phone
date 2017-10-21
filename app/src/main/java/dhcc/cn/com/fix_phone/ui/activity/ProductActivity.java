@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -32,13 +33,15 @@ import io.rong.imkit.RongIM;
 public class ProductActivity extends BaseActivity {
 
     @BindView(R.id.toolbar_title)
-    TextView     mToolbarTitle;
+    TextView       mToolbarTitle;
     @BindView(R.id.imageView_communication)
-    ImageView    mImageViewCommunication;
+    ImageView      mImageViewCommunication;
     @BindView(R.id.toolbar)
-    Toolbar      mToolbar;
+    Toolbar        mToolbar;
     @BindView(R.id.recyclerView)
-    RecyclerView mRecyclerView;
+    RecyclerView   mRecyclerView;
+    @BindView(R.id.relativeLayout)
+    RelativeLayout mRelativeLayout;
 
     private String       mName;
     private String       mHeadurl;
@@ -46,6 +49,7 @@ public class ProductActivity extends BaseActivity {
     private String       mweChatId;
     private ImageAdapter mImageAdapter;
     private List<String> mStrings;
+    private int          type;
 
     @Override
     public int getLayoutId() {
@@ -59,6 +63,7 @@ public class ProductActivity extends BaseActivity {
         mHeadurl = intent.getStringExtra("headurl");
         mUserID = intent.getStringExtra("userID");
         mweChatId = intent.getStringExtra("weChatId");
+        type = intent.getIntExtra("type", 0);
         EventBus.getDefault().register(this);
     }
 
@@ -81,6 +86,10 @@ public class ProductActivity extends BaseActivity {
         });
         mImageAdapter = new ImageAdapter(R.layout.item_image, null);
         mRecyclerView.setAdapter(mImageAdapter);
+        if (type == 1) {
+            mImageViewCommunication.setVisibility(View.GONE);
+            mRelativeLayout.setVisibility(View.GONE);
+        }
     }
 
     @Override

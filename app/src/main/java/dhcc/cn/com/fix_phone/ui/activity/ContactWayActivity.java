@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -19,27 +20,30 @@ import io.rong.imkit.RongIM;
 public class ContactWayActivity extends BaseActivity {
 
     @BindView(R.id.toolbar_title)
-    TextView  mToolbarTitle;
+    TextView       mToolbarTitle;
     @BindView(R.id.imageView_communication)
-    ImageView mImageViewCommunication;
+    ImageView      mImageViewCommunication;
     @BindView(R.id.toolbar)
-    Toolbar   mToolbar;
+    Toolbar        mToolbar;
     @BindView(R.id.info_company_name_tv)
-    TextView  mInfoCompanyNameTv;
+    TextView       mInfoCompanyNameTv;
     @BindView(R.id.info_contact_name_tv)
-    TextView  mInfoContactNameTv;
+    TextView       mInfoContactNameTv;
     @BindView(R.id.info_postcode_tv)
-    TextView  mInfoPostcodeTv;
+    TextView       mInfoPostcodeTv;
     @BindView(R.id.info_mobile_phone_tv)
-    TextView  mInfoMobilePhoneTv;
+    TextView       mInfoMobilePhoneTv;
     @BindView(R.id.info_phone_num_tv)
-    TextView  mInfoPhoneNumTv;
+    TextView       mInfoPhoneNumTv;
     @BindView(R.id.info_company_profile_tv)
-    TextView  mInfoCompanyProfileTv;
+    TextView       mInfoCompanyProfileTv;
+    @BindView(R.id.relativeLayout)
+    RelativeLayout mRelativeLayout;
 
     private BusinessResponse mBusiness;
     private String           mweChatId;
     private String           mName;
+    private int              type;
 
     @Override
     protected void init() {
@@ -47,7 +51,7 @@ public class ContactWayActivity extends BaseActivity {
         mBusiness = (BusinessResponse) intent.getSerializableExtra("mResponse");
         mName = intent.getStringExtra("name");
         mweChatId = intent.getStringExtra("weChatId");
-
+        type = intent.getIntExtra("type", 0);
     }
 
     @Override
@@ -60,6 +64,11 @@ public class ContactWayActivity extends BaseActivity {
             mInfoMobilePhoneTv.setText(mBusiness.FObject.contactMobile);
             mInfoPostcodeTv.setText(mBusiness.FObject.postCode);
             mInfoCompanyProfileTv.setText(mBusiness.FObject.address);
+        }
+
+        if (type == 1) {
+            mImageViewCommunication.setVisibility(View.GONE);
+            mRelativeLayout.setVisibility(View.GONE);
         }
     }
 

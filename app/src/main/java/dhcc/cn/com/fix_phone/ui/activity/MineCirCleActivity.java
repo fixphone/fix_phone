@@ -151,6 +151,7 @@ public class MineCirCleActivity extends BaseActivity implements DeleteDialogFrag
         mRecyclerview.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         mRecyclerview.setItemAnimator(new DefaultItemAnimator());
         mAdapter = new MineCircleAdapter(this);
+        mAdapter.setResourceType(mResourceType);
         mRecyclerview.setAdapter(mAdapter);
     }
 

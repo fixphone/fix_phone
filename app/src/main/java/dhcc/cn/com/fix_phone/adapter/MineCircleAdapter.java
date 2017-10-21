@@ -27,6 +27,7 @@ import static com.zhy.http.okhttp.log.LoggerInterceptor.TAG;
  */
 public class MineCircleAdapter extends BaseRecycleViewAdapter {
     private Context context;
+    private int     type;
 
     public MineCircleAdapter(Context context) {
         this.context = context;
@@ -64,6 +65,11 @@ public class MineCircleAdapter extends BaseRecycleViewAdapter {
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int position) {
 
         final CircleViewHolder holder = (CircleViewHolder) viewHolder;
+        if (type == 1) {
+            holder.mCommunication.setVisibility(View.GONE);
+        } else {
+            holder.mCommunication.setVisibility(View.VISIBLE);
+        }
         holder.setData((CircleItem) datas.get(position));
 
         switch (holder.viewType) {
@@ -128,8 +134,12 @@ public class MineCircleAdapter extends BaseRecycleViewAdapter {
         return datas.size();//有head需要加1
     }
 
-    public interface OnDeleteClickListener{
-        void onDelete(int position , CircleItem item);
+    public void setResourceType(int resourceType) {
+        type = resourceType;
+    }
+
+    public interface OnDeleteClickListener {
+        void onDelete(int position, CircleItem item);
     }
 
     private OnDeleteClickListener mDeleteClickListener;

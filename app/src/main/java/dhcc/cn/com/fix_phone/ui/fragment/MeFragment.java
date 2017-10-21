@@ -1,5 +1,6 @@
 package dhcc.cn.com.fix_phone.ui.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -98,7 +99,7 @@ public class MeFragment extends BaseFragment {
         mTitleNameTv.setVisibility(View.GONE);
         mTitleRightTv.setText("设置");
         mTitleRightTv.setTextColor(ContextCompat.getColor(getContext(), R.color.app_text_color_black));
-        sp = getContext().getSharedPreferences("config", getContext().MODE_PRIVATE);
+        sp = getContext().getSharedPreferences("config", Context.MODE_PRIVATE);
         editor = sp.edit();
         loadDialog = new LoadDialog(getContext(), false, "");
         toast = Toast.makeText(getContext(), "", Toast.LENGTH_SHORT);
@@ -106,8 +107,9 @@ public class MeFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        if(Account.isLogin())
-        ApiManager.Instance().getUserInfo(Account.getUserId());
+        if(Account.isLogin()){
+            ApiManager.Instance().getUserInfo(Account.getUserId());
+        }
     }
 
     @Override

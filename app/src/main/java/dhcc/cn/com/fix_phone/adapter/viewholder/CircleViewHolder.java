@@ -11,12 +11,14 @@ import android.view.ViewStub;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.List;
 
+import dhcc.cn.com.fix_phone.Account;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.bean.CircleItem;
 import dhcc.cn.com.fix_phone.bean.CommentItem;
@@ -76,7 +78,6 @@ public abstract class CircleViewHolder extends RecyclerView.ViewHolder implement
      * 评论列表
      */
     public CommentListView commentList;
-    // ===========================
     public SnsPopupWindow  snsPopupWindow;
 
 
@@ -160,11 +161,13 @@ public abstract class CircleViewHolder extends RecyclerView.ViewHolder implement
     }
 
     private void handleListener(final CircleItem circleItem) {
-        final String phone = circleItem.getUser().FPhone;
-        final String fShareUrl = circleItem.getUser().FShareUrl;
         mCommunication.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (TextUtils.equals(circleItem.getUser().FPhone, Account.getLoginInfo().getPhone())) {
+                    Toast.makeText(context, "不能与自己沟通", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 try {
                     RongIM.getInstance().startPrivateChat(mActivity,circleItem.getUser().FCreatorID+"",circleItem.getUser().FCompanyName);
                 } catch (Exception e) {

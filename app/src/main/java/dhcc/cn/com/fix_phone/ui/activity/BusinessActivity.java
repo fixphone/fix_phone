@@ -88,6 +88,7 @@ public class BusinessActivity extends BaseActivity {
         Glide.with(this).load(mHeadurl).into(mImageviewHead);
         if (type == 1) {
             mRelativeLayout.setVisibility(View.GONE);
+            mCommunication.setVisibility(View.GONE);
         }
     }
 
@@ -158,7 +159,8 @@ public class BusinessActivity extends BaseActivity {
                 intent.putExtra("name", mName).
                         putExtra("headurl", mHeadurl).
                         putExtra("weChatId", mweChatId).
-                        putExtra("userID", mUserID);
+                        putExtra("userID", mUserID).
+                        putExtra("type", type);
                 startActivity(intent);
                 break;
 
@@ -168,7 +170,8 @@ public class BusinessActivity extends BaseActivity {
                         putExtra("name", mName).
                         putExtra("headurl", mHeadurl).
                         putExtra("weChatId", mweChatId).
-                        putExtra("userID", mUserID);
+                        putExtra("userID", mUserID).
+                        putExtra("type", type);
                 startActivity(intent2);
                 break;
             default:

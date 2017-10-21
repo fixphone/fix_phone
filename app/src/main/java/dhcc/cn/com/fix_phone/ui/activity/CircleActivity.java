@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -81,6 +84,7 @@ public class CircleActivity extends YWActivity implements CircleContract.View, I
     private MaterialSearchView    mSearchView;
     private TextView              mTextView_number;
     private AlterDialogFragment   mFragment;
+    private GestureDetectorCompat mGestureDetectorCompat;
 
 
     @Override
@@ -152,6 +156,8 @@ public class CircleActivity extends YWActivity implements CircleContract.View, I
                     case 2: // 分享
                         showShareDialog(circleItem.getUser().FShareUrl);
                         break;
+                    default:
+                        break;
                 }
             }
         });
@@ -187,6 +193,25 @@ public class CircleActivity extends YWActivity implements CircleContract.View, I
             }
         });
 
+        mGestureDetectorCompat = new GestureDetectorCompat(this, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onDown(MotionEvent e) {
+                return true;
+            }
+
+            @Override
+            public boolean onDoubleTap(MotionEvent e) {
+                recyclerView.scrollToPosition(0);
+                return true;
+            }
+        });
+
+        titleBar.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return mGestureDetectorCompat.onTouchEvent(event);
+            }
+        });
     }
 
     private void showShareDialog(String FShareUrl) {
@@ -218,7 +243,8 @@ public class CircleActivity extends YWActivity implements CircleContract.View, I
                             case R.id.menu_cancel:
                                 mDialog.dismiss();
                                 break;
-
+                            default:
+                                break;
                         }
                     }
                 })
@@ -400,7 +426,8 @@ public class CircleActivity extends YWActivity implements CircleContract.View, I
                             case R.id.menu_cancel:
                                 mDialog.dismiss();
                                 break;
-
+                            default:
+                                break;
                         }
                     }
                 })
