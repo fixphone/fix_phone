@@ -124,6 +124,16 @@ public class MeFragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(!hidden){
+            if(!Account.isLogin()){
+                setViewState("", "", "");
+            }
+        }
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onUserInfo(BusinessEvent event) {
         mResponse = event.mResponse;

@@ -1127,7 +1127,7 @@ public class SealUserInfoManager implements OnDataListener {
      *
      * @return List<BlackList> 黑名单列表
      */
-    private List<BlackList> getBlackList() {
+    public List<BlackList> getBlackList() {
         if (mBlackListDao != null) {
             return mBlackListDao.loadAll();
         } else {

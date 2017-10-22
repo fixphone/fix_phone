@@ -39,6 +39,7 @@ import dhcc.cn.com.fix_phone.rong.CharacterParser;
 import dhcc.cn.com.fix_phone.rong.SealAppContext;
 import dhcc.cn.com.fix_phone.rong.SealConst;
 import dhcc.cn.com.fix_phone.rong.SealUserInfoManager;
+import dhcc.cn.com.fix_phone.ui.activity.BlackListActivity;
 import dhcc.cn.com.fix_phone.ui.activity.NewFriendListActivity;
 import dhcc.cn.com.fix_phone.ui.activity.UserDetailActivity;
 import dhcc.cn.com.fix_phone.ui.widget.LoadDialog;
@@ -196,12 +197,10 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.re_newfriends:
                 mUnreadTextView.setVisibility(View.GONE);
-                Intent intent = new Intent(getActivity(), NewFriendListActivity.class);
-                startActivityForResult(intent, 20);
+                startActivity(new Intent(getActivity(), BlackListActivity.class));
                 break;
             case R.id.contact_me_item:
                 try {
-//                    RongIM.getInstance().startPrivateChat(getActivity(), mId, mCacheName);
                     RongIM.getInstance().startCustomerServiceChat(getActivity(), mId, mCacheName, null);
                 } catch (Exception e) {
                     e.printStackTrace();
