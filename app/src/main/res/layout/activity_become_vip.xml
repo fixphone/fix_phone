@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/text_color_white"
+              android:orientation="vertical">
+
+    <include
+        layout="@layout/layout_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/public_50dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/public_30dp"
+        android:text="支付金额"
+        android:textColor="@color/app_text_color_black"
+        android:textSize="12sp"/>
+
+    <TextView
+        android:id="@+id/money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/public_20dp"
+        android:text="0.1元"
+        android:textColor="#00CB0C"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/public_15dp"
+        android:layout_marginTop="@dimen/public_30dp"
+        android:gravity="center"
+        android:text="开通会员可以解除圈子限制发布条数"
+        android:textColor="@color/app_text_color_black"
+        android:textSize="16sp"/>
+
+    <Button
+        android:id="@+id/weixplay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/public_15dp"
+        android:layout_marginRight="@dimen/public_15dp"
+        android:layout_marginTop="@dimen/public_10dp"
+        android:background="#00CB0C"
+        android:text="微信支付"
+        android:textColor="@color/white"
+        android:textSize="18sp"/>
+</LinearLayout>

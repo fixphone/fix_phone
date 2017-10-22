@@ -6,10 +6,13 @@ import dhcc.cn.com.fix_phone.bean.BusinessResponse;
 import dhcc.cn.com.fix_phone.bean.CirCleADResponse;
 import dhcc.cn.com.fix_phone.bean.CircleBusiness;
 import dhcc.cn.com.fix_phone.bean.CircleDetailAd;
+import dhcc.cn.com.fix_phone.bean.CreateOrderInfo;
 import dhcc.cn.com.fix_phone.bean.FavoResponse;
 import dhcc.cn.com.fix_phone.bean.GetFriendResponse;
 import dhcc.cn.com.fix_phone.bean.ImageResponse;
 import dhcc.cn.com.fix_phone.bean.LoginResponse;
+import dhcc.cn.com.fix_phone.bean.OrderInfo;
+import dhcc.cn.com.fix_phone.bean.PlayInWeChat;
 import dhcc.cn.com.fix_phone.bean.ProductImage;
 import dhcc.cn.com.fix_phone.bean.QueryUserResponse;
 import dhcc.cn.com.fix_phone.bean.RegisterResponse;
@@ -17,6 +20,7 @@ import dhcc.cn.com.fix_phone.bean.RongTokenResponse;
 import dhcc.cn.com.fix_phone.bean.TelCheckResponse;
 import dhcc.cn.com.fix_phone.bean.TokenResponse;
 import dhcc.cn.com.fix_phone.bean.UploadResponse;
+import dhcc.cn.com.fix_phone.bean.VipOrderInfo;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -244,22 +248,22 @@ public interface Api {
 
     //41.会员-获取升级会员信息
     @GET("/Order/GetVIPOrderInfo")
-    Call<String> GetVIPOrderInfo();
+    Call<VipOrderInfo> GetVIPOrderInfo();
 
     //42.会员-生成订单
     @POST("/Order/GenOrder")
-    Call<String> GenOrder(@Header("accessToken") String accessToken,
-                          @Query("type") String type);
+    Call<CreateOrderInfo> GenOrder(@Header("accessToken") String accessToken,
+                                   @Query("type") String type);
 
     //43.会员-获取订单信息
     @POST("/Order/Get")
-    Call<String> GetOrder(@Header("accessToken") String accessToken,
-                          @Query("billNo") String billNo);
+    Call<OrderInfo> GetOrderInfo(@Header("accessToken") String accessToken,
+                                 @Query("billNo") String billNo);
 
     //44.会员-微信支付
     @GET("/Order/PayInWeChat")
-    Call<String> PayInWeChat(@Header("accessToken") String accessToken,
-                             @Query("billNo") String billNo);
+    Call<PlayInWeChat> PayInWeChat(@Header("accessToken") String accessToken,
+                                   @Query("billNo") String billNo);
 
     //45.黑名单-添加
     @GET("/BlackList/Add")

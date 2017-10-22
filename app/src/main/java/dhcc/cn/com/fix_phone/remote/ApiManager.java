@@ -15,12 +15,16 @@ import dhcc.cn.com.fix_phone.bean.GetFriendResponse;
 import dhcc.cn.com.fix_phone.bean.ImageResponse;
 import dhcc.cn.com.fix_phone.bean.LoginInfo;
 import dhcc.cn.com.fix_phone.bean.LoginResponse;
+import dhcc.cn.com.fix_phone.bean.CreateOrderInfo;
+import dhcc.cn.com.fix_phone.bean.OrderInfo;
+import dhcc.cn.com.fix_phone.bean.PlayInWeChat;
 import dhcc.cn.com.fix_phone.bean.ProductImage;
 import dhcc.cn.com.fix_phone.bean.QueryUserResponse;
 import dhcc.cn.com.fix_phone.bean.RegisterResponse;
 import dhcc.cn.com.fix_phone.bean.RongTokenResponse;
 import dhcc.cn.com.fix_phone.bean.TelCheckResponse;
 import dhcc.cn.com.fix_phone.bean.TokenResponse;
+import dhcc.cn.com.fix_phone.bean.VipOrderInfo;
 import dhcc.cn.com.fix_phone.event.AddFriendEvent;
 import dhcc.cn.com.fix_phone.event.BusinessEvent;
 import dhcc.cn.com.fix_phone.event.CirCleBusinessEvent;
@@ -854,4 +858,89 @@ public class ApiManager {
             }
         });
     }
+
+    //41.会员-获取升级会员信息
+    public void GetVIPOrderInfo() {
+        mApi.GetVIPOrderInfo().enqueue(new Callback<VipOrderInfo>() {
+            @Override
+            public void onResponse(Call<VipOrderInfo> call, Response<VipOrderInfo> response) {
+                if (response.isSuccessful()) {
+                    EventBus.getDefault().post(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<VipOrderInfo> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //42.会员-生成订单
+    public void GenOrder(String type) {
+        mApi.GenOrder(getLoginInfo().getAccessToken(), type).enqueue(new Callback<CreateOrderInfo>() {
+            @Override
+            public void onResponse(Call<CreateOrderInfo> call, Response<CreateOrderInfo> response) {
+                if (response.isSuccessful()) {
+                    EventBus.getDefault().post(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CreateOrderInfo> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    //43.会员-获取订单信息
+    public void GetOrderInfo(String billNo) {
+        mApi.GetOrderInfo(getLoginInfo().getAccessToken(), billNo).enqueue(new Callback<OrderInfo>() {
+            @Override
+            public void onResponse(Call<OrderInfo> call, Response<OrderInfo> response) {
+                if (response.isSuccessful()) {
+                    EventBus.getDefault().post(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<OrderInfo> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //44.会员-微信支付
+    public void PayInWeChat(String billNo) {
+        mApi.PayInWeChat(getLoginInfo().getAccessToken(), billNo).enqueue(new Callback<PlayInWeChat>() {
+            @Override
+            public void onResponse(Call<PlayInWeChat> call, Response<PlayInWeChat> response) {
+                if (response.isSuccessful()) {
+                    EventBus.getDefault().post(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PlayInWeChat> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //50.会员-获取当前用户已完成订单信息
+    public void GetSuccessOrder() {
+        mApi.GetSuccessOrder(getLoginInfo().getAccessToken()).enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+    }
+
 }

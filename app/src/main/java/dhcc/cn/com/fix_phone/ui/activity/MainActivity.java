@@ -5,8 +5,6 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
@@ -19,7 +17,6 @@ import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
 import dhcc.cn.com.fix_phone.event.LoginEvent;
 import dhcc.cn.com.fix_phone.event.RongTokenEvent;
-import dhcc.cn.com.fix_phone.remote.Api;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
 import dhcc.cn.com.fix_phone.rong.SealConst;
 import dhcc.cn.com.fix_phone.rong.SealUserInfoManager;
@@ -29,7 +26,6 @@ import dhcc.cn.com.fix_phone.ui.fragment.MeFragment;
 import dhcc.cn.com.fix_phone.ui.widget.LoadDialog;
 import dhcc.cn.com.fix_phone.utils.NLog;
 import io.rong.imkit.RongIM;
-import io.rong.imkit.manager.IUnReadMessageObserver;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.message.ContactNotificationMessage;
@@ -80,6 +76,11 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
             if(!TextUtils.isEmpty(refreshToken))
                 ApiManager.Instance().RefreshToken(refreshToken);
         }
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
     }
 
     @Override

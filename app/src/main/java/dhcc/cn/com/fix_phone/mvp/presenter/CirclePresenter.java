@@ -141,6 +141,8 @@ public class CirclePresenter implements CircleContract.Presenter {
     public void addSuccess(PublishSuccessEvent event) {
         if (event.isSuccess) {
             view.refreshData();
+        } else {
+            view.showVipDialog();
         }
     }
 

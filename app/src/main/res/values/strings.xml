@@ -20,6 +20,8 @@
     <string name="add_friend">加为好友</string>
     <string name="add_text">加好友信息...</string>
 
+    <string name="pay_result_tip">这个界面用于显示第三方app通过微信支付的结果</string>
+
     <string name="online">在线</string>
     <string name="offline">离线</string>
     <string name="web_online">网页在线</string>

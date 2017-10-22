@@ -36,6 +36,8 @@ public interface CircleContract {
         void showTextViewNumber(boolean b);
 
         void refreshData();
+
+        void showVipDialog();
     }
 
     interface Presenter extends BasePresenter {

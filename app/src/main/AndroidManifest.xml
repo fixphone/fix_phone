@@ -303,9 +303,18 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".ui.activity.BecomeVipActivity"
+                  android:screenOrientation="portrait"
+                  android:theme="@style/AppTheme.NoActionBar"/>
+
         <meta-data
             android:name="dhcc.cn.com.fix_phone.MyGlideModule"
             android:value="GlideModule"/>
+
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
 
     </application>
 

@@ -48,9 +48,11 @@ import dhcc.cn.com.fix_phone.MyApplication;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.adapter.SelectImageAdapter;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
+import dhcc.cn.com.fix_phone.bean.PublishResponse;
 import dhcc.cn.com.fix_phone.conf.CircleDefaultData;
 import dhcc.cn.com.fix_phone.event.PublishSuccessEvent;
 import dhcc.cn.com.fix_phone.utils.FileUtils;
+import dhcc.cn.com.fix_phone.utils.GsonUtils;
 import dhcc.cn.com.fix_phone.utils.ImageUtil;
 import dhcc.cn.com.fix_phone.utils.UploadFileUtil;
 import io.reactivex.Observable;
@@ -228,8 +230,14 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
                             mLoadDialog.dismiss();
                         }
                         Log.d(TAG, "postUploadMessage: " + response);
-                        EventBus.getDefault().post(new PublishSuccessEvent(true));
-                        finish();
+                        try {
+                            PublishResponse publishResponse = GsonUtils.getSingleBean(response, PublishResponse.class);
+                            EventBus.getDefault().post(new PublishSuccessEvent(publishResponse.FIsSuccess));
+                            finish();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
                     }
                 });
             }

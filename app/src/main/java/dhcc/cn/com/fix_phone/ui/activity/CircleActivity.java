@@ -51,6 +51,7 @@ import dhcc.cn.com.fix_phone.mvp.contract.CircleContract;
 import dhcc.cn.com.fix_phone.mvp.presenter.CirclePresenter;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
 import dhcc.cn.com.fix_phone.ui.fragment.AlterDialogFragment;
+import dhcc.cn.com.fix_phone.ui.fragment.CommonDeleteFragment;
 import okhttp3.Call;
 
 import static dhcc.cn.com.fix_phone.ui.activity.FeedBackActivity.getCurrentTime;
@@ -60,7 +61,7 @@ import static dhcc.cn.com.fix_phone.ui.activity.FeedBackActivity.getCurrentTime;
  * @ClassName: CircleActivity
  * @date 2015-12-28 下午4:21:18
  */
-public class CircleActivity extends YWActivity implements CircleContract.View, IWXAPIEventHandler {
+public class CircleActivity extends YWActivity implements CircleContract.View, IWXAPIEventHandler ,CommonDeleteFragment.OnConfirmClickListener {
 
     public static final    int    MAX_NUMBER = 20;
     protected static final String TAG        = "CircleActivity";
@@ -85,6 +86,7 @@ public class CircleActivity extends YWActivity implements CircleContract.View, I
     private TextView              mTextView_number;
     private AlterDialogFragment   mFragment;
     private GestureDetectorCompat mGestureDetectorCompat;
+    private CommonDeleteFragment  vipDialog;
 
 
     @Override
@@ -365,6 +367,14 @@ public class CircleActivity extends YWActivity implements CircleContract.View, I
     }
 
     @Override
+    public void showVipDialog() {
+        if (vipDialog != null) {
+            vipDialog.dismiss();
+        }
+        createDialog("提示", "您发布的数量已达到限时10条，开通会员可终身免费发布。");
+    }
+
+    @Override
     public void showLoading(String msg) {
 
     }
@@ -502,5 +512,15 @@ public class CircleActivity extends YWActivity implements CircleContract.View, I
         if (mFragment != null) {
             mFragment.dismiss();
         }
+    }
+
+    private void createDialog(String title, String desc) {
+        vipDialog = CommonDeleteFragment.newInstance(title, desc);
+        vipDialog.show(getSupportFragmentManager(), "CommonDeleteFragment");
+    }
+
+    @Override
+    public void onConfirm() {
+        startActivity(new Intent(this,BecomeVipActivity.class));
     }
 }
