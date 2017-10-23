@@ -1,17 +1,18 @@
 package dhcc.cn.com.fix_phone.ui.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.tencent.mm.opensdk.constants.ConstantsAPI;
-import com.tencent.mm.opensdk.modelbase.BaseReq;
-import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import org.greenrobot.eventbus.EventBus;
@@ -35,7 +36,7 @@ import dhcc.cn.com.fix_phone.remote.ApiManager;
  * @date 2017\9\23 0023
  */
 
-public class BecomeVipActivity extends BaseActivity implements IWXAPIEventHandler {
+public class BecomeVipActivity extends BaseActivity {
 
     @BindView(R.id.title_name)
     TextView title_name;
@@ -49,21 +50,43 @@ public class BecomeVipActivity extends BaseActivity implements IWXAPIEventHandle
     @BindView(R.id.description)
     TextView description;
 
-    private String       mType;
-    private String       mBillNo;
+    private String mBillNo;
     private PlayInWeChat mPlayInWeChat;
-    private IWXAPI       mWXApi;
+    private IWXAPI mWXApi;
+
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int errCode = intent.getIntExtra("errCode", 0);
+            Log.d(TAG, "payResult: ");
+            String result = "";
+            if (errCode == 0) {
+                result = "支付成功";
+                play.setVisibility(View.GONE);
+            } else if (errCode == -2) {
+                result = "取消支付";
+                play.setText("重新支付");
+            } else {
+                result = "支付失败";
+                play.setText("重新支付");
+            }
+            description.setText("已经"+result);
+
+        }
+    };
 
     @Override
     protected void init() {
         EventBus.getDefault().register(this);
         mWXApi = WXAPIFactory.createWXAPI(this, Constants.APP_ID, true);
         mWXApi.registerApp(Constants.APP_ID);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver,new IntentFilter("dhcc.cn.com.fix_phone"));
     }
 
     @Override
     protected void destroy() {
         EventBus.getDefault().unregister(this);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver);
     }
 
     @Override
@@ -136,23 +159,13 @@ public class BecomeVipActivity extends BaseActivity implements IWXAPIEventHandle
         }
     }
 
-    // 微信发送请求到第三方应用时，会回调到该方法
-    @Override
-    public void onReq(BaseReq req) {
-        switch (req.getType()) {
-            case ConstantsAPI.COMMAND_PAY_BY_WX:
-
-                break;
-            default:
-                break;
-        }
-    }
+    private static final String TAG = "BecomeVipActivity";
 
     public void pay(PlayInWeChat payInfo) {
         PayReq request = new PayReq();
-        request.appId = payInfo.getAppId();
+        request.appId = Constants.APP_ID;
         request.partnerId = payInfo.getPartnerId();
-        request.prepayId = payInfo.getPartnerId();
+        request.prepayId = payInfo.getPrepayId();
         request.packageValue = "Sign=WXPay";
         request.nonceStr = payInfo.getNonceStr();
         request.timeStamp = payInfo.getTimeStamp();
@@ -160,33 +173,4 @@ public class BecomeVipActivity extends BaseActivity implements IWXAPIEventHandle
         mWXApi.sendReq(request);
     }
 
-    // 第三方应用发送到微信的请求处理后的响应结果，会回调到该方法
-    @Override
-    public void onResp(BaseResp resp) {
-        int result = 0;
-        switch (resp.errCode) {
-            case BaseResp.ErrCode.ERR_OK:
-                result = R.string.errcode_success;
-                break;
-            case BaseResp.ErrCode.ERR_USER_CANCEL:
-                result = R.string.errcode_cancel;
-                break;
-            case BaseResp.ErrCode.ERR_AUTH_DENIED:
-                result = R.string.errcode_deny;
-                break;
-            default:
-                result = R.string.errcode_unknown;
-                break;
-        }
-
-        Toast.makeText(this, result, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        //如果分享的时候，该已经开启，那么微信开始这个activity时，会调用onNewIntent，所以这里要处理微信的返回结果
-        setIntent(intent);
-        mWXApi.handleIntent(intent, this);
-    }
 }

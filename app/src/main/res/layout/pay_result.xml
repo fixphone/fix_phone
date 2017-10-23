@@ -4,6 +4,7 @@
     style="@style/NavPage">
     
 	<TextView
+		android:id="@+id/show_message"
 	    android:layout_width="fill_parent"
 	 	android:layout_height="fill_parent"
 		android:gravity="center"
