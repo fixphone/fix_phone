@@ -39,6 +39,7 @@ import dhcc.cn.com.fix_phone.event.ImageResponeEvent;
 import dhcc.cn.com.fix_phone.event.LoginEvent;
 import dhcc.cn.com.fix_phone.event.ProductImageEvent;
 import dhcc.cn.com.fix_phone.event.QueryUserEvent;
+import dhcc.cn.com.fix_phone.event.RefreshTokenEvent;
 import dhcc.cn.com.fix_phone.event.RegisterEvent;
 import dhcc.cn.com.fix_phone.event.RongTokenEvent;
 import dhcc.cn.com.fix_phone.event.TelCheckEvent;
@@ -343,11 +344,9 @@ public class ApiManager {
         mApi.ChangePwd(phone, oldPwd, pwd).enqueue(new Callback<TelCheckResponse>() {
             @Override
             public void onResponse(Call<TelCheckResponse> call, Response<TelCheckResponse> response) {
-                if (response.code() == 200) {
+                if (response.code() == 200 && response.body() != null) {
                     TelCheckResponse telCheckResponse = response.body();
-                    if (telCheckResponse != null && telCheckResponse.FIsSuccess) {
-                        EventBus.getDefault().post(new TelCheckEvent(telCheckResponse));
-                    }
+                    EventBus.getDefault().post(new TelCheckEvent(telCheckResponse));
                 } else {
                     TelCheckEvent event = new TelCheckEvent(null);
                     event.errorMessage = "服务器返回错误";
@@ -427,16 +426,14 @@ public class ApiManager {
         mApi.RefreshToken(refreshToken).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                if (response.code() == 200) {
+                if (response.code() == 200 && response.body() != null) {
                     LoginResponse loginResponse = response.body();
-                    if (loginResponse != null) {
-                        LoginEvent event = new LoginEvent(loginResponse);
-                        event.errorMessage = loginResponse.FMsg;
-                        event.isOk = true;
-                        EventBus.getDefault().post(event);
-                    }
+                    RefreshTokenEvent event = new RefreshTokenEvent(loginResponse);
+                    event.errorMessage = loginResponse.FMsg;
+                    event.isOk = true;
+                    EventBus.getDefault().post(event);
                 } else {
-                    LoginEvent event = new LoginEvent(null);
+                    RefreshTokenEvent event = new RefreshTokenEvent(null);
                     event.errorMessage = "服务器返回错误";
                     event.isOk = false;
                     EventBus.getDefault().post(event);
@@ -445,7 +442,7 @@ public class ApiManager {
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
-                LoginEvent event = new LoginEvent(null);
+                RefreshTokenEvent event = new RefreshTokenEvent(null);
                 event.errorMessage = t.getMessage();
                 event.isOk = false;
                 EventBus.getDefault().post(event);

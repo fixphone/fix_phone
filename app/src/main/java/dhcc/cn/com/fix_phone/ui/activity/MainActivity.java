@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
@@ -15,7 +16,7 @@ import butterknife.BindView;
 import dhcc.cn.com.fix_phone.Account;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
-import dhcc.cn.com.fix_phone.event.LoginEvent;
+import dhcc.cn.com.fix_phone.event.RefreshTokenEvent;
 import dhcc.cn.com.fix_phone.event.RongTokenEvent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
 import dhcc.cn.com.fix_phone.rong.SealConst;
@@ -41,6 +42,7 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
     private SharedPreferences.Editor editor;
 
     private SupportFragment[] mFragments = new SupportFragment[3];
+    private int tabSelect = 1;
 
     @Override
     public int getLayoutId() {
@@ -91,8 +93,23 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
     }
 
     @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        switch (ev.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                tabSelect = mTabLayout.getSelectedTabPosition();
+                break;
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
     public void onTabSelected(TabLayout.Tab tab) {
         int position = tab.getPosition();
+        if(position == 0 && !Account.isLogin()){
+            startActivity(new Intent(this, LoginActivity.class));
+            mTabLayout.getTabAt(tabSelect).select();
+            return;
+        }
         showHideFragment(mFragments[position]);
     }
 
@@ -105,6 +122,7 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
     public void onTabReselected(TabLayout.Tab tab) {
 
     }
+
 
     @Override
     protected void onResume() {
@@ -180,12 +198,12 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void refreshTokenResult(LoginEvent loginEvent){
-        if(loginEvent.loginResponse != null){
-            if(loginEvent.loginResponse.FIsSuccess){
-                Account.setAccessToken(Account.getUserId(), loginEvent.loginResponse.FObject.getAccessToken());
-                ApiManager.Instance().getRongToken(loginEvent.loginResponse.FObject.accessToken);
-                ApiManager.Instance().getUserInfo(loginEvent.loginResponse.FObject.accessToken);
+    public void refreshTokenResult(RefreshTokenEvent refreshTokenEvent){
+        if(refreshTokenEvent.loginResponse != null){
+            if(refreshTokenEvent.loginResponse.FIsSuccess){
+                Account.setAccessToken(Account.getUserId(), refreshTokenEvent.loginResponse.FObject.getAccessToken());
+                ApiManager.Instance().getRongToken(refreshTokenEvent.loginResponse.FObject.accessToken);
+                ApiManager.Instance().getUserInfo(refreshTokenEvent.loginResponse.FObject.accessToken);
             }else {
                 Account.setLogin(false);
                 Toast.makeText(this, "您的账号可能在其他地方登录了", Toast.LENGTH_SHORT).show();

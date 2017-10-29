@@ -96,6 +96,7 @@ public class UserDetailActivity extends RongBaseActivity implements View.OnClick
         mAddFriendButton = (Button) findViewById(R.id.ac_bt_add_friend);
         mNoteNameLinearLayout = (LinearLayout) findViewById(R.id.ac_ll_note_name);
 
+        mNoteNameLinearLayout.setVisibility(View.GONE);
         mAddFriendButton.setOnClickListener(this);
         mUserPhone.setOnClickListener(this);
     }
