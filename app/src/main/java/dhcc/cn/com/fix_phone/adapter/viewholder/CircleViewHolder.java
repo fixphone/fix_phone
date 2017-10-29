@@ -24,16 +24,17 @@ import dhcc.cn.com.fix_phone.bean.CircleItem;
 import dhcc.cn.com.fix_phone.bean.CommentItem;
 import dhcc.cn.com.fix_phone.bean.FavortItem;
 import dhcc.cn.com.fix_phone.ui.activity.BusinessActivity;
+import dhcc.cn.com.fix_phone.ui.activity.LoginActivity;
 import dhcc.cn.com.fix_phone.ui.widget.CommentListView;
 import dhcc.cn.com.fix_phone.ui.widget.ExpandTextView;
 import dhcc.cn.com.fix_phone.ui.widget.PraiseListView;
 import dhcc.cn.com.fix_phone.ui.widget.SnsPopupWindow;
 import dhcc.cn.com.fix_phone.ui.widget.videolist.model.VideoLoadMvpView;
 import dhcc.cn.com.fix_phone.ui.widget.videolist.widget.TextureVideoView;
+import dhcc.cn.com.fix_phone.utils.CommunicationUtil;
 import dhcc.cn.com.fix_phone.utils.GlideCircleTransform;
 import dhcc.cn.com.fix_phone.utils.UIUtils;
 import dhcc.cn.com.fix_phone.utils.UrlUtils;
-import io.rong.imkit.RongIM;
 
 /**
  * Created by yiw on 2016/8/16.
@@ -63,7 +64,7 @@ public abstract class CircleViewHolder extends RecyclerView.ViewHolder implement
     public ExpandTextView contentTv;
     public TextView       timeTv;
     public TextView       deleteBtn;
-    public View      snsBtn;
+    public View           snsBtn;
     /**
      * 点赞列表
      */
@@ -164,15 +165,19 @@ public abstract class CircleViewHolder extends RecyclerView.ViewHolder implement
         mCommunication.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!Account.isLogin()) {
+                    context.startActivity(new Intent(context, LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                    return;
+                }
+                if (Account.getLoginInfo() == null) {
+                    context.startActivity(new Intent(context, LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                    return;
+                }
                 if (TextUtils.equals(circleItem.getUser().FPhone, Account.getLoginInfo().getPhone())) {
                     Toast.makeText(context, "不能与自己沟通", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                try {
-                    RongIM.getInstance().startPrivateChat(mActivity,circleItem.getUser().FCreatorID+"",circleItem.getUser().FCompanyName);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                CommunicationUtil.communication(mActivity, circleItem.getUser().FCreatorID + "", circleItem.getUser().FCompanyName);
             }
         });
 
@@ -180,10 +185,10 @@ public abstract class CircleViewHolder extends RecyclerView.ViewHolder implement
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, BusinessActivity.class);
-                intent.putExtra("name",circleItem.getUser().FUserName).
-                        putExtra("headurl",circleItem.getUser().FHeadUrl).
-                        putExtra("weChatId",circleItem.getUser().FCreatorID).
-                        putExtra("userID",circleItem.getUser().FCreatorID+"");
+                intent.putExtra("name", circleItem.getUser().FUserName).
+                        putExtra("headurl", circleItem.getUser().FHeadUrl).
+                        putExtra("weChatId", circleItem.getUser().FCreatorID).
+                        putExtra("userID", circleItem.getUser().FCreatorID + "");
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }

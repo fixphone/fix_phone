@@ -25,7 +25,7 @@ import dhcc.cn.com.fix_phone.adapter.ImageAdapter;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
 import dhcc.cn.com.fix_phone.event.ProductImageEvent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
-import io.rong.imkit.RongIM;
+import dhcc.cn.com.fix_phone.utils.CommunicationUtil;
 
 /**
  * 2017/10/1 16
@@ -110,11 +110,7 @@ public class ProductActivity extends BaseActivity {
         mImageViewCommunication.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    RongIM.getInstance().startPrivateChat(ProductActivity.this, mweChatId, mName);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                CommunicationUtil.communication(ProductActivity.this, mweChatId, mName);
             }
         });
 
@@ -136,6 +132,8 @@ public class ProductActivity extends BaseActivity {
                 break;
             case R.id.textView_home:
                 startActivity(new Intent(ProductActivity.this, MainActivity.class));
+                break;
+            default:
                 break;
         }
     }

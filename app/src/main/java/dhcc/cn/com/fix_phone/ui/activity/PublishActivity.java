@@ -44,6 +44,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import dhcc.cn.com.fix_phone.Account;
 import dhcc.cn.com.fix_phone.MyApplication;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.adapter.SelectImageAdapter;
@@ -189,12 +190,18 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
                 if (TextUtils.isEmpty(mSelectType)) {
                     Toast.makeText(this, "请选择要发布生意的类别", Toast.LENGTH_SHORT).show();
                 } else {
-                    mLoadDialog.show();
-                    confirmCircle();
+                    if (Account.isLogin()) {
+                        mLoadDialog.show();
+                        confirmCircle();
+                    } else {
+                        startActivity(new Intent(this, LoginActivity.class));
+                    }
                 }
                 break;
             case R.id.imageView_selector:
                 applyPermission();
+                break;
+            default:
                 break;
         }
     }

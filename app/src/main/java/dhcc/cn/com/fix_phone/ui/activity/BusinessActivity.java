@@ -25,7 +25,7 @@ import dhcc.cn.com.fix_phone.base.GlideImageLoader;
 import dhcc.cn.com.fix_phone.bean.BusinessResponse;
 import dhcc.cn.com.fix_phone.event.BusinessEvent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
-import io.rong.imkit.RongIM;
+import dhcc.cn.com.fix_phone.utils.CommunicationUtil;
 
 /**
  * 2017/9/26 21
@@ -109,11 +109,7 @@ public class BusinessActivity extends BaseActivity {
         mCommunication.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    RongIM.getInstance().startPrivateChat(BusinessActivity.this, mweChatId, mName);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                CommunicationUtil.communication(BusinessActivity.this, mweChatId, mName);
             }
         });
     }
