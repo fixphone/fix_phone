@@ -25,10 +25,12 @@ import dhcc.cn.com.fix_phone.base.BaseFragment;
 import dhcc.cn.com.fix_phone.bean.GetFriendResponse;
 import dhcc.cn.com.fix_phone.db.Friend;
 import dhcc.cn.com.fix_phone.event.GetFriendEvent;
+import dhcc.cn.com.fix_phone.listener.FragmentOnNewIntent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
 import dhcc.cn.com.fix_phone.rong.BroadcastManager;
 import dhcc.cn.com.fix_phone.rong.CharacterParser;
 import dhcc.cn.com.fix_phone.rong.SealUserInfoManager;
+import dhcc.cn.com.fix_phone.ui.activity.MainActivity;
 import dhcc.cn.com.fix_phone.ui.activity.NewFriendListActivity;
 import dhcc.cn.com.fix_phone.ui.widget.DragPointView;
 import dhcc.cn.com.fix_phone.utils.NToast;
@@ -46,7 +48,7 @@ import static dhcc.cn.com.fix_phone.rong.SealAppContext.UPDATE_RED_DOT;
  * 2017/9/16 23
  */
 public class ImFragment extends BaseFragment implements DragPointView.OnDragListencer,
-        IUnReadMessageObserver {
+        IUnReadMessageObserver, FragmentOnNewIntent {
 
     @BindView(R.id.im_title_rg)
     RadioGroup mTitleRg;
@@ -63,10 +65,6 @@ public class ImFragment extends BaseFragment implements DragPointView.OnDragList
     private Conversation.ConversationType[] mConversationsTypes = null;
     private boolean isDebug;
 
-    public static ImFragment newInstance() {
-        return new ImFragment();
-    }
-    
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_im;
@@ -89,7 +87,10 @@ public class ImFragment extends BaseFragment implements DragPointView.OnDragList
         fragmentTransaction.commit();
         list_item.setChecked(true);
         changeFragment(mConversationListFragment);
-        ApiManager.Instance().GetListFriend(Account.getAccessToken(), "");
+        ((MainActivity)getActivity()).setOnNewIntent(this);
+        if(Account.isLogin()){
+            ApiManager.Instance().GetListFriend(Account.getAccessToken(), "");
+        }
     }
 
     @Override
@@ -128,6 +129,18 @@ public class ImFragment extends BaseFragment implements DragPointView.OnDragList
             }
         });
         mUnreadNumView.setDragListencer(this);
+    }
+
+    @Override
+    public void onNewIntent() {
+        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+        fragmentTransaction.remove(mConversationListFragment);
+        mConversationListFragment = null;
+        initConversationList();
+        fragmentTransaction.add(R.id.content_fl, mConversationListFragment);
+        fragmentTransaction.commit();
+        list_item.setChecked(true);
+        changeFragment(mConversationListFragment);
     }
 
     private void changeFragment(Fragment fragment){

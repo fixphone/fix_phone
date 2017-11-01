@@ -27,14 +27,10 @@ import dhcc.cn.com.fix_phone.Account;
 import dhcc.cn.com.fix_phone.MyApplication;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.base.RongBaseActivity;
-import dhcc.cn.com.fix_phone.bean.GetFriendResponse;
 import dhcc.cn.com.fix_phone.db.Friend;
 import dhcc.cn.com.fix_phone.event.AddFriendEvent;
-import dhcc.cn.com.fix_phone.event.GetFriendEvent;
 import dhcc.cn.com.fix_phone.event.QueryUserEvent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
-import dhcc.cn.com.fix_phone.rong.BroadcastManager;
-import dhcc.cn.com.fix_phone.rong.CharacterParser;
 import dhcc.cn.com.fix_phone.rong.SealAppContext;
 import dhcc.cn.com.fix_phone.rong.SealConst;
 import dhcc.cn.com.fix_phone.rong.SealUserInfoManager;
@@ -45,14 +41,10 @@ import dhcc.cn.com.fix_phone.rong.response.GetUserInfoByPhoneResponse;
 import dhcc.cn.com.fix_phone.ui.widget.DialogWithYesOrNoUtils;
 import dhcc.cn.com.fix_phone.ui.widget.LoadDialog;
 import dhcc.cn.com.fix_phone.ui.widget.SelectableRoundedImageView;
-import dhcc.cn.com.fix_phone.utils.AMUtils;
 import dhcc.cn.com.fix_phone.utils.CommonUtils;
 import dhcc.cn.com.fix_phone.utils.NToast;
 import io.rong.imageloader.core.ImageLoader;
 import io.rong.imlib.model.UserInfo;
-
-import static dhcc.cn.com.fix_phone.rong.SealAppContext.UPDATE_FRIEND;
-import static dhcc.cn.com.fix_phone.rong.SealAppContext.UPDATE_RED_DOT;
 
 public class SearchFriendActivity extends RongBaseActivity {
 
@@ -342,6 +334,7 @@ public class SearchFriendActivity extends RongBaseActivity {
             if(event.addFriendResponse.FObject != null){
                 NToast.shortToast(mContext, "请求成功");
                 LoadDialog.dismiss(mContext);
+                ApiManager.Instance().GetListFriend(Account.getAccessToken(), "");
             }
         }else {
         NToast.shortToast(mContext, "请求失败:" + event.errorMessage);

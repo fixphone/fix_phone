@@ -18,6 +18,7 @@ import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
 import dhcc.cn.com.fix_phone.event.RefreshTokenEvent;
 import dhcc.cn.com.fix_phone.event.RongTokenEvent;
+import dhcc.cn.com.fix_phone.listener.FragmentOnNewIntent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
 import dhcc.cn.com.fix_phone.rong.SealConst;
 import dhcc.cn.com.fix_phone.rong.SealUserInfoManager;
@@ -43,6 +44,8 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
 
     private SupportFragment[] mFragments = new SupportFragment[3];
     private int               tabSelect  = 1;
+    private ImFragment imFragment;
+    private FragmentOnNewIntent onNewIntent;
 
     @Override
     public int getLayoutId() {
@@ -52,7 +55,8 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
     @Override
     protected void init() {
         super.init();
-        mFragments[0] = ImFragment.newInstance();
+        imFragment = new ImFragment();
+        mFragments[0] = imFragment;
         mFragments[1] = CircleFragment.newInstance();
         mFragments[2] = MeFragment.newInstance();
         getSwipeBackLayout().setEdgeOrientation(SwipeBackLayout.STATE_IDLE);
@@ -91,6 +95,12 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
         super.onNewIntent(intent);
         ApiManager.Instance().getRongToken(Account.getAccessToken());
         ApiManager.Instance().getUserInfo(Account.getUserId());
+        ApiManager.Instance().GetListFriend(Account.getAccessToken(), "");
+        onNewIntent.onNewIntent();
+    }
+
+    public void setOnNewIntent(FragmentOnNewIntent onNewIntent){
+        this.onNewIntent = onNewIntent;
     }
 
     @Override
@@ -125,7 +135,6 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
     public void onTabReselected(TabLayout.Tab tab) {
 
     }
-
 
     @Override
     protected void onResume() {
