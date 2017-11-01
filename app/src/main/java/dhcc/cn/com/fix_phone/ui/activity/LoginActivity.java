@@ -2,7 +2,6 @@ package dhcc.cn.com.fix_phone.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -30,15 +29,14 @@ import dhcc.cn.com.fix_phone.utils.MD5;
 
 /**
  * Created by Administrator on 2017/9/24 0024.
- *
  */
 
 public class LoginActivity extends RongBaseActivity {
-
-    public static final int LOGIN_BACK_CODE = 0x0010;
-    public static final  int    REG_CODE       = 0x0001;
-    private static final String IMG_TAG_HIDE   = "hide";
-    private static final String IMG_TAG_SHOW   = "show";
+    private static final String TAG = "LoginActivity";
+    public static final  int    LOGIN_BACK_CODE = 0x0010;
+    public static final  int    REG_CODE        = 0x0001;
+    private static final String IMG_TAG_HIDE    = "hide";
+    private static final String IMG_TAG_SHOW    = "show";
 
     @BindView(R.id.title_name)
     TextView  title_name;
@@ -51,10 +49,10 @@ public class LoginActivity extends RongBaseActivity {
     @BindView(R.id.eye_state)
     ImageView eye_state;
 
-    private Toast                    toast;
-    private String                   phoneString;
-    private String                   passwordString;
-    private LoadDialog               loadDialog;
+    private Toast      toast;
+    private String     phoneString;
+    private String     passwordString;
+    private LoadDialog loadDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +96,8 @@ public class LoginActivity extends RongBaseActivity {
                 break;
             case R.id.forget_pass:
                 startActivity(ForgetPassActivity.class);
+                break;
+            default:
                 break;
         }
     }

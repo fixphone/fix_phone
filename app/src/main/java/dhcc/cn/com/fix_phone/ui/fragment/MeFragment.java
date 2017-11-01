@@ -40,6 +40,7 @@ import dhcc.cn.com.fix_phone.ui.activity.PersonInfoActivity;
 import dhcc.cn.com.fix_phone.ui.activity.VipActivity;
 import dhcc.cn.com.fix_phone.ui.widget.LoadDialog;
 import dhcc.cn.com.fix_phone.ui.widget.RoundImageView;
+import dhcc.cn.com.fix_phone.utils.SpUtils;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.UserInfo;
 
@@ -64,12 +65,15 @@ public class MeFragment extends BaseFragment {
     TextView       user_mobile;
     @BindView(R.id.user_icon)
     RoundImageView user_icon;
+    @BindView(R.id.mine_vip)
+    TextView       mine_vip;
 
-    private BusinessResponse mResponse;
-    private SharedPreferences sp;
+    private BusinessResponse         mResponse;
+    private SharedPreferences        sp;
     private SharedPreferences.Editor editor;
-    private LoadDialog loadDialog;
-    private Toast toast;
+    private LoadDialog               loadDialog;
+    private Toast                    toast;
+    private int                      mVipType;
 
     public static MeFragment newInstance() {
         Bundle args = new Bundle();
@@ -88,6 +92,7 @@ public class MeFragment extends BaseFragment {
     protected void init() {
         super.init();
         EventBus.getDefault().register(this);
+        mVipType = (int) SpUtils.get(_mActivity, "vip_type", -1);
     }
 
     @Override
@@ -107,7 +112,7 @@ public class MeFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        if(Account.isLogin()){
+        if (Account.isLogin()) {
             ApiManager.Instance().getUserInfo(Account.getUserId());
         }
     }
@@ -115,11 +120,11 @@ public class MeFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(Account.isLogin()){
-            if(mResponse != null){
+        if (Account.isLogin()) {
+            if (mResponse != null) {
                 setViewState(mResponse.FObject.companyName, mResponse.FObject.phone, mResponse.FObject.headUrl);
             }
-        }else {
+        } else {
             setViewState("", "", "");
         }
     }
@@ -127,8 +132,8 @@ public class MeFragment extends BaseFragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if(!hidden){
-            if(!Account.isLogin()){
+        if (!hidden) {
+            if (!Account.isLogin()) {
                 setViewState("", "", "");
             }
         }
@@ -137,17 +142,20 @@ public class MeFragment extends BaseFragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onUserInfo(BusinessEvent event) {
         mResponse = event.mResponse;
-        if(mResponse != null){
+        if (mResponse != null) {
             setViewState(mResponse.FObject.companyName, mResponse.FObject.phone, mResponse.FObject.headUrl);
+            if (event.mResponse.FObject.userType == 1) {
+                mine_vip.setVisibility(View.VISIBLE);
+            }
         }
     }
 
-    private void setViewState(String name, String phone, String headUrl){
+    private void setViewState(String name, String phone, String headUrl) {
         user_name.setText(name);
         user_mobile.setText(phone);
-        if(TextUtils.isEmpty(headUrl)){
+        if (TextUtils.isEmpty(headUrl)) {
             user_icon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.user_default_icon));
-        }else {
+        } else {
             Glide.with(getContext()).load(headUrl).diskCacheStrategy(DiskCacheStrategy.ALL).into(user_icon);
         }
         String userId = Account.getUserId();
@@ -163,56 +171,56 @@ public class MeFragment extends BaseFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.mine_info:
-                if(Account.isLogin()){
+                if (Account.isLogin()) {
                     Intent intent = new Intent(getContext(), PersonInfoActivity.class);
                     intent.putExtra("BusinessResponse", mResponse);
                     startActivity(intent);
-                }else {
+                } else {
                     startLoginActivity();
                 }
                 break;
             case R.id.mine_circle:
-                if(Account.isLogin()){
+                if (Account.isLogin()) {
                     startActivity(new Intent(getActivity(), MineCirCleActivity.class).putExtra("title", "我的圈子").
                             putExtra("resource_type", 1));
-                }else {
+                } else {
                     startLoginActivity();
                 }
 
                 break;
             case R.id.mine_house:
-                if(Account.isLogin()){
+                if (Account.isLogin()) {
                     startActivity(new Intent(getActivity(), MineCirCleActivity.class).putExtra("title", "我的收藏").
                             putExtra("resource_type", 2));
-                }else {
+                } else {
                     startLoginActivity();
                 }
                 break;
             case R.id.mine_suggest:
-                if(Account.isLogin()){
-                    startActivity(new Intent(getContext(),FeedBackActivity.class));
-                }else {
+                if (Account.isLogin()) {
+                    startActivity(new Intent(getContext(), FeedBackActivity.class));
+                } else {
                     startLoginActivity();
                 }
                 break;
             case R.id.mine_vip:
-                if(Account.isLogin()){
+                if (Account.isLogin()) {
                     startActivity(new Intent(getContext(), VipActivity.class));
-                }else {
+                } else {
                     startLoginActivity();
                 }
                 break;
             case R.id.mine_advert:
-                if(Account.isLogin()){
+                if (Account.isLogin()) {
                     startActivity(new Intent(getActivity(), MyProductActivity.class).putExtra("type", 1));
-                }else {
+                } else {
                     startLoginActivity();
                 }
                 break;
             case R.id.mine_produce:
-                if(Account.isLogin()){
+                if (Account.isLogin()) {
                     startActivity(new Intent(getActivity(), MyProductActivity.class).putExtra("type", 2));
-                }else {
+                } else {
                     startLoginActivity();
                 }
                 break;
@@ -225,15 +233,15 @@ public class MeFragment extends BaseFragment {
                         toast.setText("已清空");
                         toast.show();
                     }
-                }, (int)((Math.random() * 10) % 3 + 1) * 1000);
+                }, (int) ((Math.random() * 10) % 3 + 1) * 1000);
                 break;
             case R.id.mine_app:
                 startActivity(new Intent(getContext(), AboutAppActivity.class));
                 break;
             case R.id.title_right:
-                if(Account.isLogin()){
+                if (Account.isLogin()) {
                     startActivity(new Intent(getContext(), MyActivity.class).putExtra("BusinessResponse", mResponse));
-                }else {
+                } else {
                     startLoginActivity();
                 }
                 break;

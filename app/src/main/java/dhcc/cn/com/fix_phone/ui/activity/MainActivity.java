@@ -42,7 +42,7 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
     private SharedPreferences.Editor editor;
 
     private SupportFragment[] mFragments = new SupportFragment[3];
-    private int tabSelect = 1;
+    private int               tabSelect  = 1;
 
     @Override
     public int getLayoutId() {
@@ -73,10 +73,11 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
         EventBus.getDefault().register(this);
         getConversationPush();
         getPushMessage();
-        if(Account.isLogin()){
+        if (Account.isLogin()) {
             String refreshToken = Account.getLoginInfo().getRefreshToken();
-            if(!TextUtils.isEmpty(refreshToken))
+            if (!TextUtils.isEmpty(refreshToken)) {
                 ApiManager.Instance().RefreshToken(refreshToken);
+            }
         }
     }
 
@@ -94,9 +95,11 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        switch (ev.getAction()){
+        switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 tabSelect = mTabLayout.getSelectedTabPosition();
+                break;
+            default:
                 break;
         }
         return super.dispatchTouchEvent(ev);
@@ -105,7 +108,7 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
         int position = tab.getPosition();
-        if(position == 0 && !Account.isLogin()){
+        if (position == 0 && !Account.isLogin()) {
             startActivity(new Intent(this, LoginActivity.class));
             mTabLayout.getTabAt(tabSelect).select();
             return;
@@ -198,15 +201,15 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void refreshTokenResult(RefreshTokenEvent refreshTokenEvent){
-        if(refreshTokenEvent.loginResponse != null){
-            if(refreshTokenEvent.loginResponse.FIsSuccess){
+    public void refreshTokenResult(RefreshTokenEvent refreshTokenEvent) {
+        if (refreshTokenEvent.loginResponse != null) {
+            if (refreshTokenEvent.loginResponse.FIsSuccess) {
                 Account.setAccessToken(Account.getUserId(), refreshTokenEvent.loginResponse.FObject.getAccessToken());
                 ApiManager.Instance().getRongToken(refreshTokenEvent.loginResponse.FObject.accessToken);
                 ApiManager.Instance().getUserInfo(refreshTokenEvent.loginResponse.FObject.accessToken);
-            }else {
+            } else {
                 Account.setLogin(false);
-                Toast.makeText(this, "您的账号可能在其他地方登录了", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "您的账号可能在其他地方登录了", Toast.LENGTH_SHORT).show();
             }
         }
     }

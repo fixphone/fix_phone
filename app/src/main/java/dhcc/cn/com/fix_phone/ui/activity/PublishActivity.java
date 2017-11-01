@@ -12,7 +12,9 @@ import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.content.FileProvider;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -172,6 +174,24 @@ public class PublishActivity extends BaseActivity implements SelectImageAdapter.
                 if (mFileVideo != null && mFileVideo.getName().endsWith("mp4")) {
                     startActivity(new Intent(PublishActivity.this, ExtendsNormalActivity.class).putExtra("path", mFileVideo.getAbsolutePath()));
                 }
+            }
+        });
+
+        mContentEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                int length = s.toString().length();
+                mCountTv.setText(length + "/300");
             }
         });
     }
