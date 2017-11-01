@@ -40,13 +40,13 @@ import dhcc.cn.com.fix_phone.rong.SealAppContext;
 import dhcc.cn.com.fix_phone.rong.SealConst;
 import dhcc.cn.com.fix_phone.rong.SealUserInfoManager;
 import dhcc.cn.com.fix_phone.ui.activity.BlackListActivity;
-import dhcc.cn.com.fix_phone.ui.activity.NewFriendListActivity;
 import dhcc.cn.com.fix_phone.ui.activity.UserDetailActivity;
 import dhcc.cn.com.fix_phone.ui.widget.LoadDialog;
 import dhcc.cn.com.fix_phone.ui.widget.SelectableRoundedImageView;
 import dhcc.cn.com.fix_phone.utils.PinyinComparator;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.mention.SideBar;
+import io.rong.imlib.model.CSCustomServiceInfo;
 
 /**
  * tab 2 通讯录的 Fragment
@@ -55,33 +55,33 @@ import io.rong.imkit.mention.SideBar;
 public class ContactsFragment extends Fragment implements View.OnClickListener {
 
     private SelectableRoundedImageView mSelectableRoundedImageView;
-    private TextView mNameTextView;
-    private TextView mNoFriends;
-    private TextView mUnreadTextView;
-    private View mHeadView;
-    private EditText mSearchEditText;
-    private ListView mListView;
-    private PinyinComparator mPinyinComparator;
-    private SideBar mSidBar;
+    private TextView                   mNameTextView;
+    private TextView                   mNoFriends;
+    private TextView                   mUnreadTextView;
+    private View                       mHeadView;
+    private EditText                   mSearchEditText;
+    private ListView                   mListView;
+    private PinyinComparator           mPinyinComparator;
+    private SideBar                    mSidBar;
     /**
      * 中部展示的字母提示
      */
-    private TextView mDialogTextView;
-    private List<Friend> mFriendList;
-    private List<Friend> mFilteredFriendList;
+    private TextView                   mDialogTextView;
+    private List<Friend>               mFriendList;
+    private List<Friend>               mFilteredFriendList;
     /**
      * 好友列表的 mFriendListAdapter
      */
-    private FriendListAdapter mFriendListAdapter;
+    private FriendListAdapter          mFriendListAdapter;
     /**
      * 汉字转换成拼音的类
      */
-    private CharacterParser mCharacterParser;
+    private CharacterParser            mCharacterParser;
     /**
      * 根据拼音来排列ListView里面的数据类
      */
-    private String mId;
-    private String mCacheName;
+    private String                     mId;
+    private String                     mCacheName;
 
     private static final int CLICK_CONTACT_FRAGMENT_FRIEND = 2;
 
@@ -111,7 +111,7 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
         mSidBar.setTextView(mDialogTextView);
         LayoutInflater mLayoutInflater = LayoutInflater.from(getActivity());
         mHeadView = mLayoutInflater.inflate(R.layout.item_contact_list_header,
-                                            null);
+                null);
         mUnreadTextView = (TextView) mHeadView.findViewById(R.id.tv_unread);
         RelativeLayout newFriendsLayout = (RelativeLayout) mHeadView.findViewById(R.id.re_newfriends);
         RelativeLayout selfLayout = (RelativeLayout) mHeadView.findViewById(R.id.contact_me_item);
@@ -201,10 +201,15 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.contact_me_item:
                 try {
-                    RongIM.getInstance().startCustomerServiceChat(getActivity(), mId, mCacheName, null);
+                    //首先需要构造使用客服者的用户信息
+                    CSCustomServiceInfo.Builder csBuilder = new CSCustomServiceInfo.Builder();
+                    CSCustomServiceInfo csInfo = csBuilder.nickName("融云").build();
+                    RongIM.getInstance().startCustomerServiceChat(getActivity(), mId, mCacheName, csInfo);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                break;
+            default:
                 break;
         }
     }
@@ -298,7 +303,7 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                     final Friend bean = mFriendList.get(position - 1);
-//                    startFriendDetailsPage(bean);
+                    //                    startFriendDetailsPage(bean);
                     new AlertDialog.Builder(getContext()).setTitle("删除好友").setNegativeButton("取消", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -318,7 +323,7 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
+                }
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -343,18 +348,11 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
     }
 
     private void updatePersonalUI() {
-//        SharedPreferences sp = SealAppContext.getInstance().getContext().getSharedPreferences("config", Context.MODE_PRIVATE);
-//        mId = sp.getString(SealConst.SEALTALK_LOGIN_ID, "");
-//        mCacheName = sp.getString(SealConst.SEALTALK_LOGIN_NAME, "");
-        mId = "KEFU150358816985468";
+        mId = "KEFU150125440025998";
         mCacheName = "速通交易客服";
-//        final String header = sp.getString(SealConst.SEALTALK_LOGING_PORTRAIT, "");
         mNameTextView.setText(mCacheName);
         if (!TextUtils.isEmpty(mId)) {
-//            UserInfo userInfo = new UserInfo(mId, mCacheName, Uri.parse(header));
-//            String portraitUri = SealUserInfoManager.getInstance().getPortraitUri(userInfo);
             mSelectableRoundedImageView.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_launcher));
-//            ImageLoader.getInstance().displayImage("file:///android_asset/ic_launcher.png", mSelectableRoundedImageView, MyApplication.getOptions());
         }
     }
 
@@ -385,7 +383,7 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getFriend(DeleteFriendEvent event) {
-        if(event.telCheckResponse != null && event.telCheckResponse.FIsSuccess){
+        if (event.telCheckResponse != null && event.telCheckResponse.FIsSuccess) {
             SealUserInfoManager.getInstance().deleteFriends();
             ApiManager.Instance().GetListFriend(Account.getAccessToken(), "");
         }
