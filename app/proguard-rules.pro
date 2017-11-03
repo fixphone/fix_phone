@@ -12,9 +12,9 @@
 # If your project uses WebView with JS, uncomment the following
 # and specify the fully qualified class name to the JavaScript interface
 # class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+-keepclassmembers class fqcn.of.javascript.interface.for.webview {
+   public *;
+}
 
 # Uncomment this to preserve the line number information for
 # debugging stack traces.
@@ -34,7 +34,6 @@
 -keep class * extends java.lang.annotation.Annotation { *; }
 
 # 保持哪些类不被混淆
--keep public class * implements com.bumptech.glide.module.GlideModule
 -keep public class * extends android.app.Fragment
 -keep public class * extends android.app.Activity
 -keep public class * extends android.app.Application
@@ -58,7 +57,6 @@
 -printmapping mapping.txt
 #####################记录生成的日志数据，gradle build时 在本项目根目录输出-end################
 
--keep class com.umeng.onlineconfig.**{ *; }
 -keep class com.alipay.euler.andfix.**{ *; }
 -keep class android.support.v7.**{ *; }
 -keep class android.support.design.**{ *; }
@@ -71,8 +69,6 @@
 -keep class com.google.gson.* { *;}
 -keep class com.google.zxing.**{ *; }
 -keep class me.dm7.barcodescanner.**{ *; }
--keep class com.bumptech.glide.**{ *; }
--keep class com.activeandroid.** { *; }
 -keep class com.squareup.javapoet.**{ *; }
 -keep class com.squareup.okhttp3.**{ *; }
 -keep class com.squareup.okio.**{ *; }
@@ -95,49 +91,63 @@
 -keep class org.eclipse.paho.**{ *; }
 -keep class org.hamcrest.**{ *; }
 -keep class cn.jpush.** { *; }
--keep public class * extends com.umeng.**
 -keep public class pl.droidsonroids.gif.GifIOException{<init>(int);}
 -keep class pl.droidsonroids.gif.GifInfoHandle{<init>(long,int,int,int);}
 -keep public class com.alibaba.android.arouter.routes.**{*;}
 -keep class * implements com.alibaba.android.arouter.facade.template.ISyringe{*;}
 -keep class *.R
 
--keep class dhcc.cn.com.fix_phone.rong**{ *; }
--keep class dhcc.cn.com.fix_phone.db**{ *; }
--keep class dhcc.cn.com.fix_phone.bean**{ *; }
--keep class dhcc.cn.com.fix_phone.event**{ *; }
--keep class dhcc.cn.com.fix_phone.conf**{ *; }
--keep class dhcc.cn.com.fix_phone.base**{ *; }
--keep class dhcc.cn.com.fix_phone.MyApplication {*;}
--keep class com.zhihu.matisse**{ *; }
--keep class com.github.rubensousa.bottomsheetbuilder**{ *; }
-
--keepattributes Exceptions,InnerClasses
--keep class dhcc.cn.com.fix_phone.rong.SealNotificationReceiver {*;}
--keepattributes Signature
+-keepattributes SourceFile,LineNumberTable
+-keep class dhcc.cn.com.fix_phone.rong.**{ *; }
+-keep class dhcc.cn.com.fix_phone.db.**{ *; }
+-keep class dhcc.cn.com.fix_phone.bean.**{ *; }
+-keep class dhcc.cn.com.fix_phone.event.**{ *; }
+-keep class dhcc.cn.com.fix_phone.conf.**{ *; }
+-keep class dhcc.cn.com.fix_phone.base.**{ *; }
+-keep class com.zhihu.matisse.**{ *; }
+-keep class com.github.rubensousa.bottomsheetbuilder.**{ *; }
+-keep class org.apache.http.**{ *; }
 
 # RongCloud SDK
--keep class io.rong.** {*;}
--keep class * implements io.rong.imlib.model.MessageContent {*;}
+-keep class io.rong.** { *; }
+-keep class io.rong.imlib.** { *; }
+-keep class io.rong.message.** { *; }
+-keep class uk.co.senab.bitmapcache.** { *; }
+-keep class com.jakewharton.disklrucache.** { *; }
+-keep class com.sea_monster.core.** { *; }
+-keep class *.R$ { *; }
+-keep class **$Properties
+-keep class * implements io.rong.imlib.model.MessageContent { *; }
 -dontwarn io.rong.push.**
+-dontwarn io.rong.**
 -dontnote com.xiaomi.**
 -dontnote com.google.android.gms.gcm.**
 -dontnote io.rong.**
+-dontwarn org.eclipse.jdt.annotation.**
+-keep class dhcc.cn.com.fix_phone.rong.SealNotificationReceiver { *; }
+-keep public class com.leyye.leader.R**{ *; }
 
-# VoIP
--keep class io.agora.rtc.** {*;}
+-keep public class de.greenrobot.dao.** { *; }
+-keepattributes Exceptions,InnerClasses
+-dontwarn de.greenrobot.**
+-keep class de.greenrobot.**{ *; }
+-keepclassmembers class * extends de.greenrobot.dao.AbstractDao {
 
-# Location
--keep class com.amap.api.**{*;}
--keep class com.amap.api.services.**{*;}
+    public static java.lang.String TABLENAME;
 
-# 红包
--keep class com.google.gson.** { *; }
--keep class com.uuhelper.Application.** {*;}
--keep class net.sourceforge.zbar.** { *; }
--keep class com.google.android.gms.** { *; }
--keep class com.alipay.** {*;}
--keep class com.jrmf360.rylib.** {*;}
+}
+-keep public class de.greenrobot.dao.R$*{
+
+    public static final int *;
+
+      public static final Objects *;
+
+}
+
+##--AMap
+-keep class com.amap.api.** { *; }
+-keep class com.amap.api.services.** { *; }
+-keep class amap.api.location.** { *; }
 
 ###################################butterknife######################################
 -keep class butterknife.** { *; }
@@ -173,6 +183,28 @@
 
 #########################数据库###############################
 -keep class com.raizlabs.android.dbflow.** {*;}
+
+######################### 微信支付 ############################
+-keep class com.tencent.mm.opensdk.** { *; }
+-keep class com.tencent.wxop.** { *; }
+-keep class com.tencent.mm.sdk.** { *; }
+
+########################## glide 的混淆代码  ##################
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
+}
+
+########################## banner 的混淆代码 ##################
+-keep class com.youth.banner.** { *; }
+
+-keep class com.chad.library.adapter.** { *; }
+-keep public class * extends com.chad.library.adapter.base.BaseQuickAdapter
+-keep public class * extends com.chad.library.adapter.base.BaseViewHolder
+-keepclassmembers  class **$** extends com.chad.library.adapter.base.BaseViewHolder {
+  <init>(...);
+}
 
 ##############混淆保护自己项目的部分代码以及引用的第三方jar包library-end#######################
 
@@ -241,14 +273,3 @@
     public static int d(...);
     public static int e(...);
 }
-
--keep class com.tencent.mm.opensdk.** {
-   *;
-}
--keep class com.tencent.wxop.** {
-   *;
-}
--keep class com.tencent.mm.sdk.** {
-   *;
-}
-

@@ -1,11 +1,11 @@
 package dhcc.cn.com.fix_phone;
 
 import android.app.ActivityManager;
+import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.multidex.MultiDexApplication;
 import android.support.v4.util.ArrayMap;
 import android.text.TextUtils;
 
@@ -21,8 +21,6 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
 import java.util.Map;
 
-import dhcc.cn.com.fix_phone.bean.LoginResponse;
-import dhcc.cn.com.fix_phone.db.DBManager;
 import dhcc.cn.com.fix_phone.remote.ApiService;
 import dhcc.cn.com.fix_phone.rong.SealAppContext;
 import dhcc.cn.com.fix_phone.rong.SealUserInfoManager;
@@ -41,7 +39,7 @@ import io.rong.push.RongPushClient;
 /**
  * 2017/9/16 22
  */
-public class MyApplication extends MultiDexApplication {
+public class MyApplication extends Application {
     private static final String TAG = "MyApplication";
 
     private static Context             mContext;

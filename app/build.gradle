@@ -33,11 +33,10 @@ android {
             buildConfigField "boolean", "LOG_DEBUG", "true"
             signingConfig signingConfigs.releaseconfig
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            debuggable false
             jniDebuggable false
             renderscriptDebuggable false
             zipAlignEnabled true
-            minifyEnabled true
+            debuggable true
         }
 
         debug {
@@ -45,10 +44,10 @@ android {
             buildConfigField "boolean", "LOG_DEBUG", "true"
             signingConfig signingConfigs.releaseconfig
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            jniDebuggable false
             versionNameSuffix "-debug"
             zipAlignEnabled false
             shrinkResources false
-            jniDebuggable false
             debuggable true
         }
     }
