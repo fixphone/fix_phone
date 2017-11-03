@@ -208,6 +208,8 @@
 
 ##############混淆保护自己项目的部分代码以及引用的第三方jar包library-end#######################
 
+-keep class org.apache.http.**{*;}
+
 -keep public class * extends android.view.View {
     public <init>(android.content.Context);
     public <init>(android.content.Context, android.util.AttributeSet);
