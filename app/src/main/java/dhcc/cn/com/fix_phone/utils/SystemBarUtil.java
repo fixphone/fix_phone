@@ -53,6 +53,7 @@ public class SystemBarUtil {
 	}
 
 	@TargetApi(19)
+	@SuppressWarnings("ResourceType")
 	public SystemBarUtil(Activity activity) {
 
 		Window win = activity.getWindow();
