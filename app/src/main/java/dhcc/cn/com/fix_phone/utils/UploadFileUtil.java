@@ -11,6 +11,7 @@ import java.util.Map;
 
 import dhcc.cn.com.fix_phone.Account;
 import dhcc.cn.com.fix_phone.MyApplication;
+import dhcc.cn.com.fix_phone.remote.Api;
 import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
@@ -37,7 +38,7 @@ public class UploadFileUtil {
 
     private static void uploadFile(String path, StringCallback stringCallback, File uploadFile) {
         OkHttpUtils.post()
-                .url("http://120.77.202.151:8080" + path)
+                .url(Api.BASE_LOGIN_URL + path)
                 .addFile("mFile", uploadFile.getName(), uploadFile)
                 .addHeader("accessKey", "JHD2017")
                 .addHeader("accessToken", Account.getAccessToken())
@@ -47,7 +48,7 @@ public class UploadFileUtil {
 
     public static void uploadFileAndContent(String path, List<File> files , String Content, String selectType,StringCallback callback){
         OkHttpUtils.post()
-                .url("http://120.77.202.151:8080" + path)
+                .url(Api.BASE_LOGIN_URL + path)
                 .addHeader("accessKey", "JHD2017")
                 .addHeader("accessToken", Account.getAccessToken())
                 .addParams("type", selectType)

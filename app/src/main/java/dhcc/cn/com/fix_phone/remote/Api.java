@@ -38,7 +38,7 @@ import retrofit2.http.Query;
  * 2016/11/2 11
  */
 public interface Api {
-    String BASE_LOGIN_URL = "http://120.77.202.151:8080";
+    String BASE_LOGIN_URL = "http://120.77.202.151:8090";
 
     //1.发送注册验证码
     @POST("/Account/SendRegisterPhoneCode")

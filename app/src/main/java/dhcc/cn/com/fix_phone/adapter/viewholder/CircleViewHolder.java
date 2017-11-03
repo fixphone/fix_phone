@@ -245,7 +245,7 @@ public abstract class CircleViewHolder extends RecyclerView.ViewHolder implement
     }
 
     private void handleHeadIcon(CircleItem circleItem) {
-        String name = circleItem.getUser().getFUserName();
+        String name = circleItem.getUser().getFCompanyName();
         String headImg = circleItem.getUser().getFHeadUrl();
         String timeAgo = circleItem.getUser().getFTimeAgo();
         Glide.with(context).load(headImg).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.color.bg_no_photo).transform(new GlideCircleTransform(context)).into(headIv);

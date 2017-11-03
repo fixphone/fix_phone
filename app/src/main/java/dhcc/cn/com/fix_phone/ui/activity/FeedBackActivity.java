@@ -1,15 +1,12 @@
 package dhcc.cn.com.fix_phone.ui.activity;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Rect;
-import android.net.Uri;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,7 +19,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.nanchen.compresshelper.CompressHelper;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhihu.matisse.Matisse;
@@ -32,16 +28,11 @@ import com.zhihu.matisse.internal.entity.CaptureStrategy;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.CountDownLatch;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -50,10 +41,8 @@ import dhcc.cn.com.fix_phone.MyApplication;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.adapter.AddPhotoAdapter;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
-import dhcc.cn.com.fix_phone.bean.UploadResponse;
-import dhcc.cn.com.fix_phone.event.PublishSuccessEvent;
+import dhcc.cn.com.fix_phone.remote.Api;
 import dhcc.cn.com.fix_phone.ui.widget.LoadDialog;
-import dhcc.cn.com.fix_phone.utils.GsonUtils;
 import dhcc.cn.com.fix_phone.utils.ImageUtil;
 import dhcc.cn.com.fix_phone.utils.UIUtils;
 import dhcc.cn.com.fix_phone.utils.UploadFileUtil;
@@ -64,8 +53,6 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.Call;
-import okhttp3.Request;
-import okhttp3.Response;
 
 /**
  * Created by songyang on 2017\9\22 0022.
@@ -276,7 +263,7 @@ public class FeedBackActivity extends BaseActivity{
             public void onSuccess(List<File> files) {
                 OkHttpUtils
                         .post()
-                        .url("http://120.77.202.151:8080/Suggestion/Add")
+                        .url(Api.BASE_LOGIN_URL + "/Suggestion/Add")
                         .addHeader("accessKey", "JHD2017")
                         .addHeader("accessToken", Account.getAccessToken())
                         .addParams("content", content_et.getText().toString())

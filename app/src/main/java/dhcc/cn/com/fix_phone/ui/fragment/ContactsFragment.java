@@ -31,6 +31,7 @@ import java.util.List;
 import dhcc.cn.com.fix_phone.Account;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.adapter.FriendListAdapter;
+import dhcc.cn.com.fix_phone.conf.Constants;
 import dhcc.cn.com.fix_phone.db.Friend;
 import dhcc.cn.com.fix_phone.event.DeleteFriendEvent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
@@ -348,7 +349,7 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
     }
 
     private void updatePersonalUI() {
-        mId = "KEFU150125440025998";
+        mId = Constants.MI_SERVICE;
         mCacheName = "速通交易客服";
         mNameTextView.setText(mCacheName);
         if (!TextUtils.isEmpty(mId)) {
