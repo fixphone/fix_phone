@@ -59,6 +59,8 @@ public class MineCirCleActivity extends BaseActivity implements DeleteDialogFrag
     SmartRefreshLayout  mRefreshLayout;
     @BindView(R.id.video_progress)
     CircularProgressBar mVideoProgress;
+    @BindView(R.id.textView_desc)
+    TextView            mTextView;
     private String            mTitle;
     private MineCircleAdapter mAdapter;
     private int               mResourceType;
@@ -153,6 +155,11 @@ public class MineCirCleActivity extends BaseActivity implements DeleteDialogFrag
         mAdapter = new MineCircleAdapter(this);
         mAdapter.setResourceType(mResourceType);
         mRecyclerview.setAdapter(mAdapter);
+        if (mResourceType == 1) {
+            mTextView.setVisibility(View.VISIBLE);
+        } else {
+            mTextView.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -165,6 +172,9 @@ public class MineCirCleActivity extends BaseActivity implements DeleteDialogFrag
         CircleBusiness.FObjectBean bean = event.mFObjectBean;
         List<CircleItem> circleItems = transformCircleItem(bean);
         updateCircleItem(circleItems);
+        if (mResourceType==1) {
+            mTextView.setText("您已经发布的圈子总数：" + bean.publishNumber);
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

@@ -34,6 +34,7 @@ public class CircleBusiness {
         public int            pageIndex;
         public int            pageSize;
         public int            total;
+        public int            publishNumber;
         public List<RowsBean> rows;
 
         public static class RowsBean {

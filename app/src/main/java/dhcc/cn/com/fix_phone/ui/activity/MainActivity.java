@@ -3,8 +3,10 @@ package dhcc.cn.com.fix_phone.ui.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.Toast;
 
@@ -27,6 +29,7 @@ import dhcc.cn.com.fix_phone.ui.fragment.ImFragment;
 import dhcc.cn.com.fix_phone.ui.fragment.MeFragment;
 import dhcc.cn.com.fix_phone.ui.widget.LoadDialog;
 import dhcc.cn.com.fix_phone.utils.NLog;
+import dhcc.cn.com.fix_phone.utils.SpUtils;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
@@ -38,13 +41,14 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
 
     @BindView(R.id.tabLayout)
     TabLayout mTabLayout;
+    private static final String TAG = "MainActivity";
 
     private SharedPreferences        sp;
     private SharedPreferences.Editor editor;
 
     private SupportFragment[] mFragments = new SupportFragment[3];
     private int               tabSelect  = 1;
-    private ImFragment imFragment;
+    private ImFragment          imFragment;
     private FragmentOnNewIntent onNewIntent;
 
     @Override
@@ -53,15 +57,20 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
     }
 
     @Override
-    protected void init() {
-        super.init();
-        imFragment = new ImFragment();
-        mFragments[0] = imFragment;
-        mFragments[1] = CircleFragment.newInstance();
-        mFragments[2] = MeFragment.newInstance();
-        getSwipeBackLayout().setEdgeOrientation(SwipeBackLayout.STATE_IDLE);
-        sp = getSharedPreferences("config", MODE_PRIVATE);
-        editor = sp.edit();
+    protected void init(Bundle savedInstanceState) {
+        super.init(savedInstanceState);
+        if (savedInstanceState == null) {
+            Log.d(TAG, "init: ");
+            super.init();
+            imFragment = new ImFragment();
+            mFragments[0] = imFragment;
+            mFragments[1] = CircleFragment.newInstance();
+            mFragments[2] = MeFragment.newInstance();
+            getSwipeBackLayout().setEdgeOrientation(SwipeBackLayout.STATE_IDLE);
+            sp = getSharedPreferences("config", MODE_PRIVATE);
+            editor = sp.edit();
+            SpUtils.put(this, "onceTime", true);
+        }
     }
 
     @Override
@@ -93,13 +102,14 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        Log.d(TAG, "onNewIntent: ");
         ApiManager.Instance().getRongToken(Account.getAccessToken());
         ApiManager.Instance().getUserInfo(Account.getUserId());
         ApiManager.Instance().GetListFriend(Account.getAccessToken(), "");
         onNewIntent.onNewIntent();
     }
 
-    public void setOnNewIntent(FragmentOnNewIntent onNewIntent){
+    public void setOnNewIntent(FragmentOnNewIntent onNewIntent) {
         this.onNewIntent = onNewIntent;
     }
 
@@ -218,7 +228,7 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
                 ApiManager.Instance().getUserInfo(refreshTokenEvent.loginResponse.FObject.accessToken);
             } else {
                 Account.setLogin(false);
-//                Toast.makeText(this, "您的账号可能在其他地方登录了", Toast.LENGTH_SHORT).show();
+                //                Toast.makeText(this, "您的账号可能在其他地方登录了", Toast.LENGTH_SHORT).show();
             }
         }
     }

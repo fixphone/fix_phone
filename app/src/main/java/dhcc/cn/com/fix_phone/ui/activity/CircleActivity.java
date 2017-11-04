@@ -105,6 +105,7 @@ public class CircleActivity extends YWActivity implements CircleContract.View, I
             presenter.recycle();
         }
         super.onDestroy();
+        Log.d(TAG, "onDestroy: circleAdapter");
     }
 
     private void initListener() {

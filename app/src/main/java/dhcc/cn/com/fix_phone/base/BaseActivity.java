@@ -29,19 +29,16 @@ public abstract class BaseActivity<T extends BasePresenter> extends SwipeBackAct
             mPresenter.attachView(this);
         }
         init();
+        init(savedInstanceState);
         mLoadDialog = new LoadDialog(this, false, "");
         initView();
         initData();
         initEvent();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-/*        if(!Account.isLogin()){
-            finish();
-        }*/
+    protected void init(Bundle savedInstanceState) {
     }
+
 
     protected void init() {
 

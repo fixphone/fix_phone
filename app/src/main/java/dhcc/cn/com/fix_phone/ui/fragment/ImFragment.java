@@ -51,18 +51,18 @@ public class ImFragment extends BaseFragment implements DragPointView.OnDragList
         IUnReadMessageObserver, FragmentOnNewIntent {
 
     @BindView(R.id.im_title_rg)
-    RadioGroup mTitleRg;
+    RadioGroup    mTitleRg;
     @BindView(R.id.list_item)
-    RadioButton list_item;
+    RadioButton   list_item;
     @BindView(R.id.add_friend_iv)
-    ImageView mAddFriendIv;
+    ImageView     mAddFriendIv;
     @BindView(R.id.seal_num)
     DragPointView mUnreadNumView;
 
-    private static final String TAG = "ImFragment";
-    private ConversationListFragment mConversationListFragment = null;
-    private ContactsFragment contactsFragment = null;
-    private Conversation.ConversationType[] mConversationsTypes = null;
+    private static final String                          TAG                       = "ImFragment";
+    private              ConversationListFragment        mConversationListFragment = null;
+    private              ContactsFragment                contactsFragment          = null;
+    private              Conversation.ConversationType[] mConversationsTypes       = null;
     private boolean isDebug;
 
     @Override
@@ -87,8 +87,8 @@ public class ImFragment extends BaseFragment implements DragPointView.OnDragList
         fragmentTransaction.commit();
         list_item.setChecked(true);
         changeFragment(mConversationListFragment);
-        ((MainActivity)getActivity()).setOnNewIntent(this);
-        if(Account.isLogin()){
+        ((MainActivity) getActivity()).setOnNewIntent(this);
+        if (Account.isLogin()) {
             ApiManager.Instance().GetListFriend(Account.getAccessToken(), "");
         }
     }
@@ -104,7 +104,7 @@ public class ImFragment extends BaseFragment implements DragPointView.OnDragList
         mTitleRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
-                switch (i){
+                switch (i) {
                     case R.id.list_item:
                         changeFragment(mConversationListFragment);
                         break;
@@ -133,6 +133,7 @@ public class ImFragment extends BaseFragment implements DragPointView.OnDragList
 
     @Override
     public void onNewIntent() {
+        Log.d(TAG, "onNewIntent: ");
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
         fragmentTransaction.remove(mConversationListFragment);
         mConversationListFragment = null;
@@ -143,7 +144,7 @@ public class ImFragment extends BaseFragment implements DragPointView.OnDragList
         changeFragment(mConversationListFragment);
     }
 
-    private void changeFragment(Fragment fragment){
+    private void changeFragment(Fragment fragment) {
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
         ft.hide(contactsFragment);
         ft.hide(mConversationListFragment);
@@ -246,11 +247,11 @@ public class ImFragment extends BaseFragment implements DragPointView.OnDragList
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getFriend(GetFriendEvent event) {
-        if(event.getFriendResponse != null){
-            if(event.getFriendResponse.FObject != null && event.getFriendResponse.FObject.list != null){
+        if (event.getFriendResponse != null) {
+            if (event.getFriendResponse.FObject != null && event.getFriendResponse.FObject.list != null) {
                 Log.d(TAG, "getFriend: " + event.getFriendResponse.FObject.list);
                 SealUserInfoManager.getInstance().deleteFriends();
-                for(GetFriendResponse.FriendList.Friend f : event.getFriendResponse.FObject.list){
+                for (GetFriendResponse.FriendList.Friend f : event.getFriendResponse.FObject.list) {
                     Friend friend = new Friend(f.FFriendID, f.FCompanyName, Uri.parse(f.FHeadUrl),
                             null, null, null, null, null,
                             CharacterParser.getInstance().getSpelling(f.FCompanyName),

@@ -101,7 +101,7 @@ public class CircleFragment extends BaseFragment implements CircleFragmentAdapte
                         putExtra("headurl", mListBeans.get(position).FUrl).
                         putExtra("name", mListBeans.get(position).FLinkName).
                         putExtra("type", 1).
-                        putExtra("weChatId", mListBeans.get(position).FLinkID).
+                        putExtra("weChatId", mListBeans.get(position).FLinkID+"").
                         putExtra("userID", mListBeans.get(position).FLinkID));
             }
         });

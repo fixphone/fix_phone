@@ -187,7 +187,7 @@ public abstract class CircleViewHolder extends RecyclerView.ViewHolder implement
                 Intent intent = new Intent(context, BusinessActivity.class);
                 intent.putExtra("name", circleItem.getUser().FUserName).
                         putExtra("headurl", circleItem.getUser().FHeadUrl).
-                        putExtra("weChatId", circleItem.getUser().FCreatorID).
+                        putExtra("weChatId", circleItem.getUser().FCreatorID+"").
                         putExtra("userID", circleItem.getUser().FCreatorID + "");
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);

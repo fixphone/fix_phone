@@ -37,20 +37,17 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.activity.MainActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
 
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
                 <data
                     android:host="dhcc.cn.com.fix_phone"
                     android:pathPrefix="/push_message"
-                    android:scheme="rong" />
+                    android:scheme="rong"/>
             </intent-filter>
         </activity>
         <activity
@@ -258,7 +255,6 @@
 
         <activity
             android:name=".ui.activity.CircleActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
@@ -303,9 +299,10 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".ui.activity.BecomeVipActivity"
-                  android:screenOrientation="portrait"
-                  android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".ui.activity.BecomeVipActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <meta-data
             android:name="dhcc.cn.com.fix_phone.MyGlideModule"
@@ -314,7 +311,14 @@
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"/>
+        <activity android:name=".ui.activity.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+
+        </activity>
 
     </application>
 

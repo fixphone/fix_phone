@@ -26,6 +26,7 @@ public class CircleDefaultData {
         map.put(R.id.Business, "Business");
         map.put(R.id.Tool, "Tool");
         map.put(R.id.Device, "Device");
+        map.put(R.id.PolarizedLight,"EscapedExpose");
         map.put(R.id.Comp_Module, "Comp_Module");
         map.put(R.id.Comp_LiquidCrystal, "Comp_LiquidCrystal");
         map.put(R.id.Comp_TabMaintain, "Comp_TabMaintain");
@@ -33,7 +34,7 @@ public class CircleDefaultData {
         map.put(R.id.Comp_Chassis, "Comp_Chassis");
         map.put(R.id.Comp_Whole, "Comp_Whole");
         map.put(R.id.Comp_Device, "Comp_Device");
-        map.put(R.id.Comp_PolarizedLight, "Comp_PolarizedLight");
+        map.put(R.id.Comp_PolarizedLight, "Comp_EscapedExpose");
         return map;
     }
 
