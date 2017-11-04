@@ -12,10 +12,6 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import java.util.List;
 
 import butterknife.BindView;
@@ -23,14 +19,8 @@ import dhcc.cn.com.fix_phone.Account;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.adapter.ConversationListAdapterEx;
 import dhcc.cn.com.fix_phone.base.BaseFragment;
-import dhcc.cn.com.fix_phone.bean.GetFriendResponse;
-import dhcc.cn.com.fix_phone.db.Friend;
-import dhcc.cn.com.fix_phone.event.GetFriendEvent;
 import dhcc.cn.com.fix_phone.listener.FragmentOnNewIntent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
-import dhcc.cn.com.fix_phone.rong.BroadcastManager;
-import dhcc.cn.com.fix_phone.rong.CharacterParser;
-import dhcc.cn.com.fix_phone.rong.SealUserInfoManager;
 import dhcc.cn.com.fix_phone.ui.activity.MainActivity;
 import dhcc.cn.com.fix_phone.ui.activity.SearchFriendActivity;
 import dhcc.cn.com.fix_phone.ui.widget.DragPointView;
@@ -41,9 +31,6 @@ import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imkit.manager.IUnReadMessageObserver;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
-
-import static dhcc.cn.com.fix_phone.rong.SealAppContext.UPDATE_FRIEND;
-import static dhcc.cn.com.fix_phone.rong.SealAppContext.UPDATE_RED_DOT;
 
 /**
  * 2017/9/16 23
@@ -73,7 +60,6 @@ public class ImFragment extends BaseFragment implements DragPointView.OnDragList
 
     @Override
     protected void init() {
-        EventBus.getDefault().register(this);
         isDebug = getContext().getSharedPreferences("config", Context.MODE_PRIVATE).getBoolean("isDebug", false);
     }
 
@@ -220,12 +206,6 @@ public class ImFragment extends BaseFragment implements DragPointView.OnDragList
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Override
     public void onDragOut() {
         mUnreadNumView.setVisibility(View.GONE);
         NToast.shortToast(getContext(), "清除成功");
@@ -246,20 +226,4 @@ public class ImFragment extends BaseFragment implements DragPointView.OnDragList
         }, mConversationsTypes);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void getFriend(GetFriendEvent event) {
-        if (event.getFriendResponse != null && event.getFriendResponse.FObject != null) {
-            List<GetFriendResponse.FriendList.Friend> friendList = event.getFriendResponse.FObject.list;
-            if (friendList != null) {
-                Log.d(TAG, "getFriend: " + friendList.toString());
-                SealUserInfoManager.getInstance().deleteFriends();
-                for (GetFriendResponse.FriendList.Friend f : friendList) {
-                    Friend friend = new Friend(f.FFriendID, f.FCompanyName, Uri.parse(f.FHeadUrl), null, null, null, null, null, CharacterParser.getInstance().getSpelling(f.FCompanyName), null);
-                    SealUserInfoManager.getInstance().addFriend(friend);
-                }
-                BroadcastManager.getInstance(getContext()).sendBroadcast(UPDATE_FRIEND);
-                BroadcastManager.getInstance(getContext()).sendBroadcast(UPDATE_RED_DOT);
-            }
-        }
-    }
 }

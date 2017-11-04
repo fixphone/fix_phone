@@ -105,7 +105,6 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
         Log.d(TAG, "onNewIntent: ");
         ApiManager.Instance().getRongToken(Account.getAccessToken());
         ApiManager.Instance().getUserInfo(Account.getUserId());
-        ApiManager.Instance().GetListFriend(Account.getAccessToken(), "");
         onNewIntent.onNewIntent();
     }
 
@@ -168,8 +167,7 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
                         if (conversation.getLatestMessage() instanceof ContactNotificationMessage) { //好友消息的push
                             startActivity(new Intent(MainActivity.this, NewFriendListActivity.class));
                         } else {
-                            Uri uri = Uri.parse("rong://" + getApplicationInfo().packageName).buildUpon().appendPath("conversation")
-                                    .appendPath(conversationType).appendQueryParameter("targetId", targetId).build();
+                            Uri uri = Uri.parse("rong://" + getApplicationInfo().packageName).buildUpon().appendPath("conversation").appendPath(conversationType).appendQueryParameter("targetId", targetId).build();
                             Intent intent = new Intent(Intent.ACTION_VIEW);
                             intent.setData(uri);
                             startActivity(intent);
@@ -206,6 +204,7 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
                             @Override
                             public void onSuccess(String s) {
                                 LoadDialog.dismiss(MainActivity.this);
+                                SealUserInfoManager.getInstance().openDB();
                             }
 
                             @Override
@@ -225,10 +224,8 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
             if (refreshTokenEvent.loginResponse.FIsSuccess) {
                 Account.setAccessToken(Account.getUserId(), refreshTokenEvent.loginResponse.FObject.getAccessToken());
                 ApiManager.Instance().getRongToken(refreshTokenEvent.loginResponse.FObject.accessToken);
-                ApiManager.Instance().getUserInfo(refreshTokenEvent.loginResponse.FObject.accessToken);
             } else {
                 Account.setLogin(false);
-                //                Toast.makeText(this, "您的账号可能在其他地方登录了", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -241,21 +238,22 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
                 RongIM.connect(loginToken, new RongIMClient.ConnectCallback() {
                     @Override
                     public void onTokenIncorrect() {
-                        NLog.e("connect", "onTokenIncorrect");
+                        NLog.e("MainActivity", "onTokenIncorrect");
                     }
 
                     @Override
                     public void onSuccess(String s) {
-                        NLog.e("connect", "onSuccess userid:" + s);
+                        NLog.e("MainActivity", "onSuccess userid:" + s);
                         editor.putString(SealConst.SEALTALK_LOGIN_ID, s);
                         editor.putString("loginToken", loginToken);
                         editor.apply();
                         SealUserInfoManager.getInstance().openDB();
+                        ApiManager.Instance().GetListFriend(Account.getAccessToken(), "");
                     }
 
                     @Override
                     public void onError(RongIMClient.ErrorCode errorCode) {
-                        NLog.e("connect", "onError errorcode:" + errorCode.getValue());
+                        NLog.e("MainActivity", "onError errorcode:" + errorCode.getValue());
                     }
                 });
             }

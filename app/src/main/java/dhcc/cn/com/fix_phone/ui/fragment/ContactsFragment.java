@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -35,24 +36,25 @@ import java.util.List;
 import dhcc.cn.com.fix_phone.Account;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.adapter.FriendListAdapter;
+import dhcc.cn.com.fix_phone.bean.GetFriendResponse;
 import dhcc.cn.com.fix_phone.conf.Constants;
 import dhcc.cn.com.fix_phone.db.Friend;
 import dhcc.cn.com.fix_phone.event.DeleteFriendEvent;
+import dhcc.cn.com.fix_phone.event.GetFriendEvent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
 import dhcc.cn.com.fix_phone.rong.BroadcastManager;
 import dhcc.cn.com.fix_phone.rong.CharacterParser;
-import dhcc.cn.com.fix_phone.rong.SealAppContext;
-import dhcc.cn.com.fix_phone.rong.SealConst;
 import dhcc.cn.com.fix_phone.rong.SealUserInfoManager;
 import dhcc.cn.com.fix_phone.ui.activity.BlackListActivity;
 import dhcc.cn.com.fix_phone.ui.activity.BusinessActivity;
-import dhcc.cn.com.fix_phone.ui.activity.UserDetailActivity;
 import dhcc.cn.com.fix_phone.ui.widget.LoadDialog;
 import dhcc.cn.com.fix_phone.ui.widget.SelectableRoundedImageView;
 import dhcc.cn.com.fix_phone.utils.PinyinComparator;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.mention.SideBar;
 import io.rong.imlib.model.CSCustomServiceInfo;
+
+import static dhcc.cn.com.fix_phone.rong.SealAppContext.UPDATE_FRIEND;
 
 /**
  * tab 2 通讯录的 Fragment
@@ -98,6 +100,7 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
         IntentFilter filter = new IntentFilter();
         filter.addAction(Constants.ADD_FRIEND_SUCCESS);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(mBroadcastReceiver, filter);
+        SealUserInfoManager.getInstance().openDB();
     }
 
     @Override
@@ -111,13 +114,6 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
         return view;
     }
 
-    private void startFriendDetailsPage(Friend friend) {
-        Intent intent = new Intent(getActivity(), UserDetailActivity.class);
-        intent.putExtra("type", CLICK_CONTACT_FRAGMENT_FRIEND);
-        intent.putExtra("friend", friend);
-        startActivity(intent);
-    }
-
     private void initView(View view) {
         mSearchEditText = (EditText) view.findViewById(R.id.search);
         mListView = (ListView) view.findViewById(R.id.listview);
@@ -126,8 +122,7 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
         mDialogTextView = (TextView) view.findViewById(R.id.group_dialog);
         mSidBar.setTextView(mDialogTextView);
         LayoutInflater mLayoutInflater = LayoutInflater.from(getActivity());
-        mHeadView = mLayoutInflater.inflate(R.layout.item_contact_list_header,
-                null);
+        mHeadView = mLayoutInflater.inflate(R.layout.item_contact_list_header, null);
         mUnreadTextView = (TextView) mHeadView.findViewById(R.id.tv_unread);
         RelativeLayout newFriendsLayout = (RelativeLayout) mHeadView.findViewById(R.id.re_newfriends);
         RelativeLayout selfLayout = (RelativeLayout) mHeadView.findViewById(R.id.contact_me_item);
@@ -231,34 +226,13 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
     }
 
     private void refreshUIListener() {
-        BroadcastManager.getInstance(getActivity()).addAction(SealAppContext.UPDATE_FRIEND, new BroadcastReceiver() {
+        BroadcastManager.getInstance(getActivity()).addAction(UPDATE_FRIEND, new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                Log.d(TAG, "onReceive: UPDATE_FRIEND");
-                String command = intent.getAction();
-                if (!TextUtils.isEmpty(command)) {
-                    updateUI();
-                }
+                updateUI();
             }
         });
 
-        BroadcastManager.getInstance(getActivity()).addAction(SealAppContext.UPDATE_RED_DOT, new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                Log.d(TAG, "onReceive: UPDATE_RED_DOT");
-                String command = intent.getAction();
-                if (!TextUtils.isEmpty(command)) {
-                    mUnreadTextView.setVisibility(View.INVISIBLE);
-                }
-            }
-        });
-        BroadcastManager.getInstance(getActivity()).addAction(SealConst.CHANGEINFO, new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                Log.d(TAG, "onReceive: CHANGEINFO");
-                updatePersonalUI();
-            }
-        });
     }
 
     @Override
@@ -267,22 +241,26 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
         EventBus.getDefault().unregister(this);
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mBroadcastReceiver);
         try {
-            BroadcastManager.getInstance(getActivity()).destroy(SealAppContext.UPDATE_FRIEND);
-            BroadcastManager.getInstance(getActivity()).destroy(SealAppContext.UPDATE_RED_DOT);
-            BroadcastManager.getInstance(getActivity()).destroy(SealConst.CHANGEINFO);
+            BroadcastManager.getInstance(getActivity()).destroy(UPDATE_FRIEND);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
     }
 
     private void updateUI() {
-        updateFriendsList(SealUserInfoManager.getInstance().getFriends());
+        List<Friend> friends = SealUserInfoManager.getInstance().getFriends();
+        updateFriendsList(friends);
     }
 
     private void updateFriendsList(List<Friend> friendsList) {
         if (friendsList == null) {
             return;
         }
+
+        for (Friend friend : friendsList) {
+            Log.d(TAG, "updateFriendsList: " + friend.toString());
+        }
+
         //updateUI fragment初始化和好友信息更新时都会调用,isReloadList表示是否是好友更新时调用
         boolean isReloadList = false;
         if (mFriendList != null && mFriendList.size() > 0) {
@@ -290,7 +268,7 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
             isReloadList = true;
         }
         mFriendList = friendsList;
-        if (mFriendList != null && mFriendList.size() > 0) {
+        if (mFriendList.size() > 0) {
             handleFriendDataForSort();
             mNoFriends.setVisibility(View.GONE);
         } else {
@@ -299,6 +277,11 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
 
         // 根据a-z进行排序源数据
         Collections.sort(mFriendList, mPinyinComparator);
+
+        for (Friend friend : mFriendList) {
+            Log.d(TAG, "updateFriendsList: " + friend.toString());
+        }
+
         if (isReloadList) {
             mSidBar.setVisibility(View.VISIBLE);
             mFriendListAdapter.updateListView(mFriendList);
@@ -412,9 +395,28 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void deleteFriend(DeleteFriendEvent event) {
+        LoadDialog.dismiss(getContext());
         if (event.telCheckResponse != null && event.telCheckResponse.FIsSuccess) {
-            SealUserInfoManager.getInstance().deleteFriends();
             ApiManager.Instance().GetListFriend(Account.getAccessToken(), "");
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getFriend(GetFriendEvent event) {
+        if (event.getFriendResponse != null && event.getFriendResponse.FObject != null) {
+            List<GetFriendResponse.FriendList.Friend> friendList = event.getFriendResponse.FObject.list;
+            List<Friend> list;
+            if (friendList != null) {
+                list = new ArrayList<>();
+                SealUserInfoManager.getInstance().openDB();
+                SealUserInfoManager.getInstance().deleteFriends();
+                for (GetFriendResponse.FriendList.Friend f : friendList) {
+                    Friend friend = new Friend(f.FFriendID, f.FCompanyName, Uri.parse(f.FHeadUrl), null, null, null, null, null, CharacterParser.getInstance().getSpelling(f.FCompanyName), null);
+                    SealUserInfoManager.getInstance().addFriend(friend);
+                    list.add(friend);
+                }
+                updateFriendsList(list);
+            }
         }
     }
 
