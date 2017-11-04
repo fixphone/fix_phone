@@ -41,6 +41,7 @@ import dhcc.cn.com.fix_phone.rong.SealAppContext;
 import dhcc.cn.com.fix_phone.rong.SealConst;
 import dhcc.cn.com.fix_phone.rong.SealUserInfoManager;
 import dhcc.cn.com.fix_phone.ui.activity.BlackListActivity;
+import dhcc.cn.com.fix_phone.ui.activity.BusinessActivity;
 import dhcc.cn.com.fix_phone.ui.activity.UserDetailActivity;
 import dhcc.cn.com.fix_phone.ui.widget.LoadDialog;
 import dhcc.cn.com.fix_phone.ui.widget.SelectableRoundedImageView;
@@ -292,9 +293,20 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     if (mListView.getHeaderViewsCount() > 0) {
-                        startFriendDetailsPage(mFriendList.get(position - 1));
+                        //                        startFriendDetailsPage(mFriendList.get(position - 1));
+                        String portraitUri = SealUserInfoManager.getInstance().getPortraitUri(mFriendList.get(position - 1));
+                        getActivity().startActivity(new Intent(getActivity(), BusinessActivity.class).
+                                putExtra("headurl", portraitUri).
+                                putExtra("name", mFriendList.get(position - 1).getDisplayName()).
+                                putExtra("isIMCall", true).
+                                putExtra("userID", mFriendList.get(position - 1).getUserId()));
                     } else {
-                        startFriendDetailsPage(mFilteredFriendList.get(position));
+                        String portraitUri = SealUserInfoManager.getInstance().getPortraitUri(mFilteredFriendList.get(position));
+                        getActivity().startActivity(new Intent(getActivity(), BusinessActivity.class).
+                                putExtra("headurl", portraitUri).
+                                putExtra("name", mFilteredFriendList.get(position).getDisplayName()).
+                                putExtra("isIMCall", true).
+                                putExtra("userID", mFilteredFriendList.get(position).getUserId()));
                     }
                 }
             });

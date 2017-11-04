@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -18,6 +21,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -26,7 +30,9 @@ import org.greenrobot.eventbus.ThreadMode;
 import dhcc.cn.com.fix_phone.Account;
 import dhcc.cn.com.fix_phone.MyApplication;
 import dhcc.cn.com.fix_phone.R;
+import dhcc.cn.com.fix_phone.adapter.AddFriendAdapter;
 import dhcc.cn.com.fix_phone.base.RongBaseActivity;
+import dhcc.cn.com.fix_phone.bean.QueryUserResponse;
 import dhcc.cn.com.fix_phone.db.Friend;
 import dhcc.cn.com.fix_phone.event.AddFriendEvent;
 import dhcc.cn.com.fix_phone.event.QueryUserEvent;
@@ -48,17 +54,19 @@ import io.rong.imlib.model.UserInfo;
 
 public class SearchFriendActivity extends RongBaseActivity {
 
-    private static final String TAG = "SearchFriendActivity";
-    private static final int CLICK_CONVERSATION_USER_PORTRAIT = 1;
-    private static final int SEARCH_PHONE = 10;
-    private static final int ADD_FRIEND = 11;
-    private EditText mEtSearch;
-    private LinearLayout searchItem;
-    private TextView searchName;
+    private static final String TAG                              = "SearchFriendActivity";
+    private static final int    CLICK_CONVERSATION_USER_PORTRAIT = 1;
+    private static final int    SEARCH_PHONE                     = 10;
+    private static final int    ADD_FRIEND                       = 11;
+    private EditText                   mEtSearch;
+    private LinearLayout               searchItem;
+    private TextView                   searchName;
     private SelectableRoundedImageView searchImage;
-    private String mPhone;
-    private String addFriendMessage;
-    private String mFriendId;
+    private String                     mPhone;
+    private String                     addFriendMessage;
+    private String                     mFriendId;
+    private AddFriendAdapter           mAddFriendAdapter;
+    private RecyclerView               mRecyclerView;
 
     private Friend mFriend;
 
@@ -76,7 +84,11 @@ public class SearchFriendActivity extends RongBaseActivity {
                 LoadDialog.show(SearchFriendActivity.this);
             }
         });
-
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL));
+        mAddFriendAdapter = new AddFriendAdapter(R.layout.item_add_friend, null);
+        mRecyclerView.setAdapter(mAddFriendAdapter);
         mEtSearch = (EditText) findViewById(R.id.search_edit);
         searchItem = (LinearLayout) findViewById(R.id.search_result);
         searchName = (TextView) findViewById(R.id.search_name);
@@ -89,21 +101,9 @@ public class SearchFriendActivity extends RongBaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                if (s.length() == 11) {
-//                    mPhone = s.toString().trim();
-//                    if (!AMUtils.isMobile(mPhone)) {
-//                        NToast.shortToast(mContext, "非法手机号");
-//                        return;
-//                    }
-//                    hintKbTwo();
-//                    LoadDialog.show(mContext);
-//                    request(SEARCH_PHONE, true);
-//                } else {
-//                    searchItem.setVisibility(View.GONE);
-//                }
-                if(s.length() > 0){
+                if (s.length() > 0) {
                     mHeadRightText.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     mHeadRightText.setVisibility(View.GONE);
                     searchItem.setVisibility(View.GONE);
                 }
@@ -114,6 +114,22 @@ public class SearchFriendActivity extends RongBaseActivity {
 
             }
         });
+
+        mAddFriendAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                QueryUserResponse.QueryList.QueryUser user = mAddFriendAdapter.getItem(position);
+                if (user != null && !isFriendOrSelf(user)) {
+                    startActivity(new Intent(SearchFriendActivity.this, BusinessActivity.class).
+                            putExtra("headurl", user.FHeadUrl).
+                            putExtra("name", user.FCompanyName).
+                            putExtra("isIMAddFriend", true).
+                            putExtra("userID", user.FFriendID).
+                            putExtra("FFriendID", user.FFriendID));
+                }
+            }
+        });
+
         searchItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -283,6 +299,25 @@ public class SearchFriendActivity extends RongBaseActivity {
         }
     }
 
+    private boolean isFriendOrSelf(QueryUserResponse.QueryList.QueryUser user) {
+        SharedPreferences sp = getSharedPreferences("config", MODE_PRIVATE);
+        String selfPhoneNumber = sp.getString(SealConst.SEALTALK_LOGING_PHONE, "");
+        if (TextUtils.isEmpty(selfPhoneNumber)) {
+            if (selfPhoneNumber.equals(user.FPhone)) {
+                mFriend = new Friend(sp.getString(SealConst.SEALTALK_LOGIN_ID, ""),
+                        sp.getString(SealConst.SEALTALK_LOGIN_NAME, ""),
+                        Uri.parse(sp.getString(SealConst.SEALTALK_LOGING_PORTRAIT, "")));
+                return true;
+            } else {
+                mFriend = SealUserInfoManager.getInstance().getFriendByID(user.FFriendID);
+                if (mFriend != null) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     private boolean isFriendOrSelf(String id) {
         String inputPhoneNumber = mEtSearch.getText().toString().trim();
         SharedPreferences sp = getSharedPreferences("config", MODE_PRIVATE);
@@ -312,15 +347,19 @@ public class SearchFriendActivity extends RongBaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void queryUser(QueryUserEvent event) {
         LoadDialog.dismiss(this);
-        if(event.queryUserResponse != null){
+        if (event.queryUserResponse != null) {
             Log.d(TAG, "queryUser: " + event.queryUserResponse.FObject);
-            if(event.queryUserResponse.FObject != null && !event.queryUserResponse.FObject.list.isEmpty()){
+            if (event.queryUserResponse.FObject != null && !event.queryUserResponse.FObject.list.isEmpty()) {
                 searchItem.setVisibility(View.VISIBLE);
                 mFriendId = event.queryUserResponse.FObject.list.get(0).FFriendID;
                 Glide.with(this).load(event.queryUserResponse.FObject.list.get(0).FHeadUrl).diskCacheStrategy(DiskCacheStrategy.ALL).into(searchImage);
                 searchName.setText(event.queryUserResponse.FObject.list.get(0).FCompanyName);
+
+                //=====================
+                mAddFriendAdapter.getData().clear();
+                mAddFriendAdapter.addData(event.queryUserResponse.FObject.list);
             }
-        }else {
+        } else {
             NToast.shortToast(mContext, event.errorMessage);
             LoadDialog.dismiss(mContext);
         }
@@ -329,17 +368,17 @@ public class SearchFriendActivity extends RongBaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void addFriend(AddFriendEvent event) {
         LoadDialog.dismiss(this);
-        if(event.addFriendResponse != null){
+        if (event.addFriendResponse != null) {
             Log.d(TAG, "queryUser: " + event.addFriendResponse.FObject);
-            if(event.addFriendResponse.FObject != null){
+            if (event.addFriendResponse.FObject != null) {
                 NToast.shortToast(mContext, "请求成功");
                 LoadDialog.dismiss(mContext);
                 ApiManager.Instance().GetListFriend(Account.getAccessToken(), "");
             }
-        }else {
-        NToast.shortToast(mContext, "请求失败:" + event.errorMessage);
-        LoadDialog.dismiss(mContext);
-    }
+        } else {
+            NToast.shortToast(mContext, "请求失败:" + event.errorMessage);
+            LoadDialog.dismiss(mContext);
+        }
     }
 
 }

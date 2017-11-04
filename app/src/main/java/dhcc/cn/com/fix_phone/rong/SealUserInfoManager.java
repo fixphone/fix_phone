@@ -730,19 +730,21 @@ public class SealUserInfoManager implements OnDataListener {
     }
 
     public void addFriend(final Friend friend) {
-        mWorkHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (mFriendDao != null) {
-                    if (friend != null) {
-                        if (friend.getPortraitUri() == null || TextUtils.isEmpty(friend.getPortraitUri().toString())) {
-                            friend.setPortraitUri(Uri.parse(getPortrait(friend)));
+        if (mWorkHandler != null) {
+            mWorkHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    if (mFriendDao != null) {
+                        if (friend != null) {
+                            if (friend.getPortraitUri() == null || TextUtils.isEmpty(friend.getPortraitUri().toString())) {
+                                friend.setPortraitUri(Uri.parse(getPortrait(friend)));
+                            }
+                            mFriendDao.insertOrReplace(friend);
                         }
-                        mFriendDao.insertOrReplace(friend);
                     }
                 }
-            }
-        });
+            });
+        }
     }
 
     public void addGroup(final Groups groups) {
@@ -1232,14 +1234,16 @@ public class SealUserInfoManager implements OnDataListener {
     }
 
     public void deleteFriends() {
-        mWorkHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (mFriendDao != null) {
-                    mFriendDao.deleteAll();
+        if (mWorkHandler != null) {
+            mWorkHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    if (mFriendDao != null) {
+                        mFriendDao.deleteAll();
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     private void syncDeleteGroups() {

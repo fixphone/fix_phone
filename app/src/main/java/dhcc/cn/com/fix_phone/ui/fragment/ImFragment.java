@@ -1,5 +1,6 @@
 package dhcc.cn.com.fix_phone.ui.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.IdRes;
@@ -73,7 +74,7 @@ public class ImFragment extends BaseFragment implements DragPointView.OnDragList
     @Override
     protected void init() {
         EventBus.getDefault().register(this);
-        isDebug = getContext().getSharedPreferences("config", getContext().MODE_PRIVATE).getBoolean("isDebug", false);
+        isDebug = getContext().getSharedPreferences("config", Context.MODE_PRIVATE).getBoolean("isDebug", false);
     }
 
     @Override
