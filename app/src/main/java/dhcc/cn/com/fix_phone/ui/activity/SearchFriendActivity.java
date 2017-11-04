@@ -126,6 +126,7 @@ public class SearchFriendActivity extends RongBaseActivity {
                             putExtra("isIMAddFriend", true).
                             putExtra("userID", user.FFriendID).
                             putExtra("FFriendID", user.FFriendID));
+                    finish();
                 }
             }
         });

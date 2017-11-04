@@ -4,13 +4,17 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +59,7 @@ import io.rong.imlib.model.CSCustomServiceInfo;
  * Created by Bob on 2015/1/25.
  */
 public class ContactsFragment extends Fragment implements View.OnClickListener {
+    private static final String TAG = "ContactsFragment";
 
     private SelectableRoundedImageView mSelectableRoundedImageView;
     private TextView                   mNameTextView;
@@ -87,6 +92,15 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
 
     private static final int CLICK_CONTACT_FRAGMENT_FRIEND = 2;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constants.ADD_FRIEND_SUCCESS);
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mBroadcastReceiver, filter);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_address, container, false);
         EventBus.getDefault().register(this);
@@ -220,6 +234,7 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
         BroadcastManager.getInstance(getActivity()).addAction(SealAppContext.UPDATE_FRIEND, new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
+                Log.d(TAG, "onReceive: UPDATE_FRIEND");
                 String command = intent.getAction();
                 if (!TextUtils.isEmpty(command)) {
                     updateUI();
@@ -230,6 +245,7 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
         BroadcastManager.getInstance(getActivity()).addAction(SealAppContext.UPDATE_RED_DOT, new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
+                Log.d(TAG, "onReceive: UPDATE_RED_DOT");
                 String command = intent.getAction();
                 if (!TextUtils.isEmpty(command)) {
                     mUnreadTextView.setVisibility(View.INVISIBLE);
@@ -239,6 +255,7 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
         BroadcastManager.getInstance(getActivity()).addAction(SealConst.CHANGEINFO, new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
+                Log.d(TAG, "onReceive: CHANGEINFO");
                 updatePersonalUI();
             }
         });
@@ -248,6 +265,7 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mBroadcastReceiver);
         try {
             BroadcastManager.getInstance(getActivity()).destroy(SealAppContext.UPDATE_FRIEND);
             BroadcastManager.getInstance(getActivity()).destroy(SealAppContext.UPDATE_RED_DOT);
@@ -293,7 +311,6 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     if (mListView.getHeaderViewsCount() > 0) {
-                        //                        startFriendDetailsPage(mFriendList.get(position - 1));
                         String portraitUri = SealUserInfoManager.getInstance().getPortraitUri(mFriendList.get(position - 1));
                         getActivity().startActivity(new Intent(getActivity(), BusinessActivity.class).
                                 putExtra("headurl", portraitUri).
@@ -316,7 +333,6 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                     final Friend bean = mFriendList.get(position - 1);
-                    //                    startFriendDetailsPage(bean);
                     new AlertDialog.Builder(getContext()).setTitle("删除好友").setNegativeButton("取消", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -395,10 +411,20 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void getFriend(DeleteFriendEvent event) {
+    public void deleteFriend(DeleteFriendEvent event) {
         if (event.telCheckResponse != null && event.telCheckResponse.FIsSuccess) {
             SealUserInfoManager.getInstance().deleteFriends();
             ApiManager.Instance().GetListFriend(Account.getAccessToken(), "");
         }
     }
+
+    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (Constants.ADD_FRIEND_SUCCESS.equals(action)) {
+                ApiManager.Instance().GetListFriend(Account.getAccessToken(), "");
+            }
+        }
+    };
 }

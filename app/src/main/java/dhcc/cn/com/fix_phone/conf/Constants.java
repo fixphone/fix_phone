@@ -47,4 +47,7 @@ public class Constants {
 
     //融云
     public static final String MI_SERVICE  = "KEFU150358816985468";
+
+    //本地广播
+    public static final String ADD_FRIEND_SUCCESS = "cn.com.dhcc.addFriend.success";
 }

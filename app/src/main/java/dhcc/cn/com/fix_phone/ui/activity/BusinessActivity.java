@@ -1,6 +1,7 @@
 package dhcc.cn.com.fix_phone.ui.activity;
 
 import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
@@ -27,6 +28,7 @@ import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.base.BaseActivity;
 import dhcc.cn.com.fix_phone.base.GlideImageLoader;
 import dhcc.cn.com.fix_phone.bean.BusinessResponse;
+import dhcc.cn.com.fix_phone.conf.Constants;
 import dhcc.cn.com.fix_phone.event.AddFriendEvent;
 import dhcc.cn.com.fix_phone.event.BusinessEvent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
@@ -207,8 +209,9 @@ public class BusinessActivity extends BaseActivity {
         if (event.addFriendResponse != null) {
             Log.d(TAG, "queryUser: " + event.addFriendResponse.FObject);
             if (event.addFriendResponse.FObject != null) {
-                ApiManager.Instance().GetListFriend(Account.getAccessToken(), "");
+                LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constants.ADD_FRIEND_SUCCESS));
                 Toast.makeText(this, "" + event.addFriendResponse.FMsg, Toast.LENGTH_SHORT).show();
+                finish();
             }
         }
     }

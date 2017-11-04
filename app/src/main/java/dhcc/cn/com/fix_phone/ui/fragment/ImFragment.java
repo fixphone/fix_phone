@@ -32,7 +32,7 @@ import dhcc.cn.com.fix_phone.rong.BroadcastManager;
 import dhcc.cn.com.fix_phone.rong.CharacterParser;
 import dhcc.cn.com.fix_phone.rong.SealUserInfoManager;
 import dhcc.cn.com.fix_phone.ui.activity.MainActivity;
-import dhcc.cn.com.fix_phone.ui.activity.NewFriendListActivity;
+import dhcc.cn.com.fix_phone.ui.activity.SearchFriendActivity;
 import dhcc.cn.com.fix_phone.ui.widget.DragPointView;
 import dhcc.cn.com.fix_phone.utils.NToast;
 import io.rong.imkit.RongContext;
@@ -120,7 +120,7 @@ public class ImFragment extends BaseFragment implements DragPointView.OnDragList
         mAddFriendIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), NewFriendListActivity.class));
+                startActivity(new Intent(getContext(), SearchFriendActivity.class));
             }
         });
         mUnreadNumView.setOnClickListener(new View.OnClickListener() {
@@ -248,15 +248,13 @@ public class ImFragment extends BaseFragment implements DragPointView.OnDragList
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getFriend(GetFriendEvent event) {
-        if (event.getFriendResponse != null) {
-            if (event.getFriendResponse.FObject != null && event.getFriendResponse.FObject.list != null) {
-                Log.d(TAG, "getFriend: " + event.getFriendResponse.FObject.list);
+        if (event.getFriendResponse != null && event.getFriendResponse.FObject != null) {
+            List<GetFriendResponse.FriendList.Friend> friendList = event.getFriendResponse.FObject.list;
+            if (friendList != null) {
+                Log.d(TAG, "getFriend: " + friendList.toString());
                 SealUserInfoManager.getInstance().deleteFriends();
-                for (GetFriendResponse.FriendList.Friend f : event.getFriendResponse.FObject.list) {
-                    Friend friend = new Friend(f.FFriendID, f.FCompanyName, Uri.parse(f.FHeadUrl),
-                            null, null, null, null, null,
-                            CharacterParser.getInstance().getSpelling(f.FCompanyName),
-                            null);
+                for (GetFriendResponse.FriendList.Friend f : friendList) {
+                    Friend friend = new Friend(f.FFriendID, f.FCompanyName, Uri.parse(f.FHeadUrl), null, null, null, null, null, CharacterParser.getInstance().getSpelling(f.FCompanyName), null);
                     SealUserInfoManager.getInstance().addFriend(friend);
                 }
                 BroadcastManager.getInstance(getContext()).sendBroadcast(UPDATE_FRIEND);

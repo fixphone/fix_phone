@@ -124,7 +124,9 @@ public class SealUserInfoManager implements OnDataListener {
 
     public static void init(Context context) {
         RLog.d(TAG, "SealUserInfoManager init");
-        sInstance = new SealUserInfoManager(context);
+        if (sInstance == null) {
+            sInstance = new SealUserInfoManager(context);
+        }
     }
 
     /**
