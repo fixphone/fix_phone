@@ -208,7 +208,7 @@ public class SelectHeaderActivity extends BaseActivity {
                     UploadIconResponse resp = GsonUtils.getSingleBean(response, UploadIconResponse.class);
                     Glide.with(SelectHeaderActivity.this).load(resp.FObject.fullUrl).diskCacheStrategy(DiskCacheStrategy.ALL).into(header_icon);
                     mResponse.FObject.headUrl = resp.FObject.fullUrl;
-                    ApiManager.Instance().getUserInfo(Account.getUserId());
+                    ApiManager.Instance().getSelfInfo(Account.getUserId());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

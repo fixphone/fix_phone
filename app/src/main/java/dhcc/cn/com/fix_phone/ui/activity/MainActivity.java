@@ -104,7 +104,8 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
         super.onNewIntent(intent);
         Log.d(TAG, "onNewIntent: ");
         ApiManager.Instance().getRongToken(Account.getAccessToken());
-        ApiManager.Instance().getUserInfo(Account.getUserId());
+        ApiManager.Instance().getSelfInfo(Account.getUserId());
+        ApiManager.Instance().GetListFriend(Account.getAccessToken(), "");
         onNewIntent.onNewIntent();
     }
 
@@ -224,6 +225,7 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
             if (refreshTokenEvent.loginResponse.FIsSuccess) {
                 Account.setAccessToken(Account.getUserId(), refreshTokenEvent.loginResponse.FObject.getAccessToken());
                 ApiManager.Instance().getRongToken(refreshTokenEvent.loginResponse.FObject.accessToken);
+                ApiManager.Instance().getSelfInfo(refreshTokenEvent.loginResponse.FObject.accessToken);
             } else {
                 Account.setLogin(false);
             }

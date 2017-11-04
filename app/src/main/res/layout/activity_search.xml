@@ -24,7 +24,6 @@
             android:drawableLeft="@drawable/sealtalk_search"
             android:drawablePadding="6dp"
             android:hint="输入手机号/店铺名称"
-            android:inputType="phone"
             android:maxLength="11"
             android:maxLines="1"/>
 

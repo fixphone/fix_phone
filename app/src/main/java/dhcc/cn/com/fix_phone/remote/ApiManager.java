@@ -42,6 +42,7 @@ import dhcc.cn.com.fix_phone.event.QueryUserEvent;
 import dhcc.cn.com.fix_phone.event.RefreshTokenEvent;
 import dhcc.cn.com.fix_phone.event.RegisterEvent;
 import dhcc.cn.com.fix_phone.event.RongTokenEvent;
+import dhcc.cn.com.fix_phone.event.SelfInfoEvent;
 import dhcc.cn.com.fix_phone.event.TelCheckEvent;
 import dhcc.cn.com.fix_phone.event.TokenEvent;
 import retrofit2.Call;
@@ -214,6 +215,34 @@ public class ApiManager {
             @Override
             public void onFailure(Call<BusinessResponse> call, Throwable t) {
                 BusinessEvent event = new BusinessEvent(null);
+                event.errorMessage = t.getMessage();
+                event.isOk = false;
+                EventBus.getDefault().post(event);
+            }
+        });
+    }
+
+    //17copy.获取用户信息
+    public void getSelfInfo(String useId) {
+        mApi.getUserInfo(getLoginInfo().accessToken, useId).enqueue(new Callback<BusinessResponse>() {
+            @Override
+            public void onResponse(Call<BusinessResponse> call, Response<BusinessResponse> response) {
+                if (response.code() == 200) {
+                    BusinessResponse businessResponse = response.body();
+                    if (businessResponse != null && businessResponse.FIsSuccess) {
+                        EventBus.getDefault().post(new SelfInfoEvent(response.body()));
+                    }
+                } else {
+                    SelfInfoEvent event = new SelfInfoEvent(null);
+                    event.errorMessage = "服务器返回错误";
+                    event.isOk = false;
+                    EventBus.getDefault().post(event);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BusinessResponse> call, Throwable t) {
+                SelfInfoEvent event = new SelfInfoEvent(null);
                 event.errorMessage = t.getMessage();
                 event.isOk = false;
                 EventBus.getDefault().post(event);

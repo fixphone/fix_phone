@@ -12,6 +12,9 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -19,8 +22,14 @@ import dhcc.cn.com.fix_phone.Account;
 import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.adapter.ConversationListAdapterEx;
 import dhcc.cn.com.fix_phone.base.BaseFragment;
+import dhcc.cn.com.fix_phone.bean.GetFriendResponse;
+import dhcc.cn.com.fix_phone.db.Friend;
+import dhcc.cn.com.fix_phone.event.GetFriendEvent;
 import dhcc.cn.com.fix_phone.listener.FragmentOnNewIntent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
+import dhcc.cn.com.fix_phone.rong.BroadcastManager;
+import dhcc.cn.com.fix_phone.rong.CharacterParser;
+import dhcc.cn.com.fix_phone.rong.SealUserInfoManager;
 import dhcc.cn.com.fix_phone.ui.activity.MainActivity;
 import dhcc.cn.com.fix_phone.ui.activity.SearchFriendActivity;
 import dhcc.cn.com.fix_phone.ui.widget.DragPointView;
@@ -75,9 +84,6 @@ public class ImFragment extends BaseFragment implements DragPointView.OnDragList
         list_item.setChecked(true);
         changeFragment(mConversationListFragment);
         ((MainActivity) getActivity()).setOnNewIntent(this);
-        if (Account.isLogin()) {
-            ApiManager.Instance().GetListFriend(Account.getAccessToken(), "");
-        }
     }
 
     @Override
@@ -161,7 +167,6 @@ public class ImFragment extends BaseFragment implements DragPointView.OnDragList
                         Conversation.ConversationType.SYSTEM,
                         Conversation.ConversationType.DISCUSSION
                 };
-
             } else {
                 uri = Uri.parse("rong://" + getContext().getApplicationInfo().packageName).buildUpon()
                         .appendPath("conversationlist")
@@ -200,12 +205,6 @@ public class ImFragment extends BaseFragment implements DragPointView.OnDragList
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        System.out.println("-----");
-    }
-
-    @Override
     public void onDragOut() {
         mUnreadNumView.setVisibility(View.GONE);
         NToast.shortToast(getContext(), "清除成功");
@@ -225,5 +224,4 @@ public class ImFragment extends BaseFragment implements DragPointView.OnDragList
             }
         }, mConversationsTypes);
     }
-
 }

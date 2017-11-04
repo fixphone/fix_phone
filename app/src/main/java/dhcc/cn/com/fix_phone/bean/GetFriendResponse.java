@@ -6,6 +6,7 @@ import dhcc.cn.com.fix_phone.base.BaseResponse;
 
 /**
  * Created by songyang on 2017\10\14 0014.
+ *
  */
 
 public class GetFriendResponse extends BaseResponse {
@@ -29,11 +30,11 @@ public class GetFriendResponse extends BaseResponse {
              * FUserTypeNumber : Ordinary
              */
 
-            public String  FFriendID;
+            public int     FFriendID;
             public String  FPhone;
             public String  FCompanyName;
             public String  FHeadUrl;
-            public String  FInBlackList;
+            public boolean FInBlackList;
             public boolean FIsFooterData;
             public String  FName;
             public int     FUserID;

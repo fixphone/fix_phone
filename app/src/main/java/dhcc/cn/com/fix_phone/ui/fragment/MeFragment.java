@@ -28,6 +28,7 @@ import dhcc.cn.com.fix_phone.R;
 import dhcc.cn.com.fix_phone.base.BaseFragment;
 import dhcc.cn.com.fix_phone.bean.BusinessResponse;
 import dhcc.cn.com.fix_phone.event.BusinessEvent;
+import dhcc.cn.com.fix_phone.event.SelfInfoEvent;
 import dhcc.cn.com.fix_phone.remote.ApiManager;
 import dhcc.cn.com.fix_phone.rong.SealConst;
 import dhcc.cn.com.fix_phone.ui.activity.AboutAppActivity;
@@ -113,7 +114,7 @@ public class MeFragment extends BaseFragment {
     @Override
     protected void initData() {
         if (Account.isLogin()) {
-            ApiManager.Instance().getUserInfo(Account.getUserId());
+            ApiManager.Instance().getSelfInfo(Account.getUserId());
         }
     }
 
@@ -140,7 +141,7 @@ public class MeFragment extends BaseFragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onUserInfo(BusinessEvent event) {
+    public void onUserInfo(SelfInfoEvent event) {
         mResponse = event.mResponse;
         if (mResponse != null) {
             setViewState(mResponse.FObject.companyName, mResponse.FObject.phone, mResponse.FObject.headUrl);

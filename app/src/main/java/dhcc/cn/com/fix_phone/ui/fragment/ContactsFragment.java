@@ -411,7 +411,7 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
                 SealUserInfoManager.getInstance().openDB();
                 SealUserInfoManager.getInstance().deleteFriends();
                 for (GetFriendResponse.FriendList.Friend f : friendList) {
-                    Friend friend = new Friend(f.FFriendID, f.FCompanyName, Uri.parse(f.FHeadUrl), null, null, null, null, null, CharacterParser.getInstance().getSpelling(f.FCompanyName), null);
+                    Friend friend = new Friend(String.valueOf(f.FFriendID), f.FCompanyName, Uri.parse(f.FHeadUrl), null, null, null, null, null, CharacterParser.getInstance().getSpelling(f.FCompanyName), null);
                     SealUserInfoManager.getInstance().addFriend(friend);
                     list.add(friend);
                 }
